@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="mailToManager" mode="on" history="off">
+    <description></description>
+    <caching>NO_CACHING</caching>
+    <rununderuser source="static">[supervisor]</rununderuser>
+    <element mode="ON" type="SCRIPT">
+        <name>mail</name>
+        <events>
+            <doscript source="file">page.mailToManager.DoScript</doscript>
+        </events>
+    </element>
+</rule>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="view" id="statstatus" history="on">
+	<description>Статистика по статусу</description>
+	<outline>navigator</outline>
+	<query>remark</query>		
+	<xsltfile>views\view-statistic.xsl</xsltfile>
+	<count>remarkdraft</count>
+	<count>oncoordinate</count>
+	<count>rejected</count>
+	<count>toconsider</count>
+	<count>waitforsign</count>
+	<count>complete</count>
+	<count>favdocs</count>
+	<title source="KEYWORD">По статусу</title>
+	<column>
+		<caption id="category" source="KEYWORD">Статистика</caption>
+	</column>
+	<column>
+		<caption id="view" source="KEYWORD">По статусу</caption>
+	</column>
+	<column>
+		<caption id="helpcaption" source="KEYWORD">Помощь</caption>
+	</column>
+	<column>
+		<caption id="countcaption" source="KEYWORD">Количество</caption>
+	</column>
+	<column>
+		<caption id="executedcaption" source="KEYWORD">Исполнено</caption>
+	</column>
+	<column>
+		<caption id="onccordinatedcaption" source="KEYWORD">На согласовании</caption>
+	</column>
+	<column>
+		<caption id="onexecutionauditcaption" source="KEYWORD">На ревизии исполнения</caption>
+	</column>
+	<column>
+		<caption id="rejectedcaption" source="KEYWORD">Отклонено</caption>
+	</column>
+	<column>
+		<caption id="draftcaption" source="KEYWORD">Черновик</caption>
+	</column>
+	<column>
+		<caption id="statnamecaption" source="KEYWORD">Статистика по статусу замечаний</caption>
+	</column>
+	<column>
+		<caption id="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	</column>
+	<column>
+		<caption id="toconsidercaption" source="KEYWORD">На исполнении</caption>
+	</column>
+	<column>
+		<caption id="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	</column>
+	<glossary mode="on" id="projectsprav" source="query">
+		<description>Проекты</description>
+		<value>projectsprav</value>
+	</glossary>
+	<glossary mode="on" id="originplace" source="query">
+		<description>Место замечания</description>
+		<value>originplace</value>
+	</glossary>
+	<glossary mode="on" id="responsiblesection" source="query">
+		<description>Ответственный ИТР</description>
+		<value>responsiblesection</value>
+	</glossary>
+</rule>

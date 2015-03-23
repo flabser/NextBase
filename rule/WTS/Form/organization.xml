@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="form" id="organization" mode="on">
+	<description>Организация</description>
+	<xsltfile>forms/organization.xsl</xsltfile>
+	<doctype>organization</doctype>
+	<outline>navigator</outline>
+	<default>	
+	</default>
+	<show>
+		<field mode="on">	
+			<name>fullname</name>			
+			<value source="docfield">fullname</value>
+			<caption source="KEYWORD">Название</caption>	
+		</field>
+		<field mode="on">	
+			<name>shortname</name>			
+			<value source="docfield">shortname</value>
+			<caption source="KEYWORD">Сокращенное название</caption>	
+		</field>
+		<field mode="on">	
+			<name>address</name>			
+			<value source="docfield">address</value>	
+			<caption source="KEYWORD">Адрес</caption>
+		</field>
+		<field mode="on">
+			<name>comment</name>
+			<value source="docfield">comment</value>
+			<caption source="KEYWORD">Комментарий</caption>
+		</field>				
+	</show>
+	<save>		
+		<field mode="on">	
+			<value source="static">organization</value>
+			<docfield>form</docfield>				
+		</field>
+		<field mode="on">	
+			<value source="webformfield">fullname</value>
+			<docfield>fullname</docfield>				
+		</field>
+		<field mode="on">	
+			<value source="webformfield">shortname</value>
+			<docfield>shortname</docfield>				
+		</field>
+		<field mode="on">	
+			<value source="webformfield">address</value>
+			<docfield>address</docfield>				
+		</field>
+		<field mode="on">
+			<value source="webformfield">comment</value>
+			<docfield>comment</docfield>
+		</field>
+		<field mode="on">
+			<value source="static">organization</value>
+			<docfield>defaultruleid</docfield>
+		</field>
+		
+	</save>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("fullname"));
+		}
+	]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewdate><![CDATA[]]></viewdate>
+	<viewnumber><![CDATA[]]></viewnumber>
+	<querysave>
+		<![CDATA[
+			void doQuerySave(_Session ses, _Document doc, String user){
+            	boolean v = true;
+            	def validate = {            	
+            		if (!doc.getValueString("shortname")){
+            			localizedMsgBox("Поле \"Сокращенное название\" не заполнено.");
+            			v = false;
+            		}
+            		if (!doc.getValueString("fullname")){
+            			localizedMsgBox("Поле \"Название\" не заполнено.");
+            			v = false;
+            		}            		
+            	}
+            	validate();
+            	if (v){
+            		doc.setViewText(doc.getValueString('fullname'));
+            	}else{
+            		stopSave();
+            	}           
+			}		
+		]]>
+	</querysave>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="newdept" source="KEYWORD">Новый департамент</caption>
+	<caption name="newemp" source="KEYWORD">Новый сотрудник</caption>
+	<caption name="name" source="KEYWORD">Название</caption>
+	<caption name="shortname" source="KEYWORD">Сокращенное название</caption>
+	<caption name="adress" source="KEYWORD">Адрес</caption>
+	<caption name="comment" source="KEYWORD">Комментарий</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	<caption name="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name="organization" source="KEYWORD">Организация</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+</rule>

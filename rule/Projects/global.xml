@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><rule id="Projects" mode="on" type="global">
+	<description>Система управления проектами</description>
+	<orgname>ТОО "LOF"</orgname>
+	<liccount>100</liccount>
+	<logo>projects_small.png</logo>
+	<appname>Система управления проектами</appname>
+	<database autodeploy="ON">
+		<name>Projects</name>
+		<driver>org.postgresql.Driver</driver>
+		<url>jdbc:postgresql://192.168.10.13/Projects</url>
+		<username/>
+		<password/>
+	<connectionid>iZZ5ZpRMZCmKFtwiUTG0vA==@@@A99Xs6Q2QWs=</connectionid></database>
+	<externalmodule type="STRUCTURE">Structure</externalmodule>
+	 <eds mode="OFF"/>
+	<entrypoint/>
+	<defaultredirecturl>Provider?type=page&amp;id=mytasks&amp;page=0</defaultredirecturl>
+	<markreaddelaysec>5</markreaddelaysec>
+	<langs>
+		<entry id="RUS">Русский</entry>
+		<entry id="KAZ">Қазақша</entry>
+		<entry id="ENG">English</entry>	 
+	</langs>
+	<roles>
+		<entry id="registrator_demand">Разрешает регистрацию заявок</entry>
+		<entry id="article_writer">Разрешает регистрацию статей</entry>
+		<entry id="project_viewer">Разрешает просмотр всех проектов</entry>
+
+		<entry id="statistics_viewer">Статистика</entry>
+		<entry id="administrator">Разрешает ввод и редактирование значении справочников</entry>
+        <entry id="programmer">Программист</entry>
+        <entry id="tester">Тестировщик</entry>
+        <entry id="support_specialist">Специалист службы поддержки</entry>
+    </roles>
+	<skins>
+		<entry default="on" id="classic" path="./webapps/Projects/classic/xsl">Soria</entry>
+	</skins>
+</rule>

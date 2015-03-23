@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="query" id="forum_thread">
+	<description />
+	<rununderuser source="static">current_user</rununderuser>
+	<query source="static"></query>
+	<sortby source="static">'$sortfield'#'$order'</sortby>
+	<doctype>FORUM_THREAD</doctype>
+	<field mode="on">	
+		<name>viewtext</name>
+		<value source="resultset">viewtext</value>		
+	</field>
+</rule>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="handler" id="filling_report">
+    <rununderuser source="macro">CURRENT_USER</rununderuser>
+    <trigger>provider</trigger>
+    <scheduler>
+        <mininterval>5</mininterval>
+    </scheduler>
+    <waitresponse>true</waitresponse>
+    <showfile>true</showfile>
+    <script><![CDATA[
+	String doHandler(_Session ses, Map<String, String[]> formData){
+		try{
+			println("Yep, I'm here");			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+			SimpleDateFormat sqlDateFormat = new SimpleDateFormat("yyyyMMdd");
+					
+			String reportName = formData.get("id")[0];
+			String sqlConditionForQuery = "";
+
+			String contragent = "";
+			int contragentID = 0;
+
+            String project = "";
+            int projectID = 0;
+
+            String category = "";
+            int categoryID = 0;
+
+            String subcategory = "";
+            int subcategoryID = 0;
+
+            String fromDate = "";
+            String formatFromDate = "";
+            Date from = null;
+
+
+            String toDate = "";
+            String formatToDate = "";
+            Date to = null;
+
+            String coordstatus = "";
+            int coordstatusID = 0;
+            boolean and = false;
+
+			if (reportName == "dynamic_report") {
+                if (formData.containsKey("contragent")) {
+                    contragent = formData.get("contragent")[0];
+                    println("contragent:" + contragent);
+				    if (contragent != null && !"".equalsIgnoreCase(contragent)) {
+                        try {
+                            contragentID = Integer.valueOf(contragent);
+                            sqlConditionForQuery += " contragent = " + contragentID;
+                            and = true;
+                        } catch(NumberFormatException nfe) {
+
+                        }
+                    }
+                }
+                println(sqlConditionForQuery + "1");
+                if (formData.containsKey("project")) {
+                    println("project:" + project);
+                    project = formData.get("project")[0];
+				    try{
+					    projectID = Integer.valueOf(project);
+					    if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					    }
+					    sqlConditionForQuery += " project = " + projectID;
+					    and = true;
+				    } catch(NumberFormatException nfe) {
+
+    				}
+                }
+                  println(sqlConditionForQuery + "2");
+                if (formData.containsKey("category")) {
+                    println("category:" + category);
+				    category = formData.get("category")[0];
+				    try{
+					    categoryID = Integer.valueOf(category);
+					     if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					     }
+					    sqlConditionForQuery += " category = " + category;
+					    and = true;
+				    } catch(NumberFormatException nfe) {
+
+    				}
+                }
+                  println(sqlConditionForQuery + "3");
+                if (formData.containsKey("subcategory")) {
+                    subcategory = formData.get("subcategory")[0];
+                    println("subcategory:" + subcategory);
+				    try{
+					    subcategoryID = Integer.valueOf(subcategory);
+					    if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					     }
+					    sqlConditionForQuery += " subcategory = " + subcategory;
+					    and = true;
+				    } catch(NumberFormatException nfe) {
+
+    				}
+                }
+                   println(sqlConditionForQuery + "4");
+                if (formData.containsKey("coordstatus")) {
+                    coordstatus = formData.get("coordstatus")[0];
+                    println("coordstatus:" + coordstatus);
+				    try{
+					    coordstatusID = Integer.valueOf(coordstatus);
+					    if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					    }
+                        switch(coordstatusID) {
+                            case 0:
+                                sqlConditionForQuery += " coordstatus != " + ICoordConst.STATUS_DRAFT;
+                                and = true;
+                                break;
+                            case 1:
+                                sqlConditionForQuery += " coordstatus = " + ICoordConst.STATUS_EXECUTED;
+                                and = true;
+                                break;
+                            case 2:
+                                sqlConditionForQuery += " coordstatus not in (" + ICoordConst.STATUS_UNDEFINED + ", " + ICoordConst.STATUS_DRAFT + ", " + ICoordConst.STATUS_EXECUTED + ")";
+                                and = true;
+                                break;
+                        }
+    				} catch(NumberFormatException nfe) {
+
+    				}
+                }
+                println(sqlConditionForQuery + "5");
+
+				//String fromDate = "";
+                //String formatFromDate = "";
+
+
+                if (formData.containsKey("datefrom")) {
+                    fromDate = formData.get("datefrom")[0];
+                    if (fromDate != null && !fromDate.equalsIgnoreCase("")) {
+                        try {
+                            from = dateFormat.parse(fromDate);
+                            formatFromDate = sqlDateFormat.format(from);
+                        } catch(IllegalArgumentException iae) {
+                             iae.printStackTrace();
+                        }
+                    }
+                }
+
+                if (!"".equalsIgnoreCase(formatFromDate)) {
+                      if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					    }
+                     sqlConditionForQuery += " regdate >= '" + formatFromDate + "' ";
+                     and = true;
+                }
+
+
+                //String toDate = "";
+                //String formatToDate = "";
+
+
+                if (formData.containsKey("dateto")) {
+                    toDate = formData.get("dateto")[0];
+                    if (toDate != null && !toDate.equalsIgnoreCase("")) {
+                    try {
+                            to = dateFormat.parse(toDate);
+                            formatToDate = sqlDateFormat.format(to);
+                        } catch(IllegalArgumentException iae) {
+                            iae.printStackTrace();
+                        }
+                    }
+                }
+
+                if (!"".equalsIgnoreCase(formatToDate)) {
+                      if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					    }
+                     sqlConditionForQuery += " regdate <= '" + formatToDate + "' ";
+                     and = true;
+                }
+
+
+			} 
+			//Определяем формат будущего отчета и способ его отображения
+			String typeReportFile = "";
+			String openReportWith = "";
+			
+			typeReportFile = formData.get("typefilereport")[0];
+			//openReportWith = formData.get("openreportwith")[0];
+			
+			Date tmpDate;		
+			
+			System.out.println("Filling report...");
+			
+			Map parameters = new HashMap();
+			/*parameters.put("current_date", "дата: " + dateFormat.format(new Date()));
+			parameters.put("period", "период: " + taskdatefrom + " - " + taskdateto);
+			*/
+			JRFileVirtualizer virtualizer = new JRFileVirtualizer(10, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports");
+            parameters.put(JRParameter.REPORT_VIRTUALIZER, virtualizer);
+			def cdb = ses.getCurrentDatabase();
+			
+			
+			def remarks = cdb.getPrjsCollection(sqlConditionForQuery).getBaseCollection();
+			JRDataSource dataSource = new JRBeanArrayDataSource(remarks.toArray());
+			
+			JasperPrint print = JasperFillManager.fillReport(JasperCompileManager.compileReportToFile(new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\templates\\"+ reportName + ".jrxml"), parameters, dataSource);
+
+			System.out.println("Done!");
+			System.out.println(remarks.size());
+			
+			String format = "";
+			String app = "";
+			
+			switch(typeReportFile){
+				case "1":
+					JasperExportManager.exportReportToPdfFile(print, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\"+ reportName +".pdf");
+					format = "pdf";
+					app = "AcroRd32.exe";
+					break;
+				case "2":
+					JExcelApiExporter xlsExporter = new JExcelApiExporter();
+					xlsExporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+					xlsExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\"+ reportName +".xls");
+					xlsExporter.exportReport();
+					format = "xls";
+					app = "excel.exe";
+					break;
+				case "3":					
+					JRHtmlExporter exporter = new JRHtmlExporter();
+					exporter.setParameter(JRHtmlExporterParameter.IMAGES_URI, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\" + reportName + ".html_files\\");
+					exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+					exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\"+ reportName +".html");
+					//JasperExportManager.exportReportToHtmlFile(print, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\"+ reportName +".html");
+					exporter.exportReport();
+					format = "html";
+					app = "iexplore.exe";
+					break;
+				default:
+					JasperExportManager.exportReportToPdfFile(print, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\"+ reportName +".pdf");
+					format = "pdf";
+					app = "AcroRd32.exe";
+					break;
+			}
+			return new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\" + reportName + "." + format;
+			virtualizer.cleanup();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	]]></script>
+</rule>

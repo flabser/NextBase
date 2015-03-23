@@ -1,0 +1,14 @@
+.viewframe{
+	display: block;
+	padding: 0 3px 0 3px;;
+	position: absolute;
+	top: 70px;
+	bottom:1px;
+	left: 0px !important;
+	right:0px;
+} 
+
+#outline, #resizer, .sarea, .filter_button, .ui-datepicker-trigger,  .discussion_td, .hasattach_td, .fav_td{
+	display:none;
+}
+

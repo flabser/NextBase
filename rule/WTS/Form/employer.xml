@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="form" id="employer" mode="on">
+	<description>Сотрудник</description>
+	<xsltfile>forms/employer.xsl</xsltfile>
+	<doctype>employer</doctype>
+	<outline>navigator</outline>
+	<default> </default>
+	<show>
+		<field mode="on" publishas="ORGANIZATION">
+			<name>organization</name>
+			<value source="script"><![CDATA[
+				String[] getStringValue(_Document document){
+					return getAsArray(document.getGrandParentDocument()?.getDocID().toString()?:"");
+				}				
+				]]></value>
+		</field>
+		<field mode="on">
+			<name>fullname</name>
+			<value source="docfield">fullname</value>
+			<caption source="KEYWORD">Полное имя</caption>
+		</field>
+		<field mode="on">
+			<name>email</name>
+			<value source="docfield">email</value>
+			<caption source="KEYWORD">email</caption>
+		</field>		
+		<field mode="on">
+			<name>shortname</name>
+			<value source="docfield">shortname</value>
+			<caption source="KEYWORD">Сокращенное имя</caption>
+		</field>
+		<field mode="on">
+			<name>redirect</name>
+			<value source="macro">APP_URL</value>
+		</field>
+		<field mode="on">
+			<name>userid</name>
+			<value source="docfield">userid</value>
+		</field>
+		<field mode="on" publishas="ROLE">
+			<name>role</name>
+			<value source="docfield">role</value>
+			<caption source="KEYWORD">Роли</caption>
+		</field>
+		<field mode="on" publishas="GROUP">
+			<name>group</name>
+			<value source="docfield">group</value>
+			<caption source="KEYWORD">Группы</caption>
+		</field>
+		<field mode="on" publishas="DEPARTMENT">
+			<name>depid</name>
+			<value source="script"><![CDATA[
+				String[] getStringValue(_Document document){
+					return getAsArray(document.getParentDocument()?.getDocType() == 888 ? document.getParentDocument()?.getDocID().toString() : "");
+				}
+				]]></value>
+			<caption source="KEYWORD">Департамент</caption>
+		</field>
+		<field mode="on">
+			<name>comment</name>
+			<value source="docfield">comment</value>
+			<caption source="KEYWORD">Комментарий</caption>
+		</field>
+		<field mode="on" publishas="GLOSSARY">
+			<name>post</name>
+			<value source="docfield">postid</value>
+			<caption source="KEYWORD">Должность</caption>
+		</field>
+		<field mode="on">
+			<name>index</name>
+			<value source="docfield">index</value>
+			<caption source="KEYWORD">Индекс</caption>
+		</field>
+		<field mode="on">
+			<name>rank</name>
+			<value source="docfield">rank</value>
+			<caption source="KEYWORD">Ранг</caption>
+		</field>
+		<field mode="on">
+			<name>phone</name>
+			<value source="docfield">phone</value>
+			<caption source="KEYWORD">Телефон</caption>
+		</field>
+		<field mode="on">
+			<name>sendto</name>
+			<value source="docfield">sendto</value>
+			<caption source="KEYWORD">Рассылка уведомлений</caption>
+		</field>
+		<field mode="on">
+			<name>instmsgaddress</name>
+			<value source="docfield">instmsgaddress</value>
+		</field>
+	</show>
+	<save>
+		<field mode="on">
+			<value source="static">employer</value>
+			<docfield>form</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">instmsgaddress</value>
+			<docfield>instmsgaddress</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">fullname</value>
+			<docfield>fullname</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">shortname</value>
+			<docfield>shortname</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">depid</value>
+			<docfield>depid</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">userid</value>
+			<docfield>userid</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">comment</value>
+			<docfield>comment</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">post</value>
+			<docfield type="number">postid</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">index</value>
+			<docfield>index</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">rank</value>
+			<docfield type="number">rank</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">phone</value>
+			<docfield>phone</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">sendto</value>
+			<docfield type="number">sendto</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">fullname</value>
+			<docfield type="viewtext"/>
+		</field>
+		<field mode="on">
+			<value source="webformfield">password</value>
+			<docfield type="viewtext"/>
+		</field>
+		<field mode="on">
+			<value source="webformfield">email</value>
+			<docfield>email</docfield>
+		</field>
+		<field mode="on">
+			<value source="static">employer</value>
+			<docfield>defaultruleid</docfield>
+		</field>
+		
+	</save>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("viewtext"));
+		}
+	]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewdate><![CDATA[]]></viewdate>
+	<viewnumber><![CDATA[]]></viewnumber>
+	<querysave>
+		<![CDATA[
+			void doQuerySave(_Session session, _Document document, String user){
+				boolean v = true;
+				def validate = {
+					if (!document.getValueString("userid")){
+						localizedMsgBox("Поле \"UserID\" не заполнено.");
+						v = false;
+					}
+					if (document.getValueNumber("postid") == 0){
+						localizedMsgBox("Поле \"Должность\" не заполнено.");
+						v = false;
+					}
+					if (!document.getValueString("shortname")){
+						localizedMsgBox("Поле \"Сокращенное имя\" не заполнено.");
+						v = false;
+					}
+					if (!document.getValueString("fullname")){
+						localizedMsgBox("Поле \"Полное имя\" не заполнено.");
+						v = false;
+					}
+				}
+				validate();
+				if (v){
+          	  		document.setValueString("viewtext",document.getValueString('fullname') );
+          	  	}else{
+          	  		stopSave();
+          	  	}
+			}		
+		]]>
+	</querysave>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="newdept" source="KEYWORD">Новый департамент</caption>
+	<caption name="newemp" source="KEYWORD">Новый сотрудник</caption>
+	<caption name="employer" source="KEYWORD">Сотрудник</caption>
+	<caption name="fullname" source="KEYWORD">Полное имя</caption>
+	<caption name="shortname" source="KEYWORD">Сокращенное имя</caption>
+	<caption name="password" source="KEYWORD">Пароль</caption>
+	<caption name="repeatpassword" source="KEYWORD">Повтор пароля</caption>
+	<caption name="organization" source="KEYWORD">Организация</caption>
+	<caption name="department" source="KEYWORD">Департамент</caption>
+	<caption name="post" source="KEYWORD">Должность</caption>
+	<caption name="phone" source="KEYWORD">Телефон</caption>
+	<caption name="mailing" source="KEYWORD">Рассылка уведомлений</caption>
+	<caption name="comment" source="KEYWORD">Комментарий</caption>
+	<caption name="role" source="KEYWORD">Роли</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="rank" source="KEYWORD">Ранг</caption>
+	<caption name="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	<caption name="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+	<glossary mode="on" id="post" source="query">
+		<description>Должность</description>
+		<value>post</value>
+	</glossary>	
+	<glossary mode="on" id="roles" source="macro">APPLICATION_ROLES</glossary>
+	<glossary mode="on" id="group" source="query">
+		<description>Группа</description>
+		<value>group</value>
+	</glossary>
+</rule>

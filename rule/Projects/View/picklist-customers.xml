@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="view" id="picklist-customers">
+	<description>Заказчики</description>
+	<query>customers</query>
+	<xsltfile>views/picklist-glossary.xsl</xsltfile>
+</rule>

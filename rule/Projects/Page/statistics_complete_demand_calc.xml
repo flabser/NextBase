@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="statistics_complete_demand_calc" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/statistics_complete_demand_calc.xsl</xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<name>view_content</name>
+		<events>
+			<doscript source="file">page.statistics_complete_demand.DoScript</doscript>
+		</events>
+	</element> 	
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>captions</name>
+		<value>captions_statistics</value>
+	</element>	
+</rule>

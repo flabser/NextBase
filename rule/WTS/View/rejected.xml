@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="view" id="rejected" history="on">
+	<description>Отклоненные</description>
+	<outline>navigator</outline>
+	<query>rejected</query>		
+	<xsltfile>views\view.xsl</xsltfile>
+	<title source="KEYWORD">Отклоненные</title>
+	<count>remark</count>
+	<count>remarkdraft</count>
+	<count>oncoordinate</count>
+	<count>rejected</count>
+	<count>toconsider</count>
+	<count>waitforsign</count>
+	<count>complete</count>
+	<count>favdocs</count>
+	<field mode="on">
+		<description></description>
+		<name>newDocURL</name>
+		<value><![CDATA[Provider?type=document&amp;id=remark&amp;key=]]></value>
+	</field>
+	<column>
+		<caption id="category" source="KEYWORD">Мои документы</caption>
+	</column>
+	<column>
+		<caption id="view" source="KEYWORD">Отклоненные</caption>
+	</column>
+	<column>
+		<caption id="briefcontent" source="KEYWORD">Описание замечания</caption>
+	</column>	
+	<column>
+		<caption id="page" source="KEYWORD">Страница</caption>
+	</column>
+	<column>
+		<caption id="documents" source="KEYWORD">Документов</caption>
+	</column>
+	<column>
+		<caption id="updates" source="KEYWORD">Обновлено</caption>
+	</column>
+	<column>
+		<caption id="from" source="KEYWORD">из</caption>
+	</column>
+	<column>
+		<caption id="viewtext1" source="KEYWORD">Ответственный участка</caption>
+	</column>	
+	<column>
+		<caption id="viewtext2" source="KEYWORD">Описание замечания</caption>
+	</column>	
+	<column>
+		<caption id="viewtext3" source="KEYWORD">Автор</caption>
+	</column>		
+	<column>
+		<caption id="viewnumber" source="KEYWORD">№</caption>
+	</column>	
+	<column>
+		<caption id="viewdate" source="KEYWORD">Дата</caption>
+	</column>
+	<column>
+		<caption id="BTNDELETEDOCUMENT" source="KEYWORD">Удалить документ</caption>
+	</column>	
+	<column>
+		<caption id="helpcaption" source="KEYWORD">Помощь</caption>
+	</column>
+	<column>
+		<caption id="filtercaption" source="KEYWORD">Фильтр</caption>
+	</column>
+	<column>
+		<caption id="fastfiltercaption" source="KEYWORD">Быстрая фильтрация</caption>
+	</column>
+	<column>
+		<caption id="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	</column>
+	<column>
+		<caption id="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	</column>
+		<column>
+		<caption id="showall" source="KEYWORD">Все</caption>
+	</column>
+	<column>
+		<caption id="project" source="KEYWORD">Проект</caption>
+	</column>
+		<column>
+		<caption id="status" source="KEYWORD">Статус</caption>
+	</column>
+		<column>
+		<caption id="filtercategory" source="KEYWORD">Категория</caption>
+	</column>
+		<column>
+		<caption id="responsible" source="KEYWORD">Ответсвенный</caption>
+	</column>
+	<column>
+		<caption id="author" source="KEYWORD">Автор</caption>
+	</column>
+	<action mode="on" type="NEW_DOCUMENT">
+		<caption source="KEYWORD">Замечание</caption>
+		<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["registrator_projects", "tech_supervisor", "administrator"]) ? user.getUserID() : "");
+				}
+				]]>
+		</granted>
+		
+	</action>
+		<action mode="on" type="DELETE_DOCUMENT">
+		<caption source="KEYWORD">Удалить документ</caption>
+		<granted source="script" mode="on"><![CDATA[
+			String[] getStringValue(_Session session){
+				def user = session.getStructure().getUser(session.getCurrentUser());
+				return getAsArray(user.hasRole(["administrator", "chancellery", "tech_supervisor"]) ? user.getUserID() : "");
+			}
+			]]></granted>
+	
+	</action>
+<glossary mode="on" id="projectsprav" source="query">
+		<description>Проекты</description>
+		<value>projectsprav</value>
+	</glossary>
+	<glossary mode="on" id="docscat" source="query">
+		<description>Категории</description>
+		<value>docscat</value>
+	</glossary>
+	<glossary mode="on" id="originplace" source="query">
+		<description>Место замечания</description>
+		<value>originplace</value>
+	</glossary>
+	<glossary mode="on" id="responsiblesection" source="query">
+		<description>Ответственный ИТР</description>
+		<value>responsiblesection</value>
+	</glossary>
+	<glossary mode="on" id="bossandemp" source="query">
+		<description>Автор</description>
+		<value>bossandemp</value>
+	</glossary>
+	<glossary mode="on" id="status" source="static">
+		<value><![CDATA[
+			<entry mode="on">
+				<name>Не определен</name>
+				<value>350</value>
+			</entry>
+			<entry mode="on">
+				<name>Черновик</name>
+				<value>351</value>
+			</entry>
+			<entry mode="on">
+				<name>На согласовании</name>
+				<value>352</value>
+			</entry>
+			<entry mode="on">
+				<name>Согласован</name>
+				<value>353</value>
+			</entry>
+			<entry mode="on">
+				<name>Отклонен</name>
+				<value>354</value>
+			</entry>
+			<entry mode="on">
+				<name>На подписании</name>
+				<value>355</value>
+			</entry>
+			<entry mode="on">
+				<name>Подписан</name>
+				<value>356</value>
+			</entry>
+			<entry mode="on">
+				<name>Не требует согласования</name>
+				<value>358</value>
+			</entry>
+			<entry mode="on">
+				<name>Просрочен</name>
+				<value>359</value>
+			</entry>
+			<entry mode="on">
+				<name>Новая версия</name>
+				<value>360</value>
+			</entry>
+			<entry mode="on">
+				<name>На исполнении</name>
+				<value>361</value>
+			</entry>
+			<entry mode="on">
+				<name>Исполнен</name>
+				<value>362</value>
+			</entry>
+		]]></value>
+	</glossary>
+</rule>

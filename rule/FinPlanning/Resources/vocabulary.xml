@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vocabulary primary="ENG">
+	<sentence mode="on" keyword="Planned events">
+		<entry lang="RUS">Запланированные события</entry>
+	</sentence>
+	<sentence mode="on" keyword="Actual expenses">
+		<entry lang="RUS">Фактические расходы</entry>
+	</sentence>
+	<sentence mode="on" keyword="Actual receiving">
+		<entry lang="RUS">Фактические поступления</entry>
+	</sentence>
+	<sentence mode="on" keyword="Timetable of funds">
+		<entry lang="RUS">График движения средств</entry>
+	</sentence>
+	<sentence mode="on" keyword="Planning">
+		<entry lang="RUS">Планирование</entry>
+	</sentence>
+	<sentence mode="on" keyword="Receiving">
+		<entry lang="RUS">Получение</entry>
+	</sentence>
+	<sentence mode="on" keyword="Expenses">
+		<entry lang="RUS">Расходы</entry>
+	</sentence>
+	<sentence mode="on" keyword="Statistics">
+		<entry lang="RUS">Статистика</entry>
+	</sentence>
+	<sentence mode="on" keyword="No connection to the server">
+		<entry lang="RUS">Отсутствует соединение с сервером</entry>
+	</sentence>
+	<sentence mode="on" keyword="Mode is undefined">
+		<entry lang="RUS">Режим не определен</entry>
+	</sentence>
+	<sentence mode="on" keyword="Document state">
+		<entry lang="RUS">Статус документа</entry>
+	</sentence>
+	<sentence mode="on" keyword="Permissions">
+		<entry lang="RUS">Права доступа</entry>
+	</sentence>
+		<sentence mode="on" keyword="Reading information">
+		<entry lang="RUS">Информация о прочтении</entry>
+	</sentence>
+		<sentence mode="on" keyword="Who was read">
+		<entry lang="RUS">Кто прочел документ</entry>
+	</sentence>
+		<sentence mode="on" keyword="Delete attachment">
+		<entry lang="RUS">Удалить вложение</entry>
+	</sentence>
+		<sentence mode="on" keyword="Open attachment">
+		<entry lang="RUS">Открыть вложение</entry>
+	</sentence>
+		<sentence mode="on" keyword="Attach">
+		<entry lang="RUS">Вложение</entry>
+	</sentence>
+		<sentence mode="on" keyword="Registration date">
+		<entry lang="RUS">Дата регистрации</entry>
+	</sentence>
+		<sentence mode="on" keyword="Add a comment">
+		<entry lang="RUS">Добавить комментарии</entry>
+	</sentence>
+		<sentence mode="on" keyword="Would you like add comment to the attachment?">
+		<entry lang="RUS">Добавить комментарии к вложению?</entry>
+	</sentence>
+	<sentence mode="on" keyword="Preview">
+		<entry lang="RUS">Предварительный просмотр</entry>
+	</sentence>
+	<sentence mode="on" keyword="comments">
+		<entry lang="RUS">комментарии</entry>
+	</sentence>
+	<sentence mode="on" keyword="Digital signature">
+		<entry lang="RUS">Цифровая подпись</entry>
+	</sentence>	
+	<sentence mode="on" keyword="Attachments">
+		<entry lang="RUS">Вложения</entry>
+	</sentence>
+	<sentence mode="on" keyword="Additional">
+		<entry lang="RUS">Дополнительно</entry>
+	</sentence>
+	<sentence mode="on" keyword="User properties">
+		<entry lang="RUS">Свойства пользователя</entry>
+	</sentence>
+	<sentence mode="on" keyword="Employer">
+		<entry lang="RUS">Сотрудник</entry>
+	</sentence>
+	<sentence mode="on" keyword="Author">
+		<entry lang="RUS">Автор</entry>
+	</sentence>
+	<sentence mode="on" keyword="Properties">
+		<entry lang="RUS">Свойства</entry>
+	</sentence>
+	<sentence mode="on" keyword="Interface language">
+		<entry lang="RUS">Язык интерфейса</entry>
+	</sentence>	
+	<sentence mode="on" keyword="Delete">
+		<entry lang="RUS">Удалить</entry>
+	</sentence>	
+	<sentence mode="on" keyword="Periodicity of the events">
+		<entry lang="RUS">Периодичность возникновения</entry>
+	</sentence>
+	<sentence mode="on" keyword="Periodicity">
+		<entry lang="RUS">Периодичность</entry>
+	</sentence>
+	<sentence mode="on" keyword="Receiver or sender">
+		<entry lang="RUS">Получатель/отправитель</entry>
+	</sentence>
+	<sentence mode="on" keyword="Event date/start of a period">
+		<entry lang="RUS">Дата события/начало периода</entry>
+	</sentence>
+	<sentence mode="on" keyword="Cancel">
+		<entry lang="RUS">Отмена</entry>
+	</sentence>
+	<sentence mode="on" keyword="Search">
+		<entry lang="RUS">Поиск</entry>
+	</sentence>
+	<sentence mode="on" keyword="Saved">
+		<entry lang="RUS">Сохраненный</entry>
+	</sentence>
+	<sentence mode="on" keyword="New document">
+		<entry lang="RUS">Новый документ</entry>
+	</sentence>
+	<sentence mode="on" keyword="Editing">
+		<entry lang="RUS">Редактирование</entry>
+	</sentence>
+	<sentence mode="on" keyword="Read only">
+		<entry lang="RUS">Только для чтения</entry>
+	</sentence>
+	<sentence mode="on" keyword="All">
+		<entry lang="RUS">Все</entry>
+	</sentence>
+	<sentence mode="on" keyword="Description">
+		<entry lang="RUS">Описание</entry>
+	</sentence>
+	<sentence mode="on" keyword="Sum">
+		<entry lang="RUS">Сумма</entry>
+	</sentence>
+	<sentence mode="on" keyword="Category">
+		<entry lang="RUS">Категория</entry>
+	</sentence>
+	<sentence mode="on" keyword="Category ID">
+		<entry lang="RUS">Идентификатор категории</entry>
+	</sentence>
+	<sentence mode="on" keyword="Type of the operation">
+		<entry lang="RUS">Тип операции</entry>
+	</sentence>
+		<sentence mode="on" keyword="Subtype of the operation">
+		<entry lang="RUS">Подтип операции</entry>
+	</sentence>
+	<sentence mode="on" keyword="Place of the event">
+		<entry lang="RUS">Место возникновения</entry>
+	</sentence>
+		<sentence mode="on" keyword="Date">
+		<entry lang="RUS">Дата</entry>
+	</sentence>
+		<sentence mode="on" keyword="Page">
+		<entry lang="RUS">Страница</entry>
+	</sentence>
+		<sentence mode="on" keyword="Documents">
+		<entry lang="RUS">Документов</entry>
+	</sentence>
+		<sentence mode="on" keyword="Refreshed">
+		<entry lang="RUS">Обновлено</entry>
+	</sentence>
+		<sentence mode="on" keyword="from">
+		<entry lang="RUS">Из</entry>
+	</sentence>
+		<sentence mode="on" keyword="Filter">
+		<entry lang="RUS">Фильтр</entry>
+	</sentence>
+		<sentence mode="on" keyword="Help">
+		<entry lang="RUS">Помощь</entry>	
+	</sentence>
+		<sentence mode="on" keyword="Logout">
+		<entry lang="RUS">Завершить работу</entry>
+	</sentence>	
+	<sentence mode="on" keyword="Save and close">
+		<entry lang="RUS">Сохранить и закрыть</entry>
+	</sentence>
+	<sentence mode="on" keyword="Close">
+		<entry lang="RUS">Закрыть</entry>
+	</sentence>
+	<sentence mode="on" keyword="Close without save">
+		<entry lang="RUS">Закрыть без сохранения</entry>
+	</sentence>
+	<sentence mode="on" keyword="Cash">
+		<entry lang="RUS">Касса</entry>
+	</sentence>
+	<sentence mode="on" keyword="Month">
+		<entry lang="RUS">Месяц</entry>
+	</sentence>
+	<sentence mode="on" keyword="Base">
+		<entry lang="RUS">Основание</entry>
+	</sentence>
+	<sentence mode="on" keyword="Via">
+		<entry lang="RUS">Через</entry>
+	</sentence>
+	<sentence mode="on" keyword="Validated with document">
+		<entry lang="RUS">Подтверждено документом</entry>
+	</sentence>
+	<sentence mode="on" keyword="Target cash">
+		<entry lang="RUS">Целевая касса</entry>
+	</sentence>
+
+
+
+</vocabulary>
+
+

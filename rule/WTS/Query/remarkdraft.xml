@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="query" id="remarkdraft">
+	<description>Черновики замечания</description>
+	<doctype>PROJECT</doctype>
+	<query source="static">form = 'remark' and vn = '0' and coordstatus=351</query>
+	<sortby source="static">'$sortfield'#'$order'</sortby>
+	<field mode="on">	
+		<name>vn</name>
+		<value source="resultset">vn</value>	
+		<attrvalue></attrvalue>	
+	</field>
+
+</rule>

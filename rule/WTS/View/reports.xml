@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="view" id="reports" history="on">
+	<description>Отчеты</description>
+	<outline>navigator</outline>
+	<query>reports</query>		
+	<xsltfile>views\view.xsl</xsltfile>
+	<title source="KEYWORD">Отчеты</title>
+	<column>
+		<caption id="category" source="KEYWORD">Отчеты</caption>
+	</column>
+	<column>
+		<caption id="view" source="KEYWORD">Все</caption>
+	</column>
+	<column>
+		<caption id="page" source="KEYWORD">Страница</caption>
+	</column>
+	<column>
+		<caption id="documents" source="KEYWORD">Документов</caption>
+	</column>
+	<column>
+		<caption id="updates" source="KEYWORD">Обновлено</caption>
+	</column>
+	<column>
+		<caption id="from" source="KEYWORD">из</caption>
+	</column>
+	<column>
+		<caption id="name" source="KEYWORD">Название</caption>
+	</column>
+	<column>
+		<caption id="filtercaption" source="KEYWORD">Фильтр</caption>
+	</column>
+	<column>
+		<caption id="helpcaption" source="KEYWORD">Помощь</caption>
+	</column>
+	<column>
+		<caption id="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	</column>
+	<column>
+		<caption id="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	</column>
+		<column>
+		<caption id="showall" source="KEYWORD">Все</caption>
+	</column>
+	<column>
+		<caption id="project" source="KEYWORD">Проект</caption>
+	</column>
+		<column>
+		<caption id="status" source="KEYWORD">Статус</caption>
+	</column>
+		<column>
+		<caption id="filtercategory" source="KEYWORD">Категория</caption>
+	</column>
+		<column>
+		<caption id="responsible" source="KEYWORD">Ответсвенный</caption>
+	</column>
+	<column>
+		<caption id="author" source="KEYWORD">Автор</caption>
+	</column>
+	<action mode="off" type="NEW_DOCUMENT">
+		<caption source="KEYWORD">Новый отчет</caption>
+		<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["registrator_tasks", "boss", "administrator"]) ? user.getUserID() : "");
+				}
+				]]>
+		</granted>
+		
+	</action>	
+</rule>

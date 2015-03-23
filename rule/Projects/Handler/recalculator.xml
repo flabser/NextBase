@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><rule app="" id="recalculator" isvalid="true" mode="ON" type="HANDLER">
+    <description/>
+    <rununderuser source="STATIC" type="TEXT">[supervisor]</rununderuser>
+    <trigger>SCHEDULER</trigger>
+    <scheduler mode="ON">
+        <starttime>1:00</starttime>
+        <nextstart/>
+        <days>MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY</days>
+    </scheduler>
+    <events>
+        <trigger source="file">handler.prjs_recalculator.Trigger</trigger>
+    </events>
+</rule>

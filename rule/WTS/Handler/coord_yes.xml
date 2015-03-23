@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="handler" id="coord_yes">
+	<rununderuser source="macro">CURRENT_USER</rununderuser>
+	<trigger>provider</trigger>
+	<scheduler>
+		<mininterval>5</mininterval>
+	</scheduler>	
+	<script><![CDATA[
+		String doHandler(_Session ses, Map<String, String[]> formData){
+		try{
+		def cdb = ses.getCurrentDatabase();
+		def mailAgent = ses.getMailAgent();
+		def msngAgent = ses.getInstMessengerAgent();
+		def recipientsMail = [];
+		def recipientsID = [];
+		String msubject = "";
+		String body = "";
+		String msg = "";
+		def prj = cdb.getProjectByID(Integer.parseInt(formData.get("key")[0]));
+		def author = ses.getStructure()?.getUser(prj.getValueString("author"));
+		def block = prj.getCurrentBlock();
+		def coordlist = block.getCurrentCoordinators();
+		boolean finalblock = false;
+		def rejectProject = {project->
+			project.setCoordStatus("rejected");
+			project.setLastUpdate(new Date());
+			project.setValueString("oldversion", "1");
+			project.setIsRejected(1);
+			project.save("observer");
+			/*Формирование новой версии проекта*/
+			project.setNewDoc();
+			project.setIsRejected(0);
+			project.setCoordStatus("newversion");
+			int docversion = project.getDocVersion()+1;
+			project.setDocVersion(docversion);
+			String vn = project.getVn();
+			project.setVn(vn.contains(",") ? vn.replaceFirst(",.", ",") + docversion.toString() : vn + "," + docversion.toString());
+			project.setProjectDate(new Date());
+			project.setNotesID(Util.generateRandomAsText());
+			project.clearEditors();
+			project.clearReaders();
+			project.addEditor(project.getValueString("author"));
+			project.addReader(project.getValueString("author"));
+			def blocks = project.getBlocks();
+			blocks.each{
+				it.setStatus("awaiting");
+				it.getCoordinators()*.resetCoordinator();
+			}
+			project.save("observer");
+		}
+			
+		for (coord in coordlist){			
+			if(coord.getUserID() && coord.getUserID() == ses.getCurrentUser()){				
+				String[] comment = formData.get("comment");
+				coord.setDecision("agree", comment != null ? comment[0] : "");			
+				if (block && block.getType() == "pos"){
+					def nextCoord = block.getNextCoordinator(coord);
+					if (nextCoord && nextCoord.getUserID()){
+						nextCoord.setCurrent(true);
+						prj.addReader(nextCoord.getUserID());
+						if (nextCoord.getEmail()){
+							recipientsMail.add(nextCoord.getEmail());
+						}
+						if (nextCoord.getInstMessengerAddr()){
+							recipientsID.add(nextCoord.getInstMessengerAddr());
+						}
+					} else {
+						finalblock = true;
+					}
+				}else{
+					if(block.getType() == "par" && coordlist.size <= 1){
+						finalblock = true;
+					}
+				}
+				if (finalblock){
+					block.setStatus("coordinated");				
+					def nextBlock = prj.getNextBlock(block);
+					if (nextBlock){
+						if (nextBlock.getType() == "par"){
+							nextBlock.setStatus("coordinating");
+							def nextcoords = nextBlock.getCoordinators();
+							nextcoords.each{ nextcoord ->
+								nextcoord.setCurrent(true);
+								prj.addReader(nextcoord.getUserID());
+								if (nextcoord.getEmail()){
+									recipientsMail.add(nextcoord.getEmail());
+								}
+								if (nextcoord.getInstMessengerAddr()){
+									recipientsID.add(nextcoord.getInstMessengerAddr());
+								}
+							}
+						}else{ 
+							if(nextBlock.getType() == "pos"){
+								nextBlock.setStatus("coordinating");
+								def nextcoord = nextBlock.getFirstCoordinator();
+								if (nextcoord){
+									nextcoord.setCurrent(true);
+									prj.addReader(nextcoord.getUserID());
+									if (nextcoord.getEmail()){
+										recipientsMail.add(nextcoord.getEmail());
+									}
+									if (nextcoord.getInstMessengerAddr()){
+										recipientsID.add(nextcoord.getInstMessengerAddr());
+									}
+								}
+							}else{
+								if (nextBlock.getType() == "sign"){
+									def decisions = [];
+									def cusers = prj.getBlocks()*.getCoordinators();
+									cusers.each{
+										for (c in it) {
+											decisions.add(c.getDecision())
+										}
+									}
+									if (!decisions.find({it == "disagree"})) {
+										if (prj.getForm()[0] != "remark") {
+											prj.setCoordStatus("coordinated");
+										} else {
+											prj.setCoordStatus("executing");
+										}  
+										/*if (prj.getAutoSendToSign() == 1){
+											prj.setCoordStatus("signing");
+											nextBlock.setStatus("coordinating");
+											def signer = prj.getSigner();
+											signer.setCurrent(true);
+											if (signer.getUserID()){
+												prj.addReader(signer.getUserID());
+											}
+											prj.sendToSignining();
+										}*/
+									} else {
+										rejectProject(prj);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if (prj.getCoordStatus() == _CoordStatusType.COORDINATING){
+			if (recipientsID){
+				msg = "Вам документ на согласование: Замечание №" + prj.getVn() + " от " + prj.getProjectDate().format("dd.MM.yyyy HH:mm:ss") + " \nДля работы с документом перейдите по ссылке " + prj.getFullURL();			
+				msngAgent.sendMessage(recipientsID, msg);
+			}
+			
+
+				
+				msubject = "[CKK] [Замечания] -> Прошу согласовать документ №" + prj.getVn() + " от " + prj.getProjectDate().format("dd.MM.yyyy HH:mm:ss");
+	  			body = '<b><font color="#000080" size="4" face="Default Serif">Документ на согласование</font></b><hr>';
+				body += '<table cellspacing="0" cellpadding="4" border="0" style="padding:10px; font-size:12px; font-family:Arial;">';
+				body += '<tr>';
+				body += '<td style="border-bottom:1px solid #CCC;" valign="top" colspan="2">';
+				body += "Вам документ №" + prj.getVn() + " от " + prj.getProjectDate().format("dd.MM.yyyy HH:mm:ss") + " на согласование \"" +  prj.getValueString("briefcontent") + '\"' + '<br>';
+				body += '</td></tr><tr>';
+				body += '<td colspan="2"></td>';
+				body += '</tr></table>';
+				body += '<p><font size="2" face="Arial">Для работы с документом перейдите по <a href="' + prj.getFullURL() + '">ссылке...</a></p></font>';    			
+				
+				if (recipientsMail){
+					mailAgent.sendMail(recipientsMail, msubject, body);
+				}
+
+		}
+		if (prj.getCoordStatus() == _CoordStatusType.COORDINATED || prj.getCoordStatus() == _CoordStatusType.SIGNING){
+		
+			msg = "По документу: \"" + prj.getValueString("briefcontent") + "\" завершено согласование. Для работы с документом перейдите по ссылке " + prj.getFullURL();
+			msngAgent.sendMessage([author?.getInstMessengerAddr()], msg);
+			
+
+			
+				msubject = '[СЭД] [Проекты] Согласование документа \"' + prj.getValueString("briefcontent") + '\" завершено.';
+	  			body = '<b><font color="#000080" size="4" face="Default Serif">Завершено согласование</font></b><hr>';
+				body += '<table cellspacing="0" cellpadding="4" border="0" style="padding:10px; font-size:12px; font-family:Arial;">';
+				body += '<tr>';
+				body += '<td style="border-bottom:1px solid #CCC;" valign="top" colspan="2">';
+				body += 'По документу \"' +  prj.getValueString("briefcontent") + '\" завершено согласование. <br>';
+				body += '</td></tr><tr>';
+				body += '<td colspan="2"></td>';
+				body += '</tr></table>';
+				body += '<p><font size="2" face="Arial">Для работы с документом перейдите по <a href="' + prj.getFullURL() + '">ссылке...</a></p></font>';    			
+				
+				mailAgent.sendMail([author?.getEmail()], msubject, body);
+
+		}
+		if (prj.getCoordStatus() == _CoordStatusType.COORDINATED){
+			msg = "Документ \"" + prj.getValueString("briefcontent") + "\" готов к отправке на подпись. Пожалуйста, проверьте правильность составления документа и все ли участники согласования ";
+			msg += "одобрили документ. \nДля работы с документом перейдите по ссылке " + prj.getFullURL();
+			msngAgent.sendMessage([author?.getInstMessengerAddr()], msg);
+
+				msubject = '[СЭД] [Проекты] Проект для отправки на подпись \"' + prj.getValueString("briefcontent") + '\"';
+				body = '<b><font color="#000080" size="4" face="Default Serif">Согласование завершено</font></b><hr>';
+				body += '<table cellspacing="0" cellpadding="4" border="0" style="padding:10px; font-size:12px; font-family:Arial;">';
+				body += '<tr>';
+				body += '<td style="border-bottom:1px solid #CCC;" valign="top" colspan="2">';
+				body += 'Проект документа завершил согласование и готов к отправке на подпись. Проверьте правильность составления документа ';
+				body += 'и все ли участники согласования одобрили документ.<br>';
+				body += '</td></tr><tr>';
+				body += '<td colspan="2"></td>';
+				body += '</tr></table>';
+				body += '<p><font size="2" face="Arial">Для работы с документом перейдите по <a href="' + prj.getFullURL() + '">ссылке...</a></p></font>';
+			
+				mailAgent.sendMail([author?.getEmail()], msubject, body);
+
+		}	
+			if (prj.getCoordStatus() == _CoordStatusType.EXECUTING){
+			msg = "Документ №\"" + prj.getVn() + " от " + prj.getProjectDate().format("dd.MM.yyyy HH:mm:ss") + " " + prj.getValueString("briefcontent") + "\" был принят в работу.";
+			msg += " \nДля работы с документом перейдите по ссылке " + prj.getFullURL();
+			msngAgent.sendMessage([author?.getInstMessengerAddr()], msg);   
+
+				msubject = "[СКК] [Замечания] Замечание №" + prj.getVn() + " от " + prj.getProjectDate().format("dd.MM.yyyy HH:mm:ss") + " было принято в работу. ";
+				body = '<b><font color="#000080" size="4" face="Default Serif">Принято в работу</font></b><hr>';
+				body += '<table cellspacing="0" cellpadding="4" border="0" style="padding:10px; font-size:12px; font-family:Arial;">';
+				body += '<tr>';
+				body += '<td style="border-bottom:1px solid #CCC;" valign="top" colspan="2">';
+				body += "Замечание №" + prj.getVn() + " от " + prj.getProjectDate().format("dd.MM.yyyy HH:mm:ss") + " " + prj.getValueString("briefcontent") + " было принято в работу.<br>";
+				body += '</td></tr><tr>';
+				body += '<td colspan="2"></td>';
+				body += '</tr></table>';
+				body += '<p><font size="2" face="Arial">Для работы с документом перейдите по <a href="' + prj.getFullURL() + '">ссылке...</a></p></font>';
+			
+				mailAgent.sendMail([author?.getEmail()], msubject, body);
+
+		}		
+		if (prj.getCoordStatus() == _CoordStatusType.SIGNING){
+			msg = "После рассмотрения документа: \"" + prj.getValueString("briefcontent") + "\" он отправлен на подпись к " + prj.getSigner()?.getShortName();
+			msg += "\nДля работы с документом перейдите по ссылке " + prj.getFullURL();
+			msngAgent.sendMessage([author?.getInstMessengerAddr()], msg);
+				
+			msg = "Вам документ: \"" + prj.getValueString("briefcontent") + "\" на подпись. \nДля работы с документом перейдите по ссылке " + prj.getFullURL();
+			msngAgent.sendMessage([prj.getSigner()?.getInstMessengerAddr()], msg);
+
+				msubject = '[СЭД] [Проекты] Отправлен на подпись документ \"' + prj.getValueString("briefcontent") + '\"';
+				body = '<b><font color="#000080" size="4" face="Default Serif">Документ на подпись</font></b><hr>';
+				body += '<table cellspacing="0" cellpadding="4" border="0" style="padding:10px; font-size:12px; font-family:Arial;">';
+				body += '<tr>';
+				body += '<td style="border-bottom:1px solid #CCC;" valign="top" colspan="2">';
+				body += 'После рассмотрения документа: \"' +  prj.getValueString("briefcontent") + '\" он отправлен на подпись к ';
+				body += prj.getSigner()?.getShortName() + ' <br>';
+				body += '</td></tr><tr>';
+				body += '<td colspan="2"></td>';
+				body += '</tr></table>';
+				body += '<p><font size="2" face="Arial">Для работы с документом перейдите по <a href="' + prj.getFullURL() + '">ссылке...</a></p></font>';
+				
+				mailAgent.sendMail([author?.getEmail()], msubject, body);
+										
+				msubject = '[СЭД] [Проекты] -> Прошу подписать документ \"' + prj.getValueString("briefcontent") + '\"';
+				body = '<b><font color="#000080" size="4" face="Default Serif">Документ на подпись</font></b><hr>';
+				body += '<table cellspacing="0" cellpadding="4" border="0" style="padding:10px; font-size:12px; font-family:Arial;">';
+				body += '<tr>';
+				body += '<td style="border-bottom:1px solid #CCC;" valign="top" colspan="2">';
+				body += 'Вам документ: \"' +  prj.getValueString("briefcontent") + '\" на подпись. <br>';
+				body += '</td></tr><tr>';
+				body += '<td colspan="2"></td>';
+				body += '</tr></table>';
+				body += '<p><font size="2" face="Arial">Для работы с документом перейдите по <a href="' + prj.getFullURL() + '">ссылке...</a></p></font>';
+				
+				mailAgent.sendMail([prj.getSigner()?.getEmail()], msubject, body);
+		}
+
+		prj.setLastUpdate(new Date());
+		prj.save("observer");
+		return "";
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	}
+	]]></script>
+</rule>

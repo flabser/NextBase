@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="projectDoc" mode="on">
+	<description>Проектный документ</description>
+	<xsltfile>forms/projectDoc.xsl</xsltfile>
+	<doctype>main</doctype>
+	<title></title>
+	<events>
+		<queryopen source="file">form.projectdoc.QueryOpen</queryopen>
+		<querysave source="file">form.projectdoc.QuerySave</querysave>
+		<postsave source="file">form.projectdoc.PostSave</postsave>
+	</events> 
+	<default>
+		<action mode="on" type="SAVE">
+			<caption source="KEYWORD">Сохранить и закрыть</caption>
+			<granted source="macro" mode="on">current_user</granted>
+		</action> 	
+		<field mode="on" publishas="USER"> 
+			<value source="macro">current_user</value>
+			<name>docauthor</name>
+		</field> 
+		<field mode="on">
+			<name>docdate</name>
+			<value source="macro">current_time</value>
+			<caption source="KEYWORD">Дата</caption>
+		</field>		
+	</default>
+	<show>
+		<action mode="on" type="SAVE">
+			<caption source="KEYWORD">Сохранить и закрыть</caption>
+			<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Document doc){
+					return getAsArray(doc.getValueString('docauthor'))
+				}]]></granted>
+		</action>		
+		<field mode="on" publishas="USER">
+			<name>docauthor</name>
+			<value source="docfield">docauthor</value>
+			<caption source="KEYWORD">Автор записи</caption>
+		</field>
+		<field mode="on">
+			<name>docdate</name>
+			<value source="docfield">docdate</value>
+			<caption source="KEYWORD">Дата записи</caption>
+		</field>
+		<field mode="on">
+			<name>title</name>
+			<value source="docfield">title</value>
+			<caption source="KEYWORD">Тема</caption>
+		</field>
+		<field mode="on">
+			<name>content</name>
+			<value source="docfield">content</value>
+			<caption source="KEYWORD">Содержание</caption>
+		</field>
+		<field mode="on">
+			<name>rtfcontent</name>
+			<value source="doc_attachment">rtfcontent</value>
+			<caption source="KEYWORD">Вложения</caption>
+		</field>
+		<field mode="on"  publishas="USER">
+			<name>readers</name>
+			<value source="docfield">readers</value>
+			<caption source="KEYWORD">Читатели</caption>
+		</field>
+		<field mode="on"  publishas="USER">
+			<name>editors</name>
+			<value source="docfield">editors</value>
+			<caption source="KEYWORD">Редакторы</caption>
+		</field>
+	</show>
+ 
+	<save>
+		<field mode="on">
+			<value source="static">projectDoc</value>
+			<docfield>form</docfield>
+		</field> 
+		<field mode="on">
+			<value source="static">projectDoc</value>
+			<docfield>defaultruleid</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">docauthor</value>
+			<docfield>docauthor</docfield>			
+		</field>
+		<field mode="on">
+			<value source="webformfield">docdate</value>
+			<docfield type="datetime">docdate</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">title</value>
+			<docfield>title</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">content</value>
+			<docfield >content</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfile">rtfcontent</value>
+			<docfield  type="file">rtfcontent</docfield>
+		</field> 
+		<field mode="on">
+			<value source="webformfield">readers</value>
+			<docfield>readers</docfield>			
+		</field>
+		<field mode="on">
+			<value source="webformfield">editors</value>
+			<docfield>editors</docfield>			
+		</field>
+		<field mode="on">
+			<value source="static">Проектный документ</value>
+			<docfield type="viewtext"></docfield>			
+		</field>
+	</save>
+	 
+	<querysave><![CDATA[
+		void doQuerySave(_Session ses, _Document doc, String user) {			
+			try {	
+				boolean v = true;
+				def validate = {
+					if (doc.getValueString("title") == ""){
+						localizedMsgBox("Поле \"Тема\" не заполнено.");
+						v = false;
+					}
+					
+				}
+				
+				validate();
+				if (v){		
+					doc.clearReaders();
+					doc.clearEditors();				
+					doc.addEditor(doc.getValueString("docauthor"));
+					doc.addReader(doc.getValueString("docauthor"));							
+					def readers = doc.getValueList("readers");
+					
+					// нужно что бы они тоже видели головной проект 
+					def pdoc = doc.getParentDocument();				
+					
+					readers.each{
+						println(it);
+						doc.addReader(it);
+						pdoc.addReader(it);
+					}
+					 
+					def editors = doc.getValueList("editors");
+					editors.each{
+						doc.addEditor(it);
+						doc.addReader(it);
+						pdoc.addReader(it);
+					}
+						pdoc.addReader('[project_viewer]');
+						doc.addReader('[project_viewer]');
+					pdoc.save("observer");
+				}
+				else{
+					stopSave();
+				}
+				  
+			}
+			catch(e) {
+				println "*** querysave"
+				e.printStackTrace()
+				stopSave()
+			}
+		}]]></querysave>
+
+	<postsave><![CDATA[
+		void doPostSave(_Session ses, _Document doc, String user) {
+			try {			
+						 
+			}
+			catch(Exception e){
+				println "*** postsave"
+				e.printStackTrace()
+			}
+		}
+		 ]]></postsave>
+  
+	<viewtext><![CDATA[
+		]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewdate><![CDATA[
+	]]></viewdate>
+	<viewnumber><![CDATA[]]></viewnumber>
+	
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="title" source="KEYWORD">Проектный документ</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="attachments" source="KEYWORD">Вложения</caption>
+	<caption name="history" source="KEYWORD">История</caption>
+	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="cancel" source="KEYWORD">Закрыть</caption>
+	<caption name="searchcaption" source="KEYWORD">Поиск</caption>
+	<caption source="KEYWORD" name="docauthor">Автор</caption>
+	<caption source="KEYWORD" name="docdate">Дата записи</caption> 
+	<caption name="readers" source="KEYWORD">Читатели</caption>
+	<caption name="editors" source="KEYWORD">Редакторы</caption>  
+	<caption name="title1" source="KEYWORD">Тема</caption> 
+	<caption name="saveandclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="percentage_of_completion" source="KEYWORD">Процент исполнения</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name ="attention" source ="KEYWORD">Внимание</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="infofreaders" source="KEYWORD">Кем прочтен</caption>
+	<caption name="readtime" source="KEYWORD">Время прочтения</caption>
+	<caption name="read" source="KEYWORD">Прочтен</caption>
+	<caption name="notread" source="KEYWORD">Не прочтен</caption>
+	<caption name ="addcommentforattachment" source ="KEYWORD">Добавить комментарий к вложению?</caption>
+	<caption name ="showfilename" source ="KEYWORD">Укажите имя файла для вложения</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="addcomment" source ="KEYWORD">Добавить комментарий</caption>
+	<caption name="delete_file" source="KEYWORD">Удалить файл</caption>
+	<caption name="comments" source="KEYWORD">комментарий</caption>
+	<caption name ="view_userprofile" source ="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+</rule>

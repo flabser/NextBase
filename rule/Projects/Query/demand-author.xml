@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="query" id="demand-author">
+	<description>Заявки</description>
+	<rununderuser source="macro">current_user</rununderuser>
+	<doctype>document</doctype>
+	<query source="static">form = 'demand'</query>
+	<groupby source="static" publishas="USER">author</groupby>
+
+    <field mode="on">
+        <name>author</name>
+        <value source="resultset">author</value>
+    </field>
+    <field mode="on">
+        <name>status</name>
+        <value source="resultset">status</value>
+    </field>
+	<field mode="on">
+		<name>apps</name>
+		<value source="resultset">apps</value>
+	</field>
+	<field mode="on">
+		<name>dvn</name>
+		<value source="resultset">dvn</value>
+	</field>
+	<field mode="on">
+		<name>vn</name>
+		<value source="resultset">vn</value>
+	</field>
+	<field mode="on">
+		<name>viewtext</name>
+		<value source="resultset">viewtext</value>
+	</field>
+	<field mode="on">
+		<name>executer</name>
+		<value source="resultset" type="userid">executer</value>
+	</field>
+	<field mode="on">
+		<name>briefcontent</name>
+		<value source="resultset">briefcontent</value>
+	</field>
+	<field mode="on">
+		<name>ctrldate</name>
+		<value source="resultset">ctrldate</value>
+	</field>
+	<field mode="on">
+		<name>priority</name>
+		<value source="resultset">priority</value>
+	</field>
+	<field mode="on">
+		<name>allcontrol</name>
+		<value source="resultset">allcontrol</value>
+	</field>
+</rule>

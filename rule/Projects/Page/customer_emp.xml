@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="customer_emp" mode="on" history="off">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/customer-emp.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>customer_prop</name>
+		<events>
+			<doscript source="file">page.customer_prop.DoScript</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="QUERY">
+		<name>view_content</name>
+		<doctype>structure</doctype>
+		<query source="macro">EXPANDED_STRUCTURE</query>
+	</element>
+</rule>

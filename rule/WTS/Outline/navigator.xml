@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="outline" id="navigator" mode="on">
+	<description>Navigator outline</description>
+	<xsltfile>outline.xsl</xsltfile>
+	<outline>
+		<entry id="projects" mode="on">
+			 <granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["tech_supervisor", "tech_engineer", "top_manager", "administrator"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			
+			<caption source="KEYWORD">Замечания</caption>
+			<hint source="KEYWORD">Замечания</hint>
+			<entry mode="on" type="link" url="Provider?type=view&amp;id=remark&amp;page=0" hint="Замечания" id="remark">
+				<caption source="KEYWORD">Все замечания</caption>
+				<hint source="KEYWORD">Все замечания</hint>
+			</entry>			
+			<entry mode="on" type="link"
+				url="Provider?type=view&amp;id=remarkdraft&amp;page=0" hint="Черновик" id="remarkdraft">
+				<caption source="KEYWORD">Черновик</caption>
+				<hint source="KEYWORD">Черновик</hint>
+			</entry>
+			<entry mode="on" type="link"
+				url="Provider?type=view&amp;id=oncoordinate&amp;page=0" hint="На согласовании" id="oncoordinate">
+				<caption source="KEYWORD">На согласовании</caption>
+				<hint source="KEYWORD">На согласовании у ответственного участка</hint>
+			</entry>
+			<entry mode="on"
+				url="Provider?type=view&amp;id=rejected&amp;page=0" id="rejected">
+				<caption source="KEYWORD">Отклоненные</caption>
+				<hint source="KEYWORD">Отклоненные ответственным участка</hint>					
+			</entry>
+			<entry mode="on"
+				url="Provider?type=view&amp;id=toconsider&amp;page=0" id="toconsider">
+				<caption source="KEYWORD">На исполнении</caption>
+				<hint source="KEYWORD">На исполнении</hint>					
+			</entry>
+			<entry mode="on" type="link"
+				url="Provider?type=view&amp;id=waitforsign&amp;page=0" hint="Ожидает подпись" id="waitforsign">
+				<caption source="KEYWORD">На ревизии исполнения</caption>
+				<hint source="KEYWORD">На ревизии исполнения у автора замечания</hint>
+			</entry>
+			
+			<entry mode="on"
+				url="Provider?type=view&amp;id=complete&amp;page=0" id="complete">
+				<caption source="KEYWORD">Исполненные</caption>
+				<hint source="KEYWORD">Исполненные</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=view&amp;id=favdocs&amp;page=0" hint="Избранные" id="favdocs">
+				<caption source="KEYWORD">Избранные</caption>
+				<hint source="KEYWORD">Избранные</hint>
+			</entry>
+		</entry>
+		<entry id="statistic" mode="on">
+			<caption source="KEYWORD">Статистика</caption>
+			<hint source="KEYWORD">Статистика</hint>
+			<entry mode="on" type="link" url="Provider?type=view&amp;id=statstatus&amp;page=0&amp;pagesize=-1" hint="По статусу" id="statstatus">
+				<caption source="KEYWORD">По статусу</caption>
+				<hint source="KEYWORD">По статусу</hint>
+			</entry>
+			<entry mode="on" type="link" url="Provider?type=view&amp;id=statoriginplace&amp;page=0&amp;pagesize=-1" hint="По месту возникновения" id="statoriginplace">
+				<caption source="KEYWORD">По месту возникновения</caption>
+				<hint source="KEYWORD">По месту возникновения</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=view&amp;id=statresponsiblesection&amp;page=0&amp;pagesize=-1" hint="По ответственному участка" id="statresponsiblesection">
+				<caption source="KEYWORD">По ответственному участка</caption>
+				<hint source="KEYWORD">По ответственному участка</hint>					
+			</entry>
+			<entry mode="on" url="Provider?type=view&amp;id=statindexcomplete&amp;page=0&amp;pagesize=-1" hint="Индекс устранения" id="statindexcomplete">
+				<caption source="KEYWORD">Индекс устранения</caption>
+				<hint source="KEYWORD">Индекс устранения</hint>					
+			</entry>
+			<entry mode="off" url="Provider?type=view&amp;id=dynamicstatistic&amp;page=0&amp;pagesize=-1" hint="Динамический отчет" id="dynamicstatistic">
+				<caption source="KEYWORD">Динамический отчет</caption>
+				<hint source="KEYWORD">Динамический отчет</hint>					
+			</entry>
+		</entry>
+		<entry id="reports" mode="on">
+			<caption source="KEYWORD">Отчеты</caption>
+			<hint source="KEYWORD">Отчеты</hint>
+			<entry mode="on" type="link" url="Provider?type=view&amp;id=reports&amp;page=0" hint="Все" id="reports">
+				<caption source="KEYWORD">Все</caption>
+				<hint source="KEYWORD">Все</hint>
+			</entry>
+			<entry mode="off" type="link" url="Provider?type=view&amp;id=status_report&amp;page=0" hint="По статусу" id="status_report">
+				<caption source="KEYWORD">По статусу</caption>
+				<hint source="KEYWORD">По статусу</hint>
+			</entry>
+			<entry mode="off" type="link" url="Provider?type=view&amp;id=object_report&amp;page=0" hint="По объекту" id="object_report">
+				<caption source="KEYWORD">По объекту</caption>
+				<hint source="KEYWORD">По объекту</hint>
+			</entry>
+			<entry mode="off" type="link" url="Provider?type=view&amp;id=originplace_report&amp;page=0" hint="По месту возникновения" id="originplace_report">
+				<caption source="KEYWORD">По месту возникновения</caption>
+				<hint source="KEYWORD">По месту возникновения</hint>
+			</entry>
+			<entry mode="off" type="link" url="Provider?type=view&amp;id=instruction_report&amp;page=0" hint="По предписаниям" id="instruction_report">
+				<caption source="KEYWORD">По предписаниям</caption>
+				<hint source="KEYWORD">По предписаниям</hint>
+			</entry>
+		</entry>
+		<entry id="glossary" mode="on">
+			<caption source="KEYWORD">Справочники</caption>
+			<hint source="KEYWORD">Справочники</hint>
+			 <granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["chancellery", "administrator", "operator", "top_manager"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			
+			
+			<granted source="static" mode="on">kkuliyev</granted>
+			<entry mode="off" url="Provider?type=view&amp;id=structurelist" id="structurelist">
+				<caption source="KEYWORD">Структура организации</caption>
+				<hint source="KEYWORD">Структура организации</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["administrator", "top_manager"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			
+			</entry>
+			<entry mode="on" url="Provider?type=view&amp;id=docscat" id="docscat">
+				<caption source="KEYWORD">Вид работ</caption>
+				<hint source="KEYWORD">Вид работ</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["chancellery", "administrator", "operator"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			
+			</entry>
+			<entry mode="on" url="Provider?type=view&amp;id=subcat" id="subcat">
+				<caption source="KEYWORD">Подвид работ</caption>
+				<hint source="KEYWORD">Подвид работ</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["chancellery", "administrator", "operator"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+		
+			</entry>
+			<entry mode="off" url="Provider?type=view&amp;id=post&amp;sortfield=VIEWTEXT2&amp;order=ASC" id="post">
+				<caption source="KEYWORD">Должность</caption>
+				<hint source="KEYWORD">Должность</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["chancellery", "administrator", "operator"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			</entry>
+			<entry mode="off" url="Provider?type=view&amp;id=subdivisionlist&amp;sortfield=VIEWTEXT1&amp;order=ASC" id="subdivisionlist">
+				<caption source="KEYWORD">Тип подразделения</caption>
+				<hint source="KEYWORD">Тип подразделения</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["chancellery", "administrator", "operator"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			
+			
+			</entry>
+			<entry mode="on" url="Provider?type=view&amp;id=city" id="city">
+				<caption source="KEYWORD">Регион/Город</caption>
+				<hint source="KEYWORD">Регион/Город</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["chancellery", "administrator", "operator"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			
+			</entry>
+			<entry mode="on" url="Provider?type=view&amp;id=projectsprav" id="projectsprav">
+				<caption source="KEYWORD">Проекты</caption>
+				<hint source="KEYWORD">Проекты</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["chancellery", "administrator", "operator"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			
+			</entry>
+			<entry mode="on" url="Provider?type=view&amp;id=contractorcatlist" id="contractorcatlist">
+				<caption source="KEYWORD">Категория контрагентов</caption>
+				<hint source="KEYWORD">Категория контрагентов</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["chancellery", "administrator", "operator"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			
+			</entry>
+			<entry mode="on" url="Provider?type=view&amp;id=contractor" id="contractor">
+				<caption source="KEYWORD">Контрагент</caption>
+				<hint source="KEYWORD">Контрагент</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["chancellery", "administrator", "operator"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			
+			
+			</entry>
+			<entry mode="on" url="Provider?type=view&amp;id=originplace" id="originplace">
+				<caption source="KEYWORD">Место замечания</caption>
+				<hint source="KEYWORD">Место замечания</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["chancellery","administrator", "operator"]) ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			
+			
+			</entry>
+			<entry mode="off" url="Provider?type=view&amp;id=role" id="role">
+				<caption source="KEYWORD">Роли пользователей</caption>
+				<hint source="KEYWORD">Роли пользователей</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole("administrator") ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			</entry>
+			<entry mode="off" url="Provider?type=view&amp;id=group" id="group">
+				<caption source="KEYWORD">Группы пользователей</caption>
+				<hint source="KEYWORD">Группы пользователей</hint>
+				<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole("administrator") ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			</entry>
+		</entry>
+		<entry id="recyclebin" mode="on">
+			<caption source="KEYWORD">Корзина</caption>
+			<hint source="KEYWORD">Корзина</hint>
+			<entry mode="on" url="Provider?type=view&amp;id=recyclebin" id="recyclebin">
+				<caption source="KEYWORD">Корзина</caption>
+				<hint source="KEYWORD">Корзина</hint>
+			</entry>
+		</entry>
+		<default>
+			<field mode="on">
+				<name>logout</name>
+				<value source="static">logout</value>
+				<caption source="KEYWORD">Завершить работу</caption>
+			</field>
+			<field mode="on">
+				<name>documentmanager</name>
+				<value source="static">documentmanager</value>
+				<caption source="KEYWORD">Документооборот</caption>
+			</field>
+			<field mode="on">
+				<name>outlinetitle</name>
+				<value source="static">outlinetitle</value>
+				<caption source="KEYWORD">Список документов</caption>
+			</field>
+			<field mode="on">
+				<name>orgtitle</name>
+				<value source="static">ТОО Avanti</value>
+			</field>
+		</default>
+	</outline>
+</rule>

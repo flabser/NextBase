@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="getctrldate" mode="on" history="off">
+	<description>ctrldate</description>
+	<rununderuser source="static">[supervisor]</rununderuser>
+	<caching>NO_CACHING</caching>
+	<xsltfile></xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<name>script_result</name>
+		<events>
+			<doscript source="file">page.getctrldate.DoScript</doscript>
+		</events>
+	</element>
+</rule>

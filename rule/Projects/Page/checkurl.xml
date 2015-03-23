@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="checkURL" mode="on">
+	<description></description>
+	<rununderuser source="static">[supervisor]</rununderuser>
+	<caching>NO_CACHING</caching>
+	<element mode="ON" type="SCRIPT">
+		<name>script_result</name>
+		<events>
+			<doscript source="file">page.checkURL.DoScript</doscript>
+		</events>
+	</element>
+	
+</rule>

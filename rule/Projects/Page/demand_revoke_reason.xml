@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="demand_revoke_reason" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/glossary-view.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">page.prjs_actionbar.demand_revoke_reason</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="QUERY">
+		<name>view_content</name>
+		<doctype>glossary</doctype>
+		<query source="static">form = 'demand_revoke_reason'</query>
+	</element>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>captions</name>
+		<value>captions_glossary</value>
+	</element>
+</rule>

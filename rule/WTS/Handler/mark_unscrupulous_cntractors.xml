@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule id="mark_unscrupulous_cntractors" app="" type="HANDLER"
+	isvalid="true" mode="ON">
+	<description>create mark for unscrupulous contractors</description>
+	<rununderuser source="STATIC" type="TEXT">[observer]
+	</rununderuser>
+	<trigger>MANUALLY</trigger>
+	<tohandle source="QUERY" type="TEXT">contractor</tohandle><!--String doHandler(_Session 
+		session, _DocumentCollection collection){ -->
+	<script><![CDATA[String doHandler(_Session ses, _DocumentCollection collection){
+	def cdb = ses.getCurrentDatabase();
+	int colCount = collection.getCount();
+	println("поиск недобросовестных контрагентов: " + colCount);
+	println("найдено контаргентов всего: " + colCount + ", старт поиска недобросовестных...");
+		for(int j=0; j < colCount; j++){
+			def doc = collection.getNthDocument(j);
+			int doc_id = doc.getDocID();			
+			def col = cdb.getPrjsCollection("contragent=" + doc_id);
+                       int c = col.getCount();                       
+                       if (c > 2){
+                          doc.setValueString('isbadperformer','1');
+                          doc.save();
+ 			  println("отмечен как недобросовестный: " + doc.getValueString("name"));
+                       }
+			 
+		}
+		 println("поиск недобросовестных контрагентов завершен");	
+	}
+
+	
+
+	]]></script><!--} -->
+</rule>

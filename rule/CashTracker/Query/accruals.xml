@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="query" id="accruals">
+	<description>Начисления</description>
+	<rununderuser source="macro">current_user</rununderuser>
+	<doctype>document</doctype>
+	<query source="static">form = 'accrual' or (form = 'operations' and calcstaff = '1')</query>
+	<sortby source="static">regdate#asc</sortby>
+
+	<field mode="on">
+		<name>year</name>
+		<value source="resultset">year</value>
+	</field>
+	<field mode="on">
+		<name>month</name>
+		<value source="resultset">month</value>
+	</field>
+	<field mode="on" publishas="EMPLOYER">
+		<name>personal</name>
+		<value source="resultset">personal</value>
+	</field>
+	<field mode="on">
+		<name>typeoperation</name>
+		<value source="resultset">typeoperation</value>
+	</field>
+	<field mode="on">
+		<name>typeoperationstaff</name>
+		<value source="resultset">typeoperationstaff</value>
+	</field>
+	<field mode="on">
+		<name>category</name>
+		<value source="resultset">category</value>
+	</field>
+	<field mode="on">
+		<name>summa</name>
+		<value source="resultset">summa</value>
+	</field>
+	<field mode="on">
+		<name>documented</name>
+		<value source="resultset">documented</value>
+	</field>
+	<field mode="on">
+		<name>form</name>
+		<value source="resultset">form</value>
+	</field>
+</rule>

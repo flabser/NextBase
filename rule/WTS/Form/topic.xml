@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="topic" mode="on">
+	<description>Тема форума</description>
+	<xsltfile>forms/topics.xsl</xsltfile>
+	<doctype>TOPIC</doctype>
+	<title source="KEYWORD">Тема форума</title>
+	<outline>navigator</outline>
+	<default>
+		<field mode="on">
+			<name>close</name>
+			<caption source="KEYWORD">Закрыть</caption>
+		</field>
+		<field mode="on">
+			<name>properties</name>
+			<caption source="KEYWORD">Свойства</caption>
+		</field>
+		<field mode="on">
+			<name>content</name>
+			<caption source="KEYWORD">Содержание</caption>
+		</field>
+		<field mode="on">
+			<name>saved</name>
+			<caption source="KEYWORD">Сохраненный</caption>
+		</field>
+		<field mode="on">
+			<name>newdoc</name>
+			<caption source="KEYWORD">Новый документ</caption>
+		</field>
+		<field mode="on">
+			<name>editing</name>
+			<caption source="KEYWORD">Редактирование</caption>
+		</field>
+		<field mode="on">
+			<name>readonly</name>
+			<caption source="KEYWORD">Только для чтения</caption>
+		</field>
+		<field mode="on">
+			<name>modenotdefined</name>
+			<caption source="KEYWORD">Режим не определен</caption>
+		</field>
+		<field mode="on">
+			<name>doctypemultilang</name>
+			<caption source="KEYWORD">Тема</caption>
+		</field>
+		<field mode="on">
+			<name>more</name>
+			<caption source="KEYWORD">Дополнительно</caption>
+		</field>
+		<field mode="on">
+			<name>type</name>
+			<caption source="KEYWORD">Тип</caption>
+		</field>
+		<field mode="on">
+			<name>contributors</name>
+			<caption source="KEYWORD">Участники</caption>
+		</field>
+		<field mode="on">
+			<name>waittime</name>
+			<caption source="KEYWORD">Время ожидания</caption>
+		</field>
+		<field mode="on">
+			<name>statuscoord</name>
+			<caption source="KEYWORD">Статус</caption>
+		</field>
+		<field mode="on">
+			<name>unlimtimecoord</name>
+			<caption source="KEYWORD">Неограничено</caption>
+		</field>
+		<field mode="on">
+			<name>typenotdefined</name>
+			<caption source="KEYWORD">Тип не определен</caption>
+		</field>
+		<field mode="on">
+			<name>topicdate</name>
+			<value source="macro">current_time</value>
+		</field>
+		<field mode="on">
+			<name>contentsource</name>
+			<caption source="KEYWORD">Основной текст</caption>
+		</field>
+		<field mode="on">
+			<name>briefcontent</name>
+			<value source="static" />
+			<caption source="KEYWORD">Краткое содержание</caption>
+		</field>
+		<field mode="on" publishas="USER">
+			<name>author</name>
+			<value source="macro">current_user</value>
+			<caption source="KEYWORD">Автор</caption>
+		</field>
+	</default>
+	<show>
+		<field mode="on">
+			<name>close</name>
+			<caption source="KEYWORD">Закрыть</caption>
+		</field>
+		<field mode="on">
+			<name>properties</name>
+			<caption source="KEYWORD">Свойства</caption>
+		</field>
+		<field mode="on">
+			<name>content</name>
+			<caption source="KEYWORD">Содержание</caption>
+		</field>
+		<field mode="on">
+			<name>saved</name>
+			<caption source="KEYWORD">Сохраненный</caption>
+		</field>
+		<field mode="on">
+			<name>editing</name>
+			<caption source="KEYWORD">Редактирование</caption>
+		</field>
+		<field mode="on">
+			<name>readonly</name>
+			<caption source="KEYWORD">Только для чтения</caption>
+		</field>
+		<field mode="on">
+			<name>modenotdefined</name>
+			<caption source="KEYWORD">Режим не определен</caption>
+		</field>
+		<field mode="on">
+			<name>doctypemultilang</name>
+			<caption source="KEYWORD">Тема</caption>
+		</field>
+		<field mode="on">
+			<name>more</name>
+			<caption source="KEYWORD">Дополнительно</caption>
+		</field>
+		<field mode="on">
+			<name>contributors</name>
+			<caption source="KEYWORD">Участники</caption>
+		</field>
+		<action mode="on" type="SAVE">
+			<caption source="KEYWORD">Сохранить и закрыть</caption>
+			<granted source="macro" mode="on">AUTHOR</granted>
+			<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Document doc){
+					return getAsArray(doc.getValueString('executor'));
+					}
+					]]>
+			</granted>
+		</action>
+		<!-- <action mode="off" type="STOP_DOCUMENT"> <caption source="KEYWORD">Остановить 
+			документ</caption> <granted source="script" mode="off"><![CDATA[String[] 
+			getStringValue(_Document doc){ return getAsArray('kairatdkuliyevf'); }]]> 
+			</granted> <granted source="script" mode="on"><![CDATA[ String[] getStringValue(_Document 
+			doc){ def prj = (_Project) doc; String status = prj.getCoordStatus(); if 
+			(status && (status == "coordinating" || status == "expired" || status == 
+			"signing" || status == "signed")){ return getAsArray(doc.getValueString("author")?:""); 
+			} } ]]> </granted> </action> -->
+
+
+		<field mode="on" publishas="USER">
+			<name>author</name>
+			<value source="docfield">author</value>
+			<caption source="KEYWORD">Автор</caption>
+		</field>
+		<field mode="on">
+			<name>topicdate</name>
+			<value source="docfield">topicdate</value>
+		</field>
+		<field mode="on">
+			<name>viewtext</name>
+			<value source="docfield">theme</value>
+		</field>
+		<field mode="on">
+			<name>theme</name>
+			<value source="docfield">theme</value>
+		</field>
+		<field mode="on">
+			<name>rtfcontent</name>
+			<value source="docfield">rtfcontent</value>
+		</field>
+	</show>
+	<save push="on" syncrule="workdocprj">
+		<field mode="on">
+			<value source="webformfield">author</value>
+			<docfield>author</docfield>
+		</field>
+		<field mode="on">
+			<value source="static">topic</value>
+			<docfield>form</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">topicdate</value>
+			<docfield>topicdate</docfield>
+		</field>	
+		<field mode="on">
+			<value source="webformfield">theme</value>
+			<docfield>theme</docfield>
+		</field>
+		<field mode="on">
+			<value source="macro">AUTHOR</value>
+			<docfield type="author" />
+		</field>
+		<field mode="on">
+			<value source="webformfield">action</value>
+			<docfield>action</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfile">rtfcontent</value>
+			<docfield>rtfcontent</docfield>
+		</field>
+		<field mode="on">
+			<value source="static">topic</value>
+			<docfield>defaultruleid</docfield>
+		</field>
+	</save>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("theme"));
+		}
+	]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewdate><![CDATA[]]></viewdate>
+	<viewnumber><![CDATA[]]></viewnumber>
+	<querysave><![CDATA[
+		void doQuerySave(_Session session, _Document document, String user){
+		boolean v = true;
+		def validate = {
+					v = true;
+			}
+			validate();
+			if (v){
+			
+			}else{
+				stopSave();
+			}
+			}
+	]]>
+	</querysave>
+	<postsave><![CDATA[void doPostSave(_Session session, _Document document, String user) {
+		def db = session.getCurrentDatabase();
+		int docID = document.getDocID();
+		int pDocID = document.getParentDocID();
+		int pDocType = document.getParentDocType();
+		println(docID);
+		println(pDocID);
+		println(pDocType);
+		if (pDocID != 0 && pDocType != 890) {
+			db.setTopic(docID, pDocID, pDocType);
+			println("Yes");
+		}
+		
+	}]]></postsave>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="more" source="KEYWORD">Дополнительно</caption>
+	<caption name="type" source="KEYWORD">Тип</caption>
+	<caption name="contributors" source="KEYWORD">Участники</caption>
+	<caption name="waittime" source="KEYWORD">Время ожидания</caption>
+	<caption name="statuscoord" source="KEYWORD">Статус</caption>
+	<caption name="waiting" source="KEYWORD">Ожидает ответа</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="unlimtimecoord" source="KEYWORD">Неограничено</caption>
+	<caption name="expectbegincoord" source="KEYWORD">Ожидание начала согласования</caption>
+	<caption name="typenotdefined" source="KEYWORD">Тип не определен</caption>
+	<caption name="awairesponse" source="KEYWORD">Ожидает ответа</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="complete" source="KEYWORD">Завершен</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="searchcaption" source="KEYWORD">поиск</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+	<caption name="commentcaption" source="KEYWORD">Комментарий</caption>
+	<caption name="warning" source="KEYWORD">Предупреждение</caption>
+	<caption name="files" source="KEYWORD">Файлы</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	<caption name="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+</rule>

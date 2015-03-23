@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="view" id="originplace_report" history="on">
+	<description>Отчеты по месту возникновения</description>
+	<outline>navigator</outline>
+	<query>originplace_report</query>		
+	<xsltfile>views\view.xsl</xsltfile>
+	<title source="KEYWORD">По месту возникновения</title>
+	<field mode="on">
+		<description></description>
+		<name>newDocURL</name>
+		<value><![CDATA[Provider?type=document&amp;id=originplace_report&amp;key=]]></value>
+	</field>
+	<column>
+		<caption id="category" source="KEYWORD">Отчеты</caption>
+	</column>
+	<column>
+		<caption id="view" source="KEYWORD">По месту возникновения</caption>
+	</column>
+	<column>
+		<caption id="page" source="KEYWORD">Страница</caption>
+	</column>
+	<column>
+		<caption id="documents" source="KEYWORD">Документов</caption>
+	</column>
+	<column>
+		<caption id="updates" source="KEYWORD">Обновлено</caption>
+	</column>
+	<column>
+		<caption id="from" source="KEYWORD">из</caption>
+	</column>
+	<column>
+		<caption id="name" source="KEYWORD">Название</caption>
+	</column>
+	<column>
+		<caption id="filtercaption" source="KEYWORD">Фильтр</caption>
+	</column>
+	<column>
+		<caption id="helpcaption" source="KEYWORD">Помощь</caption>
+	</column>
+	<column>
+		<caption id="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	</column>
+	<column>
+		<caption id="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	</column>
+	<action mode="off" type="NEW_DOCUMENT">
+		<caption source="KEYWORD">Новый отчет</caption>
+		<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole(["registrator_tasks", "boss", "administrator"]) ? user.getUserID() : "");
+				}
+				]]>
+		</granted>
+	</action>	
+</rule>

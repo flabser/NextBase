@@ -1,0 +1,44 @@
+<class className="kz.flabs.runtimeobj.document.coordination.BlockCollection">
+    <block>
+        <id>1406340754</id>
+        <type>329</type>
+        <delaytime>0</delaytime>
+        <status>366</status>
+        <num>1</num>
+        <coordinator>
+            <type>371</type>
+            <user>
+                <fullname>Константинов Александр Андреевич</fullname>
+                <userid>wish</userid>
+            </user>
+            <current>false</current>
+            <decision>
+                <decision>341</decision>
+                <comment>Комментарий-суслик</comment>
+                <decisiondate>2015-02-06 15:47:49</decisiondate>
+            </decision>
+            <num>1</num>
+        </coordinator>
+    </block>
+    <block>
+        <id>985529251</id>
+        <type>327</type>
+        <delaytime>0</delaytime>
+        <status>365</status>
+        <num>999</num>
+        <coordinator>
+            <type>372</type>
+            <user>
+                <fullname>Пупкин Василий Иванович</fullname>
+                <userid>pupkinv</userid>
+            </user>
+            <current>true</current>
+            <decision>
+                <decision>340</decision>
+                <comment></comment>
+            </decision>
+            <num>1</num>
+        </coordinator>
+    </block>
+    <status>355</status>
+</class>

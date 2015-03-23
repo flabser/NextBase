@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="bank_account" mode="on">
+	<description>Расчётный счёт</description>
+	<xsltfile>forms/bank_account.xsl</xsltfile>
+	<doctype>glossary</doctype>
+	<events>
+		<queryopen source="file">bankfinance.form.bank_account.QueryOpen</queryopen>
+		<querysave source="file">bankfinance.form.bank_account.QuerySave</querysave>
+	</events>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>shared-form-vocabulary</name>
+		<value>shared-form-vocabulary</value>
+	</element>
+	<caption name="title" source="KEYWORD">Расчётный счёт</caption>
+	<caption name="name" source="KEYWORD">Название</caption>
+	<caption name="value_of_control" source="KEYWORD">Сумма контроля</caption>
+	<caption name="observers" source="KEYWORD">Наблюдатели</caption>
+</rule>

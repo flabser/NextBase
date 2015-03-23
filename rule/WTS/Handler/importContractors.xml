@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule id="importContractors" app="" type="HANDLER" isvalid="true" mode="ON">
+<rununderuser source="static">[observer]</rununderuser>
+	<trigger>provider</trigger>
+	<waitresponse>true</waitresponse>
+	<description>import contractors from xml file</description> 
+ 	<events>
+ 		<trigger source="file">handler.importContractor.Trigger</trigger>
+ 	</events>
+
+<script><![CDATA[
+	String doHandler(_Session session, Map<String, String[]> formData){
+		   try{
+			 println "Начинаю импорт контрагентов..."
+			 
+			 // поменять путь к файлу здесь. Заменить "\" na "\\"
+			 String filepath = "C:\\Users\\User1\\Desktop\\контрагенты.xml";
+			 
+			 			 
+			 File file = new File(filepath);
+			 def xmldoc = new XmlParser().parse(file) 
+			
+			 println xmldoc.name()
+			 def cdb = session.getCurrentDatabase();
+			 def gl = null;
+			 def newgl = null;
+			 int count = 0;
+			 int k = 0;
+			 // tag counteragent
+			 xmldoc.children().each{
+				 String rnn = it.find {it.name() == 'RNN'}.text()
+				 
+				 def strfield = {fieldname -> it.find{ it.name().toLowerCase() == fieldname}.text() }
+				 
+				 gl = cdb.getGlossaryDocs("contractor","rnn='$rnn'")
+				 String author = session.getUser().getUserID();
+				 
+				 if(gl.size() == 0){
+				 	newgl = new _Glossary(cdb)
+					newgl.setName(strfield("name"))
+					newgl.addStringField("email", strfield("email"))
+					newgl.addStringField("rnn", strfield("rnn"))
+					newgl.addStringField("bin", strfield("bin"))
+					newgl.setCode(strfield("code"))
+					
+					newgl.setViewText(strfield("name"))
+					newgl.setForm("contractor")
+					newgl.setDefaultRuleID("contractor")					
+					newgl.save(Const.sysUser)
+					count ++;
+				 }else{
+				 	k++;
+				 }
+			 }
+			 println "$count contragents were saved\n $k contragent(s) already exist" 
+			 	
+		 }catch(Exception e){
+			println("Hey, here is error: ");
+			e.printStackTrace();
+		}
+	}
+	]]></script>
+</rule>

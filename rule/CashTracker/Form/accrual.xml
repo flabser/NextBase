@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="accrual" mode="on">
+	<description>Начисление</description>
+	<xsltfile>forms/accrual.xsl</xsltfile>
+	<doctype>main</doctype>
+	<events>
+		<queryopen source="file">cashtracker.form.accrual.QueryOpen</queryopen>
+		<querysave source="file">cashtracker.form.accrual.QuerySave</querysave>
+		<!-- <postsave source="file">form.accrual.PostSave</postsave> -->
+	</events>
+	<glossary mode="on" id="month" source="static">
+		<description>Месяц</description>
+		<value><![CDATA[
+			<entry><code>1</code><name>Январь</name></entry>
+			<entry><code>2</code><name>Февраль</name></entry>
+			<entry><code>3</code><name>Март</name></entry>
+			<entry><code>4</code><name>Апрель</name></entry>
+			<entry><code>5</code><name>Май</name></entry>
+			<entry><code>6</code><name>Июнь</name></entry>
+			<entry><code>7</code><name>Июль</name></entry>
+			<entry><code>8</code><name>Август</name></entry>
+			<entry><code>9</code><name>Сентябрь</name></entry>
+			<entry><code>10</code><name>Октябрь</name></entry>
+			<entry><code>11</code><name>Ноябрь</name></entry>
+			<entry><code>12</code><name>Декабрь</name></entry>]]>
+		</value>
+	</glossary>
+	<caption name="title" source="KEYWORD">Начисление</caption>
+	<caption name="doctype" source="KEYWORD">Начисление</caption>
+	<caption name="vn" source="KEYWORD">№</caption>
+	<caption name="regdate" source="KEYWORD">Дата регистрации</caption>
+	<caption name="date" source="KEYWORD">Дата операции</caption>
+	<caption name="typeoperationstaff" source="KEYWORD">Тип операции по персоналу</caption>
+	<caption name="month" source="KEYWORD">Месяц</caption>
+	<caption name="year" source="KEYWORD">Год</caption>
+	<caption name="personal" source="KEYWORD">Сотрудник</caption>
+	<caption name="summa" source="KEYWORD">Сумма</caption>
+	<caption name="comments" source="KEYWORD">комментарий</caption>
+</rule>

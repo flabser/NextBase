@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="statistics-chart-income" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/statistics-chart.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>category-select-options</name>
+		<value>category-select-options</value>
+	</element>
+	<element mode="ON" type="STATIC_TAG">
+		<name>glossaries</name>
+		<value>
+			<![CDATA[
+			<select name="typeoperation" title="Тип операции">
+				<option value="in">Приход</option>
+				<option value="out">Расход</option>
+				<option value="transfer">Перевод</option>
+				<option value="calcstaff">Расчет с персоналом</option>
+				<option value="received">Получение</option>
+				<option value="withdraw">withdraw</option>
+				<option value="getcash">getcash</option>
+			</select>]]>
+		</value>
+	</element>
+	<caption name="viewnamecaption" source="KEYWORD">Actual receiving</caption>
+</rule>

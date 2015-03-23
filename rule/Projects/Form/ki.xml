@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="kip" mode="on">
+	<description>Карточка исполнения</description>
+	<xsltfile>forms/ki.xsl</xsltfile>
+	<doctype>main</doctype>
+
+	<events> 
+		<querysave source="file">form.ki.QuerySave</querysave>
+		<postsave source="file">form.ki.PostSave</postsave>   
+		<queryopen source="file">form.ki.QueryOpen</queryopen>   
+	</events> 
+	
+
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="progressexecution" source="KEYWORD">Ход исполнения</caption>
+	<caption name="attachments" source="KEYWORD">Вложения</caption>
+	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="title" source="KEYWORD">Карточка исполнения</caption>
+	<caption name="parentdocurl" source="KEYWORD">Ссылка на заявку</caption>
+	<caption name="docdate" source="KEYWORD">Дата записи</caption>
+	<caption name="docauthor" source="KEYWORD">Автор</caption>
+	<caption name="saveandclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="report" source="KEYWORD">Краткое содержание</caption>
+	<caption name ="addcommentforattachment" source ="KEYWORD">Добавить комментарий к вложению?</caption>
+	<caption name ="showfilename" source ="KEYWORD">Укажите имя файла для вложения</caption>
+	<caption name ="addcomment" source ="KEYWORD">Добавить комментарий</caption>
+	<caption name ="attention" source ="KEYWORD">Внимание</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+	<caption name="executed" source="KEYWORD">Исполнено</caption>
+	<caption name="noted" source="KEYWORD">Принято к сведению</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="infofreaders" source="KEYWORD">Кем прочтен</caption>
+	<caption name="readtime" source="KEYWORD">Время прочтения</caption>
+	<caption name="read" source="KEYWORD">Прочтен</caption>
+	<caption name="notread" source="KEYWORD">Не прочтен</caption>
+	<caption name="delete_file" source="KEYWORD">Удалить файл</caption>
+	<caption name="comments" source="KEYWORD">комментарий</caption>
+	<caption name ="view_userprofile" source ="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	
+	
+</rule>

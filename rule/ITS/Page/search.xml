@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="search" mode="on" history="off">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/search.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">page.its_actionbar.search</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>view_content</name>
+		<events>
+			<doscript source="file">page.its_search.DoScript</doscript>
+		</events>
+	</element> 	
+	<caption name="page" source="KEYWORD">Страница</caption>
+	<caption name="documents" source="KEYWORD">Документов</caption>
+	<caption name="updates" source="KEYWORD">Обновлено</caption>
+	<caption name="from" source="KEYWORD">из</caption>	 
+	<caption name="viewdate" source="KEYWORD">Срок исполнения</caption>
+	<caption name="viewtext" source="KEYWORD">Краткое содержание</caption>
+	<caption name ="help" source ="KEYWORD">Помощь</caption>
+	<caption name ="logout" source ="KEYWORD">Завершить работу</caption>
+	<caption name ="search" source ="KEYWORD">Поиск</caption>
+	<caption name ="addtofav" source ="KEYWORD">Добавить в избранное</caption>
+	<caption name ="removefromfav" source ="KEYWORD">Удалить с избранного</caption>
+	<caption name="viewtext1" source="KEYWORD">Название</caption>
+	<caption name="viewtext2" source="KEYWORD">Дата</caption>
+	<caption name="viewtext3" source="KEYWORD">Количество</caption>
+</rule>

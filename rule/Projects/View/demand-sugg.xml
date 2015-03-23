@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="view" id="demand-sugg" history="on">
+	<description>Заявки</description>
+	<query>demand-sugg</query>
+	<xsltfile>views/demand-sugg.xsl</xsltfile>
+</rule>

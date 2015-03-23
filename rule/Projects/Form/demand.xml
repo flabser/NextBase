@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="demand" mode="on">
+	<description>Заявка</description>
+	<xsltfile>forms/demand.xsl</xsltfile>
+	<doctype>main</doctype>
+	<events>
+		<queryopen source="file">form.demand.QueryOpen</queryopen> 
+		<querysave source="file">form.demand.QuerySave</querysave>
+		<postsave source="file">form.demand.PostSave</postsave>   
+	</events> 
+	<caption name="saveandclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="newdemand" source="KEYWORD">Новая заявка</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="progressexecution" source="KEYWORD">Ход исполнения</caption>
+	<caption name="attachments" source="KEYWORD">Вложения</caption>
+	<caption name="history" source="KEYWORD">История</caption>
+	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="newtask" source="KEYWORD">Новое задание</caption>
+	<caption name="searchcaption" source="KEYWORD">Поиск</caption>
+	<caption name="executer" source="KEYWORD">Исполнитель</caption>
+	<caption name="title" source="KEYWORD">Заявка</caption>
+	<caption name="docdate" source="KEYWORD">Дата записи</caption>
+	<caption name="docauthor" source="KEYWORD">Автор</caption>
+	<caption name="project" source="KEYWORD">Проект</caption>
+	<caption name="milestone" source="KEYWORD">Веха</caption>
+	<caption name="ki" source="KEYWORD">Карточка исполнения</caption>
+	<caption name="remained_days" source="KEYWORD">Осталось дней</caption>
+	<caption name="priority" source="KEYWORD">Приоритет</caption>
+	<caption name="complication" source="KEYWORD">Коэффициент сложности</caption>	
+	<caption name="ctrldate" source="KEYWORD">Срок исполнения</caption> 
+	<caption name="comment" source="KEYWORD">Примечания</caption>
+	<caption name="revokeDemand" source="KEYWORD">Отменить заявку</caption>
+	<caption name="resetControl" source="KEYWORD">Снять с контроля</caption>
+	<caption name="controlisreset" source="KEYWORD">Снято с контроля</caption>
+	<caption name="readytochecking" source="KEYWORD">Готова к проверке</caption>
+	<caption name="revokedDemnd" source="KEYWORD">Заявка отменена</caption>
+	<caption name="reason" source="KEYWORD">причина</caption>
+	<caption name="control" source="KEYWORD">Контроль</caption>
+	<caption name="status" source="KEYWORD">Статус</caption>
+	<caption name="incontrol" source="KEYWORD">На контроле</caption>
+	<caption name="iserror" source="KEYWORD">Является ошибкой</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="removedfromcontrol" source="KEYWORD">Документ снят с контроля</caption>
+	<caption name="from" source="KEYWORD">от</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+	<caption name="notify" source="KEYWORD">Уведомить</caption>
+	<caption name="removefromcontrol" source="KEYWORD">Снять с контроля</caption>
+	<caption name="notifyofnewimplement" source="KEYWORD">Уведомить о реализации новой доработки?</caption>
+    <caption name ="removedcaption" source ="KEYWORD">Пожалуйста ждите...Идет процесс снятия с контроля</caption>
+    <caption name ="help" source ="KEYWORD">Помощь</caption>
+	<caption name ="logout" source ="KEYWORD">Завершить работу</caption>
+	<caption name ="documents" source ="KEYWORD">Записей</caption>
+	<caption name ="projects" source ="KEYWORD">Проекты</caption>
+	<caption name ="addcommentforattachment" source ="KEYWORD">Добавить комментарий к вложению?</caption>
+	<caption name ="showfilename" source ="KEYWORD">Укажите имя файла для вложения</caption>
+	<caption name ="addcomment" source ="KEYWORD">Добавить комментарий</caption>
+	<caption name ="attention" source ="KEYWORD">Внимание</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="infofreaders" source="KEYWORD">Кем прочтен</caption>
+	<caption name="readtime" source="KEYWORD">Время прочтения</caption>
+	<caption name="read" source="KEYWORD">Прочтен</caption>
+	<caption name="notread" source="KEYWORD">Не прочтен</caption>
+	<caption name="delete_file" source="KEYWORD">Удалить файл</caption>
+	<caption name="extend" source="KEYWORD">Продлить</caption>
+	<caption name="comments" source="KEYWORD">комментарий</caption>
+	<caption name="soon" source="KEYWORD">Скорее</caption>
+	<caption name="later" source="KEYWORD">Не спеша</caption>
+	<caption name="easier" source="KEYWORD">Проще</caption>
+	<caption name="complicated" source="KEYWORD">Сложнее</caption>
+	<caption name="view_userprofile" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name="go" source="KEYWORD">Перейти</caption>
+	<caption name="showhistoryctrldate" source="KEYWORD">Отобразить историю изменения</caption>
+	<caption name="hidehistoryctrldate" source="KEYWORD">Скрыть историю изменения</caption>
+	<caption name="publishforcustomer" source="KEYWORD">Опубликовать для заказчика</caption>
+	<caption name="historychangectrldate" source="KEYWORD">История изменения срока исполнения</caption>
+	<caption name="firstctrldate" source="KEYWORD">Первичный срок исполнения</caption>
+	<caption name="shiftcountdays" source="KEYWORD">Кол-во дней</caption>
+	<caption name="shiftreason" source="KEYWORD">Причина</caption>
+	<caption name="shiftauthor" source="KEYWORD">Кто продлил</caption>
+	<caption name="startshiftdate" source="KEYWORD">Продлено с</caption>
+	<caption name="demandtype" source="KEYWORD">Тип заявки</caption>
+	<caption name="discussion" source="KEYWORD">Обсуждение</caption>
+    <caption name="adddiscussion" source="KEYWORD">Добавить тему обсуждения</caption>
+    <caption name="write_discussion" source="KEYWORD">Написать новый комментарий</caption>
+    <caption name="comment_on_discussion" source="KEYWORD">Комментариев в теме</caption>
+    <caption name="add" source="KEYWORD">Добавить</caption>
+    <caption name="sent" source="KEYWORD">отправлено</caption>
+    <caption name="makecomment" source="KEYWORD">Комментировать</caption>
+    <caption name="fill_topic_title" source="KEYWORD">Заполните название темы</caption>
+    <caption name="fill_comment" source="KEYWORD">Заполните текст комментария</caption>
+    <caption name="startdate" source="KEYWORD">Приступить к работе с</caption>
+</rule>

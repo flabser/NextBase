@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="form" id="supplier" mode="on">
+	<description/>
+	<xsltfile>forms/supplier.xsl</xsltfile>
+	<doctype>glossary</doctype>
+	<events>
+		<queryopen source="file">form.supplier.QueryOpen</queryopen>
+		<querysave source="file">form.supplier.QuerySave</querysave>
+	</events> 
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="supplier" source="KEYWORD">Поставщик</caption>
+	<caption name="name" source="KEYWORD">Наименование</caption>
+	<caption name="address" source="KEYWORD">Адрес</caption>
+	<caption name="phone" source="KEYWORD">Телефон</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="briefcontent" source="KEYWORD">Краткое содержание</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+	<caption name="changeview" source="KEYWORD">Изменить вид</caption>
+	<caption name="receiverslist" source="KEYWORD">Список получателей напоминания</caption>
+	<caption name="commentcaption" source="KEYWORD">Комментарий</caption>
+	<caption name="correspforacquaintance" source="KEYWORD">Список корреспондентов для ознакомления</caption>
+	<caption name="searchcaption" source="KEYWORD">поиск</caption>
+	<caption name="files" source="KEYWORD">Файлы</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="infofreaders" source="KEYWORD">Кем прочтен</caption>
+	<caption name="new" source="KEYWORD">Новое</caption>
+	<caption name="category" source="KEYWORD">Категория</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="taskvn" source="KEYWORD">Номер</caption>
+	<caption name="dvn" source="KEYWORD">от</caption>
+	<caption name="executors" source="KEYWORD">Исполнители</caption>
+	<caption name="taskauthor" source="KEYWORD">Автор</caption>
+	<caption name="author" source="KEYWORD">Автор</caption>
+	<caption name="comment" source="KEYWORD">Примечание</caption>
+	<caption name="notesexecuted" source="KEYWORD">Отметки о исполнении</caption>
+	<caption name="saving" source="KEYWORD">Сохранение</caption>
+	<caption name="showfilename" source="KEYWORD">Укажите имя файла для вложения</caption>
+	<caption name="addcomment" source="KEYWORD">Добавить комментарий к вложению?</caption>
+	<caption name="removedfromcontrol" source="KEYWORD">Документ снят с контроля</caption>
+	<caption name="warning" source="KEYWORD">Предупреждение</caption>
+	<caption name="whomread" source="KEYWORD">Кем прочтен</caption>
+	<caption name="timeofreading" source="KEYWORD">Время прочтения</caption>
+	<caption name="attention" source="KEYWORD">Внимание</caption>
+	<caption name="putundercontrol" source="KEYWORD">Поставить на контроль</caption>
+	<caption name="add_comment" source="KEYWORD">Добавить комментарий</caption>
+	<caption name="delete_file" source="KEYWORD">Удалить файл</caption>
+	
+	<glossary mode="off" id="controltype" source="query">
+		<description>Типы контроля</description>
+		<value>controltype</value>
+	</glossary>
+</rule>

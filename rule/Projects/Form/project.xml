@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="project" mode="on" history="on">
+	<description>Проект</description>
+	<xsltfile>forms/project.xsl</xsltfile>
+	<doctype>main</doctype>
+	<events>
+		<queryopen source="file">form.project.QueryOpen</queryopen>
+		<querysave source="file">form.project.QuerySave</querysave>
+		<postsave source="file">form.project.PostSave</postsave>
+	</events> 
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="newproject" source="KEYWORD">Новый проект</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="attachments" source="KEYWORD">Вложения</caption>
+	<caption name="history" source="KEYWORD">История</caption>
+	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="title" source="KEYWORD">Проект</caption>
+	<caption name="cancel" source="KEYWORD">Закрыть</caption>
+	<caption name="searchcaption" source="KEYWORD">Поиск</caption>
+	<caption name="docauthor" source="KEYWORD" >Автор</caption>
+	<caption  name="docdate" source="KEYWORD">Дата записи</caption> 
+	<caption name="project_name" source="KEYWORD">Название проекта</caption>
+	<caption name="manager" source="KEYWORD">Ответственный менеджер</caption>
+	<caption name="programmer" source="KEYWORD">Ответственный программист</caption>
+	<caption name="tester" source="KEYWORD">Ответственный тестировщик</caption>
+	<caption name="startdate" source="KEYWORD">Дата начала</caption>
+	<caption name="duedate" source="KEYWORD">Дата завершения</caption>
+	<caption name="customer" source="KEYWORD">Заказчик</caption>	
+	<caption name="customer_emp" source="KEYWORD">Представитель заказчика</caption>	
+	<caption name="percentage_of_completion" source="KEYWORD">Процент исполнения</caption>
+	<caption name="milestone" source="KEYWORD">Веха</caption>
+	<caption name="projectDoc" source="KEYWORD">Проектный документ</caption>
+	<caption name="link_to_poligon" source="KEYWORD">Ссылка на полигон</caption>
+	<caption name="comment_to_poligon" source="KEYWORD">Комментарий</caption>
+	<caption name="projectdoc" source="KEYWORD">Проектная документация</caption>
+	<caption name="newmilestone" source="KEYWORD">Новая веха</caption>
+	<caption name="newProjectDoc" source="KEYWORD">Новый проектный документ</caption>
+	<caption name="linkToProjectDoc" source="KEYWORD">Ссылки на проектную документацию</caption>		 
+	<caption name="saveandclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="observer" source="KEYWORD">Наблюдатели</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name ="help" source ="KEYWORD">Помощь</caption>
+	<caption name ="logout" source ="KEYWORD">Завершить работу</caption>
+	<caption name ="documents" source ="KEYWORD">Записей</caption>
+	
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="infofreaders" source="KEYWORD">Кем прочтен</caption>
+	<caption name="readtime" source="KEYWORD">Время прочтения</caption>
+	<caption name="read" source="KEYWORD">Прочтен</caption>
+	<caption name="notread" source="KEYWORD">Не прочтен</caption>
+	<caption name ="view_userprofile" source ="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+    <caption name="status" source="KEYWORD">Статус</caption>
+    <caption name="status1" source="KEYWORD">Перспективный</caption>
+    <caption name="status2" source="KEYWORD">В действии</caption>
+    <caption name="status3" source="KEYWORD">Завершен</caption>
+    <caption name="status4" source="KEYWORD">Приостановлен</caption>
+</rule>

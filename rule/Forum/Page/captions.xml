@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="captions" mode="on">
+	<description></description>
+    <caching>CACHING_IN_APPLICATION_SCOPE</caching>
+    <element mode="ON" type="STATIC_TAG"></element>
+
+	<caption name="search" source="KEYWORD">Поиск</caption>
+    <caption name="page" source="KEYWORD">Страница</caption>
+    <caption name="documents" source="KEYWORD">Документов</caption>
+    <caption name="updates" source="KEYWORD">Обновлено</caption>
+    <caption name="from" source="KEYWORD">из</caption>
+    <caption name="btnNewDocument" source="KEYWORD">Добавить</caption>
+    <caption name="btnDelete" source="KEYWORD">Удалить</caption>
+    <caption name="helpcaption" source="KEYWORD">Помощь</caption>
+    <caption name="logout" source="KEYWORD">Завершить работу</caption>
+    <caption name="userprofhint" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+    <caption name="app_short_title" source="KEYWORD"></caption>
+    <caption name="app_title" source="KEYWORD">Форум</caption>
+    <caption name ="addtofav" source ="KEYWORD">Добавить в избранное</caption>
+    <caption name ="removefromfav" source ="KEYWORD">Удалить с избранного</caption>
+</rule>

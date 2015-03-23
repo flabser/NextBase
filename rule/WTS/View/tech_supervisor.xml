@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="view" id="tech_supervisor">
+	<description>Ответные документы</description>
+	<query>tech_supervisor</query>		
+	<xsltfile>views\bossandemppicklist.xsl</xsltfile>	
+</rule>

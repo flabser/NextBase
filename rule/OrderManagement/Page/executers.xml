@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="executers" mode="on" history="off">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/customer-emp.xsl</xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<name>executers</name>
+		<events>
+			<doscript source="file">page.executerslist.DoScript</doscript>
+		</events>
+	</element> 
+</rule>

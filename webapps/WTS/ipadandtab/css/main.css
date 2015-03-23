@@ -1,0 +1,33 @@
+img{border:none;}
+html{margin:0px;padding:0px; max-width:1000px}
+.ui-button-text {
+    padding: 0.75em 1.3em !important;
+}
+#footer{
+	position:absolute; 
+	bottom:0px;
+	border-top:1px solid #ccc;
+	width:100%; 
+	left:0px; 
+	height:30px;
+	background:none repeat scroll 0 0 #e6e6e6; 
+	min-width: 1020px;
+}
+#footer a ,#footer font{ text-decoration:none; color: #444444; font: 85%/2 Arial;}
+#footer .extlink { text-decoration:underline; color: #444444; font: 11px Arial;}
+#footer .extlink:hover { text-decoration:underline; color: red; font: 11px Arial;}
+#footer a :hover { text-decoration:underline;}
+/* .button_panel button:hover{ */
+/* 	border: 1px solid #79b7e7; */
+/* 	background: #d0e5f5 url(/SharedResources/jquery/css/base/images/ui-bg_glass_75_d0e5f5_1x400.png) 50% 50% repeat-x; */
+/* 	font-weight: bold; */
+/* 	color: #1d5987; */
+/* } */
+.button_img { width:17px; height:17px; margin-right:3px; vertical-align:top}
+a :hover {text-decoration:none;}
+.doclink {color:#1A3DC1 !important;text-decoration:none;}
+.doclink:hover, .doclink :hover { color:#FF0000 !important; text-decoration:underline !important;}
+.doclink font:hover {text-decoration:none;}
+.actionlink {text-decoration:none; color:#444444;}
+.actionlink font {vertical-align:1px;margin-left:1px;font-size:13px;}
+.doclink_action :hover {color:#1A3DC1; text-decoration:underline;}

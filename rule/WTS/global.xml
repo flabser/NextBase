@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="global" id="WTS" mode="on">
+	<description>Автоматизированная веб-система технического надзора</description>
+	<orgname>ТОО "Avanti"</orgname>
+	<liccount>10000</liccount>
+	<logo>qc_logo.png</logo>
+	<appname>Контроль качества строительства ТОО "BI-GROUP"</appname>
+	<database autodeploy="on">
+		<name>QC</name>
+ 	<driver>org.h2.Driver</driver>
+	<url>jdbc:h2:QC_data/Avanti;AUTO_SERVER=TRUE;CACHE_TYPE=SOFT_LRU;CACHE_SIZE=262144;QUERY_CACHE_SIZE=262144;MVCC=TRUE</url>
+	<username></username>
+	<password></password> 
+		<password>123</password>
+			<scheduler>
+				<cyclecontrol>
+					<mininterval daysofweek="WORKWEEK,">1</mininterval>
+				</cyclecontrol>
+			</scheduler> -->
+
+	<!-- 	<name>WTS</name>
+	<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+	 <url>jdbc:jtds:sqlserver://192.168.0.22:1434/WTS(31.08.2012)</url>
+	 <username>mariya</username>
+	<password>12345678</password>-->
+
+	</database>  
+	
+	<daemons>
+		<daemon>
+			<class>kz.flabs.appdaemon.CycleControl</class>
+			<scheduler mode="ON">
+				<mininterval daysofweek="WORKWEEK,">360</mininterval>
+			</scheduler>
+		</daemon>
+		<daemon>
+			<class>kz.flabs.appdaemon.Recalculator</class>
+			<scheduler mode="ON">
+				<mininterval daysofweek="WORKWEEK,">360</mininterval>
+			</scheduler>
+		</daemon>
+		<daemon>
+			<class>kz.flabs.appdaemon.TimeWaiting</class>
+			<scheduler mode="ON">
+				<mininterval daysofweek="WORKWEEK,">360</mininterval>
+			</scheduler>
+		</daemon>		
+	</daemons>
+	
+	<entrypoint>Provider?type=static&amp;id=start</entrypoint>
+	<defaultredirecturl>Provider?type=view&amp;id=remarkdraft</defaultredirecturl>
+	<langs>
+		<entry id="RUS">Русский</entry>
+		<entry id="KAZ">Қазақша</entry>
+	</langs>
+	<skins>
+		<entry id="classic" path="webapps/WTS/classic/xsl" default="on">Soria</entry>
+<!-- 		<entry id="ipadandtab" path="./webapps/QC/ipadandtab/xsl">Soria</entry> -->
+	</skins>
+	<roles>
+		<entry id="tech_supervisor"></entry>
+		<entry id="tech_engineer"></entry>
+		<entry id="top_manager"></entry>
+		<entry id="administrator"></entry>	
+		<entry id="operator"></entry>
+	</roles>
+	<markdelaysec>5</markdelaysec>                                                                                                                                                                             
+	<sync mode="off">
+		<nsf>
+			<dominohost>192.168.0.13:63148</dominohost>
+			<dominouser>admin</dominouser>
+			<dominopwd>123</dominopwd>
+			<dominoserver>Zion</dominoserver>
+			<dominoqueuedb>KMG\qevent.nsf</dominoqueuedb>
+		</nsf>
+		<default>
+			<userredirect app="Workflow">Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=sz&amp;page=0
+			</userredirect>
+		</default>
+		<puller>
+			<multithread>true</multithread>
+		</puller>
+	</sync>
+	<eds mode="off">
+		<keypass></keypass>
+    	<keystore></keystore>
+	</eds>
+</rule>

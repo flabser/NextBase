@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule id="un_mark_all_unscrupulous_contractors" app="" type="HANDLER" isvalid="true" mode="ON">
+<rununderuser source="STATIC" type="TEXT">[observer]</rununderuser>
+<description>create mark for unscrupulous contractors</description>
+<trigger>SCHEDULER</trigger>
+<scheduler mode="OFF">
+<starttime></starttime>
+</scheduler>
+<tohandle source="QUERY" type="request">contractor</tohandle><script><![CDATA[	
+	
+String doHandler(_Session ses, _DocumentCollection collection){
+	def cdb = ses.getCurrentDatabase();
+	int colCount = collection.getCount();
+	     println("старт восстановления недобросовестных контрагентов ...");
+		for(int j=0; j < colCount; j++){
+			def doc = collection.getNthDocument(j);
+		        String value = doc.getValueString("isbadperformer");                     
+                       if (value == '1'){
+                          doc.setValueString('isbadperformer','');
+                          doc.save();
+                          println("восстановлен как добросовестный: " + doc.getValueString("name"));
+                       }
+			 
+		}
+	     println("восстановление недобросовестных контрагентов завершен");		
+	}
+
+	]]></script>
+		</rule>

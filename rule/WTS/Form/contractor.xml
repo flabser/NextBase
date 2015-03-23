@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="form" id="contractor" mode="on">
+	<description>Контрагент</description>
+	<xsltfile>forms/contractor.xsl</xsltfile>
+	<doctype>glossary</doctype>
+	<outline>navigator</outline>
+	<default>	
+	</default>
+	<show>
+		<field mode="on">
+            <name>rtfcontent</name>
+            <value source="doc_attachment">rtfcontent</value>
+        </field>
+		<field mode="on">	
+			<name>name</name>			
+			<value source="docfield">name</value>	
+			<caption source="KEYWORD">Название</caption>
+		</field>
+		<field mode="on">	
+			<name>rnn</name>			
+			<value source="docfield">rnn</value>
+		</field>
+		<field mode="on">	
+			<name>bin</name>			
+			<value source="docfield">bin</value>
+		</field>
+		<field mode="on">	
+			<name>code</name>			
+			<value source="docfield">code</value>
+		</field>
+		<field mode="on">
+            <name>isbadperformer</name>
+            <value source="docfield">isbadperformer</value>
+            <caption source="KEYWORD">Недобросовестный исполнитель</caption> 
+        </field>
+        <field mode="on" publishas="glossary">
+			<name>contractorcat</name>
+			<value source="docfield">contractorcat</value>
+			<caption source="KEYWORD">Категория</caption>
+		</field>
+		<field mode="on">
+			<name>email</name>
+			<value source="docfield">email</value>
+		</field>
+	</show>
+	<save>		
+		<field mode="on">	
+			<value source="static">contractor</value>
+			<docfield>form</docfield>				
+		</field>
+		<field mode="on">	
+			<value source="webformfield">name</value>
+			<docfield>name</docfield>				
+		</field>
+		<field mode="on">	
+			<value source="webformfield">code</value>
+			<docfield>code</docfield>				
+		</field>
+		<field mode="on">
+            <value source="webformfile">rtfcontent</value>
+            <docfield type="file">rtfcontent</docfield>
+        </field>
+		<field mode="on">	
+			<value source="webformfield">rnn</value>
+			<docfield>rnn</docfield>				
+		</field>
+		<field mode="on">	
+			<value source="webformfield">bin</value>
+			<docfield>bin</docfield>				
+		</field>
+		<field mode="on">
+			<value source="webformfield">contractorcat</value>
+			<docfield type="glossary">contractorcat</docfield>
+		</field>
+		<field mode="on">	
+			<value source="webformfield">name</value>
+			<docfield type="viewtext"></docfield>				
+		</field>
+		<field mode="on">	
+			<value source="webformfield">isbadperformer</value>
+			<docfield>isbadperformer</docfield>				
+		</field>
+		<field mode="on">
+			<value source="static">contractor</value>
+			<docfield>defaultruleid</docfield>
+		</field>
+		<field mode="on">
+			<value source="static">email</value>
+			<docfield>email</docfield>
+		</field>
+	</save>
+	<querysave><![CDATA[
+		void doQuerySave(_Session session, _Document document, String user){
+		boolean v = true;
+		def validate = {
+			if (document.getValueString("name") == ""){
+					localizedMsgBox("Поле \"Имя проекта\" не заполнено.");
+					v = false;
+				}
+			if (document.getValueString("code") == ""){
+					localizedMsgBox("Поле \"Код\" не заполнено.");
+					v = false;
+				}
+			}
+			validate();
+			if (v){
+			    document.setViewText(document.getValueString('name'));
+			}else{
+				stopSave();
+			}
+		}
+	]]>
+	</querysave>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("name"));
+		}
+	]]></viewtext>
+	<viewtext><![CDATA[String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("rnn"));
+		}]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewdate><![CDATA[]]></viewdate>
+	<viewnumber><![CDATA[]]></viewnumber>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="name" source="KEYWORD">Контрагент</caption>
+	<caption name="rnn" source="KEYWORD">РНН</caption>
+	<caption name="bin" source="KEYWORD">БИН</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+	<caption name="category" source="KEYWORD">Категория</caption>
+	<caption name="badperformer" source="KEYWORD">Недобросовестный исполнитель</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="code" source="KEYWORD">Код</caption>
+	<caption name="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	<caption name="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="attachments" source="KEYWORD">Заговоловок печатной формы</caption>
+	<glossary mode="on" id="contractorcatlist" source="query">
+		<description>Категория корреспондента</description>
+		<value>contractorcatlist</value>
+	</glossary>
+</rule>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="topic" mode="on">
+	<description>Тема форума</description>
+	<xsltfile>forms/topics.xsl</xsltfile>
+	<doctype>TOPIC</doctype>
+	<title source="KEYWORD">Тема форума</title>
+	<events>
+		<queryopen source="file">form.topic.QueryOpen</queryopen> 
+		<querysave source="file">form.topic.QuerySave</querysave>
+		<postsave source="file">form.topic.PostSave</postsave>   
+	</events> 
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="more" source="KEYWORD">Дополнительно</caption>
+	<caption name="type" source="KEYWORD">Тип</caption>
+	<caption name="contributors" source="KEYWORD">Участники</caption>
+	<caption name="waittime" source="KEYWORD">Время ожидания</caption>
+	<caption name="statuscoord" source="KEYWORD">Статус</caption>
+	<caption name="waiting" source="KEYWORD">Ожидает ответа</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="unlimtimecoord" source="KEYWORD">Неограничено</caption>
+	<caption name="expectbegincoord" source="KEYWORD">Ожидание начала согласования</caption>
+	<caption name="typenotdefined" source="KEYWORD">Тип не определен</caption>
+	<caption name="awairesponse" source="KEYWORD">Ожидает ответа</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="complete" source="KEYWORD">Завершен</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="searchcaption" source="KEYWORD">поиск</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+	<caption name="commentcaption" source="KEYWORD">Комментарий</caption>
+	<caption name="warning" source="KEYWORD">Предупреждение</caption>
+	<caption name="files" source="KEYWORD">Файлы</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	<caption name="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+    <caption name="discussion" source="KEYWORD">Обсуждение</caption>
+    <caption name="adddiscussion" source="KEYWORD">Добавить тему обсуждения</caption>
+    <caption name="write_discussion" source="KEYWORD">Написать новый комментарий</caption>
+    <caption name="comment_on_discussion" source="KEYWORD">Комментариев в теме</caption>
+    <caption name="add" source="KEYWORD">Добавить</caption>
+    <caption name="sent" source="KEYWORD">отправлено</caption>
+    <caption name="makecomment" source="KEYWORD">Комментировать</caption>
+    <caption name="fill_topic_title" source="KEYWORD">Заполните название темы</caption>
+    <caption name="fill_comment" source="KEYWORD">Заполните текст комментария</caption>
+</rule>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="handler" id="filling_report">
+	<rununderuser source="macro">CURRENT_USER</rununderuser>
+	<trigger>provider</trigger>
+	<scheduler>
+		<mininterval>5</mininterval>
+	</scheduler>
+	<waitresponse>true</waitresponse>
+	<showfile>true</showfile>
+	<script><![CDATA[
+	String doHandler(_Session ses, Map<String, String[]> formData){
+		try{
+			println("Yep, I'm here");			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+					
+			String reportName = formData.get("id")[0];
+			String sqlConditionForQuery = "";
+			
+			if (reportName == "project_report") {
+				String project = formData.get("project")[0];
+				try{
+					int projectID = Integer.valueOf(project);
+					sqlConditionForQuery = " project = " + projectID + " and coordstatus != 351 ";
+				} catch(NumberFormatException nfe) {
+					sqlConditionForQuery = " coordstatus != 351 ";
+				}
+			} 
+			//Определяем формат будущего отчета и способ его отображения
+			String typeReportFile = "";
+			String openReportWith = "";
+			
+			typeReportFile = formData.get("typefilereport")[0];
+			//openReportWith = formData.get("openreportwith")[0];
+			
+			Date tmpDate;		
+			
+			System.out.println("Filling report...");
+			
+			Map parameters = new HashMap();
+			JRFileVirtualizer virtualizer = new JRFileVirtualizer(10, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports");
+            parameters.put(JRParameter.REPORT_VIRTUALIZER, virtualizer);
+			/*parameters.put("current_date", "дата: " + dateFormat.format(new Date()));
+			parameters.put("period", "период: " + taskdatefrom + " - " + taskdateto);
+			*/
+			def cdb = ses.getCurrentDatabase();
+			
+			
+			def remarks = cdb.getPrjsCollection(sqlConditionForQuery).getBaseCollection();
+			JRDataSource dataSource = new JRBeanArrayDataSource(remarks.toArray());
+			
+			JasperPrint print = JasperFillManager.fillReport(JasperCompileManager.compileReportToFile(new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\templates\\"+ reportName + ".jrxml"), parameters, dataSource);
+
+			String format = "";
+			String app = "";
+			
+			switch(typeReportFile){
+				case "1":
+					JasperExportManager.exportReportToPdfFile(print, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\"+ reportName +".pdf");
+					format = "pdf";
+					app = "AcroRd32.exe";
+					break;
+				case "2":
+					JExcelApiExporter xlsExporter = new JExcelApiExporter();
+					xlsExporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+					xlsExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\"+ reportName +".xls");
+					xlsExporter.exportReport();
+					format = "xls";
+					app = "excel.exe";
+					break;
+				case "3":					
+					JRHtmlExporter exporter = new JRHtmlExporter();
+					exporter.setParameter(JRHtmlExporterParameter.IMAGES_URI, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\" + reportName + ".html_files\\");
+					exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+					exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\"+ reportName +".html");
+					//JasperExportManager.exportReportToHtmlFile(print, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\"+ reportName +".html");
+					exporter.exportReport();
+					format = "html";
+					app = "iexplore.exe";
+					break;
+				default:
+					JasperExportManager.exportReportToPdfFile(print, new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\"+ reportName +".pdf");
+					format = "pdf";
+					app = "AcroRd32.exe";
+					break;
+			}
+			return new File("").getAbsolutePath() + "\\webapps\\WTS\\reports\\" + reportName + "." + format;
+			virtualizer.cleanup();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	]]></script>
+</rule>

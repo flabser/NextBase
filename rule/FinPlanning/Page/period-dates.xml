@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="period-dates" mode="on" history="off">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/period-dates.xsl</xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="file">finplanning.page.oth.PeriodDates</doscript>
+		</events>
+	</element>
+</rule>

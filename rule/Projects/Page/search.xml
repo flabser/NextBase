@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="search" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/search.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">page.prjs_actionbar.search</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>view_content</name>
+		<events>
+			<doscript source="file">page.prjs_search.DoScript</doscript>
+		</events>
+	</element> 	
+</rule>

@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="remark" mode="on">
+	<description>Проект замечания</description>
+	<xsltfile>forms/remarkblankpred.xsl</xsltfile>
+	<doctype>PROJECT</doctype>
+	<title source="KEYWORD">Замечание</title>
+	<outline>navigator</outline>
+	<default>
+		<field mode="on">
+			<name>ctrldate</name>
+			<value source="script">
+				<![CDATA[String[] getStringValue(_Session session){
+					return getAsArray(session.getCurrentDateAsString(15));
+					}
+				]]>
+			</value>
+		</field>
+
+		<field mode="on">
+			<name>statuscoord</name>
+			<value source="static">new</value>
+		</field>
+		<field mode="on">
+			<name>docversion</name>
+			<value source="static">1</value>
+		</field>
+		<field mode="on">
+			<name>coordstatus</name>
+			<value source="static">351</value>
+			<attrvalue source="static">Черновик</attrvalue>
+		</field>
+		<field mode="on" publishas="USER">
+			<name>projectauthor</name>
+			<value source="macro">current_user</value>
+		</field>
+		<field mode="on" publishas="USER">
+			<name>sender</name>
+			<value source="macro">current_user</value>
+		</field>
+		<field mode="on">
+			<name>signer</name>
+			<value source="static" />
+		</field>
+		<field mode="on">
+			<name>recipients</name>
+			<value source="static" />
+		</field>
+		<field mode="on">
+			<name>briefcontent</name>
+			<value source="static" />
+		</field>
+		<field mode="on">
+			<name>projectdate</name>
+			<value source="macro">current_time</value>
+		</field>
+		<field mode="on" publishas="USER">
+			<name>author</name>
+			<value source="macro">current_user</value>
+		</field>
+		<field mode="on" publishas="GLOSSARY">
+			<name>position</name>
+			<value source="macro">current_user_position</value>
+		</field>
+	</default>
+	<show>
+		<field mode="on">
+			<name>signer</name>
+		</field>
+		<field mode="on" publishas="GLOSSARY">
+			<name>position</name>
+			<value source="macro">current_user_position</value>
+		</field>		
+		<field mode="on" publishas="GLOSSARY">
+			<name>project</name>
+			<value source="docfield">project</value>
+		</field>
+		<field mode="on">
+			<name>coordinats</name>
+			<value source="docfield">coordinats</value>
+		</field>
+		<field mode="on">
+			<name>respost</name>
+			<value source="docfield">respost</value>
+		</field>
+		<field mode="on" publishas="GLOSSARY">
+			<name>city</name>
+			<value source="docfield">city</value>
+		</field>
+		<field mode="on">
+			<name>street</name>
+			<value source="docfield">street</value>
+		</field>
+		<field mode="on">
+			<name>house</name>
+			<value source="docfield">house</value>
+		</field>
+		<field mode="on">
+			<name>porch</name>
+			<value source="docfield">porch</value>
+		</field>
+		<field mode="on">
+			<name>floor</name>
+			<value source="docfield">floor</value>
+		</field>
+		<field mode="on">
+			<name>apartment</name>
+			<value source="docfield">apartment</value>
+		</field>
+		<field mode="on">
+			<name>origin</name>
+			<value source="docfield">origin</value>
+		</field>
+		<field mode="on">
+			<name>close</name>
+			<caption source="KEYWORD">Закрыть</caption>
+		</field>
+		<field mode="on">
+			<name>properties</name>
+			<caption source="KEYWORD">Свойства</caption>
+		</field>
+		<field mode="on">
+			<name>attachments</name>
+			<caption source="KEYWORD">Вложения</caption>
+		</field>
+		<field mode="on">
+			<name>rtfcontent</name>
+			<value source="doc_attachment">rtfcontent</value>
+		</field>
+		<field mode="on">
+			<name>content</name>
+			<caption source="KEYWORD">Содержание</caption>
+		</field>
+		<field mode="on">
+			<name>coordination</name>
+			<caption source="KEYWORD">Согласование</caption>
+		</field>
+		<field mode="on">
+			<name>saved</name>
+			<caption source="KEYWORD">Сохраненный</caption>
+		</field>
+		<field mode="on">
+			<name>newdoc</name>
+			<caption source="KEYWORD">Новый документ</caption>
+		</field>
+		<field mode="on">
+			<name>editing</name>
+			<caption source="KEYWORD">Редактирование</caption>
+		</field>
+		<field mode="on">
+			<name>readonly</name>
+			<caption source="KEYWORD">Только для чтения</caption>
+		</field>
+		<field mode="on">
+			<name>modenotdefined</name>
+			<caption source="KEYWORD">Режим не определен</caption>
+		</field>
+		<field mode="on">
+			<name>doctypemultilang</name>
+			<caption source="KEYWORD">Замечание</caption>
+		</field>
+		<field mode="on">
+			<name>more</name>
+			<caption source="KEYWORD">Дополнительно</caption>
+		</field>
+		<field mode="on">
+			<name>type</name>
+			<caption source="KEYWORD">Тип</caption>
+		</field>
+		<field mode="on">
+			<name>contributors</name>
+			<caption source="KEYWORD">Участники</caption>
+		</field>
+		<field mode="on">
+			<name>waittime</name>
+			<caption source="KEYWORD">Время ожидания</caption>
+		</field>
+		<field mode="on">
+			<name>statuscoord</name>
+			<caption source="KEYWORD">Статус</caption>
+		</field>
+		<field mode="on">
+			<name>currcoorder</name>
+			<caption source="KEYWORD">текущий согл.</caption>
+		</field>
+		<field mode="on">
+			<name>waiting</name>
+			<caption source="KEYWORD">Ожидает ответа</caption>
+		</field>
+		<field mode="on">
+			<name>unlimtimecoord</name>
+			<caption source="KEYWORD">Неограничено</caption>
+		</field>
+		<field mode="on">
+			<name>oncoordinating</name>
+			<caption source="KEYWORD">На согласовании</caption>
+		</field>
+		<field mode="on">
+			<name>agreed</name>
+			<caption source="KEYWORD">Согласован</caption>
+		</field>
+		<field mode="on" publishas="GLOSSARY">
+			<name>category</name>
+			<value source="docfield">category</value>
+		</field>
+		<field mode="on">
+			<name>coordblocks</name>
+			<value source="macro">COORD_BLOCKS</value>
+		</field>
+		<field mode="on">
+			<name>recipients</name>
+			<value source="macro">RECIPIENTS</value>
+		</field>
+		<field mode="on">
+			<name>coordblocks</name>
+			<value source="macro">COORD_BLOCKS</value>
+		</field>
+		<field mode="on">
+			<name>recipients</name>
+			<value source="macro">RECIPIENTS</value>
+		</field>
+		<field mode="on">
+			<name>projectdate</name>
+			<value source="docfield">projectdate</value>
+		</field>
+		<field mode="on" publishas="USER">
+			<name>author</name>
+			<value source="docfield">author</value>
+		</field>
+		<field mode="on">
+			<name>vnnumber</name>
+			<value source="docfield">vnnumber</value>
+		</field>
+		<field mode="on">
+			<name>vn</name>
+			<value source="docfield">vn</value>
+		</field>
+		<field mode="on" publishas="USER">
+			<name>sender</name>
+			<value source="docfield">sender</value>
+		</field>
+		<field mode="on" publishas="USER">
+			<name>responsible</name>
+			<value source="docfield">responsible</value>
+		</field>
+		<field mode="on">
+			<name>coordstatus</name>
+			<value source="docfield">coordstatus</value>
+		</field>
+		<field mode="on">
+			<name>regdate</name>
+			<value source="docfield">regdate</value>
+		</field>
+		<field mode="on">
+			<name>currentcoordblocknumber</name>
+			<value source="docfield">currentcoordblocknumber</value>
+		</field>
+		<field mode="on">
+			<name>currentrecipient</name>
+			<value source="docfield">currentrecipient</value>
+		</field>
+		<field mode="on">
+			<name>viewtext</name>
+			<value source="docfield">viewtext</value>
+		</field>
+		<field mode="on">
+			<name>docversion</name>
+			<value source="docfield">docversion</value>
+		</field>
+		<field mode="on" publishas="HTML">
+			<name>briefcontent</name>
+			<value source="docfield">briefcontent</value>
+		</field>
+		<field mode="on">
+			<name>coordblocks</name>
+			<value source="macro">COORD_BLOCKS</value>
+		</field>
+		<field mode="on" publishas="HTML">
+			<name>contentsource</name>
+			<value source="docfield">contentsource</value>
+		</field>
+		<field mode="on" publishas="AS_IS">
+			<name>regdocurl</name>
+			<value source="script"><![CDATA[
+				String[] getStringValue(_Document doc){
+					int regdocID = 0;
+					regdocID = doc.getValueInt("regdocid");
+					String url = "";
+					String currentUserID = doc.getCurrentUser()?.getUserID();					
+					if (regdocID != 0 && currentUserID) {						
+						def regdoc = doc.getSession()?.getCurrentDatabase()?.getDocumentByID(regdocID);
+						url = regdoc.getURL();
+					}
+					return getAsArray(url);
+				}
+				]]></value>
+		</field>
+		<field mode="on">
+			<name>regdocviewtext</name>
+			<value source="script"><![CDATA[
+				String[] getStringValue(_Document doc){
+					int regdocID = doc.getValueInt("regdocid");
+					String currentUserID = doc.getCurrentUser()?.getUserID();
+					String viewtext = "";
+					if (regdocID != 0 && currentUserID) {						
+						def regdoc = doc.getSession()?.getCurrentDatabase()?.getDocumentByID(regdocID);
+						viewtext = regdoc?.getValueString("viewtext");
+					}
+					return getAsArray(viewtext);
+				}
+				]]></value>
+		</field>
+		<field mode="on">
+			<name>ctrldate</name>
+			<value source="docfield">ctrldate</value>
+			<docfield type="datetime">ctrldate</docfield>
+		</field>
+		<field mode="on" publishas="GLOSSARY">
+			<name>subcategory</name>
+			<value source="docfield">subcategory</value>
+			<docfield type="number">subcategory</docfield>
+		</field>
+		<field mode="on" publishas="GLOSSARY">
+			<name>contragent</name>
+			<value source="docfield">contragent</value>
+			<docfield>contragent</docfield>
+		</field>
+	</show>
+	<save push="on" syncrule="workdocprj">
+	</save>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			String respID = doc.getValueString("responsible");
+			def respUser = doc.getSession().getStructure().getUser(respID);
+			return getAsArray(respUser?.getShortName() ?: "");
+		}
+	]]></viewtext>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			String content = doc.getValueString("contentsource");
+			content = Util.removeHTMLTags(content);
+			if (content.length() > 256) {
+				content = content.substring(0, 255);
+			}
+			return getAsArray(content);
+		}
+	]]></viewtext>
+	<viewtext></viewtext>
+	<viewdate><![CDATA[
+		String[] getStringValue(_Document doc){
+			Date prjDate = doc.getProjectDate();
+			return getAsArray(Util.dateTimeFormat.format(prjDate));
+		}
+	]]></viewdate>
+	<viewnumber><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("vnnumber")=="0" ? "" : doc.getValueString("vnnumber"));
+		}
+	]]></viewnumber>
+	<querysave><![CDATA[
+		void doQuerySave(_Session ses, _Document doc, String user){
+		try{
+			boolean v = true;
+			def prj = (_Project) doc;
+			def validate = {
+				if (prj.getCategory() == 0){
+					localizedMsgBox("Поле \"Вид работ\" не заполнено.");
+					v = false;
+				}	
+				if (!prj.getContragent()){
+					localizedMsgBox("Поле \"Контрагент\" не заполнено.");
+					v = false;
+				}				
+				if (prj.getProject() == 0){
+					localizedMsgBox("Поле \" Связан с проектом\" не заполнено.");
+					v = false;
+				}
+				if (!prj.getSigner()){
+					localizedMsgBox("Поле \"Ответственный участка\" не заполнено.");
+					v = false;
+				}
+			}
+			String action = doc.getValueString('action');
+			if (prj.isNewDoc && action != "draft" || !prj.isNewDoc && prj.getCoordStatus() == _CoordStatusType.DRAFT && (action == "startcoord" || action == "send")) validate();
+			if (v){			
+			def struct = ses.getStructure();
+			String authorRus = "";
+			def events = [];
+			def author = struct.getUser(doc.getValueString("author"));
+			if (author){
+				authorRus = author.getShortName();
+			}
+			String briefCont = doc.getValueString("briefcontent");
+			if (briefCont){
+				briefCont = ", " + briefCont;
+			}
+			//doc.setValueString("viewtext","Проект служебной записки" + ' ' + authorRus + briefCont);
+			
+			//Выбираем необходимое действие над документом
+			//Для сохранения в качестве черновика мы просто изменяем статус проекта и всех блоков
+			if (action == "draft"){
+				prj.setCoordStatus("draft");
+				def blocks = prj.getBlocks();
+				for (b in blocks){
+					b.setStatus("awaiting");
+				}
+				doc.addEditor(author?.getUserID());
+			}else{
+				//Для отправки на согласование
+				if (action == "startcoord"){
+					prj.setCoordStatus('coordinating');
+					def block = prj.getFirstBlock();
+					def coordBlocks = prj.getCoordBlocks();
+					//Присваиваем первому согласовательному блоку статус "На согласовании"
+					if (block && block.getType() != "sign" && block.getType() != "undefined"){
+						block.setStatus("coordinating");
+						if (block.getType() == "pos"){
+							def coord = block.getFirstCoordinator();
+							if (coord){
+								coord.setCurrent(true);
+								doc.addReader(coord.getUserID());
+							}
+						}
+						else{
+							if (block.getType() == "par"){
+								def coords = block.getCoordinators();
+								coords.each{coord ->
+									coord.setCurrent(true);
+									doc.addReader(coord.getUserID());
+								}
+							}
+						}
+					}
+					
+					block = prj.getNextBlock(block);
+					while (block){
+						block.setStatus("awaiting");
+						block = prj.getNextBlock(block);
+					}
+					//events = ["new.create.doclink.oncoordination", "notify.on.awaiting.document"];
+					//doc.dropEventAfterPush(events);
+				}else{
+					//Для отправки на подпись
+					if (action == 'send'){						
+						println("Документ отправлен на подпись");
+						/*в том случае, если мы создали блоки согласования, но документ сразу же был отправлен
+						 на подпись*/
+						def coordBlocks = prj.getCoordBlocks();
+						coordBlocks.each{cb->
+							if (cb.getStatus() == "undefined"){
+								cb.setStatus("awaiting");
+							}
+						}
+						prj.setCoordStatus('signing');
+						//Делаем текущим подписывателя
+						
+						def block = prj.getSignBlock();
+						if (block){
+							block.setStatus('coordinating');
+						}
+						def signer = prj.getSigner();
+						if (signer){
+							signer.setCurrent(true);
+							doc.addReader(signer.getUserID());
+						}
+					}
+					//events = ["new.document.to.sign", "notify.document.send.to.sign", "new.create.doclink.nosign"];
+					//doc.dropEventAfterPush(events);
+				}
+			}
+			if (prj.isNewDoc && prj.getCoordStatus() == _CoordStatusType.DRAFT){
+				doc.addStringField("vn", "0");
+				doc.addNumberField("vnnumber", 0);
+				doc.addNumberField("isrejected", 0);
+				setRedirectView("remarkdraft");	
+			}
+			if (prj.getCoordStatus() != _CoordStatusType.DRAFT && (prj.isNewDoc || prj.getValueNumber("vnnumber") == 0)){
+				def db = ses.getCurrentDatabase();
+				int num = db.getRegNumber('remark');
+				String vnAsText = Integer.toString(num);
+				doc.addStringField("vn", vnAsText);
+				doc.addNumberField("vnnumber",num);
+				localizedMsgBox("Документ зарегистрирован под № " + vnAsText);
+				doc.addNumberField("isrejected", 0);							
+				//doc.setValueString("viewtext","Проект служебной записки" + ' ' + authorRus + briefCont);
+				
+			}
+			doc.addReader(author?.getUserID());
+		}else{
+			stopSave();
+		}
+		}
+		catch(e) {
+			e.printStackTrace();
+			stopSave();
+		}
+	}
+	]]></querysave>
+	<postsave><![CDATA[
+		void doPostSave(_Session ses, _Document doc, String user){
+			try{
+			if (doc.getCoordStatus() != _CoordStatusType.DRAFT){
+				//doc.clearEditors();
+				doc.save("observer");
+			}			
+			def recipientsMail = [];
+			def recipientsID = [];
+			def sync = ses.getSynchronizer();
+			def mailAgent = ses.getMailAgent();
+			def msngAgent = ses.getInstMessengerAgent();
+			String msubject = "";
+			String body = "";
+			String msg = "";
+			def events = [];
+			def author = ses.getStructure()?.getUser(doc.getValueString("author"));
+			//Для отправки на согласование
+			if (doc.getCoordStatus() == _CoordStatusType.COORDINATING){
+				def block = doc.getCurrentBlock();
+				def coordinators = block?.getCurrentCoordinators();
+				coordinators.each{
+					recipientsMail.add(it.getEmail());
+					recipientsID.add(it.getInstMessengerAgent());
+				}		
+				if (sync.isOn()){
+					events = ["new.create.doclink.oncoordination", "notify.on.awaiting.document"];
+					doc.dropEventAfterPush(events);
+				}else{					
+					msubject = "[CKK] [Замечания] -> Прошу согласовать документ №" + doc.getVn() + " от " + doc.getProjectDate().format("dd.MM.yyyy HH:mm:ss");
+					body = '<b><font color="#000080" size="4" face="Default Serif">Документ на согласование</font></b><hr>';
+					body += '<table cellspacing="0" cellpadding="4" border="0" style="padding:10px; font-size:12px; font-family:Arial;">';
+					body += '<tr>';
+					body += '<td style="border-bottom:1px solid #CCC;" valign="top" colspan="2">';
+					body += "Вам документ №" + doc.getVn() + " от " + doc.getProjectDate().format("dd.MM.yyyy HH:mm:ss") + " на согласование. " + '<br>';
+					body += '</td></tr><tr>';
+					body += '<td colspan="2"></td>';
+					body += '</tr></table>';
+					body += '<p><font size="2" face="Arial">Для работы с документом перейдите по <a href="' + doc.getFullURL() + '">ссылке...</a></p></font>';
+				
+					mailAgent.sendMail(recipientsMail, msubject, body);						
+				}
+				msg = "Вам документ на согласование: \"" + doc.getValueString("briefcontent") + "\". \nДля работы с документом перейдите по ссылке " + doc.getFullURL();
+				msngAgent.sendMessage(recipientsID, msg);			
+			}
+			//Для отправки на подпись
+			if (doc.getCoordStatus() == _CoordStatusType.SIGNING){
+				if (sync.isOn()){
+					events = ["new.document.to.sign", "notify.document.send.to.sign", "new.create.doclink.nosign"];
+					doc.dropEventAfterPush(events);
+				}else{
+					msubject = '[СЭД] [Проекты] Отправлен на подпись документ \"' + doc.getValueString("briefcontent") + '\"';
+					body = '<b><font color="#000080" size="4" face="Default Serif">Документ на подпись</font></b><hr>';
+					body += '<table cellspacing="0" cellpadding="4" border="0" style="padding:10px; font-size:12px; font-family:Arial;">';
+					body += '<tr>';
+					body += '<td style="border-bottom:1px solid #CCC;" valign="top" colspan="2">';
+					body += 'После рассмотрения документа: \"' +  doc.getValueString("briefcontent") + '\" он отправлен на подпись к ';
+					body += doc.getSigner()?.getShortName() + ' <br>';
+					body += '</td></tr><tr>';
+					body += '<td colspan="2"></td>';
+					body += '</tr></table>';
+					body += '<p><font size="2" face="Arial">Для работы с документом перейдите по <a href="' + doc.getFullURL() + '">ссылке...</a></p></font>';
+				
+					mailAgent.sendMail([author?.getEmail()], msubject, body);
+										
+					msubject = '[СЭД] [Проекты] -> Прошу подписать документ \"' + doc.getValueString("briefcontent") + '\"';
+					body = '<b><font color="#000080" size="4" face="Default Serif">Документ на подпись</font></b><hr>';
+					body += '<table cellspacing="0" cellpadding="4" border="0" style="padding:10px; font-size:12px; font-family:Arial;">';
+					body += '<tr>';
+					body += '<td style="border-bottom:1px solid #CCC;" valign="top" colspan="2">';
+					body += 'Вам документ: \"' +  doc.getValueString("briefcontent") + '\" на подпись. <br>';
+					body += '</td></tr><tr>';
+					body += '<td colspan="2"></td>';
+					body += '</tr></table>';
+					body += '<p><font size="2" face="Arial">Для работы с документом перейдите по <a href="' + doc.getFullURL() + '">ссылке...</a></p></font>';
+					
+					mailAgent.sendMail([doc.getSigner()?.getEmail()], msubject, body);
+				}
+				msg = "После рассмотрения документа: \"" + doc.getValueString("briefcontent") + "\" он отправлен на подпись к " + doc.getSigner()?.getShortName();
+				msg += "\nДля работы с документом перейдите по ссылке " + doc.getFullURL();
+				msngAgent.sendMessage([author?.getInstMessengerAgent()], msg);
+				
+				msg = "Вам документ: \"" + doc.getValueString("briefcontent") + "\" на подпись. \nДля работы с документом перейдите по ссылке " + doc.getFullURL();
+				msngAgent.sendMessage([doc.getSigner()?.getInstMessengerAgent()], msg);
+			}
+		}catch(Exception e){
+				e.printStackTrace();
+		}
+			
+			
+	}
+			]]>
+	</postsave>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="otpravitotvuchcaption" source="KEYWORD">Отправить ответственному участка</caption>
+	<caption name="prinyatvrabotucaption" source="KEYWORD">Принять в работу</caption>
+	<caption name="podtverditcaption" source="KEYWORD">Подтвердить исполнение</caption>
+	<caption name="otklispcaption" source="KEYWORD">Отклонить исполнение</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="attachments" source="KEYWORD">Вложения</caption>
+	<caption name="avtorcaption" source="KEYWORD">Автор замечания</caption>
+	<caption name="otvetstvennyicaption" source="KEYWORD">Ответственный участка</caption>
+	<caption name="svprojectcaption" source="KEYWORD">Связан с проектом</caption>
+	<caption name="rukprojcaption" source="KEYWORD">Руководитель проекта</caption>
+	<caption name="zamrukprojcaption" source="KEYWORD">Зам. руководителя проекта</caption>
+	<caption name="contracaption" source="KEYWORD">Контрагент</caption>
+	<caption name="srokispcaption" source="KEYWORD">Срок исполнения</caption>
+	<caption name="vidrabotcaption" source="KEYWORD">Вид работ</caption>
+	<caption name="podvidrabotcaption" source="KEYWORD">Подвид работ</caption>
+	<caption name="mestovozcaption" source="KEYWORD">Место возникновения</caption>
+	<caption name="cordinatycaption" source="KEYWORD">Координаты</caption>
+	<caption name="citycaption" source="KEYWORD">Город</caption>
+	<caption name="streetcaption" source="KEYWORD">Улица</caption>
+	<caption name="domcaption" source="KEYWORD">Дом</caption>
+	<caption name="podezdcaption" source="KEYWORD">Подъезд</caption>
+	<caption name="etazhcaption" source="KEYWORD">Этаж</caption>
+	<caption name="kvartcaption" source="KEYWORD">Квартира</caption>
+	<caption name="opisaniecaption" source="KEYWORD">Описание замечания</caption>
+	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="coordination" source="KEYWORD">Согласование</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="addblock" source="KEYWORD">Добавить блок</caption>
+	<caption name="removeblock" source="KEYWORD">Удалить блок</caption>
+	<caption name="doctypemultilang" source="KEYWORD">Замечание</caption>
+	<caption name="more" source="KEYWORD">Дополнительно</caption>
+	<caption name="type" source="KEYWORD">Тип</caption>
+	<caption name="contributors" source="KEYWORD">Участники</caption>
+	<caption name="contributorscoord" source="KEYWORD">Участники согласования</caption>
+	<caption name="waittime" source="KEYWORD">Время ожидания</caption>
+	<caption name="statuscoord" source="KEYWORD">Статус</caption>
+	<caption name="parcoord" source="KEYWORD">Параллельное</caption>
+	<caption name="sercoord" source="KEYWORD">Последовательное</caption>
+	<caption name="curcoorder" source="KEYWORD">текущий согл.</caption>
+	<caption name="waiting" source="KEYWORD">Ожидает ответа</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="unlimtimecoord" source="KEYWORD">Неограничено</caption>
+	<caption name="oncoordinating" source="KEYWORD">На согласовании</caption>
+	<caption name="agreed" source="KEYWORD">Согласован</caption>
+	<caption name="expectbegincoord" source="KEYWORD">Ожидание начала согласования</caption>
+	<caption name="typenotdefined" source="KEYWORD">Тип не определен</caption>
+	<caption name="agree" source="KEYWORD">Согласен</caption>
+	<caption name="disagree" source="KEYWORD">Не согласен</caption>
+	<caption name="awairesponse" source="KEYWORD">Ожидает ответа</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="complete" source="KEYWORD">Завершен</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="searchcaption" source="KEYWORD">поиск</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+	<caption name="changeview" source="KEYWORD">Изменить вид</caption>
+	<caption name="commentcaption" source="KEYWORD">Комментарий</caption>
+	<caption name="coordparam" source="KEYWORD">Параметры согласования</caption>
+	<caption name="hours" source="KEYWORD">часов</caption>
+	<caption name="yescaption" source="KEYWORD">да</caption>
+	<caption name="nocaption" source="KEYWORD">нет</caption>
+	<caption name="answercommentcaption" source="KEYWORD">Оставить комментарий ответа?</caption>
+	<caption name="warning" source="KEYWORD">Предупреждение</caption>
+	<caption name="files" source="KEYWORD">Файлы</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="infofreaders" source="KEYWORD">Кем прочтен</caption>
+	<caption name="draftcaption" source="KEYWORD">Черновик</caption>
+	<caption name="soglasovancaption" source="KEYWORD">Согласован</caption>
+	<caption name="otklonencaption" source="KEYWORD">Отклонен</caption>
+	<caption name="newversioncaption" source="KEYWORD">Новая версия</caption>
+	<caption name="naispolneniicaption" source="KEYWORD">На исполнении</caption>
+	<caption name="ispolnenocaption" source="KEYWORD">Исполнено</caption>
+	<caption name="revisionispolneniyacaption" source="KEYWORD">Ревизия исполнения</caption>
+	<caption name="podpisancaption" source="KEYWORD">Подписан</caption>
+	<caption name="prosrochencaption" source="KEYWORD">Просрочен</caption>
+	<caption name="nasoglasovaniiuitrcaption" source="KEYWORD">На согласовании у ответственного участка</caption>
+	<caption name="otklonenitrcaption" source="KEYWORD">Отклонено ответственным участка</caption>
+	<caption name="prosrochencaption" source="KEYWORD">Проект был просрочен во время согласования</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	<caption name="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+
+	<glossary mode="on" id="projectsprav" source="query">
+		<description>Проекты</description>
+		<value>projectsprav</value>
+	</glossary>
+	<glossary mode="on" id="docscat" source="query">
+		<description>Категории</description>
+		<value>docscat</value>
+	</glossary>
+	<glossary mode="on" id="originplace" source="query">
+		<description>Место возникновения замечания</description>
+		<value>originplace</value>
+	</glossary>
+	<glossary mode="on" id="city" source="query">
+		<description>Город</description>
+		<value>city</value>
+	</glossary>
+	<glossary mode="on" id="subcat" source="query">
+		<description>Подкатегории</description>
+		<value>subcat</value>
+	</glossary>
+	<glossary mode="off" id="contractor" source="query">
+		<description>Контрагент</description>
+		<value>contractor</value>
+	</glossary>
+</rule>

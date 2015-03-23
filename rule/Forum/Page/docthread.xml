@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="docthread" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/docthread.xsl</xsltfile>	
+	
+	<element mode="ON" type="QUERY">
+		<name>responses</name>
+		<doctype>glossary</doctype>
+		<query source="static">parentdocid#number=$parentdocid</query>
+	</element>
+	 
+</rule>

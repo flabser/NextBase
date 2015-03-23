@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="view" id="statindexcomplete" history="on">
+	<description>Индекс устранения</description>
+	<outline>navigator</outline>
+	<query>remark</query>		
+	<xsltfile>views\view-statistic.xsl</xsltfile>
+	<title source="KEYWORD">Индекс устранения</title>
+	<column>
+		<caption id="category" source="KEYWORD">Статистика</caption>
+	</column>
+	<column>
+		<caption id="view" source="KEYWORD">Индекс устранения</caption>
+	</column>
+	<column>
+		<caption id="helpcaption" source="KEYWORD">Помощь</caption>
+	</column>
+	<column>
+		<caption id="statnamecaption" source="KEYWORD">Статистика индекса устранения</caption>
+	</column>
+	<column>
+		<caption id="executedcaption" source="KEYWORD">Исполнено</caption>
+	</column>
+	<column>
+		<caption id="notexecutedcaption" source="KEYWORD">Не исполнено</caption>
+	</column>
+	<column>
+		<caption id="januarycaption" source="KEYWORD">Январь</caption>
+	</column>
+	<column>
+		<caption id="februarycaption" source="KEYWORD">Февраль</caption>
+	</column>
+	<column>
+		<caption id="marchcaption" source="KEYWORD">Март</caption>
+	</column>
+	<column>
+		<caption id="aprilcaption" source="KEYWORD">Апрель</caption>
+	</column>
+	<column>
+		<caption id="maycaption" source="KEYWORD">Май</caption>
+	</column>
+	<column>
+		<caption id="junecaption" source="KEYWORD">Июнь</caption>
+	</column>
+	<column>
+		<caption id="julycaption" source="KEYWORD">Июль</caption>
+	</column>
+	<column>
+		<caption id="augustcaption" source="KEYWORD">Август</caption>
+	</column>
+	<column>
+		<caption id="septembercaption" source="KEYWORD">Сентябрь</caption>
+	</column>
+	<column>
+		<caption id="octobercaption" source="KEYWORD">Октябрь</caption>
+	</column>
+	<column>
+		<caption id="novembercaption" source="KEYWORD">Ноябрь</caption>
+	</column>
+	<column>
+		<caption id="decembercaption" source="KEYWORD">Декабрь</caption>
+	</column>
+	<column>
+		<caption id="jancaption" source="KEYWORD">Январь</caption>
+	</column>
+	<column>
+		<caption id="rejectedcaption" source="KEYWORD">Отклонено</caption>
+	</column>
+	<column>
+		<caption id="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	</column>
+	<column>
+		<caption id="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	</column>
+</rule>

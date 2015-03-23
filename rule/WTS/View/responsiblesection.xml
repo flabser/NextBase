@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="view" id="responsiblesection">
+	<description>Ответные документы</description>
+	<query>responsiblesection</query>		
+	<xsltfile>views\bossandemppicklist.xsl</xsltfile>	
+</rule>

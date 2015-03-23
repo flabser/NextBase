@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="project-list" mode="on">
+	<description></description>
+	<caching>CACHING_IN_USER_SESSION_SCOPE</caching>
+	<xsltfile>pages/page-dialogbox-list.xsl</xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<name>script_result</name>
+		<events>
+			<doscript source="file">page.getDocsList.DoScript</doscript>
+		</events>
+	</element> 	
+</rule>

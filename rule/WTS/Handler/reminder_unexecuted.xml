@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="windows-1251"?><rule id="reminder_unexecuted" app="" type="HANDLER" isvalid="true" mode="ON"><description>reminder unexecuted</description><rununderuser source="STATIC" type="TEXT">[observer]
+	</rununderuser><trigger>SCHEDULER</trigger><scheduler mode="OFF"><starttime>15:54</starttime><nextstart>18.08.2011 15:54:42</nextstart></scheduler><tohandle source="MACRO" type="TEXT">ALLTASKS</tohandle><script><![CDATA[
+
+        String doHandler(_Session session, _DocumentCollection collection){
+
+			try {
+				ArrayList<_Employer> allEmp;
+				def recipient = [];
+				String empid;
+				def authoremp;
+				def str_ctrldate
+				String ctrlstyle;
+				String remindDate;
+				Boolean usercontrol = false;
+
+				int iCollCount = 0;
+				int iControl = 0;
+				int diffDays;
+				BigDecimal cdiffDays;
+
+				String body = "";
+				String sbody;
+				String ebody;
+
+				def execName;
+				def task;
+				def doc;
+				def struct = session.getStructure();
+				def cdb = session.getCurrentDatabase();
+				def ma = session.getMailAgent();
+
+				java.text.DateFormat fmt = new java.text.SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+				Calendar curday = Calendar.getInstance(); 
+				Calendar ctrlday = Calendar.getInstance();
+				Date date = new Date();
+				curday.setTime(date);
+				long curday_milis = curday.getTimeInMillis();
+
+				remindDate = String.format('%tF', date);
+
+				//
+				sbody = '<b><font color="#000080" size="4" face="Default Serif">Напоминание о неисполненных заданиях от '+remindDate+'</font></b><hr>';
+				sbody += '<table cellspacing="0" cellpadding="4" border="0" style="padding:5px; font-size:13px; font-family:Arial;">';
+				sbody += '<tr><td colspan="3"><b> </b></td></tr>';
+				sbody += '<tr>';
+				sbody += '<td style="border-bottom:2px solid #CCC;text-align:center;" width="175px">Срок исполнения</td>';
+				sbody += '<td style="border-bottom:2px solid #CCC;text-align:left;" width="500px">Содержание</td>';
+				sbody += '<td style="border-bottom:2px solid #CCC;text-align:center;" width="130px">Автор</td>';
+				sbody += '</tr>';
+
+				ebody = '</table>';
+				//
+
+				allEmp = struct.getAllEmployers();
+				iCollCount = collection.getCount();
+
+				for(emp in allEmp){
+					empid = emp.getUserID();
+					recipient = emp.getEmail();
+					for(int j=0; j<iCollCount; j++){
+						doc = collection.getNthDocument(j);
+						task = cdb.getTaskByID(doc.getDocID());
+						if(task.isControl()){
+							execName = task.getExecutorsList();
+							execName.each {exec ->
+								if(exec.getUserID() == empid & exec.getResetDate() == null){
+									usercontrol = true;
+								}
+							}
+							
+							if(usercontrol){								
+								/*str_ctrldate = doc.getValueString("ctrldate");
+								Date ctrldate = fmt.parse(str_ctrldate);
+								*/ 
+								Date ctrldate = doc.getControlDate();
+								str_ctrldate = Util.dateTimeFormat.format(ctrldate);
+								ctrlday.setTime(ctrldate);
+								try {
+									iControl++;
+									long ctrlday_milis = ctrlday.getTimeInMillis();
+									long diff = ctrlday_milis - curday_milis;
+									cdiffDays = diff / (24 * 60 * 60 * 1000);
+									diffDays = cdiffDays;
+
+									authoremp = struct.getUser(doc.getValueString("author"));
+									if (authoremp!=null){
+										authoremp = authoremp.getShortName();
+									} else {
+										authoremp = doc.getValueString("author");
+									}
+
+									// Почтовое уведомление
+									ctrlstyle = "";
+									if(diffDays<2){
+										ctrlstyle = "color:red;";
+									}
+
+									body += '<tr><td valign="top" style="border-top:1px solid #CCC;text-align:center;'+ctrlstyle+'">'+str_ctrldate+' ('+diffDays+')</td>';
+									body += '<td valign="top" style="border-top:1px solid #CCC;white-space:pre-line;">';
+									body += '<a href="' + doc.getFullURL() + '">'+doc.getValueString("content").trim()+'</a>';
+									body += '</td>';
+									body += '<td valign="top" style="border-top:1px solid #CCC;text-align:center;">'+authoremp+'</td></tr>';
+									
+								} catch(e) {
+									println("Handler > remind > "+e.toString());
+								}
+
+								usercontrol = false;
+							} //end usercontrol
+						} //end task.isControl
+					} //end collection
+
+					if (body.length()>0){
+						body = sbody + body + ebody;
+						ma.sendMail("Task@flabs.kz", "4ms",[recipient], 'Напоминание о неисполненных заданиях ('+iControl+') от '+remindDate, body);
+						body = "";
+						iControl = 0;
+					}
+
+					recipient = [];
+				}
+
+        		return "" + iCollCount;
+        	}
+        	catch(e) {
+				e.printStackTrace();
+			}
+        }]]></script></rule>

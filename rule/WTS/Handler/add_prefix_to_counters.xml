@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule id="add_prefix_to_counters" app="" type="HANDLER" isvalid="true"
+	mode="ON">
+	<description>add_prefix_to_counters unexecuted</description>
+	<rununderuser source="STATIC" type="TEXT">[observer]
+	</rununderuser>
+	<trigger>SCHEDULER</trigger>
+	<scheduler mode="OFF">
+		<starttime>15:54</starttime>
+		<nextstart>18.08.2011 15:54:42</nextstart>
+	</scheduler>
+	<tohandle source="MACRO" type="TEXT">ALLTASKS</tohandle>
+	<script><![CDATA[
+
+    String doHandler(_Session session, _DocumentCollection collection){
+
+			try {
+                def cdb = session.getCurrentDatabase();
+                def gloscol = cdb.getGlossaryDocs("projectsprav", "prefix <> ''");
+                gloscol.each{
+                    cdb.addCounter(it.getValueString("prefix"), 0);
+                    println(it.getGlossaryForm());
+                }
+        	} catch(e) {
+				e.printStackTrace();
+			}
+        }]]></script>
+</rule>

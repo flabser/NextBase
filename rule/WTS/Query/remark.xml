@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="query" id="remark">
+	<description />
+	<rununderuser source="static">[observer]</rununderuser>
+	<query source="static">form = 'remark'</query>
+	<sortby source="static">'$sortfield'#'$order'</sortby>
+	<doctype form='workdocprj'>PROJECT</doctype>
+	<!-- <field mode="on"> <name>viewtext</name> <value source="resultset">viewtext</value> 
+		<attrvalue/> </field> -->
+	<!-- <field mode="on"> <name>vnnumber</name> <value source="resultset">vnnumber</value> 
+		<attrvalue/> </field> <field mode="on"> <name>regdate</name> <value source="resultset">regdate</value> 
+		<attrvalue/> </field> -->
+	<field mode="on">
+		<name>coordstatus</name>
+		<value source="resultset">coordstatus</value>
+		<attrvalue />
+	</field>
+	<field mode="on">
+		<name>project</name>
+		<value source="resultset">project</value>
+		<attrvalue />
+	</field>
+	<field mode="on">
+		<name>responsible</name>
+		<value source="resultset">responsible</value>
+		<attrvalue />
+	</field>
+    <field mode="on">
+		<name>vn</name>
+		<value source="resultset">vn</value>
+		<attrvalue></attrvalue>
+	</field>
+</rule>

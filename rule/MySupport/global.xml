@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><rule id="MySupport" mode="on" type="global">
+	<description>Система управления проектами</description>
+	<orgname/>
+	<liccount>100</liccount>
+	<logo>mysupport.png</logo>
+	<appname>Система управления проектами</appname>
+	<database autodeploy="ON">
+		<name>test_project_flabs</name>
+		<driver>org.postgresql.Driver</driver>
+<!-- 		<url>jdbc:postgresql://192.168.0.11/prjflabs</url> -->
+		<url>jdbc:postgresql://192.168.0.13:5433/test_project_flabs</url> 
+		<username/>
+		<password/>
+	<connectionid>rOgCmczpE/2iIwuqg4pIfw==@@@2DudFNr9gOCiIwuqg4pIfw==</connectionid></database> 
+	<externalmodule type="STRUCTURE">Structure</externalmodule>
+	<eds mode="OFF"/>
+	<entrypoint/>
+	<defaultredirecturl>Provider?type=page&amp;id=favdocs</defaultredirecturl>
+
+	<markreaddelaysec>5</markreaddelaysec>
+
+	<langs>
+		<entry id="RUS">Русский</entry>
+		<entry id="KAZ">Қазақша</entry>
+		<entry id="ENG">English</entry>	 
+	</langs>
+	<roles>
+		<entry id="administrator">Разрешает ввод и редактирование значении справочников</entry>	
+	</roles>
+
+	<skins>
+		<entry default="on" id="classic" path="./webapps/MySupport/classic/xsl">Classic</entry>
+	</skins>
+</rule>

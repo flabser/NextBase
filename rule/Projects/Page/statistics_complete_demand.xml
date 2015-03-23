@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="statistics_complete_demand" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/statistics_complete_demand.xsl</xsltfile>	
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">page.prjs_actionbar.search</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>filter_elements</name>
+		<events>
+			<doscript source="file">page.filter_content.DoScript</doscript>
+		</events>
+	</element>
+	<caption name="executor" source ="KEYWORD">Исполнитель</caption>
+	<caption name="startdate" source ="KEYWORD">c</caption>
+	<caption name="enddate" source ="KEYWORD">до</caption>
+	<caption name="choose" source ="KEYWORD">Выбрать</caption>
+	<caption name ="help" source ="KEYWORD">Помощь</caption>
+	<caption name ="logout" source ="KEYWORD">Завершить работу</caption>
+	<caption name="viewdate" source="KEYWORD">Срок исполнения</caption>
+	<caption name="viewtext" source="KEYWORD">Краткое содержание</caption>
+	<caption name ="author" source ="KEYWORD">Автор</caption>
+	<caption name ="viewtext1" source ="KEYWORD">Проект</caption>
+	<caption name ="addtofav" source ="KEYWORD">Добавить в избранное</caption>
+	<caption name ="search" source ="KEYWORD">Поиск</caption>
+	<caption name ="find" source ="KEYWORD">Искать</caption>
+	<caption name ="print" source ="KEYWORD">Печать</caption>
+	<caption name ="resetfilter" source ="KEYWORD">Сбросить фильтр</caption>
+</rule>

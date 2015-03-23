@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><rule app="Workflow" id="task_report_xls" isvalid="true" mode="ON" type="HANDLER">
+    <description/>
+    <rununderuser source="STATIC" type="TEXT">[observer]</rununderuser>
+    <trigger>provider</trigger>
+    <events>
+        <trigger source="file">page.task_report_xls.Trigger</trigger>
+    </events>
+</rule>

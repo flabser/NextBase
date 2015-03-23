@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="outline" id="outline" mode="on">
+	<description>Navigator outline</description>
+	<xsltfile>outline.xsl</xsltfile>
+	<outline>
+		<entry mode="on" url="Provider?type=page&amp;id=favdocs&amp;page=0" id="favdocs">
+			<caption source="KEYWORD">Избранные</caption>
+			<hint source="KEYWORD">Избранные</hint>
+		</entry>
+		<entry id="projects" mode="on">
+			<caption source="KEYWORD">Проекты</caption>
+			<hint source="KEYWORD">Проекты</hint>
+			 <entry mode="on" id="project">
+				<caption source="KEYWORD">Проекты</caption>
+				<hint source="KEYWORD">Проекты</hint>
+				<entry mode="on" url="Provider?type=view&amp;id=project" id="project">
+	            	<caption source="KEYWORD">Проекты</caption>
+					<hint source="KEYWORD">Проекты</hint>
+	            </entry> 			 
+	        </entry>
+        </entry>
+		<entry id="glossary" mode="on">
+			<caption source="KEYWORD">Справочники</caption>
+			<hint source="KEYWORD">Справочники</hint>
+			<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole("admin") ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			 
+			<entry mode="on" url="Provider?type=view&amp;id=structurelist" id="structurelist">
+				<caption source="KEYWORD">Структура организации</caption>
+				<hint source="KEYWORD">Структура организации</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=view&amp;id=post" id="post">
+				<caption source="KEYWORD">Должность</caption>
+				<hint source="KEYWORD">Должность</hint>
+			</entry>
+					
+			<entry mode="on" url="Provider?type=view&amp;id=group" id="group">
+				<caption source="KEYWORD">Группы пользователей</caption>
+				<hint source="KEYWORD">Группы пользователей</hint>
+			</entry>			
+			
+		</entry>
+		<entry id="_recyclebin" mode="on">
+			<caption source="KEYWORD">Корзина</caption>
+			<hint source="KEYWORD">Корзина</hint>
+			<entry mode="on" url="Provider?type=view&amp;id=recyclebin" id="recyclebin">
+				<caption source="KEYWORD">Корзина</caption>
+				<hint source="KEYWORD">Корзина</hint>
+			</entry>
+		</entry> 
+		<default>
+			<field mode="on">
+				<name>logout</name>
+				<value source="static">logout</value>
+				<caption source="KEYWORD">Завершить работу</caption>
+			</field>
+			<field mode="on">
+				<name>help</name>
+				<value source="static">help</value>
+				<caption source="KEYWORD">Помощь</caption>
+			</field>
+		</default>
+	</outline>
+</rule>

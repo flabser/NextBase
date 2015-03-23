@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="project" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/project.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">page.prjs_actionbar.projects</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="QUERY">
+		<name>view_content</name>
+		<doctype>document</doctype>
+		 <query source="static">form='project'</query>
+	</element>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>captions</name>
+		<value>captions_project</value>
+	</element>		 
+</rule>

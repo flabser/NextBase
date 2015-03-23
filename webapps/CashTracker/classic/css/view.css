@@ -1,0 +1,109 @@
+.view {
+	background: #FFF;
+	height: 100%;
+	min-height: 100px;
+	min-width: 320px;
+	padding: 6px;
+	position: relative;
+}
+
+.view table {
+	width: 100%;
+}
+
+.view-header {
+	margin: 0;
+	max-width: 100%;
+	min-width: 320px;
+	padding: 0;
+	position: relative;
+}
+
+.view-table {
+	overflow: auto;
+	padding: 0 0 4px 0;
+}
+
+.view-table table {
+	border-bottom: 2px solid #bbc6d1;
+}
+
+.view-table th {
+	background: #F2F2F2 linear-gradient(#FFF, #F2F2F2);
+	border: 1px solid #CED6DB;
+	border-bottom: 2px solid #CED6DB;
+	font-size: .9em;
+	padding: 4px;
+}
+
+.view-table th a {
+	padding: 0;
+}
+
+.view-table td {
+	border: 1px solid #CED6DB;
+	padding: 0 5px;
+	vertical-align: top;
+	word-wrap: break-word;
+}
+
+.view-table th input[type=checkbox],.view-table td input[type=checkbox] {
+	margin: 4px 0;
+}
+
+.view-table .document:hover {
+	background: #F5F5F5;
+}
+
+.view-table a {
+	color: #333;
+	display: block;
+	margin: 0;
+	padding: .35em 0;
+	text-decoration: none;
+}
+
+.view-table tr:hover a {
+	color: #0000EE;
+}
+
+.view-empty {
+	color: #666;
+	font-size: 1.3em;
+}
+
+.view .unread {
+	font-weight: bold;
+}
+
+.view .page-info {
+	margin: 8px 0;
+	padding: 4px 0;
+}
+
+.view .page-info>h3 {
+	font-size: 22px;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+
+.view .page-info>h3>small {
+	font-size: 13px;
+}
+
+.vt-arrow {
+	background: url(/SharedResources/img/classic/arrow_blue.gif) no-repeat center 2px;
+	display: inline-block;
+	height: 16px;
+	margin: 0 5px;
+	width: 16px;
+}
+
+.negative-sum {
+	color: #E02117 !important;
+}
+
+.view-table .response a {
+	display: inline;
+}

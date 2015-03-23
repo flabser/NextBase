@@ -1,0 +1,37 @@
+BODY {font-family: Verdana, Arial, Helvetica, sans-serif !important; width:100% ;}
+html{width:100% !important}
+.button_panel, tabs-2, tabs-3, tabs-4, tabs-5, .ui-datepicker-trigger{display:none}
+#outline {display:none}
+#resizer{display:none}
+#projectCaption{display:none}
+#originplaceCaption{display:none}
+.ui-tabs-nav {display:none}
+#system_buttonbar {display:none}
+table { font-size:10pt !important; font-family: Verdana, Arial, Helvetica, sans-serif !important;}
+.fc {font-size:98%;vertical-align:top;text-align:right; width:240px; color:#444444}
+.fc a{display:none}
+.formwrapper { height: 100%; left: 0; margin-left: 15px; padding: 0; position: absolute; right: 0; bottom:0px; width:100%}
+#htmlcodenoteditable {width:503px !important; height:auto !important; min-height:60px; display:block !important}
+.jHtmlArea {display:none; width:503px !important; border:none !important; height:auto !important;}
+#txtDefaultHtmlArea {display:block; border:none !important;}
+.jHtmlArea ul {display:none}
+#tabs {border-radius:0px; border:none; background:#fff}
+#authortbl tr td {width:500px}
+.div_editable { background:#eee; border:1px solid #eee;  padding:3px 0px 3px 0px; color:gray; width:500px !important;}
+.td_editable { background:#eee; border:1px solid #eee;  padding:3px 3px 3px 5px; color:gray;  width:500px !important;}
+.td_noteditable { background:#eee; border:1px solid #eee; padding:3px 3px 3px 5px; color:gray;  width:500px !important; }
+.select_editable { background:#eee; border:1px solid #eee; padding:3px 3px 3px 5px; color:gray;  width:510px !important; }
+.select_noteditable { background:#eee; border:1px solid #eee; padding:3px 3px 3px 5px;  color:gray;  width:510px !important;}
+.textarea_noteditable { background:#eee; border:1px solid #eee; overflow:auto; padding-left:5px;  color:gray;  width:500px !important;}
+.textarea_editable { background:#eee; border:1px solid #eee; padding-left:5px; overflow:auto; color:gray;  width:500px !important;}
+#tabs .ui-tabs-panel {padding-left: 0em;padding-top: 0.5em;}
+.formtitle{	
+  	margin:75px 0px 0px 10px;
+  	padding:15px 0px 10px 0px;
+  	height:25px;
+  	overflow:hidden;
+  	font-size:21px;
+}
+#ctrldate{width:90px !important;}
+#apptitle {font-size:1.1em !important}
+#printmediasign {display:block !important}

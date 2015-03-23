@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="new_type_report" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="3a041833-f5ac-4f77-a15a-a803f88e7b94">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Normal" isDefault="true" pdfFontName="c:\windows\fonts\tahoma.ttf" pdfEncoding="Cp1251"/>
+	<subDataset name="techsupervision" uuid="38755a84-d3ff-46db-817b-fb3d957997a6">
+		<parameter name="PROJECTDOCID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select value, docid, name, itrname from CUSTOM_FIELDS_GLOSSARY as cfgloss
+inner join (select shortname as itrname, userid from EMPLOYERS) as itrData on cfgloss.VALUE = itrData.USERID where cfgloss.docid = $P{PROJECTDOCID} and cfgloss.name = 'techsupervision']]>
+		</queryString>
+		<field name="itrname" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="images" uuid="7473b4fa-976e-470d-93f6-5fff83828bb0">
+		<parameter name="DOCID" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select value as image from custom_blobs_projects where docid =  $P{DOCID}]]>
+		</queryString>
+		<field name="image" class="java.sql.Blob"/>
+	</subDataset>
+	<subDataset name="dataset1" uuid="217b3bf1-4777-4814-9cfe-21b1970b0e0e"/>
+	<scriptlet name="CoordStatus" class="CoordStatus"/>
+	<parameter name="DATETO" class="java.lang.String"/>
+	<parameter name="DATEFROM" class="java.lang.String"/>
+	<parameter name="DATECOND" class="java.lang.String">
+		<defaultValueExpression><![CDATA[($P{DATEFROM} != null && $P{DATEFROM}.isEmpty() == false && $P{DATETO} != null && $P{DATETO}.isEmpty() == false ? " AND REGDATE BETWEEN '" + $P{DATEFROM} + "' AND '" + $P{DATETO} + "'" :
+ $P{DATEFROM} != null && $P{DATEFROM}.isEmpty() == false && ($P{DATETO} == null || $P{DATETO}.isEmpty() == true) ? " AND REGDATE > '" + $P{DATEFROM} + "'" :
+ ($P{DATEFROM} == null || $P{DATEFROM}.isEmpty() == true) && $P{DATETO} != null && $P{DATETO}.isEmpty() == false ? " AND REGDATE < '" + $P{DATETO} + "'" :
+ ($P{DATEFROM} == null || $P{DATEFROM}.isEmpty() == true) && ($P{DATEFROM} == null || $P{DATEFROM}.isEmpty() == true) ? "" : "")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FORMAT_DATETO" class="java.lang.String"/>
+	<parameter name="FORMAT_DATEFROM" class="java.lang.String"/>
+	<parameter name="PROJECT" class="java.lang.String"/>
+	<parameter name="PROJCOND" class="java.lang.String">
+		<defaultValueExpression><![CDATA[($P{PROJECT} != null && $P{PROJECT}.isEmpty() == false ? " AND PROJECT IN (" + $P{PROJECT} + ")" : "")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PROJECTID" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="PROJECTNAME" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from projects p left join (select userid as t, shortname as shortname from employers e) as e on p.author = e.t
+left join (select ID as blockid, DOCID as pid from COORDBLOCKS where TYPE = 328) as c on p.DOCID = c.pid
+left join (select COORDINATOR, BLOCKID from COORDINATORS) as coords on c.blockid = coords.BLOCKID
+left join (select shortname as signersn, userid from EMPLOYERS) as e1 on coords.COORDINATOR = e1.USERID
+left join (select viewtext as catname, docid as catid from GLOSSARY) as gloscat on p.category = gloscat.catid
+left join (select viewtext as subcatname, docid as subcatid from GLOSSARY) as glossubcat on p.subcategory = glossubcat.subcatid
+left join (select  regdate as kiregdate, report, PARENTDOCID as projid, PARENTDOCTYPE as projtype, DOCID as kidocid from EXECUTIONS) as exs on (
+    p.docid = exs.projid
+    and exs.kidocid = (
+        select max(DOCID)
+        from EXECUTIONS
+        where parentdocid = p.DOCID
+    ))
+left join (select viewtext as objectName, docid as objectID from GLOSSARY) as objgloss on p.PROJECT = objectID
+where coordstatus != 351
+$P!{DATECOND}
+$P!{PROJCOND}]]>
+	</queryString>
+	<field name="DOCID" class="java.lang.Integer"/>
+	<field name="LASTUPDATE" class="java.sql.Timestamp"/>
+	<field name="AUTHOR" class="java.lang.String"/>
+	<field name="AUTOSENDAFTERSIGN" class="java.lang.Integer"/>
+	<field name="AUTOSENDTOSIGN" class="java.lang.Integer"/>
+	<field name="BRIEFCONTENT" class="java.lang.String"/>
+	<field name="CONTENTSOURCE" class="java.lang.String"/>
+	<field name="COORDSTATUS" class="java.lang.Integer"/>
+	<field name="REGDATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROJECTDATE" class="java.sql.Timestamp"/>
+	<field name="VN" class="java.lang.String"/>
+	<field name="VNNUMBER" class="java.lang.Integer"/>
+	<field name="DOCVERSION" class="java.lang.Integer"/>
+	<field name="ISREJECTED" class="java.lang.Integer"/>
+	<field name="RECIPIENT" class="java.lang.String"/>
+	<field name="DOCTYPE" class="java.lang.Integer"/>
+	<field name="NOTESID" class="java.lang.String"/>
+	<field name="NOTESURL" class="java.lang.String"/>
+	<field name="VIEWTEXT" class="java.lang.String"/>
+	<field name="VIEWICON" class="java.lang.String"/>
+	<field name="FORM" class="java.lang.String"/>
+	<field name="SYNCSTATUS" class="java.lang.Integer"/>
+	<field name="DOCFOLDER" class="java.lang.String"/>
+	<field name="DELIVERYTYPE" class="java.lang.String"/>
+	<field name="SENDER" class="java.lang.String"/>
+	<field name="NOMENTYPE" class="java.lang.Integer"/>
+	<field name="HAS_ATTACHMENT" class="java.lang.Integer"/>
+	<field name="DEL" class="java.lang.Integer"/>
+	<field name="REGDOCID" class="java.lang.Integer"/>
+	<field name="HAR" class="java.lang.Integer"/>
+	<field name="PROJECT" class="java.lang.Integer"/>
+	<field name="DEFAULTRULEID" class="java.lang.String"/>
+	<field name="VIEWTEXT1" class="java.lang.String"/>
+	<field name="VIEWTEXT2" class="java.lang.String"/>
+	<field name="VIEWTEXT3" class="java.lang.String"/>
+	<field name="VIEWNUMBER" class="java.lang.Integer"/>
+	<field name="VIEWDATE" class="java.sql.Timestamp"/>
+	<field name="SIGN" class="java.lang.String"/>
+	<field name="SIGNEDFIELDS" class="java.lang.String"/>
+	<field name="ORIGIN" class="java.lang.String"/>
+	<field name="COORDINATS" class="java.lang.String"/>
+	<field name="CITY" class="java.lang.Integer"/>
+	<field name="STREET" class="java.lang.String"/>
+	<field name="HOUSE" class="java.lang.String"/>
+	<field name="PORCH" class="java.lang.String"/>
+	<field name="FLOOR" class="java.lang.String"/>
+	<field name="APARTMENT" class="java.lang.String"/>
+	<field name="RESPONSIBLE" class="java.lang.String"/>
+	<field name="CTRLDATE" class="java.sql.Timestamp"/>
+	<field name="SUBCATEGORY" class="java.lang.Integer"/>
+	<field name="CONTRAGENT" class="java.lang.String"/>
+	<field name="PODRYAD" class="java.lang.String"/>
+	<field name="SUBPODRYAD" class="java.lang.String"/>
+	<field name="EXECUTOR" class="java.lang.String"/>
+	<field name="TOPICID" class="java.lang.Integer"/>
+	<field name="category" class="java.lang.Integer"/>
+	<field name="parentdocid" class="java.lang.Integer"/>
+	<field name="parentdoctype" class="java.lang.Integer"/>
+	<field name="respost" class="java.lang.String"/>
+	<field name="ddbid" class="java.lang.String"/>
+	<field name="amountdamage" class="java.lang.String"/>
+	<field name="t" class="java.lang.String"/>
+	<field name="shortname" class="java.lang.String"/>
+	<field name="blockid" class="java.lang.Integer"/>
+	<field name="pid" class="java.lang.Integer"/>
+	<field name="COORDINATOR" class="java.lang.String"/>
+	<field name="signersn" class="java.lang.String"/>
+	<field name="userid" class="java.lang.String"/>
+	<field name="catname" class="java.lang.String"/>
+	<field name="catid" class="java.lang.Integer"/>
+	<field name="subcatname" class="java.lang.String"/>
+	<field name="subcatid" class="java.lang.Integer"/>
+	<field name="kiregdate" class="java.sql.Timestamp"/>
+	<field name="report" class="java.lang.String"/>
+	<field name="projid" class="java.lang.Integer"/>
+	<field name="projtype" class="java.lang.Integer"/>
+	<field name="objectName" class="java.lang.String"/>
+	<field name="objectID" class="java.lang.Integer"/>
+	<sortField name="objectName"/>
+	<variable name="REGDATE" class="java.lang.String">
+		<variableExpression><![CDATA[new SimpleDateFormat("dd.MM.yyyy").format($F{REGDATE})]]></variableExpression>
+	</variable>
+	<variable name="352" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{COORDSTATUS} == 352 ? 1 : null]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="353" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{COORDSTATUS} == 353 ? 1 : null]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="354" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{COORDSTATUS} == 354 ? 1 : null]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="355" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{COORDSTATUS} == 355 ? 1 : null]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="356" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{COORDSTATUS} == 356 ? 1 : null]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="359" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{COORDSTATUS} == 359 ? 1 : null]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="361" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{COORDSTATUS} == 361 ? 1 : null]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="362" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{COORDSTATUS} == 362 ? 1 : null]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="oncoord" class="java.lang.String">
+		<variableExpression><![CDATA[($V{352} != null && $V{352} != 0 ? "\nНа согласовании: " + $V{352} : "")]]></variableExpression>
+		<initialValueExpression><![CDATA[" "]]></initialValueExpression>
+	</variable>
+	<variable name="coord" class="java.lang.String">
+		<variableExpression><![CDATA[($V{353} != null && $V{353} != 0 ? "\nСогласовано: " + $V{353} : "")]]></variableExpression>
+		<initialValueExpression><![CDATA[" "]]></initialValueExpression>
+	</variable>
+	<variable name="reject" class="java.lang.String">
+		<variableExpression><![CDATA[($V{354} != null && $V{354} != 0 ? "\nОтклонено: " + $V{354} : "")]]></variableExpression>
+		<initialValueExpression><![CDATA[" "]]></initialValueExpression>
+	</variable>
+	<variable name="onsign" class="java.lang.String">
+		<variableExpression><![CDATA[($V{355} != null && $V{355} != 0 ? "\nНа подписании: " + $V{355} : "")]]></variableExpression>
+		<initialValueExpression><![CDATA[" "]]></initialValueExpression>
+	</variable>
+	<variable name="sign" class="java.lang.String">
+		<variableExpression><![CDATA[($V{356} != null && $V{356} != 0 ? "\nПодписано: " + $V{356}  : "")]]></variableExpression>
+		<initialValueExpression><![CDATA[" "]]></initialValueExpression>
+	</variable>
+	<variable name="outdate" class="java.lang.String">
+		<variableExpression><![CDATA[($V{359} != null && $V{359} != 0 ? "\nПросрочено: " + $V{359} : "")]]></variableExpression>
+		<initialValueExpression><![CDATA[" "]]></initialValueExpression>
+	</variable>
+	<variable name="onexecute" class="java.lang.String">
+		<variableExpression><![CDATA[($V{361} != null && $V{361} != 0 ? "\nНа исполнении: " + $V{361} : "")]]></variableExpression>
+		<initialValueExpression><![CDATA[" "]]></initialValueExpression>
+	</variable>
+	<variable name="execute" class="java.lang.String">
+		<variableExpression><![CDATA[($V{362} != null && $V{362} != 0 ? "\nИсполнено: " + $V{362} : "")]]></variableExpression>
+		<initialValueExpression><![CDATA[" "]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement uuid="af361ec3-c0b2-4da7-bbbd-e3f8e2cbf3f6" x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Отчет по предписаниям на объекте: " + $P{PROJECTNAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="22f69566-c1e5-42d9-ad65-6046c5e06f9d" x="0" y="20" width="555" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["за период с " + $P{FORMAT_DATEFROM} + " - " + $P{FORMAT_DATETO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="218" splitType="Prevent">
+			<frame>
+				<reportElement uuid="fec1cf81-4798-426c-b0ba-60d23f859c10" style="Normal" positionType="Float" x="0" y="0" width="555" height="218" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="5b35077d-0975-4105-a905-aced53872b24" positionType="Float" x="1" y="1" width="553" height="15" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Top" markup="styled">
+						<paragraph lineSpacing="AtLeast"/>
+					</textElement>
+					<textFieldExpression><![CDATA["<b>№</b> " + $F{VN} + "  <b>Дата регистрации:</b> " + $V{REGDATE} + " <b>Объект:</b> " + $F{objectName} + "\n" +
+"<b>Вид работ:</b> " + ($F{catname}!=null?$F{catname}:"") + "\n" +
+"<b>Подвид работ:</b> " + ($F{subcatname}!=null?$F{subcatname}:"") + "\n" +
+"<b>Ответственный участка на объекте:</b>       " + ($F{signersn}!=null?$F{signersn}:"")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="c61cd21c-245c-4109-923d-50c28ab12c7d" positionType="Float" x="0" y="31" width="554" height="15" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Top" markup="styled">
+						<paragraph lineSpacing="AtLeast"/>
+					</textElement>
+					<textFieldExpression><![CDATA["<b>Место возникновения:</b> " + $F{ORIGIN}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="b85184ca-3cac-40d9-8c45-96055098ac49" positionType="Float" x="1" y="183" width="554" height="35" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Top" markup="html">
+						<font size="11" isBold="false" isUnderline="false"/>
+						<paragraph lineSpacing="AtLeast"/>
+					</textElement>
+					<textFieldExpression><![CDATA["<b>" + $F{CONTENTSOURCE} + "</b><br/>" +
+"<b>Статус:</b> " + $P{CoordStatus_SCRIPTLET}.getStatusName() + ($F{kiregdate} != null && $F{COORDSTATUS} == 362 ? " " + $F{kiregdate} : "") +
+($F{report} != null && $F{COORDSTATUS} == 362 ? "<br/>Для устранения замечания ответственным участка были выполнены следующие операции: " + "<br/>" + $F{report} : "")]]></textFieldExpression>
+				</textField>
+				<componentElement>
+					<reportElement uuid="a9d8fb03-3f13-4e23-8941-46b5af15a519" positionType="Float" mode="Transparent" x="188" y="16" width="366" height="15" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="techsupervision" uuid="4a2ace1e-c1c3-4599-a455-5f6ed451195b">
+							<datasetParameter name="PROJECTDOCID">
+								<datasetParameterExpression><![CDATA[$F{PROJECT}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:listContents height="15" width="366">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="de5a288a-093f-4f63-bc23-8e6dde84b282" positionType="Float" x="0" y="0" width="366" height="15" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+									<pen lineWidth="0.0"/>
+									<topPen lineWidth="0.0"/>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<textElement verticalAlignment="Top" markup="styled">
+									<paragraph lineSpacing="AtLeast"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{itrname}]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ab481487-59cc-40f0-ad20-a98f8145859e" positionType="Float" x="1" y="16" width="187" height="15" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Top" markup="styled">
+						<paragraph lineSpacing="AtLeast"/>
+					</textElement>
+					<textFieldExpression><![CDATA["<b>Инженер технического надзора:</b> "]]></textFieldExpression>
+				</textField>
+				<componentElement>
+					<reportElement uuid="93b4200d-4906-4202-bc0a-63bbff61b668" positionType="Float" x="130" y="48" width="294" height="131" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="images" uuid="220bd1d1-5a29-4538-b1a5-bf4e9df6f05f">
+							<datasetParameter name="DOCID">
+								<datasetParameterExpression><![CDATA[$F{DOCID}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:listContents height="131" width="294">
+							<image scaleImage="FillFrame" onErrorType="Blank">
+								<reportElement uuid="754889ba-85a8-4698-9fe3-edb68a06c013" positionType="Float" mode="Opaque" x="0" y="0" width="294" height="131" isRemoveLineWhenBlank="true"/>
+								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+									<pen lineWidth="0.0"/>
+									<topPen lineWidth="0.0"/>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
+								<imageExpression><![CDATA[$F{image}.getBinaryStream()]]></imageExpression>
+							</image>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+			</frame>
+		</band>
+	</detail>
+	<summary>
+		<band height="21" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="f560da6a-d107-4fe7-a781-d1a8b3479f38" positionType="Float" x="48" y="0" width="441" height="20" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>Количество выданных предписаний:</b> " + $V{REPORT_COUNT} + "\n" +
+$V{oncoord} +
+$V{coord} +
+$V{reject} +
+$V{onsign} +
+$V{sign} +
+$V{outdate} +
+$V{onexecute} +
+$V{execute}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

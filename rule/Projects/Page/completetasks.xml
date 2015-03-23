@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="completetasks" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/mydocuments.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>filter_elements</name>
+		<value>filter_content</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">page.prjs_actionbar.demand</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>script_result</name>
+		<events>
+			<doscript source="file">page.getDocsListCompleteTasks.DoScript</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>captions</name>
+		<value>captions_demand</value>
+	</element>	
+</rule>

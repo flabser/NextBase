@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="view" id="structure">
+	<description>Ответные адокументы</description>
+	<query>structure</query>		
+	<xsltfile>views/dialogbox-list.xsl</xsltfile>	
+</rule>

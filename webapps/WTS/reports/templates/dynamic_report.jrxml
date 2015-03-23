@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="remarks_by_status" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="06dd69cf-8348-4f92-9c29-0979389bdaa3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+	<style name="Normal" isDefault="true" pdfFontName="c:\windows\fonts\tahoma.ttf" pdfEncoding="Cp1251"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="controlDate" class="java.util.Date">
+		<fieldDescription><![CDATA[controlDate]]></fieldDescription>
+	</field>
+	<field name="projectGlossary" class="kz.flabs.runtimeobj.document.glossary.Glossary"/>
+	<field name="contragentGlossary" class="kz.flabs.runtimeobj.document.glossary.Glossary"/>
+	<field name="vnNumber" class="java.lang.Integer"/>
+	<field name="contentSource" class="java.lang.String"/>
+	<field name="coordStatus" class="java.lang.Integer"/>
+	<field name="fullURL" class="java.lang.String"/>
+	<field name="amountDamage" class="java.lang.String"/>
+	<sortField name="projectID" type="Variable"/>
+	<sortField name="vnNumber"/>
+	<variable name="ctrldate" class="java.lang.String">
+		<variableExpression><![CDATA[(new SimpleDateFormat("dd.MM.yyyy")).format($F{controlDate})]]></variableExpression>
+	</variable>
+	<variable name="Не определен" class="java.lang.String">
+		<variableExpression><![CDATA[($F{coordStatus}.intValue() == Integer.valueOf("350") ? "Не определен" :
+	($F{coordStatus}.intValue() == Integer.valueOf("351") ? "Черновик" :
+		($F{coordStatus}.intValue() == Integer.valueOf("352") ? "На согласовании" :
+			($F{coordStatus}.intValue() == Integer.valueOf("353") ? "Согласован" :
+				($F{coordStatus}.intValue() == Integer.valueOf("354") ? "Отклонен" :
+					($F{coordStatus}.intValue() == Integer.valueOf("355") ? "На подписании" :
+						($F{coordStatus}.intValue() == Integer.valueOf("356") ? "Подписан" :
+							($F{coordStatus}.intValue() == Integer.valueOf("358") ? "Не требует согласования" :
+								($F{coordStatus}.intValue() == Integer.valueOf("359") ? "Просрочен" :
+									($F{coordStatus}.intValue() == Integer.valueOf("360") ? "Новая версия" :
+										($F{coordStatus}.intValue() == Integer.valueOf("361") ? "На исполнении" :
+											($F{coordStatus}.intValue() == Integer.valueOf("362") ? "Исполнен" : "Не определен" ) ) ) ) ) ) ) ) ) ) ) )]]></variableExpression>
+	</variable>
+	<variable name="projectID" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{projectGlossary}.getViewText()]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement uuid="a1b76f33-4c22-4148-95d0-25cc4f8e8216" mode="Opaque" x="0" y="-19" width="555" height="91" backcolor="#FFFFFF"/>
+				<elementGroup>
+					<elementGroup>
+						<staticText>
+							<reportElement uuid="f46b8dd5-ee44-44a7-9e87-571ce66869e3" x="133" y="35" width="421" height="21" forecolor="#000000"/>
+							<textElement>
+								<font size="13" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Автоматизированная веб-система технического надзора (WTS)]]></text>
+						</staticText>
+						<image>
+							<reportElement uuid="3cd2c48e-eedd-4580-9547-094bcec894c3" x="0" y="0" width="131" height="91"/>
+							<imageExpression><![CDATA["logo_large.jpg"]]></imageExpression>
+						</image>
+						<staticText>
+							<reportElement uuid="f07facb4-d957-4d6c-9a71-3f56c1d2ef98" x="133" y="57" width="421" height="21" forecolor="#000000"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="13" isBold="true"/>
+							</textElement>
+							<text><![CDATA[]]></text>
+						</staticText>
+					</elementGroup>
+				</elementGroup>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13">
+			<line>
+				<reportElement uuid="5e2bde6f-1e36-4e03-83f1-82ae0ab9461a" x="0" y="12" width="554" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="34">
+			<staticText>
+				<reportElement uuid="089fc28c-3ef7-4e66-9969-8364e0b2e3c3" x="1" y="1" width="86" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Контрагент]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="cda045a4-4465-475d-b914-b19b5cf6f14a" x="1" y="32" width="554" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="98b50c68-9326-4058-808c-b02149033857" x="180" y="1" width="168" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Наименование замечания]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cde30295-6203-4a83-b9d6-60aa71c0eb9b" x="427" y="0" width="67" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Проект]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2cd543d1-f39c-4f32-95fc-c2662b75fcb6" x="87" y="0" width="93" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[№ предписания]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0bd52d00-d9ac-4788-99d5-dd1d6eb538a2" x="348" y="1" width="79" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Отметка об устранении]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e11677a5-429b-421f-87b0-05a402daf55f" x="494" y="0" width="60" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Сумма ущерба]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="58" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false" hyperlinkType="Reference">
+				<reportElement uuid="df42f592-a46c-4287-8507-22d535c78bd6" key="textField" stretchType="RelativeToBandHeight" x="1" y="0" width="86" height="36">
+					<printWhenExpression><![CDATA[$F{contragentGlossary} == null ? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contragentGlossary}.getViewText()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false" hyperlinkType="Reference">
+				<reportElement uuid="27d41ed2-9447-426a-a78d-cdc8cf68ab38" key="textField" stretchType="RelativeToBandHeight" x="427" y="0" width="67" height="36">
+					<printWhenExpression><![CDATA[$F{projectGlossary} == null ? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{projectGlossary}.getViewText()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false" hyperlinkType="Reference">
+				<reportElement uuid="1f09724b-39a9-4ed9-97c2-8c78fbf75e2e" key="textField" stretchType="RelativeToBandHeight" x="180" y="1" width="168" height="36"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contentSource}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false" hyperlinkType="Reference" hyperlinkTarget="Blank">
+				<reportElement uuid="310e3e4e-a37e-4c9f-96f7-8bacbec7f73a" key="textField" stretchType="RelativeToBandHeight" x="87" y="0" width="93" height="36">
+					<printWhenExpression><![CDATA[$F{vnNumber}.intValue() == Integer.valueOf("0") ? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Предписание №" + $F{vnNumber}]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{fullURL}]]></hyperlinkReferenceExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false" hyperlinkType="Reference">
+				<reportElement uuid="1e6d82d7-253a-4845-997a-c7d293a8322f" key="textField" stretchType="RelativeToBandHeight" x="348" y="0" width="79" height="36"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{coordStatus}.intValue() == Integer.valueOf("362") ? "Устранено" : "Не устранено"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false" hyperlinkType="Reference">
+				<reportElement uuid="e86fb322-7e15-45ef-a5b7-5eeccf55ffc1" key="textField" stretchType="RelativeToBandHeight" x="494" y="0" width="60" height="36">
+					<printWhenExpression><![CDATA[$F{amountDamage} != null ? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amountDamage}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

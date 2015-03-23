@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule id="fixRespPost" type="HANDLER">
+<description>fix tech_engineer post</description>
+<rununderuser source="STATIC" type="TEXT">observer</rununderuser>
+<trigger>provider</trigger>
+<scheduler mode="OFF"><starttime>08:50</starttime><nextstart>30.06.2011 08:50:33</nextstart></scheduler>
+<script><![CDATA[
+
+		String doHandler(_Session session, _DocumentCollection collection){
+			try {
+				def db = session.getCurrentDatabase();
+				def prjs = db.getPrjsCollection("");
+				int count = prjs.getCount();
+				for (int i = 0; i < count; i++){
+					def project = prjs.getNthDocument(i);
+					String respID = project.getValueString("responsible");
+					def respUser = session.getStructure().getUser(respID);
+					String postName = "";
+					if (respUser) {						
+						postName = db.getGlossaryDocument(respUser.getPostID())?.getViewText();
+						project.setValueString("respost", postName);
+					}
+					project.save("[observer]");
+				}
+			}catch(e) {
+				e.printStackTrace();
+			}
+        	}]]>
+</script></rule>

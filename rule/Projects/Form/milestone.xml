@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="milestone" mode="on">
+	<description>Веха</description>
+	<xsltfile>forms/milestone.xsl</xsltfile>
+	<doctype>main</doctype>
+	<default>
+		<action mode="on" type="SAVE">
+			<caption source="KEYWORD">Сохранить и закрыть</caption>
+			<granted source="macro" mode="on">current_user</granted>
+		</action> 		
+		<field mode="on" publishas="USER"> 
+			<value source="macro">current_user</value>
+			<name>docauthor</name>
+		</field> 
+		<field mode="on">
+			<name>docdate</name>
+			<value source="macro">current_time</value>
+			<caption source="KEYWORD">Дата</caption>
+		</field>
+	</default>
+	<show>
+		<action mode="on" type="SAVE">
+			<caption source="KEYWORD">Сохранить и закрыть</caption>
+			<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Document doc){
+					return getAsArray(doc.getValueString('author'))
+				}]]></granted>
+		</action>		
+		<field mode="on" publishas="USER">
+			<name>docauthor</name>
+			<value source="docfield">docauthor</value>
+			<caption source="KEYWORD">Автор записи</caption>
+		</field>
+		<field mode="on">
+			<name>docdate</name>
+			<value source="docfield">docdate</value>
+			<caption source="KEYWORD">Дата записи</caption>
+		</field>
+		<field mode="on">
+			<name>description</name>
+			<value source="docfield">description</value>
+			<caption source="KEYWORD">Описание</caption>
+		</field>	
+		<field mode="on">
+			<name>percentage_of_completion</name>
+			<value source="docfield">percentage_of_completion</value>
+			<caption source="KEYWORD">Процент исполнения</caption>
+		</field>
+		<field mode="on">
+			<name>current</name>
+			<value source="docfield">current</value>
+			<caption source="KEYWORD">Текущая</caption>
+		</field>			 
+		<field mode="on">
+			<name>startdate</name>
+			<value source="docfield">startdate</value>
+			<caption source="KEYWORD">Дата начала</caption>
+		</field>
+		<field mode="on">
+			<name>duedate</name>
+			<value source="docfield">duedate</value>
+			<caption source="KEYWORD">Дата завершения</caption>
+		</field>
+	</show>
+	
+	<events> 
+		<querysave source="file">form.milestone.QuerySave</querysave> 
+		<postsave source="file">form.milestone.PostSave</postsave>
+		<queryopen source="file">form.milestone.QueryOpen</queryopen>
+	</events> 
+
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){			
+			
+			return getAsArray(doc.getValueString("description"))
+		}]]></viewtext>
+	<viewtext><![CDATA[
+	String[] getStringValue(_Document doc){			
+			
+			return getAsArray(doc.getValueString("percentage_of_completion"))
+		}]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewdate><![CDATA[
+		String[] getStringValue (_Document doc ){
+			return getAsArray(doc.getValueString("duedate"))			
+		}
+	]]></viewdate>
+	<viewnumber><![CDATA[]]></viewnumber>
+	
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="docauthor" source="KEYWORD">Автор</caption>
+	<caption name="docdate" source="KEYWORD">Дата записи</caption>
+	<caption name="title" source="KEYWORD">Веха</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="attachments" source="KEYWORD">Вложения</caption>
+	<caption name="history" source="KEYWORD">История</caption>
+	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="current" source="KEYWORD">Текущая</caption> 
+	<caption name="description" source="KEYWORD">Описание</caption>
+	<caption name="newdemand" source="KEYWORD">Новая заявка</caption>  
+	<caption name="startdate" source="KEYWORD">Дата начала</caption>
+	<caption name="duedate" source="KEYWORD">Дата завершения</caption>
+	<caption name="saveandclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="percentage_of_completion" source="KEYWORD">Процент исполнения</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name ="help" source ="KEYWORD">Помощь</caption>
+	<caption name ="logout" source ="KEYWORD">Завершить работу</caption>
+	<caption name ="documents" source ="KEYWORD">Записей</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="infofreaders" source="KEYWORD">Кем прочтен</caption>
+	<caption name="readtime" source="KEYWORD">Время прочтения</caption>
+	<caption name="read" source="KEYWORD">Прочтен</caption>
+	<caption name="notread" source="KEYWORD">Не прочтен</caption>
+	<caption name ="view_userprofile" source ="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+</rule>

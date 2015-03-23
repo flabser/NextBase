@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="query" id="milestone">
+	<description>Проекты</description> 
+	<doctype>document</doctype>
+	<query source="static">form = 'milestone'</query>
+	<!-- <groupby source="static" publishas="GLOSSARY">apps</groupby> -->
+
+	<!-- <field mode="on">
+        <name>author</name>
+        <value source="resultset">author</value>
+    </field>-->
+	 
+</rule>

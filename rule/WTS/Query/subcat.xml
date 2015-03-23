@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="query" id="subcat">
+	<description></description>
+	<doctype>glossary</doctype>
+	<query source="static">form='subcat'</query>
+	<sortby source="static">'$sortfield'#'$order'</sortby>
+	<field mode="on">	
+		<name>viewtext</name>
+		<value source="resultset">name</value>	
+		<attrvalue></attrvalue>	
+	</field>
+	<field mode="on">	
+		<name>category</name>
+		<value source="resultset">category</value>	
+		<attrvalue></attrvalue>	
+	</field>
+		
+</rule>

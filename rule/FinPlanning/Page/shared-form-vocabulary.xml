@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="page" id="shared-form-vocabulary" mode="on">
+	<description></description>
+	<caption name="close" source="KEYWORD">Close</caption>
+	<caption name="cancel" source="KEYWORD">Cancel</caption>
+
+	<caption name="saved" source="KEYWORD">Saved</caption>
+	<caption name="newdoc" source="KEYWORD">New document</caption>
+	<caption name="editing" source="KEYWORD">Editing</caption>
+	<caption name="readonly" source="KEYWORD">Read only</caption>
+	<caption name="modenotdefined" source="KEYWORD">Mode is undefined</caption>
+	<caption name="author" source="KEYWORD">Author</caption>
+
+	<caption name="properties" source="KEYWORD">Properties</caption>
+	<caption name="attachments" source="KEYWORD">Attachments</caption>
+	<caption name="additional" source="KEYWORD">Additional</caption>
+
+	<caption name="info_status_doc" source="KEYWORD">Document state</caption>
+	<caption name="info_permissions" source="KEYWORD">Permissions</caption>
+	<caption name="info_read" source="KEYWORD">Reading information</caption>
+	<caption name="info_readers" source="KEYWORD">Who was read</caption>
+	<caption name="info_read_time" source="KEYWORD">Time</caption>
+	<caption name="info_ds" source="KEYWORD">Digital signature</caption>
+
+	<caption name="attach" source="KEYWORD">Attach</caption>
+	<caption name="attach_delete" source="KEYWORD">Delete attachment</caption>
+	<caption name="attach_open" source="KEYWORD">Open attachment</caption>
+	<caption name="attach_preview" source="KEYWORD">Preview</caption>
+	<caption name="attach_add_comment" source="KEYWORD">Add a comment</caption>
+</rule>

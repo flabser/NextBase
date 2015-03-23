@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="query" id="responsiblesection">
+    <description>Структура</description>
+    <rununderuser source="static">observer</rununderuser>  
+    <doctype>STRUCTURE</doctype>
+    <query source="macro">tech_engineer</query>
+    <field mode="on">	
+		<name>viewtext</name>
+		<value source="resultset">shortname</value>	
+		<attrvalue></attrvalue>	
+	</field>	
+    <field mode="on">	
+		<name>shortname</name>
+		<value source="docfield">shortname</value>	
+		<attrvalue></attrvalue>	
+	</field>	
+</rule>

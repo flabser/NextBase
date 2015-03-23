@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="content" id="help_documents" mode="on" anonymous="on">	
+	<description>Help</description>	
+	<xsltfile>help.xsl</xsltfile>		
+	<field mode="on">		
+		<description></description>
+		<name>category</name>
+		<value>Общие вопросы</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>topic</name>
+		<value>Регистрация входящего документа</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>«Входящий документ» - Входящие документы, которые поступили в вашу организацию и были зарегистрированы в канцелярии. Вам будут доступны не все документы, а только те, к которым вы имеете “отношение” например, вас указали при регистрации в качестве получателя входящего документа (регистрацию входящих документов осуществляет канцелярия) или вас указали в резолюции (в карточке задания) в качестве исполнителя документа.
+			Для регистрации входящего документа необходимо выполнить следующие действия: 
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			1.Перейти в соответствующее представление, и нажать на кнопку “Новый входящий документ” см. Рис. 1
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/helpimg/regIN/in1.jpg</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Рис. 1 Представление вида "Входящие документы"</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			2.В открывшейся форме заполнить необходимые поля. см. Рис. 2
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/helpimg/regIN/in2.jpg</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Рис. 2 Пустая форма документа "Входящий"</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			3.Далее нажимаем кнопку “Сохранить и закрыть”.
+			Функционально, документы Резолюция и Перепоручение выполняют одну и ту же роль и содержат одинаковые поля, т.е. в этих документах описывается задание, срок исполнения и исполнители задания. Различие заключается в следующем: Резолюция создается непосредственно на входящий документ и имеет приоритет над всеми последующими препоручениями. Тип контроля, назначенный в резолюции, наследуется во все последующие перепоручения. Перепоручения так же не могут иметь срок исполнения, который больше срока указанного в резолюции.
+			Ввод резолюции осуществляется путем нажатия кнопки “Резолюция” расположенной на панели акции входящего документа. см Рис. 3
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/helpimg/regIN/in3.jpg</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Рис. 3 Заполненная форма документа "Входящий"</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/helpimg/regIN/in4.jpg</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Рис. 4 Резолюция на входящий документ</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			Выбираем исполнителя, и заполняем текст резолюции. Нажимаем “Сохранить и закрыть” см. Рис. 4
+			Регистрация перепоручения осуществляется путем нажатия кнопки “Перепоручение”. Кнопка доступна только исполнителям задания, если инициируется ввод перепоручения или получателям входящего документа если инициируется ввод резолюции.
+			Ввод карточки исполнения осуществляется путем нажатия соответствующей кнопки, расположенной на панели акции формы резолюции или перепоручения.
+			Кнопка доступна только внутренним исполнителям задания.
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>topic</name>
+		<value>Регистрация ответного документа</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			Для регистрации ответного документа нужно выполнить следующие действия:
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			1.Перейти в соответствующее представление, например “Входящие” нажать на документ, на который необходимо создать ответный и нажать кнопку “Ответный исходящий”
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/helpimg/regIN/in5.jpg</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Рис. 5 Заполненая форма резолюции </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			2. Заполняем необходимые поля в открывшейся форме Проекта исходящего, содержание документа помещаем в поле “Основной текст” далее выбираем людей для согласования и нажимаем кнопку “Отправить на согласование” если у нас нет людей для согласования, то нажимаем кнопку “ Отправить на подпись”.
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>topic</name>
+		<value>Регистрация исходящего документа</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			Исходящий документ - официальный документ, отправляемый из организации, предназначенный для взаимодействия с внешними организациями.
+			В разделе находятся документы, которые ваша организация отправляет другим организациям. БД  предназначена  для  обеспечения  ввода  и  хранения  исходящей корреспонденции. Раздел «Исходящие» открывает представление, в котором отображаются так называемые «официальные документы». Это документы, которые прошли процедуру регистрации в вашей организации и имеют регистрационный номер, присвоенный канцелярией.
+			Вам доступны только документы, где вы указаны как автор подписи исходящего документа или были инициатором документа.
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			Регистрацию Исходящего Документа в 4ms Workflow можно осуществить двумя способами: C помощью заполнения формы (Только для Канцелярии), или через Проект Исходящего.
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			Здесь мы рассмотрим первый вариант, с помощью заполнения формы:
+			1.Перейти в соответствующее представление, и нажать на кнопку:
+			«Новый исходящий документ» см. Рис. 6
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/helpimg/regISH/ish1.jpg</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Рис. 6 Представление вида "Исходящие документы"</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			2. В Открывшейся форме заполняем необходимые поля.
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			3. Содержание документа помещаем в поле “Основной текст” во вкладке “Содержание”. Так же во вкладке “Вложения” можно вставить приложение к исходящему документу.
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/helpimg/regISH/ish2.jpg</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Рис. 7 Форма исходящего документа</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/helpimg/regISH/ish3.jpg</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Рис. 8 Форма исходящего документа</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>
+			4.Нажимаем кнопку “Зарегистрировать документ”.
+			После регистрации документ приобретает статус “Официального документа”. См. Рис. 7-8
+		</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>seealso</name>
+		<value>help</value>				
+	</field>
+	<caption name="helpcaption" source="KEYWORD">Помощь</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+</rule>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="typeoperationstaff" mode="on">
+	<description>Тип операции по персоналу</description>
+	<xsltfile>forms/typeoperationstaff.xsl</xsltfile>
+	<doctype>glossary</doctype>
+
+	<default>
+		<field mode="on">
+			<name>name</name>
+			<caption source="KEYWORD">Наименование</caption>
+		</field>
+		<field mode="on">
+			<name>typeoperation</name>
+			<caption source="KEYWORD">Тип операции</caption>
+		</field>
+	</default>
+	<show>
+		<field mode="on">
+			<name>name</name>
+			<value source="docfield">name</value>
+			<caption source="KEYWORD">Наименование</caption>
+		</field>
+		<field mode="on">
+			<name>typeoperation</name>
+			<value source="docfield">typeoperation</value>
+			<caption source="KEYWORD">Тип операции</caption>
+		</field>
+	</show>
+	<save>
+		<field mode="on">
+			<value source="static">typeoperationstaff</value>
+			<docfield>form</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">typeoperation</value>
+			<docfield>typeoperation</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">name</value>
+			<docfield>name</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">name</value>
+			<docfield type="VIEWTEXT" />
+		</field>
+
+		<field mode="on">
+			<value source="static">typeoperationstaff</value>
+			<docfield>defaultruleid</docfield>
+		</field>
+	</save>
+
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			String _typeoperation = ""
+			String typeoperation = doc.getValueString("typeoperation")
+			if(typeoperation.equals("charge")){
+				_typeoperation = "начисление"
+			} else if(typeoperation.equals("holddebt")){
+				_typeoperation = "удержание"
+			}
+
+			return getAsArray(_typeoperation)
+		}]]></viewtext>
+
+	<glossary mode="on" id="typeoperation" source="static">
+		<description>typeoperation</description>
+		<value><![CDATA[
+			<entry><skey>charge</skey><name>начисление</name></entry>
+			<entry><skey>holddebt</skey><name>удержание</name></entry>]]>
+		</value>
+	</glossary>
+
+	<caption name="title" source="KEYWORD">Тип операции по персоналу</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Идет сохранение документа...</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+	<caption name="saving" source="KEYWORD">Сохранение</caption>
+	<caption name="name" source="KEYWORD">Название</caption>
+	<caption name="typeoperation" source="KEYWORD">Тип операции</caption>
+</rule>

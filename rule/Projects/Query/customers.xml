@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="query" id="customers">
+	<description>Заявки</description>
+	<rununderuser source="macro">current_user</rununderuser>
+	<doctype>glossary</doctype>
+	<query source="static">form = 'customers'</query>
+</rule>

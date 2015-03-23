@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="content" id="help_documents" mode="on" anonymous="on">	
+	<description>Help</description>	
+	<xsltfile>help.xsl</xsltfile>		
+	<field mode="on">		
+		<description></description>
+		<name>category</name>
+		<value>Резюме</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>topic</name>
+		<value>Контроль качества строительства</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Модуль " Контроль качества строительства ", обеспечивает управление процессами контроля качества строительства. Ключевым документом в данном процессе является документ: "Замечание", момент регистрации которого является началом рабочего процесса. Документ содержит поля с описанием замечания, места возникновения, сроком устрнения и других полей. В момент регистрации, документ получает уникальный регистрационный номер, статус "черновик",  доступ на документ ограничивается автором и отвественным ИТР участка места возникновения замечания (далее "отвественный участка"). Ответсвенный участка так же получает доступ на кнопки "Согласен"  и "Не согласен" посредством которых он выражает свое отношение к замечанию на предмет обоснованности. 
+При положительном решении документ, меняет статус на "на исполнении", при этом выдаются права сотрудникам тех.надзора и при необходимости курирующим менеджерам проекта. 
+При отклонении документ меняет статус на "отклонен отвественным участка" и в этом случае процесс останавливается.  
+При статусе "на исполнении", сотрудники тех. надзора в процессе заносят либо факт устранения либо не соотвествия выполненных работ, с изложением причин. При отметке "Устранено" - замечание меняет статус как "Исполнено", при отметке "Не устранено", замечание не меняет статус для продолжения работы до момента устранения.
+В процессе доступ к "потоку" документов ограничиваются только теми сотрудниками, которые имеют отношение к данному потоку. Так же в процессе смены состоянии или статусов возможна рассылка по электронной почте и выдача прав на просмотр тем сотрудникам которые заинтересованы в просмотр
+
+		</value>				
+	</field>	
+	<field mode="on">		
+		<description></description>
+		<name>topic</name>
+		<value>Автоматизированная веб-система технического надзора - "WTS"</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>topic</name>
+		<value>Web-Technical-Supervision</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>1.	Описание системы</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Система предназначена для автоматизированного процесса контроля качества строительства и ведение журнала замечаний технического надзора по качеству работ.
+</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Осуществляется контроль и мониторинг базы данных замечаний, дефектов и недоработок в строительстве, выявленных техническим надзором. Предусмотрено ведение строительных проектов и их статусов в разрезе от подъезда до квартиры, уведомления и напоминания, совместная работа над замечаниями.
+</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>2.	Рабочее пространство пользователя системы</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Загрузив страницу информационной системы в веб-браузере, пользователь видит на экране  Рабочее пространство:
+</value>				
+	</field>
+	
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/1.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Для авторизации в правом верхнем углу экрана пользователь должен ввести свой ID-пользователя (выданный администратором) и пароль (предустановленный, либо заведенный самостоятельно).
+</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/2.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Если отметить флажок "Чужой компьютер", то введенный пароль не будет автоматически сохранен в операционной системе (безопасность работы в интернет-кафе и т.п. местах).Авторизация на рабочем пространстве является "Единой точкой входа", то есть, авторизуясь однократно, пользователь получает доступ ко всем приложениям, расположенным в рабочем пространстве (если таких несколько). Набор таких приложений зависит от конкретной информационной системы.
+</value>				
+	</field>
+	
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Если пароль и логин введены правильно, на рабочем пространстве появится иконка программного приложения (вход кликом мыши):
+</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/3.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Для выхода из рабочего пространства достаточно нажать кнопку "Выйти".  Которая является "Единой точкой выхода" – после нее опять потребуется авторизация.
+</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>3.	Рабочее место пользователя WTS</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>После авторизации и входа в систему, пользователю открывается его автоматизированное рабочее место (далее АРМ):</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/4.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>С левой стороны панель навигации с доступными (если есть права на их просмотр) видами, справа - представления с доступными кнопками (если есть права на определенные действия).
+Разделяющая полоса у края панели позволяет щелчком мыши свернуть влево панель навигации и развернуть на весь экран представление.
+</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Доступные виды.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>o	Замечания:</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Черновик – черновики созданных, но не отправленных замечаний</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	На согласовании – созданные замечания, находящиеся на согласовании</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Отклоненные – не согласованные замечания</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	На исполнении – замечания на исполнении</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	На ревизии исполнения – выполненные, но не утвержденные на закрытие замечания</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Исполненные – выполненные и закрытые замечания</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Избранные – вид с документами, выбранными пользователем из общего списка для быстрого доступа</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>o	Статистика</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>o	Справочники</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Ссылка в правом верхнем углу экрана "Завершить  работу" позволяет выйти из приложения в рабочее пространство.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>4.	Роли</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>В "WTS" закреплены роли, которые позволяют группе лиц, получивших права, выполнять набор соответствующих функций, таких как просмотр, ввод, модификация определенных данных.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Технадзор: создание замечания, проставление отметки об устранении замечания, отметки о несоответствии выполненных работ и т.д., пользование фильтрами и отчетами, модификация определенных полей журнала (tech_supervisor).</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Ответственный ИТР: проставление отметки о согласии с замечанием, отметки об устранении дефекта и т.д., пользование фильтрами и отчетами, модификация определенных полей журнала (tech_engineer).</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Топ-менеджер: просмотр всех данных, пользование фильтрами и отчетами (top_manager).</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Оператор: ввод данных в справочники, пользование фильтрами и отчетами (operator).</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>5.	Информация о пользователе системы</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Данные о пользователе системы задаются Администратором (administrator) при создании/заведении Нового пользователя. В последующем информация может редактироваться администратором, некоторые поля и самим пользователем. Чтобы просмотреть свой профиль, пользователь может зайти в него через ссылку на своем имени (в АРМе вверху справа).
+</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Основные вкладки пользовательского профиля:</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Свойства</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Интерфейс</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Управление фильтрами</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/6.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Редактируемые пользователем поля: пароль и E-mail.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Предустановленный администратором пароль пользователь должен сменить после первого входа и менять периодически в зависимости от правил безопасности организации. Электронный адрес можно сменить, если пользователь уходит в отпуск и хочет, чтобы корпоративные сообщения присылались ему на личный почтовый ящик. После выхода из отпуска можно также сменить адрес на корпоративный.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Интерфейс</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>В этой вкладке пользователь может настроить свое рабочее место для его удобства и эргономичности.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/7.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Количество в виде – сколько документов выводить одновременно в списке на экран.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Периодичность – как часто будет обновляться информация о поступивших документах, то есть при установке в 10 минут документы будут обновлять свой статус (исполнен/не исполнен) и т.п. каждые 10 минут. </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Язык  - выбрать язык интерфейса системы (предусмотрены казахский/русский/английский/ китайский).</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Управление фильтрами</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Управление фильтрами – позволит создать шаблоны выборки документов, которыми пользователь часто пользуется в своей повседневной работе, но они имеют более конкретный диапазон поиска, в отличие от предустановленных. </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/8.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Добавить фильтр</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/9.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Выбирая необходимые параметры, можно создать фильтр, который отберет, например, все документы, созданные конкретным автором или документы с ключевым словом "ABCD…" по конкретному проекту и т.д. Нажатие "ОК" сохранит фильтр и он появится в списке. Сохраненный пользовательский фильтр будет доступен только для создавшего его пользователя и его запуск будет возможен из панели навигации.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>6.	Передача прав доступа</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>На случай болезни и отпуска ответственных лиц возможна передача их прав другому пользователю. Права имеет возможность передавать только администратор системы.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>7.	Справочники</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Информация по проектам, контрагентам, должностям и др. ведется в специальных справочниках, редактировать которые имеет право сотрудник с правами Оператор. </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Справочники системы:</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Структура организации</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Должность</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Тип подразделения</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Роли пользователей</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Группы пользователей</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Вид работ</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Подвид работ</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Регион/Город</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Проекты</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Категория контрагентов</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Контрагент</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Место замечания</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>8.	Движение документов в системе</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/10.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>Описание</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Специалист из отдела технического надзора за строительством создаёт из черновика Замечание, оно появится в виде "черновик". </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Указывает в нем ответственного участка (начальника участка), указывает контрагента замечания и заполняет все необходимые поля. </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Затем нажимает кнопку Отправить ответственному участка</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Система сохраняет документ и отправляет уведомление в почтовый корпоративный ящик ответственному участка и документ находится в виде "на согласовании". </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Получатель открывает этот документ и, если согласен с этим замечанием, то нажимает кнопку Принять. Если же замечание ошибочное или не правильное, то нажимает Отклонить (в результате документ уходит в "отклонённые", откуда его уже не вернуть на исполнение). </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Если замечание принимается в исполнение, то оно находится на исполнении в соответствии со сроком исполнения, указанном автором в Замечании.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	До тех пор, пока не произвели исправление (исполнение) замечания,  оно находится в виде "на исполнении". </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Как только замечание устранено, ответственный участка нажимает кнопку Отметить исполнение и заполняет карточку исполнения. </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	После отметки исполнения замечания ответственным лицом, автору приходит уведомление об исполнении. </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	На этом этапе документ находится в виде "на ревизии исполнения". В этом виде документ ожидает реакции автора - подтверждения или отклонения исполнения. </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Если автор отклоняет исполнение - то документ возвращается на исполнение. </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Если подтверждает исполнение, то документ получает статус исполненного и находится в виде "исполненные". </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>9.	"Черный список"</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Название организации (компании, фирмы, ИП, бригады), зафиксированное в замечаниях в графе "Наименование Контрагента" более 3-х раз, автоматически приобретает статус "недобросовестного исполнителя договорных обязательств", и эта информация сохраняется в справочнике контрагентов системы.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>При создании нового замечания, при вводе 4 символов названия какой-либо организации в поле ввода "контрагента" система предоставит на выбор подходящие наименования из справочника. После выбора "контрагента" из открывшегося списка, системой определяется принадлежность его к "черному списку", о чем проставляется соответствующая отметка справа:</value>				
+	</field>
+			<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/12.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>10.	Предустановленные фильтры</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Наиболее часто используемые запросы выведены в фильтры с просмотром результатов на экране:</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>В разрезе Объекта:</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	По одной/всем Квартирам</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Просроченные замечания</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Ответственный за устранение</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Период</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Сумма ущерба по объекту</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>В разрезе Контрагента:</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	По всем объектам</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Просроченные замечания</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Сумма ущерба по контрагенту</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	По одному Объекту</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	По всем квартирам</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Просроченные замечания</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Ответственный за устранение</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Период</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Сумма ущерба</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>11.	Отчеты</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>У пользователя есть возможность вывода отчетов по имеющимся в системе проектам и замечаниям в файл:</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>1)	По статусу (Структура: Статус/Подрядчики/Замечания, проект);</value>				
+	</field><field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>2)	По месту возникновения (Структура: Проект/Подрядчики/Начальник участка/Объекты, сроки, статус);</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>3)	В разрезе одного объекта все замечания по видам работ.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Для вывода отчета нужно выбрать представление с требующимся видом отчета и в открывшейся форме нажать кнопку "Сформировать отчет":</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/13.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Отчет можно сохранить в разных форматах - в формате *.xls (таблицы Excel), в *.pdf (формат Adobe Reader, для дальнейшего использования в печати и текстовых редакторах) и *.html (просмотр сохраненных отчетов в веб-браузерах). Также можно предварительно просмотреть отчет в окне браузера. Пользователь выбирает отметкой нужный формат вывода и затем кнопку "Сформировать отчет".</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>12.	Статистика</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>В системе также есть возможность мониторинга работы проектов и исправления замечаний через графические статистические сводки:</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	По статусу – по статусу замечаний (Исполнено, На согласовании, На ревизии исполнения, Отклонено), например:</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/14.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	По месту возникновения - соответственно по месту возникновения</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	По ответственному участка – сколько замечаний в разрезе ответственных</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>list</name>
+		<value>•	Индекс устранения – статистика исполнения в разрезе месяцев.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>13.	Уведомления </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>О просроченных замечаниях система напомнит ответственным лицам, закрепленным за строящимся объектом, уведомлением в почтовый ящик. Данное сообщение отправляется и в адрес контрагента - в качестве контрольного уведомления c возможностью вывода уведомления на печать. </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>14.	Почта</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Для обсуждения проектов и их ведения в системе предусмотрена внутренняя переписка между сотрудниками в виде чата. Пользователи обмениваются информацией в рамках присвоенных им ролей.</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>15.	Кнопки WTS </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Для работы пользователей в системе предусмотрены следующие кнопки (по алфавиту):</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/15.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/16.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/17.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/18.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/19.png</value>				
+	</field>
+		<field mode="on">		
+		<description></description>
+		<name>imagetitle</name>
+		<value>16.	Клавиши быстрого доступа </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Для удобства пользователей предусмотрена возможность вызова функций сочетанием нажатия определенных клавиш с Ctrl ("горячие" клавиши). </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>image</name>
+		<value>classic/img/content/20.png</value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Например, при нажатии "Ctrl" рядом с кнопками появляются буквы, которые можно нажать: N или D, и тогда либо откроется новый документ (New), либо удалится тот (Delete), на котором в момент нажатия находился курсор. </value>				
+	</field>
+	<field mode="on">		
+		<description></description>
+		<name>chapter</name>
+		<value>Например, при нажатии "Ctrl" рядом с кнопками появляются буквы, которые можно нажать: N или D, и тогда либо откроется новый документ (New), либо удалится тот (Delete), на котором в момент нажатия находился курсор. </value>				
+	</field>
+			<field mode="on">		
+		<description></description>
+		<name>seealso</name>
+		<value>help</value>				
+	</field>
+	<caption name="helpcaption" source="KEYWORD">Помощь</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+</rule>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="order" mode="on">
+	<description>Заказ</description>
+	<xsltfile>forms/order.xsl</xsltfile>
+	<doctype>main</doctype>
+
+	<events> 
+		<queryopen source="file">form.orderdoc.QueryOpen</queryopen>
+		<querysave source="file">form.orderdoc.QuerySave</querysave>
+	</events>
+
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="title" source="KEYWORD">Клиент</caption>
+	<caption name="name" source="KEYWORD">Название</caption>
+    <caption name="bin" source="KEYWORD">БИН</caption>
+	<caption name="saveandclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name ="help" source ="KEYWORD">Помощь</caption>
+	<caption name ="logout" source ="KEYWORD">Завершить работу</caption>
+	<caption name ="documents" source ="KEYWORD">Записей</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name ="view_userprofile" source ="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+    <caption name="searchcaption" source="KEYWORD">Поиск</caption>
+
+    <caption name="orderNum" source="KEYWORD">Номер заказа</caption>
+    <caption name="regDate" source="KEYWORD">Дата заказа</caption>
+    <caption name="customer" source="KEYWORD">Заказчик</caption>
+    <caption name="responsiblePerson" source="KEYWORD">Ответственный исполнитель</caption>
+    <caption name="issueDate" source="KEYWORD">Дата выдачи</caption>
+    <caption name="goodsList" source="KEYWORD">Наименование товаров</caption>
+    <caption name="price" source="KEYWORD">Цена за единицу</caption>
+    <caption name="quantity" source="KEYWORD">Количество</caption>
+    <caption name="totalPrice" source="KEYWORD">Сумма</caption>
+    <caption name="prepayment" source="KEYWORD">Предоплата</caption>
+    <caption name="leftPayment" source="KEYWORD">Остаток</caption>
+    <caption name="linkToOutlay" source="KEYWORD">Ссылка на смету</caption>
+    <caption name="linkToModel" source="KEYWORD">Ссылка на макет</caption>
+    <caption name="purchaseCost" source="KEYWORD">Фактическая стоимость закупа</caption>
+    <caption name="contractorCost" source="KEYWORD">Фактическая стоимость подрядчика</caption>
+    <caption name="laborCost" source="KEYWORD">Фактическая стоимость рабочей силы</caption>
+    <caption name="profit" source="KEYWORD">Прибыль</caption>
+    <caption name="model" source="KEYWORD">Макет</caption>
+    <caption name="workerCode" source="KEYWORD">Код сотрудника</caption>
+    <caption name="credit" source="KEYWORD">Наличие кредита</caption>
+    <caption name="signedAct" source="KEYWORD">Наличие подписанного акта</caption>
+    <caption name="docauthor" source="KEYWORD">Автор</caption>
+    <caption name="" source="KEYWORD"></caption>
+
+</rule>

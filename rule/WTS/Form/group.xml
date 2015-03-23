@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="form" id="Group" mode="on">
+    <description>Группа пользователя</description>
+    <xsltfile>forms/group.xsl</xsltfile>
+    <doctype>group</doctype>
+    <outline>navigator</outline>
+    <default>	
+    </default>
+    <show>
+        <field mode="on">	
+            <name>groupname</name>			
+            <value source="docfield">name</value>
+            <caption source="KEYWORD">Название</caption>	
+        </field>
+        <field mode="on">	
+            <name>description</name>			
+            <value source="docfield">description</value>
+            <caption source="KEYWORD">Описание</caption>	
+        </field>
+        <field mode="on" publishas="ROLE">
+            <name>role</name>
+            <value source="docfield">role</value>
+            <caption source="KEYWORD">Роли</caption>
+        </field>
+        <field mode="on" publishas="USER">
+			<name>members</name>
+			<value source="docfield">members</value>
+		</field>
+        <field mode="on" publishas="USER">
+			<name>ownergroup</name>
+			<value source="docfield">ownergroup</value>
+		</field>
+    </show>
+    <save>		
+        <field mode="on">	
+            <value source="static">group</value>
+            <docfield>form</docfield>				
+        </field>
+        <field mode="on">	
+            <value source="webformfield">groupname</value>
+            <docfield>groupname</docfield>				
+        </field>
+        <field mode="on">	
+            <value source="webformfield">groupname</value>
+            <docfield type="viewtext"></docfield>				
+        </field>
+        <field mode="on" publishas="USER">
+			<name>members</name>
+			<value source="webformfield">members</value>
+		</field>
+        <field mode="on">	
+            <value source="webformfield">description</value>
+            <docfield>description</docfield>				
+        </field>
+        <field mode="on">
+        	<value source="webformfield">ownergroup</value>
+        	<docfield>ownergroup</docfield>
+        </field>
+		<field mode="on">
+			<value source="static">group</value>
+			<docfield>defaultruleid</docfield>
+		</field>
+		
+	</save>
+	<querysave><![CDATA[
+		void doQuerySave(_Session session, _Document document, String user){
+		boolean v = true;
+		def validate = {
+			if (document.getValueString("name") == ""){
+					localizedMsgBox("Поле \"Название\" не заполнено.");
+					v = false;
+				}
+			}
+			validate();
+			if (v){
+			    doc.setViewText(doc.getValueString("name"));
+			}else{
+				stopSave();
+				}
+			}
+	]]>
+	</querysave>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("name"));
+		}
+	]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewdate><![CDATA[]]></viewdate>
+	<viewnumber><![CDATA[]]></viewnumber>
+    <caption name="newdoc" source="KEYWORD">Новый документ</caption>
+    <caption name="editing" source="KEYWORD">Редактирование</caption>
+    <caption name="readonly" source="KEYWORD">Только для чтения</caption>
+    <caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+    <caption name="saved" source="KEYWORD">Сохраненный</caption>
+    <caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="name" source="KEYWORD">Группа пользователей</caption>
+	<caption name="description" source="KEYWORD">Описание</caption>
+	<caption name="ownergroup" source="KEYWORD">Владелец группы</caption>
+	<caption name="partgroup" source="KEYWORD">Участники группы</caption>
+	<caption name="role" source="KEYWORD">Роли</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	<caption name="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+	<glossary mode="on" id="roles" source="macro">APPLICATION_ROLES</glossary>
+   <!--  <glossary mode="on" id="role" source="query">
+        <description>Роль</description>
+        <value>role</value>
+    </glossary> -->
+</rule>

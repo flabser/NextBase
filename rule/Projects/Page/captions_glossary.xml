@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="captions_glossary" mode="on" history="on">
+	<description></description>
+	<caching>CACHING_IN_APPLICATION_SCOPE</caching>
+	<element mode="ON" type="STATIC_TAG"></element>
+	<caption name="viewtext1" source="KEYWORD">Название</caption>
+	<caption name ="help" source ="KEYWORD">Помощь</caption>
+	<caption name ="logout" source ="KEYWORD">Завершить работу</caption>
+	<caption name ="documents" source ="KEYWORD">Записей</caption> 	
+	<caption name ="search" source ="KEYWORD">Поиск</caption>
+	<caption name ="view_userprofile" source ="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+</rule>

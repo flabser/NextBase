@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="remarks_by_status" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bf855e0c-bcaf-4961-9fb0-68a89ae40ef6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+	<property name="et.sf.jasperreports.export.xls.remove.empty.space.between.rows" value="true"/>
+	<style name="Normal" isDefault="true" pdfFontName="c:\windows\fonts\tahoma.ttf" pdfEncoding="Cp1251"/>
+	<field name="projectGlossary" class="kz.flabs.runtimeobj.document.glossary.Glossary"/>
+	<field name="categoryGlossary" class="kz.flabs.runtimeobj.document.glossary.Glossary"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement uuid="87773668-5d91-440a-ac7b-572d293b3353" mode="Opaque" x="0" y="-19" width="555" height="91" backcolor="#FFFFFF"/>
+				<elementGroup>
+					<elementGroup>
+						<staticText>
+							<reportElement uuid="15afc2e4-57ae-449b-83b3-edd520673eb3" x="133" y="35" width="421" height="21" forecolor="#000000"/>
+							<textElement>
+								<font size="13" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Автоматизированная веб-система технического надзора (WTS)]]></text>
+						</staticText>
+						<image>
+							<reportElement uuid="17e3c6b5-8530-4a1e-9aaf-86b82d7d124d" x="0" y="0" width="131" height="91"/>
+							<imageExpression><![CDATA["logo_large.jpg"]]></imageExpression>
+						</image>
+						<staticText>
+							<reportElement uuid="f1aaba6e-a020-4d3f-9cd4-9fe8d7948911" x="133" y="57" width="421" height="21" forecolor="#000000"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="13" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Отчет по объектам]]></text>
+						</staticText>
+					</elementGroup>
+				</elementGroup>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13">
+			<line>
+				<reportElement uuid="8022a5b5-ccac-45c1-8326-3ea6d879a38e" x="0" y="12" width="554" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24">
+			<staticText>
+				<reportElement uuid="fd42c908-a334-4861-bf69-26ac56adf56b" x="35" y="1" width="192" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Проект]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a0b78605-834a-4f5d-b22b-81b830c06e1e" x="227" y="1" width="328" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Виды работ]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="2d588a74-5106-4d62-be71-e6efdb22ccf0" x="1" y="22" width="554" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="37" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+				<reportElement uuid="1914f691-5f52-431c-8e1a-4fe74a737259" key="textField" positionType="Float" x="35" y="1" width="192" height="36" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{projectGlossary} == null ? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" pdfEncoding="Cp1251"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{projectGlossary}.getViewText()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+				<reportElement uuid="0cb69c45-0746-4044-9010-a20a445e7594" key="textField" positionType="Float" x="227" y="1" width="328" height="36" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{categoryGlossary} == null ? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" pdfEncoding="Cp1251"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categoryGlossary}.getViewText()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true" hyperlinkType="Reference">
+				<reportElement uuid="d0ef8f84-cfb2-49a6-8d32-98f733e90294" key="textField" positionType="Float" x="0" y="1" width="35" height="36" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" pdfEncoding="Cp1251"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

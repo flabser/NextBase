@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="handler" id="exportStructFromXLS">
+	<rununderuser source="macro">CURRENT_USER</rununderuser>
+	<trigger>provider</trigger>
+	<script><![CDATA[
+			String doHandler(_Session session, _DocumentCollection collection){
+				
+				def db = session.getCurrentDatabase();
+				
+				def glossaries = db.dataBase.getGlossaries();						
+							
+			try {
+				/*File errors = new File("errors.log");
+				PrintWriter printer = new PrintWriter(errors);
+				File file = new File("errors.log");*/				
+											
+				File xlsFile = new File("Glossaries.xls");
+								
+				Workbook workbook = Workbook.getWorkbook(xlsFile);
+								
+				Sheet sheet = workbook.getSheet(1);	
+				
+								
+				println(sheet.getRows());
+				println(sheet.getColumns());
+				
+				int catID = 0;
+				
+				for (int i = 1; i <= sheet.getRows()-1; i++) {
+					def glossary = new Glossary(db.dataBase);
+					for (int j = 0; j <= sheet.getColumns()-1; j++) {
+						Cell cell = sheet.getCell(j, i);
+						if (cell.getType() != CellType.EMPTY) {
+							def value;
+							if (cell.getType() == CellType.LABEL) {
+								LabelCell labCell = (LabelCell) cell;
+								value = labCell.getString().trim();
+							} else if (cell.getType() == CellType.NUMBER) {
+								NumberCell numCell = (NumberCell) cell;
+								value = numCell.getContents().trim();
+							}						
+							switch(j){
+								case 0:
+									println(value);
+									glossary.setCode(value);
+									println(glossary.getCode());
+									glossary.addStringField("code", value);
+									break;
+								case 1:								
+									catID = glossaries.getGlossaryElementID(value, "contractorcat");
+									if (catID == 0) {
+										def glos = new Glossary(db.dataBase);
+										glos.setName(value);
+										glos.setViewText(value);
+										glos.setCode("0");
+										glos.defaultRuleID = "contractorcat";
+										glos.form = "contractorcat";
+										glos.save(Const.sysGroupAsSet, Const.sysUser);
+										catID = glos.getDocID();									
+									}
+									glossary.addIntField("contractorcat", catID);								
+									break;
+								case 2:
+									glossary.setName(value);
+									glossary.setViewText(value);
+									break;
+								case 3:
+									glossary.addStringField("rnn", value);
+									break;
+								case 4:
+									glossary.addStringField("bin", value);
+									break;
+							}
+											
+						}
+					}
+						glossary.defaultRuleID = "contractor";
+						glossary.form = "contractor";
+						glossary.save(Const.sysGroupAsSet, Const.sysUser);	
+				}				
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			} 
+			}
+			]]> 
+	</script>
+</rule>

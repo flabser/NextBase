@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="statistics-timetable-funds" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/statistics-timetable-funds.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<caption name="viewnamecaption" source="KEYWORD">Timetable of funds</caption>
+</rule>

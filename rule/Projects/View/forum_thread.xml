@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="view" id="forum_thread" history="off">
+	<description>Ответные адокументы</description>
+	<query>forum_thread</query>		
+	<xsltfile>views\glossthread.xsl</xsltfile>	
+</rule>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="captions_statistics" mode="on" history="off">
+	<description></description>
+	<caching>CACHING_IN_APPLICATION_SCOPE</caching>
+	<element mode="ON" type="STATIC_TAG"></element>
+	<caption name ="help" source ="KEYWORD">Помощь</caption>
+	<caption name ="logout" source ="KEYWORD">Завершить работу</caption>
+	<caption name ="documents" source ="KEYWORD">Записей</caption>
+	<caption name ="search" source ="KEYWORD">Поиск</caption>
+	<caption name ="addtofav" source ="KEYWORD">Добавить в избранное</caption>
+	<caption name ="view_userprofile" source ="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name ="showstat" source ="KEYWORD">Показать статистику</caption>
+	<caption name ="projects" source ="KEYWORD">Проекты</caption>
+	<caption name ="startdate" source ="KEYWORD">Заявки от</caption>
+	<caption name ="enddate" source ="KEYWORD">до</caption>
+	<caption name ="executor" source ="KEYWORD">Сотрудники</caption>
+    <caption name ="org" source ="KEYWORD">Организации</caption>
+    <caption name ="all" source ="KEYWORD">Все</caption>
+
+</rule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="query" id="demand-sugg">
+	<description>Заявки</description>
+	<rununderuser source="static">[supervisor]</rununderuser>
+	<doctype>document</doctype>
+	<query source="static">form = 'demand' and vn = '$keyword'</query>
+
+	<field mode="on">
+		<name>vn</name>
+		<value source="resultset">vn</value>
+	</field>
+</rule>

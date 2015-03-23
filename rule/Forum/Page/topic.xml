@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="topic" mode="on" history="on">
+	<description>Темы</description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/topic.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+    <element mode="ON" type="INCLUDED_PAGE">
+        <name>captions</name>
+        <value>captions</value>
+    </element>
+	<element mode="ON" type="QUERY">
+		<name>view_content</name>
+		<doctype>FORUM_THREAD</doctype>
+		<query source="static">form = 'topic'</query>
+<!-- 		<sortby source="static">viewtext1#ASC</sortby> -->
+	</element>
+
+</rule>

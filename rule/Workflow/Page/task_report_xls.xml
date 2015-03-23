@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="task_report_xls" mode="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<element mode="ON" type="SCRIPT">
+		<name>dyn_elements</name>
+		<events>
+			<doscript source="file">page.task_report_xls.TaskReportXLS</doscript>
+		</events>
+	</element>
+</rule>

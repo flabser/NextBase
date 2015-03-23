@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="captions" mode="on" history="off">
+	<description></description>
+	<caching>CACHING_IN_USER_SESSION_SCOPE</caching>
+    <element mode="ON" type="STATIC_TAG"></element>
+	<caption name ="help" source ="KEYWORD">Помощь</caption>
+	<caption name ="logout" source ="KEYWORD">Завершить работу</caption>
+	<caption name ="documents" source ="KEYWORD">Записей</caption> 	
+	<caption name ="search" source ="KEYWORD">Поиск</caption>
+	<caption name ="view_userprofile" source ="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+    <caption name ="viewtext" source ="KEYWORD">Номер заказа</caption>
+    <caption name ="viewtext1" source ="KEYWORD">Заказчик</caption>
+    <caption name ="viewtext2" source ="KEYWORD">Ответственный исполнитель</caption>
+    <caption name ="viewdate" source ="KEYWORD">Дата заказа</caption>
+    <caption name ="filter" source ="KEYWORD">Фильтр</caption>
+    <caption name ="all" source ="KEYWORD">Все</caption>
+</rule>

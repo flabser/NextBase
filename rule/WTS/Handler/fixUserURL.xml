@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule id="fixUserURL" type="HANDLER">
+<description>reminder unexecuted</description>
+<rununderuser source="STATIC" type="TEXT">observer</rununderuser>
+<trigger>provider</trigger>
+<scheduler mode="OFF"><starttime>08:50</starttime><nextstart>30.06.2011 08:50:33</nextstart></scheduler>
+<script><![CDATA[
+
+		String doHandler(_Session session, _DocumentCollection collection){
+			try {
+				def sysDB = new kz.flabs.dataengine.h2.SystemDatabase();
+				def users = sysDB.getAllUsers("", 0, -1);				
+				users.each{
+					def urls = it.redirectURLs;
+					urls.each{key, value->
+						String newURL = "";
+						StringTokenizer t = new StringTokenizer(value, "&");
+						while(t.hasMoreTokens()){
+							if (t.countTokens() == 3){
+								newURL = t.nextToken() + "&id=outline" + "&" + t.nextToken() + "&sub" + t.nextToken();
+								println(value + " " + newURL);
+							}else{
+								println("Ссылка " + value + " будет обработана позже");
+								newURL = t.nextToken();
+							}
+						}
+						it.addRedirectURL(key, newURL);
+					}
+					it.save(Const.sysGroupAsSet, Const.sysUser);
+				}
+			}catch(e) {
+				e.printStackTrace();
+			}
+        	}]]></script></rule>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="form" id="comment" mode="on">
+	<description>Комментарий</description>
+	<xsltfile>forms/comment.xsl</xsltfile>
+	<doctype>post</doctype>
+	<title source="KEYWORD">Комментарий</title>
+	<default>
+		<action mode="on" type="SAVE">
+			<caption source="KEYWORD">Сохранить и закрыть</caption>
+			<granted source="macro" mode="on">current_user</granted>
+		</action>
+		<field mode="on" type="datetime">
+			<name>postdate</name>
+			<value source="macro">current_time</value>
+			<caption source="KEYWORD">Дата регистрации</caption>
+		</field>
+		<field mode="on" publishas="USER">
+			<name>author</name>
+			<value source="macro">current_user</value>
+			<caption source="KEYWORD">Автор</caption>
+		</field>
+		<field mode="on" publishas="HTML">
+			<name>contentsource</name>
+			<value source="static" />
+			<caption source="KEYWORD">Содержание</caption>
+		</field>
+	</default>
+	<show>
+		<action mode="on" type="SAVE">
+			<caption source="KEYWORD">Сохранить и закрыть</caption>
+			<granted source="macro" mode="on">current_user</granted>
+		</action>
+		<action mode="on" type="COMPOSE_COMMENT">
+			<caption source="KEYWORD">Комментарий</caption>
+			<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Document doc){
+					def session = doc.getSession();
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole("chancellery") ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+		</action>
+		<field mode="on">
+			<name>flag</name>
+			<value source="docfield">shared</value>
+			<caption source="KEYWORD">Флаг публичности</caption>
+		</field>
+		<field mode="on">
+			<name>form</name>
+			<value source="docfield">form</value>
+		</field>
+		<field mode="on">
+			<name>postdate</name>
+			<value source="docfield">postdate</value>
+			<caption source="KEYWORD">Дата регистрации</caption>
+		</field>
+		<field mode="on" publishas="USER">
+			<name>author</name>
+			<value source="docfield">author</value>
+			<caption source="KEYWORD">Автор</caption>
+		</field>
+		<field mode="on" publishas="HTML">
+			<name>contentsource</name>
+			<value source="docfield">contentsource</value>
+			<caption source="KEYWORD">Содержание</caption>
+		</field>
+		<field mode="on">
+			<name>projecturl</name>
+			<value source="script"><![CDATA[
+				String[] getStringValue(_Document doc){
+					int projectID = 0;
+					projectID = doc.getValueInt("projectdocid");
+					String url = "";
+					String currentUserID = doc.getCurrentUser()?.getUserID();					
+					if (projectID != 0 && currentUserID) {						
+						def project = doc.getSession()?.getCurrentDatabase()?.getProjectByID(projectID);
+						url = project.getURL();
+					}
+					return getAsArray(url);
+				}
+				]]></value>
+		</field>
+		<field mode="on">
+			<name>projectviewtext</name>
+			<value source="script"><![CDATA[
+				String[] getStringValue(_Document doc){
+					int projectID = doc.getValueInt("projectdocid");
+					String currentUserID = doc.getCurrentUser()?.getUserID();
+					String viewtext = "";
+					if (projectID != 0 && currentUserID) {						
+						def project = doc.getSession()?.getCurrentDatabase()?.getProjectByID(projectID);
+						viewtext = project.getViewText();
+					}
+					return getAsArray(viewtext);
+				}
+				]]></value>
+		</field>
+	</show>
+	<save>
+		<field mode="on">
+			<value source="static">comment</value>
+			<docfield>defaultruleid</docfield>
+		</field>
+		<field mode="on">
+			<value source="static">comment</value>
+			<docfield>form</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">postdate</value>
+			<docfield type="datetime">postdate</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">author</value>
+			<docfield>author</docfield>
+		</field>
+		<field mode="on" publishas="HTML">
+			<value source="webformfield">contentsource</value>
+			<docfield>contentsource</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">flag</value>
+			<docfield type="number">shared</docfield>
+			<iferror>0</iferror>
+		</field>
+	</save>
+	<querysave><![CDATA[
+		void doQuerySave(_Session ses, _Document doc, String user){
+		def pdoc = doc.getParentDocument();
+		def readers = pdoc?.getReaders();
+		readers.each{
+			doc.addReader(it.getUserID());
+		}           
+      	
+	}
+	]]></querysave>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("contentsource"));
+		}
+	]]></viewtext>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("contentsource"));
+		}
+	]]></viewtext>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("contentsource"));
+		}
+	]]></viewtext>
+	<viewdate><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("postdate"));
+		}
+	]]></viewdate>
+	<viewnumber><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray("0");
+		}
+	]]></viewnumber>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="attachments" source="KEYWORD">Вложения</caption>
+	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="progress" source="KEYWORD">Ход исполнения</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="doctypemultilang" source="KEYWORD">Комментарий</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="files" source="KEYWORD">Файлы</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="infofreaders" source="KEYWORD">Кем прочтен еще</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	<caption name="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+		<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+</rule>
+ 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="statistics_projects_activity" mode="on" history="on">
+	<rununderuser source="static">[supervisor]</rununderuser>
+	<description></description>
+    <caching>CACHING_IN_APPLICATION_SCOPE</caching>
+	<xsltfile>pages/statistics_projects_activity.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	 <element mode="ON" type="SCRIPT">
+		<name>projects</name>
+		<events>
+			<doscript source="file">page.getDocsListAllProjects.DoScript</doscript>
+		</events>
+	</element> 
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>captions</name>
+		<value>captions_statistics</value>
+	</element>
+</rule>

@@ -1,0 +1,2788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vocabulary primary="RUS">
+	<sentence mode="on"  keyword="Отсутствует соединение с сервером">
+		<entry lang="KAZ">Сервермен байланыс орнатылмаған</entry>
+		<entry lang="ENG">No connection to the server</entry>
+        <entry lang="CHN">没有连接到服务器</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Посмотреть свойства текущего пользователя">
+		<entry lang="KAZ">Ағымдағы қолданушының қасиетiне қарау</entry>
+		<entry lang="ENG">To look at properties of the current user</entry>
+        <entry lang="CHN">見的物業的當前用戶 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнить">
+		<entry lang="KAZ">Орындау</entry>
+		<entry lang="ENG">Execute</entry>
+        <entry lang="CHN">執行 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Документ исполнен">
+		<entry lang="KAZ">Құжат орындаған</entry>
+		<entry lang="ENG">Document is executed</entry>
+        <entry lang="CHN">簽立的文件  </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Исполнение отклонено">
+		<entry lang="KAZ">Орындау қисайтқан</entry>
+		<entry lang="ENG">Execution is rejected</entry>
+        <entry lang="CHN">根據拒絕 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Документ принят в работу">
+		<entry lang="KAZ">Құжат жұмысқа қабылданған</entry>
+		<entry lang="ENG">Document is accepted in operation</entry>
+        <entry lang="CHN">通過在文件的工作 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Документ отклонен вами">
+		<entry lang="KAZ">Құжат сiз қисайтқан</entry>
+		<entry lang="ENG">Document is rejected by you</entry>
+        <entry lang="CHN">文件將被拒絕你 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Уровень в должностной иерархии">
+		<entry lang="KAZ">Деңгей лауазымды иерархияда</entry>
+		<entry lang="ENG">Level in official hierarchy</entry>
+        <entry lang="CHN">這一級的職位等級 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Документ отмечен как прочтенный">
+		<entry lang="KAZ">Құжат оқылған сияқты атап өтiлген</entry>
+		<entry lang="ENG">Document is marked as read</entry>
+        <entry lang="CHN">文件標記為 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Документ сохранен">
+		<entry lang="KAZ">Құжат сақтаған</entry>
+		<entry lang="ENG">Document is saved</entry>
+        <entry lang="CHN">這份文件已獲救 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Пожалуйста ждите... Идет сохранение документа">
+		<entry lang="KAZ">Күтiңiзшi... Құжаттың сақтауы жүредi</entry>
+		<entry lang="ENG">Please wait... There is a saving of the document</entry>
+        <entry lang="CHN">請稍候. 保存一個文件 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Индекс">
+		<entry lang="KAZ">Әріпсан</entry>
+		<entry lang="ENG">index</entry>
+        <entry lang="CHN">指數 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Головное подразделение">
+		<entry lang="KAZ">Бастың бөлімшесі</entry>
+		<entry lang="ENG">Head division</entry>
+        <entry lang="CHN">總目股 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Повтор пароля">
+		<entry lang="KAZ">Парольнiң қайталауы</entry>
+		<entry lang="ENG">Password repetition</entry>
+        <entry lang="CHN">重復密碼: </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Рассылка уведомлений">
+		<entry lang="KAZ">Хабарламаның таратуы</entry>
+		<entry lang="ENG">Mailing of notices</entry>
+        <entry lang="CHN">電郵通知 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Сумма ущерба">
+		<entry lang="KAZ">Залалдың сомасы</entry>
+		<entry lang="ENG">Amount of damage</entry>
+        <entry lang="CHN">該數額的損失 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Новый подвид работ">
+		<entry lang="KAZ">Жұмыстардың жаңа түр тармағы</entry>
+		<entry lang="ENG">New subspecies of operations</entry>
+        <entry lang="CHN">新工程</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Организация">
+		<entry lang="KAZ">Ұйымдастыру</entry>
+		<entry lang="ENG">Organization</entry>
+        <entry lang="CHN">組織</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Мои документы">
+		<entry lang="KAZ">Менің құжаттарым</entry>
+		<entry lang="ENG">My documents</entry>
+        <entry lang="CHN">我的文件</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Включить замещение">
+		<entry lang="KAZ">Ауыстыруні қосу</entry>
+		<entry lang="ENG">include replacement</entry>
+        <entry lang="CHN">包括更换</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Замещающие">
+		<entry lang="KAZ">Орнын басатын</entry>
+		<entry lang="ENG">Substitute</entry>
+        <entry lang="CHN">替代</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Апрель">
+		<entry lang="KAZ">Сәуір</entry>
+		<entry lang="ENG">April</entry>
+        <entry lang="CHN">四月</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Новый департамент">
+		<entry lang="KAZ">Жаңа департамент</entry>
+		<entry lang="ENG">The new department</entry>
+        <entry lang="CHN">新部門</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Новый сотрудник">
+		<entry lang="KAZ">Жаңа қызметкер</entry>
+		<entry lang="ENG">New employee</entry>
+        <entry lang="CHN">新員工</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Поле "Сокращенное название" не заполнено.'>
+		<entry lang="KAZ">"Қысқартылған атауы" жолы  толтырылмады.</entry>
+		<entry lang="ENG">"The field"Short name"is not filled."</entry>
+        <entry lang="CHN">“場”短名稱“沒有填寫。”</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Поле "Название" не заполнено.'>
+		<entry lang="KAZ">"Атауы" жолы  толтырылмады.</entry>
+		<entry lang="ENG">"The field "Name" is not filled."</entry>
+        <entry lang="CHN">“場”名稱“沒有填寫。”</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Поле "Вид работ" не заполнено.'>
+		<entry lang="KAZ">"Жұмысы түрі" жолы  толтырылмады.</entry>
+		<entry lang="ENG">"The field "Type of work" is not filled."</entry>
+        <entry lang="CHN">“類型的工作”來回答</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Поле "Ранг" не заполнено.'>
+		<entry lang="KAZ">"Ранг" жолы  толтырылмады.</entry>
+		<entry lang="ENG">"The field "Rank" is not filled."</entry>
+        <entry lang="CHN">“類型的工作”來回答</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Поле "Должность" не заполнено.'>
+		<entry lang="KAZ">"Лауазым" жолы  толтырылмады.</entry>
+		<entry lang="ENG">The "title" is not empty.</entry>
+        <entry lang="CHN">“標題”是不是空的。</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Поле "Страна" не заполнено.'>
+		<entry lang="KAZ">"Ел" жолы  толтырылмады.</entry>
+		<entry lang="ENG">The "Country" is not empty.</entry>
+        <entry lang="CHN">“國家”是空白的。</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Поле "Регион/город" не заполнено.'>
+		<entry lang="KAZ">"өңір/шаһар" жолы  толтырылмады.</entry>
+		<entry lang="ENG">The "Region / city" is not empty.</entry>
+        <entry lang="CHN">“地區/城市”是空白的。</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Поле "Имя проекта" не заполнено.'>
+		<entry lang="KAZ">"Жобанің атауы" жолы  толтырылмады.</entry>
+		<entry lang="ENG">The "Project name" is not empty.</entry>
+        <entry lang="CHN">“地區/城市”是空白的。</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Контрагенты'>
+		<entry lang="KAZ">Контрагенты</entry>
+		<entry lang="ENG">Contractor</entry>
+        <entry lang="CHN">承包商</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Поле "Категория контрагентов" не заполнено.'>
+		<entry lang="KAZ">"Қарсы уәкiлдердiң дәрежесi" жолы  толтырылмады.</entry>
+		<entry lang="ENG">The "Category Listing" is blank.</entry>
+        <entry lang="CHN">“類別列表”是空的。</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Поле "Место возникновения замечания" не заполнено.'>
+		<entry lang="KAZ">"Ескертудi орын" жолы  толтырылмады.</entry>
+		<entry lang="ENG">The "place of observation" is blank.</entry>
+        <entry lang="CHN">“觀察”是空白的。</entry>		
+	</sentence>
+	<sentence mode="on" keyword='"Тип поздразделения" не заполнено.'>
+		<entry lang="KAZ">"Бөлiмшенiң түрi" жолы  толтырылмады.</entry>
+		<entry lang="ENG">The "Type units" is not empty.</entry>
+        <entry lang="CHN">“類型單位”是空白的。</entry>		
+	</sentence>
+	<sentence mode="on" keyword='Поле "Код" не заполнено.'>
+		<entry lang="KAZ">"Код" жолы  толтырылмады.</entry>
+		<entry lang="ENG">"The field"code"is not filled."</entry>
+        <entry lang="CHN">“場”碼“沒有填寫。”</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Не исполнено">
+		<entry lang="KAZ">Орындамаған</entry>
+		<entry lang="ENG">Not executed</entry>
+        <entry lang="CHN">不履行 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Статистика по месту возникновения">
+		<entry lang="KAZ">Пайда болуды орын-орныменге санақ</entry>
+		<entry lang="ENG">Statistics on an origin place</entry>
+        <entry lang="CHN">關於統計的地方,一個 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Всего">
+		<entry lang="KAZ">Барлығы</entry>
+		<entry lang="ENG">Total</entry>
+        <entry lang="CHN">在整個 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Статистика замечаний по ответственным участков">
+		<entry lang="KAZ">Жауапты бөлiмшелер бойынша ескертулердi санақ</entry>
+		<entry lang="ENG">Statistics of notes on responsible sections</entry>
+        <entry lang="CHN">統計評論關於負責任的網址 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Статистика индекса устранения">
+		<entry lang="KAZ">Жоюды индекстi санақ</entry>
+		<entry lang="ENG">Statistics of an index of elimination</entry>
+        <entry lang="CHN">統計數據處理指數</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Январь">
+		<entry lang="KAZ">қаңтар</entry>
+		<entry lang="ENG">January</entry>
+        <entry lang="CHN">1月 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Февраль">
+		<entry lang="KAZ">ақпан</entry>
+		<entry lang="ENG">February</entry>
+        <entry lang="CHN">2月  </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Март">
+		<entry lang="KAZ">наурыз</entry>
+		<entry lang="ENG">March</entry>
+        <entry lang="CHN">3月  </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Апрель">
+		<entry lang="KAZ">сәуір</entry>
+		<entry lang="ENG">April</entry>
+        <entry lang="CHN">4月  </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Май">
+		<entry lang="KAZ">мамыр</entry>
+		<entry lang="ENG">May</entry>
+        <entry lang="CHN">馬伊  </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Июнь">
+		<entry lang="KAZ">маусым</entry>
+		<entry lang="ENG">June</entry>
+        <entry lang="CHN">6月 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Июль">
+		<entry lang="KAZ">шілде</entry>
+		<entry lang="ENG">July</entry>
+        <entry lang="CHN">7月 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Август">
+		<entry lang="KAZ">тамыз</entry>
+		<entry lang="ENG">August</entry>
+        <entry lang="CHN">8月</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Сентябрь">
+		<entry lang="KAZ">қыркүйек</entry>
+		<entry lang="ENG">September</entry>
+        <entry lang="CHN">9月  </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Октябрь">
+		<entry lang="KAZ">қазан</entry>
+		<entry lang="ENG">October</entry>
+        <entry lang="CHN">10月 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ноябрь">
+		<entry lang="KAZ">қараша</entry>
+		<entry lang="ENG">November</entry>
+        <entry lang="CHN">11月  </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Декабрь">
+		<entry lang="KAZ">желтоқсан</entry>
+		<entry lang="ENG">December</entry>
+        <entry lang="CHN">12月 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Все проекты">
+		<entry lang="KAZ">Барлық жобалар</entry>
+		<entry lang="ENG">All projects</entry>
+        <entry lang="CHN">所有的項目 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Печать">
+		<entry lang="KAZ">Баспа</entry>
+		<entry lang="ENG">Print</entry>
+        <entry lang="CHN">列印 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отклонено">
+		<entry lang="KAZ">Қисайтқан</entry>
+		<entry lang="ENG">Rejected</entry>
+        <entry lang="CHN">駁回</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Количество">
+		<entry lang="KAZ">Cан</entry>
+		<entry lang="ENG">Amount</entry>
+        <entry lang="CHN">的數目。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Статистика по статусу замечаний">
+		<entry lang="KAZ">Ескертулердi мәртебе бойынша санақ</entry>
+		<entry lang="ENG">Statistics on the status of notes</entry>
+        <entry lang="CHN">統計評論的地位 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Обсуждение">
+		<entry lang="KAZ">Тексеру</entry>
+		<entry lang="ENG">Discussion</entry>
+        <entry lang="CHN">討論 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Технический надзор">
+		<entry lang="KAZ">Техникалық қадағалау</entry>
+		<entry lang="ENG">Technical supervision</entry>
+        <entry lang="CHN">技術監督 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="РНН">
+		<entry lang="KAZ">СТН</entry>
+		<entry lang="ENG">RNT</entry>
+        <entry lang="CHN">登記稅的身分証號碼 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Группа пользователей">
+		<entry lang="KAZ">Жаңа топ</entry>
+		<entry lang="ENG">User group</entry>
+        <entry lang="CHN">新的组</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Владелец группы">
+		<entry lang="KAZ">Топтың иесі</entry>
+		<entry lang="ENG">Owner of group</entry>
+        <entry lang="CHN">該擁有人的。</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Участники группы">
+		<entry lang="KAZ">Топтың қатысқандарлары</entry>
+		<entry lang="ENG">Participants of group</entry>
+        <entry lang="CHN">與會者集團 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="БИН">
+		<entry lang="KAZ">ТНК</entry>
+		<entry lang="ENG">BIN</entry>
+        <entry lang="CHN">商業識別號碼 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Очистить">
+		<entry lang="KAZ">тазалау</entry>
+		<entry lang="ENG">clear</entry>
+        <entry lang="CHN">清潔  </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Свойства пользователя">
+		<entry lang="KAZ">Қолданушының қасиеттерi</entry>
+		<entry lang="ENG">Properties of the user</entry>
+        <entry lang="CHN">該物業的用戶。 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Проект организации">
+		<entry lang="KAZ">Мекеменің жобалар</entry>
+		<entry lang="ENG">Project of the organization</entry>
+        <entry lang="CHN">项目的组织</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Страна">
+		<entry lang="KAZ">Ел</entry>
+		<entry lang="ENG">Country</entry>
+        <entry lang="CHN">國家 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ранг">
+		<entry lang="KAZ">Дәреже</entry>
+		<entry lang="ENG">Rank</entry>
+        <entry lang="CHN">職級 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="От">
+		<entry lang="KAZ">От</entry>
+		<entry lang="ENG">from</entry>
+        <entry lang="CHN">從 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Восстановить">
+		<entry lang="KAZ">Қалпына келтір</entry>
+		<entry lang="ENG">Recover</entry>
+        <entry lang="CHN">恢復 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Быстрая фильтрация">
+		<entry lang="KAZ">Tез фильтрлеуi</entry>
+		<entry lang="ENG">Fast filtering</entry>
+        <entry lang="CHN">快速過濾</entry>		
+	</sentence>ы
+	<sentence mode="on" keyword="с">
+		<entry lang="KAZ">c</entry>
+		<entry lang="ENG">from</entry>
+        <entry lang="CHN">的,</entry>		
+	</sentence>
+	<sentence mode="on" keyword="по">
+		<entry lang="KAZ">бойынша</entry>
+		<entry lang="ENG">to</entry>
+        <entry lang="CHN">關於 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Фильтр документов">
+		<entry lang="KAZ">Құжат сүзгіш</entry>
+		<entry lang="ENG">Documents filter</entry>
+        <entry lang="CHN">濾紙 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Удалить фильтр">
+		<entry lang="KAZ">Алыстат- сүзгіш</entry>
+		<entry lang="ENG">Remove filter</entry>
+        <entry lang="CHN">刪除該篩選器 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Добавить фильтр">
+		<entry lang="KAZ">Үсте- сүзгіш</entry>
+		<entry lang="ENG">Add filter</entry>
+        <entry lang="CHN">添加一個過濾器 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Язык интерфейса">
+		<entry lang="KAZ">Интерфейс тілі</entry>
+		<entry lang="ENG">Interface language</entry>
+        <entry lang="CHN">语言</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Интерфейс">
+		<entry lang="KAZ">Интерфейс</entry>
+		<entry lang="ENG">interface</entry>
+        <entry lang="CHN">它的界面 </entry>		
+	</sentence>	
+		<sentence mode="on" keyword="Скин">
+		<entry lang="KAZ">Түрі</entry>
+		<entry lang="ENG">Skin</entry>
+        <entry lang="CHN">皮肤</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Роли">
+		<entry lang="KAZ">Рөлдер</entry>
+		<entry lang="ENG">Roles</entry>
+        <entry lang="CHN">電郵通知 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управление фильтрами">
+		<entry lang="KAZ">Басқарма сүзгіштермен</entry>
+		<entry lang="ENG">Management of filters</entry>
+        <entry lang="CHN">管理/濾清器 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Периодичность обновления видов">
+		<entry lang="KAZ">Көріністің жаңала- оралымдқы</entry>
+		<entry lang="ENG">Periodicity of updating of types</entry>
+        <entry lang="CHN">更新數據的頻率 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Группы">
+		<entry lang="KAZ">Топтар</entry>
+		<entry lang="ENG">Groups</entry>
+        <entry lang="CHN">工作組 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Старый пароль">
+		<entry lang="KAZ">Кәрі шартты белгі</entry>
+		<entry lang="ENG">Old password</entry>
+        <entry lang="CHN">“舊密碼  </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый пароль">
+		<entry lang="KAZ">Жаңа шартты белгі</entry>
+		<entry lang="ENG">New password</entry>
+        <entry lang="CHN">一個新密碼  </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Повтор нового пароля">
+		<entry lang="KAZ">Жаңа шартты белгінің повтор</entry>
+		<entry lang="ENG">Repetition of the new password</entry>
+        <entry lang="CHN">再說一遍一個新密碼 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Тип документа">
+		<entry lang="KAZ">Құжат түрі</entry>
+		<entry lang="ENG">Type of Document</entry>
+        <entry lang="CHN">文件類型 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Проект">
+		<entry lang="KAZ">Жобалар</entry>
+		<entry lang="ENG">Project</entry>
+        <entry lang="CHN">項目</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Категория">
+		<entry lang="KAZ">Дәреже</entry>
+		<entry lang="ENG">Category</entry>
+        <entry lang="CHN">類別</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Автор">
+		<entry lang="KAZ">Автор</entry>
+		<entry lang="ENG">Author</entry>
+        <entry lang="CHN">作者</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Дата регистрации">
+		<entry lang="KAZ">Тіркелу күні</entry>
+		<entry lang="ENG">Date of registration</entry>
+        <entry lang="CHN">註冊日期</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Ключевое слово">
+		<entry lang="KAZ">Бұлақты сөз</entry>
+		<entry lang="ENG">keyword</entry>
+        <entry lang="CHN">關鍵詞</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Название фильтра">
+		<entry lang="KAZ">Сүзгіш атау</entry>
+		<entry lang="ENG">Name of the filter</entry>
+        <entry lang="CHN">過濾器的名稱</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Место возникновения замечания">
+		<entry lang="KAZ">Ескертудi пайда болуды орын</entry>
+		<entry lang="ENG">Place of origin of the note</entry>
+        <entry lang="CHN">該地點的意見。 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новое место возникновения замечания">
+		<entry lang="KAZ">Ескертудi пайда болуды жаңа орын</entry>
+		<entry lang="ENG">New place of origin of the note</entry>
+        <entry lang="CHN">在新地點的意見。 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый вид работ">
+		<entry lang="KAZ">Жұмыстардың жаңа түрi</entry>
+		<entry lang="ENG">New type of operations</entry>
+        <entry lang="CHN">一個新的觀點工程 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Очистить корзину">
+		<entry lang="KAZ">тазалау</entry>
+		<entry lang="ENG">Кәрзеңкенi тазалау</entry>
+        <entry lang="CHN">清空回收站 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Отмена">
+		<entry lang="KAZ">Болдырмау</entry>
+		<entry lang="ENG">Cancel</entry>
+        <entry lang="CHN">廢除 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Кем прочтен">
+		<entry lang="KAZ">Кiм оқыған</entry>
+		<entry lang="ENG">By whom it is read</entry>
+        <entry lang="CHN">任何人看好 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Черновик">
+		<entry lang="KAZ">шимай</entry>
+		<entry lang="ENG">draft</entry>
+        <entry lang="CHN">草稿 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Исполнено">
+		<entry lang="KAZ">Орындаған</entry>
+		<entry lang="ENG">executed</entry>
+        <entry lang="CHN">执行 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Просрочен">
+		<entry lang="KAZ">Мерзiмiнен өткен</entry>
+		<entry lang="ENG">delayed</entry>
+        <entry lang="CHN">已过期 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Ревизия исполнения">
+		<entry lang="KAZ">Орындауды тексеру</entry>
+		<entry lang="ENG">Execution audit</entry>
+        <entry lang="CHN">执行审计 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="На согласовании у ответственного участка">
+		<entry lang="KAZ">Келiсуде жауапты бөлiмшеде</entry>
+		<entry lang="ENG">On coordination at a responsible section</entry>
+        <entry lang="CHN">关于负责任的许多的统一</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Отклонено ответственным участка">
+		<entry lang="KAZ">Жауапты бөлiмше қисайтқан</entry>
+		<entry lang="ENG">It is rejected responsible a section</entry>
+        <entry lang="CHN">被拒绝的责任区</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Проект был просрочен во время согласования">
+		<entry lang="KAZ">Жоба келiсу уақытында мерзiмiнен өткен</entry>
+		<entry lang="ENG">The project was delayed during coordination</entry>
+        <entry lang="CHN">该项目是在谈判过程中已过期</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Помощь">
+		<entry lang="KAZ">Жәрдем</entry>
+		<entry lang="ENG">Help</entry>
+        <entry lang="CHN">援助 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новая версия">
+		<entry lang="KAZ">Жаңа болжам</entry>
+		<entry lang="ENG">New version</entry>
+        <entry lang="CHN">新版本</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Отклоненные">
+		<entry lang="KAZ">Қабылданбағаны</entry>
+		<entry lang="ENG">rejected</entry>
+        <entry lang="CHN">被拒绝的申请</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="На ревизии исполнения">
+		<entry lang="KAZ">Орындаудың тексерулерiне</entry>
+		<entry lang="ENG">On execution audit</entry>
+        <entry lang="CHN">执行审计</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="На исполнении">
+		<entry lang="KAZ">Орындауда</entry>
+		<entry lang="ENG">On execution</entry>
+        <entry lang="CHN">对性能</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Категория контрагентов">
+		<entry lang="KAZ">Қарсы уәкiлдердiң дәрежесi</entry>
+		<entry lang="ENG">Category of contractors</entry>
+        <entry lang="CHN">承建商类别</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Место замечания">
+		<entry lang="KAZ">Ескертудi орын</entry>
+		<entry lang="ENG">Note place</entry>
+        <entry lang="CHN">放置注释</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Улица">
+		<entry lang="KAZ">көше</entry>
+		<entry lang="ENG">Street</entry>
+        <entry lang="CHN">街</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Дом">
+		<entry lang="KAZ">үй</entry>
+		<entry lang="ENG">home</entry>
+        <entry lang="CHN">房子</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Подъезд">
+		<entry lang="KAZ">кіреберіс</entry>
+		<entry lang="ENG">entrance</entry>
+        <entry lang="CHN">入口处</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Этаж">
+		<entry lang="KAZ">қабат</entry>
+		<entry lang="ENG">floor</entry>
+        <entry lang="CHN">地板</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Квартира">
+		<entry lang="KAZ">пәтер</entry>
+		<entry lang="ENG">apartment</entry>
+        <entry lang="CHN">公寓</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Руководитель проекта">
+		<entry lang="KAZ">Жоба жетекшiсi</entry>
+		<entry lang="ENG">Project manager</entry>
+        <entry lang="CHN">项目经理</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Зам. руководителя проекта">
+		<entry lang="KAZ">жоба жетекшiсi орынбасар</entry>
+		<entry lang="ENG">Deputy project manager</entry>
+        <entry lang="CHN">赞。项目经理</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Подтвердить исполнение">
+		<entry lang="KAZ">Орындауды растау</entry>
+		<entry lang="ENG">To confirm execution</entry>
+        <entry lang="CHN">确认法规遵从性</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Отправить ответственному участка">
+		<entry lang="KAZ">Жауапты бөлiмшеге жiберу</entry>
+		<entry lang="ENG">To send responsible a section</entry>
+        <entry lang="CHN">发送负责多</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Отклонить исполнение">
+		<entry lang="KAZ">Орындауды қисайту</entry>
+		<entry lang="ENG">To reject execution</entry>
+        <entry lang="CHN">拒绝响应</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Принять в работу">
+		<entry lang="KAZ">Жұмысқа қабылдау</entry>
+		<entry lang="ENG">To accept in operation</entry>
+        <entry lang="CHN">负责的工作</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Место возникновения">
+		<entry lang="KAZ">Пайда болуды орын</entry>
+		<entry lang="ENG">Origin place</entry>
+        <entry lang="CHN">位置</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Описание замечания">
+		<entry lang="KAZ">Ескертудi сипаттама</entry>
+		<entry lang="ENG">Note description</entry>
+        <entry lang="CHN">描述评论</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Координаты">
+		<entry lang="KAZ">Координаталар</entry>
+		<entry lang="ENG">Coordinates</entry>
+        <entry lang="CHN">坐标</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Автор замечания">
+		<entry lang="KAZ">Ескертудi автор</entry>
+		<entry lang="ENG">Author of the note</entry>
+        <entry lang="CHN">作者的评论</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Ответственный участка">
+		<entry lang="KAZ">Жауаптысы бөлiмше</entry>
+		<entry lang="ENG">Responsible section</entry>
+        <entry lang="CHN">负责的区域</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Связан с проектом">
+		<entry lang="KAZ">Жобамен байланған</entry>
+		<entry lang="ENG">Connected to the project</entry>
+        <entry lang="CHN">与项目关联</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Контрагент">
+		<entry lang="KAZ">Контрагент</entry>
+		<entry lang="ENG">Counterpart</entry>
+        <entry lang="CHN">缔约方</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Предупреждение">
+		<entry lang="KAZ">Ескерту</entry>
+		<entry lang="ENG">Warning</entry>
+        <entry lang="CHN">預防 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Избранные">
+		<entry lang="KAZ">Таңдаулылар</entry>
+		<entry lang="ENG">Favorites</entry>
+        <entry lang="CHN">收藏</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Роль пользователя">
+		<entry lang="KAZ">Қолданушының рөлi</entry>
+		<entry lang="ENG">Role of the user</entry>
+        <entry lang="CHN">用户角色</entry>		
+	</sentence>
+	<sentence mode="on" keyword="По статусу">
+		<entry lang="KAZ">Мәртебе бойынша</entry>
+		<entry lang="ENG">On the status</entry>
+        <entry lang="CHN">按状态</entry>		
+	</sentence>
+	<sentence mode="on" keyword="По месту возникновения">
+		<entry lang="KAZ">Пайда болуларды орын-орныменге</entry>
+		<entry lang="ENG">In an origin place</entry>
+        <entry lang="CHN">由原居地</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отчеты по объектам">
+		<entry lang="KAZ">Объекттер бойынша есептеу нәтижелерi</entry>
+		<entry lang="ENG">Reports on objects</entry>
+        <entry lang="CHN">記錄的設施 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="По объекту">
+		<entry lang="KAZ">Объект бойынша</entry>
+		<entry lang="ENG">On object</entry>
+        <entry lang="CHN">在對象 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отчеты по статусу">
+		<entry lang="KAZ">Мәртебе бойынша есептеу нәтижелерi</entry>
+		<entry lang="ENG">Reports on the status</entry>
+        <entry lang="CHN">關於報告的現況 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="По ответственному участка">
+		<entry lang="KAZ">Жауапты бөлiмше бойынша</entry>
+		<entry lang="ENG">On responsible section</entry>
+        <entry lang="CHN">由所有者的站点</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Индекс устранения">
+		<entry lang="KAZ">Жоюды индекс</entry>
+		<entry lang="ENG">Elimination index</entry>
+        <entry lang="CHN">索引删除</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Вид работ">
+		<entry lang="KAZ">Жұмыстардың түрi</entry>
+		<entry lang="ENG">Type of operations</entry>
+        <entry lang="CHN">类型的作品</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Подвид работ">
+		<entry lang="KAZ">Жұмыстардың түр тармағы</entry>
+		<entry lang="ENG">Subspecies of operations</entry>
+        <entry lang="CHN">亚种工程</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Оставить комментарий ответа?">
+		<entry lang="KAZ">Жауаптың түсiнiгiн қалдырады ма?</entry>
+		<entry lang="ENG">To leave the answer comment?</entry>
+        <entry lang="CHN">評論答覆? </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="нет">
+		<entry lang="KAZ">жоқ</entry>
+		<entry lang="ENG">no</entry>
+        <entry lang="CHN">無  </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="да">
+		<entry lang="KAZ">иә</entry>
+		<entry lang="ENG">yes</entry>
+        <entry lang="CHN">是否  </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="часов">
+		<entry lang="KAZ">сағат</entry>
+		<entry lang="ENG">hours</entry>
+        <entry lang="CHN">時間  </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Параметры согласования">
+		<entry lang="KAZ">Келiсудiң параметрлерi</entry>
+		<entry lang="ENG">Coordination parameters</entry>
+        <entry lang="CHN">協調參數</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Участники согласования">
+		<entry lang="KAZ">Келiсудiң қатысушылары</entry>
+		<entry lang="ENG">Participants of the coordination</entry>
+        <entry lang="CHN">協調 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Изменить вид">
+		<entry lang="KAZ">Түрдi өзгерту</entry>
+		<entry lang="ENG">Сhange view</entry>
+        <entry lang="CHN">改變的期望 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Список получателей напоминания">
+		<entry lang="KAZ">Еске салудың алушыларының тiзiмi</entry>
+		<entry lang="ENG">The list of receivers of a reminder</entry>
+        <entry lang="CHN">原價受援者發出催復通知 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Список корреспондентов для ознакомления">
+		<entry lang="KAZ">Танысу үшiн корреспонденттер тiзiмi</entry>
+		<entry lang="ENG">The list of correspondents for acquaintance</entry>
+        <entry lang="CHN">該名單記者了解</entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Краткое содержание" не заполнено.'>
+		<entry lang="KAZ">"Қысқаша мазмұн" өрiс толтырылмаған</entry>
+		<entry lang="ENG">The field "Summary" isn't filled.</entry>
+        <entry lang="CHN">場的內容摘要'是不填補。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Тип документа" не заполнено.'>
+		<entry lang="KAZ">"Құжаттың түрi" өрiс толтырылмаған</entry>
+		<entry lang="ENG">The field "Type of the document" is not filled.</entry>
+        <entry lang="CHN">外地的類型的文件'是不填補 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Кому адресован" не заполнено.'>
+		<entry lang="KAZ">"Кiмге жiберген" өрiс толтырылмаған</entry>
+		<entry lang="ENG">Field "to Whom it is addressed" it is not filled.</entry>
+        <entry lang="CHN">外地人”是解決不填補。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Откуда поступил" не заполнено.'>
+		<entry lang="KAZ">"Қайдан түстi" өрiс толтырылмаған</entry>
+		<entry lang="ENG">Field "Whence has arrived" it is not filled.</entry>
+        <entry lang="CHN">外地的加盟'是不填補。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Подкатегория" не заполнено.'>
+		<entry lang="KAZ">"Жұмыстардың түр тармағы" өрiс толтырылмаған</entry>
+		<entry lang="ENG">The "Sub" is blank.</entry>
+        <entry lang="CHN">“亚健康”是空白的。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Тип поздразделения" не заполнено.'>
+		<entry lang="KAZ">"Бөлiмшенiң түрi" өрiс толтырылмаған</entry>
+		<entry lang="ENG">"Type units" is blank.</entry>
+        <entry lang="CHN">“类型单位”是空白的。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Дата исх. документа" не заполнено.'>
+		<entry lang="KAZ">"Шығыс құжатыны дата" өрiс толтырылмаған.</entry>
+		<entry lang="ENG">The field "Date of the ref. document" isn't filled.</entry>
+        <entry lang="CHN">波利亞的日期前。 文件'是不填補。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Исходящий №" не заполнено.'>
+		<entry lang="KAZ">"№ шығуы" өрiс толтырылмаған.</entry>
+		<entry lang="ENG">The field "Proceeding №" is not filled.</entry>
+        <entry lang="CHN">外地的外游編號”是不填補。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Укажите исполнителя.'>
+		<entry lang="KAZ">Орындаушының көрсетiңiз.</entry>
+		<entry lang="ENG">Specify the executor.</entry>
+        <entry lang="CHN">進入主任。</entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Содержание отчета" не заполнено.'>
+		<entry lang="KAZ">"Есептеу нәтижесiнiң мазмұныды" өрiс толтырылмаған.</entry>
+		<entry lang="ENG">The field "Maintenance of the report" is not filled.</entry>
+        <entry lang="CHN">外地的內容的報告沒有填補。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Текст резолюции" не заполнено.'>
+		<entry lang="KAZ">"Бұрыштамалардың мәтiнi" өрiс толтырылмаған.</entry>
+		<entry lang="ENG">The field "the resolution Text" isn't filled.</entry>
+        <entry lang="CHN">外地的案文的這項決議'是不填補。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Не выбраны исполнители задания.'>
+		<entry lang="KAZ">Тапсырманың орындаушылары таңдалғандар емес.</entry>
+		<entry lang="ENG">Executors of the task aren't chosen.</entry>
+        <entry lang="CHN">沒有入選藝術家任務。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Автор резолюции" не заполнено.'>
+		<entry lang="KAZ">"Қарардың авторы" өрiс толтырылмаған.</entry>
+		<entry lang="ENG">The field "Author of the resolution" is not filled.</entry>
+        <entry lang="CHN">外地的提案國的決議是沒有填補。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Ф.И.О." не заполнено.'>
+		<entry lang="KAZ">"Ф.А.Ә." өрiс толтырылмаған.</entry>
+		<entry lang="ENG">The field "S.N.P" is not filled.</entry>
+        <entry lang="CHN">外地的您的姓名'是不填補。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Получатель" не заполнено.'>
+		<entry lang="KAZ">"Алушы" өрiс толтырылмаған.</entry>
+		<entry lang="ENG">The field "Receiver" is not filled.</entry>
+        <entry lang="CHN">外地的受援國'是不填補。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Вид доставки" не заполнено.'>
+		<entry lang="KAZ">"Жеткiзудi түр" өрiс толтырылмаған.</entry>
+		<entry lang="ENG">The field "Type of delivery" is not filled.</entry>
+        <entry lang="CHN">外地的傳輸類型'是不填補。 </entry>		
+	</sentence>
+	<sentence mode="on"  keyword='Поле "Кто подписал" не заполнено.'>
+		<entry lang="KAZ">"Кiм қол қойды" өрiс толтырылмаған.</entry>
+		<entry lang="ENG">"Who has signed a field" is not filled.</entry>
+        <entry lang="CHN">外地人”簽署不填補。</entry>		
+	</sentence>
+	
+	
+	<sentence mode="on"  keyword="Китайский">
+		<entry lang="KAZ">中文</entry>
+		<entry lang="RUS">中文</entry>
+		<entry lang="ENG">中文</entry>
+        <entry lang="CHN">中文</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Завершен">
+		<entry lang="KAZ">Бiтiрген</entry>
+		<entry lang="ENG">Complete</entry>
+        <entry lang="CHN">关闭</entry>		
+	</sentence>
+	<sentence mode="on"  keyword="Отправитель">
+		<entry lang="KAZ">Жіберуші</entry>
+		<entry lang="ENG">Sender</entry>
+        <entry lang="CHN">寄件人</entry>	
+	</sentence>
+	<sentence mode="on"  keyword="Задания">
+		<entry lang="KAZ">Тапсырмалар</entry>
+		<entry lang="ENG">Tasks</entry>
+        <entry lang="CHN">作業 </entry>	
+	</sentence>
+	<sentence mode="on"  keyword="Отчет">
+		<entry lang="KAZ">Есептеме</entry>
+		<entry lang="ENG">Report</entry>
+        <entry lang="CHN">报告 </entry>	
+	</sentence>
+	<sentence mode="on"  keyword="Статус">
+		<entry lang="KAZ">Статус</entry>
+		<entry lang="ENG">status</entry>
+        <entry lang="CHN">状态 </entry>	
+	</sentence>
+	<sentence mode="on"  keyword="Автоматизированная веб-система технического надзора (WTS)">
+		<entry lang="KAZ">Техникалық бақылау бойынша автоматтандырылған веб-системасы (WTS)</entry>
+		<entry lang="ENG">The automated web-based technical supervision (WTS)</entry>
+        <entry lang="CHN">自动化的基于网络的技术监督</entry>	
+	</sentence>
+	<sentence mode="on"  keyword="Проект">
+		<entry lang="KAZ">Проект</entry>
+		<entry lang="ENG">project</entry>
+        <entry lang="CHN">项目</entry>	
+	</sentence>
+	<sentence mode="on"  keyword="Тип файла отчета">
+		<entry lang="KAZ">Есептеме файлының түрі</entry>
+		<entry lang="ENG">File Type Report</entry>
+        <entry lang="CHN">文件类型报告</entry>	
+	</sentence>
+	<sentence mode="on"  keyword="Найти">
+		<entry lang="KAZ">Тауып алу</entry>
+		<entry lang="ENG">Find</entry>
+        <entry lang="CHN">找到</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Завершить работу">
+		<entry lang="KAZ">Жұмысты аяқтау</entry>
+		<entry lang="ENG">Logout</entry>
+        <entry lang="CHN">退出</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Количество документов в виде">
+		<entry lang="KAZ">Құжаттардың түрiндегi сан</entry>
+		<entry lang="ENG">An amount of documents is in a kind</entry>
+        <entry lang="CHN">表单中的文件数量</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Мои документы">
+		<entry lang="KAZ">Менің құжаттарым</entry>
+		<entry lang="ENG">My documents</entry>
+        <entry lang="CHN">我的文件</entry>		
+	</sentence>
+		<sentence mode="on" keyword="На рассмотрение">
+		<entry lang="KAZ">Қарастыруға</entry>
+		<entry lang="ENG">To the review</entry>
+        <entry lang="CHN">检讨</entry>		
+	</sentence>		
+	<sentence mode="on" keyword="Поручено мне">
+		<entry lang="KAZ">Маған тапсырылған</entry>
+		<entry lang="ENG">Entrusted to me</entry>
+        <entry lang="CHN">托付给我</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Мои задания">
+		<entry lang="KAZ">Менің тапсырмаларым</entry>
+		<entry lang="ENG">My tasks</entry>
+        <entry lang="CHN">我的工作</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Зарегистрировать документ">
+		<entry lang="KAZ">Құжат тiркеп алу</entry>
+		<entry lang="ENG">Register document</entry>
+        <entry lang="CHN">注册文档</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполненные">
+		<entry lang="KAZ">Орындалғандар</entry>
+		<entry lang="ENG">Performed</entry>
+        <entry lang="CHN">充满</entry>	
+	</sentence>
+	<sentence mode="on" keyword="На согласование">
+		<entry lang="KAZ">Келісімге</entry>
+		<entry lang="ENG">For coordination</entry>
+        <entry lang="CHN">批准</entry>		
+	</sentence>
+	<sentence mode="on" keyword="На подпись">
+		<entry lang="KAZ">Қол қоюға</entry>
+		<entry lang="ENG">For signature</entry>
+        <entry lang="CHN">签字</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Документы организации">
+		<entry lang="KAZ">Мекеменің құжаттары</entry>
+		<entry lang="ENG">Documents of the organization</entry>
+        <entry lang="CHN">该组织的文件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Служебные записки">
+		<entry lang="KAZ">Қызметтік жазбалар</entry>
+		<entry lang="ENG">Memos</entry>
+        <entry lang="CHN">备忘录</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Cлужебная записка">
+		<entry lang="KAZ">Қызметтік жазбахат</entry>
+		<entry lang="ENG">Memo</entry>
+        <entry lang="CHN">备忘录</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Входящие">
+		<entry lang="KAZ">Кіріс құжаттар</entry>
+		<entry lang="ENG">Incoming</entry>
+        <entry lang="CHN">收件箱</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исходящие">
+		<entry lang="KAZ">Шығыс құжаттар</entry>
+		<entry lang="ENG">Outgoing</entry>
+        <entry lang="CHN">发件箱</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новое обращение">
+		<entry lang="KAZ">Жана жолданымы</entry>
+		<entry lang="ENG">New treatment </entry>
+        <entry lang="CHN">新的治疗</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новое">
+		<entry lang="KAZ">Жаңа</entry>
+		<entry lang="ENG">New</entry>
+        <entry lang="CHN">新</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новое задание">
+		<entry lang="KAZ">Жаңа тапсырма</entry>
+		<entry lang="ENG">New task</entry>
+        <entry lang="CHN">新工作</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Обращения граждан">
+		<entry lang="KAZ">Азаматтардың жолданымы</entry>
+		<entry lang="ENG">Treatment of citizens</entry>
+        <entry lang="CHN">处理公民</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Проекты">
+		<entry lang="KAZ">Жобалар</entry>
+		<entry lang="ENG">Projects</entry>
+        <entry lang="CHN">项目</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Контрагент">
+		<entry lang="KAZ">Қарсы уәкiл</entry>
+		<entry lang="ENG">Contractor</entry>
+        <entry lang="CHN">承包商</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Недобросовестный исполнитель">
+		<entry lang="KAZ">Ықылассыз орындаушы</entry>
+		<entry lang="ENG">Unconscientious performer</entry>
+        <entry lang="CHN">不公平的执行</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Проект">
+		<entry lang="KAZ">Жобалар</entry>
+		<entry lang="ENG">Project</entry>
+        <entry lang="CHN">项目</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Проекты организации">
+		<entry lang="KAZ">Мекеменің жобалар</entry>
+		<entry lang="ENG">Projects of the organization</entry>
+        <entry lang="CHN">项目的组织</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Cтраница">
+		<entry lang="KAZ">Бет</entry>
+		<entry lang="ENG">Pages</entry>
+        <entry lang="CHN">页面</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Документов">
+		<entry lang="KAZ">Құжаттар саны</entry>
+		<entry lang="ENG">Documents</entry>
+        <entry lang="CHN">文件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Дата регистрации">
+		<entry lang="KAZ">Тіркелу күні</entry>
+		<entry lang="ENG">Registration Date</entry>
+        <entry lang="CHN">登记日期</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Краткое содержание">
+		<entry lang="KAZ">Қысқаша мазмұны</entry>
+		<entry lang="ENG">Summary</entry>
+        <entry lang="CHN">综述</entry>		
+	</sentence>
+	<sentence mode="on" keyword="срок">
+		<entry lang="KAZ">мерзімі</entry>
+		<entry lang="ENG">term</entry>
+        <entry lang="CHN">长期</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Обновлено">
+		<entry lang="KAZ">Жаңартылды</entry>
+		<entry lang="ENG">Updated</entry>
+        <entry lang="CHN">更新</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Документооборот">
+		<entry lang="KAZ">Құжатайналым</entry>
+		<entry lang="ENG">Document Management</entry>
+        <entry lang="CHN">文档管理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="поиск">
+		<entry lang="KAZ">іздеу</entry>
+		<entry lang="ENG">search</entry>
+        <entry lang="CHN">搜索</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Версия">
+		<entry lang="KAZ">Нұсқа</entry>
+		<entry lang="ENG">Version</entry>
+        <entry lang="CHN">版本</entry>
+	</sentence>
+	<sentence mode="on" keyword="Запомнить пароль">
+		<entry lang="KAZ">Құпия сөзді жаттау</entry>
+		<entry lang="ENG">Remember password</entry>
+        <entry lang="CHN">记住密码</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Пользователь">
+		<entry lang="KAZ">Пайдаланушы</entry>
+		<entry lang="ENG">Username</entry>
+        <entry lang="CHN">用户</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Остановить документ">
+		<entry lang="KAZ">Құжатты тоқтату</entry>
+		<entry lang="ENG">Stop document</entry>
+        <entry lang="CHN">停止纸</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Пароль">
+		<entry lang="KAZ">Құпия сөз</entry>
+		<entry lang="ENG">Password</entry>
+        <entry lang="CHN">密码</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Войти">
+		<entry lang="KAZ">Кіру</entry>
+		<entry lang="ENG">Login</entry>
+        <entry lang="CHN">进入</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Сохраненный">
+		<entry lang="KAZ">Сақталған құжат</entry>
+		<entry lang="ENG">Saved document</entry>
+        <entry lang="CHN">保存</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Редактирование">
+		<entry lang="KAZ">Өңдеу</entry>
+		<entry lang="ENG">Editing</entry>
+        <entry lang="CHN">编辑</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Закрыть">
+		<entry lang="KAZ">Жабу</entry>
+		<entry lang="ENG">Close</entry>
+        <entry lang="CHN">关闭</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Основные свойства">
+		<entry lang="KAZ">Негізгі қасиеттері</entry>
+		<entry lang="ENG">Basic properties</entry>
+        <entry lang="CHN">基本性能</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Свойства">
+		<entry lang="KAZ">Қасиеттері</entry>
+		<entry lang="ENG">Properties</entry>
+        <entry lang="CHN">物业</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Подписал ">
+		<entry lang="KAZ">Қол қойды</entry>
+		<entry lang="ENG">Signed by</entry>
+        <entry lang="CHN">签署</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Получатель">
+		<entry lang="KAZ">Алушы</entry>
+		<entry lang="ENG">Recipient</entry>
+        <entry lang="CHN">收件人</entry>		
+	</sentence>
+		<sentence mode="on" keyword="Получатели">
+		<entry lang="KAZ">Алушылар</entry>
+		<entry lang="ENG">Recipients</entry>
+        <entry lang="CHN">受助人</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Является ответным на">
+		<entry lang="KAZ">Жауап болып табылады</entry>
+		<entry lang="ENG">Is a response to</entry>
+        <entry lang="CHN">是一家响应</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Срок исполнения">
+		<entry lang="KAZ">Орындалу мерзімі</entry>
+		<entry lang="ENG">Term of execution</entry>
+        <entry lang="CHN">长期性能</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Вложения">
+		<entry lang="KAZ">Тіркемелер</entry>
+		<entry lang="ENG">Attachments</entry>
+        <entry lang="CHN">嵌入</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Прикрепить">
+		<entry lang="KAZ">Тіркеу</entry>
+		<entry lang="ENG">Attach</entry>
+        <entry lang="CHN">附上</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ход исполнения">
+		<entry lang="KAZ">Орындалу барысы</entry>
+		<entry lang="ENG">Implementing progress</entry>
+        <entry lang="CHN">当然，执行</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Автор">
+		<entry lang="KAZ">Автор</entry>
+		<entry lang="ENG">Author</entry>
+        <entry lang="CHN">笔者</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Карточка исполнения">
+		<entry lang="KAZ">Орындалу карточкасы</entry>
+		<entry lang="ENG">Performance card</entry>
+        <entry lang="CHN">卡性能</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый входящий документ">
+		<entry lang="KAZ">Жаңа кіріс құжат</entry>
+		<entry lang="ENG">New incoming document</entry>
+        <entry lang="CHN">新进入的文件</entry>		
+	</sentence>
+	
+	<sentence mode="on" keyword="Входящий">
+		<entry lang="KAZ">Кіріс құжат</entry>
+		<entry lang="ENG">Incoming</entry>
+        <entry lang="CHN">访港</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исходящий">
+		<entry lang="KAZ">Шығыс құжат</entry>
+		<entry lang="ENG">Outgoing</entry>
+        <entry lang="CHN">即将离任</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исходящий документ">
+		<entry lang="KAZ">Шығыс құжат</entry>
+		<entry lang="ENG">Outgoing document</entry>
+        <entry lang="CHN">出站文档</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Входящие документы">
+		<entry lang="KAZ">Кіріс құжаттар</entry>
+		<entry lang="ENG">Incoming documents</entry>
+        <entry lang="CHN">收到的文件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исходящие ответные документы">
+		<entry lang="KAZ">Шығыс жауап құжаттар</entry>
+		<entry lang="ENG">Outgoing Response documents</entry>
+        <entry lang="CHN">即将离任的响应文档</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Проект исходящего">
+		<entry lang="KAZ">Шығыс құжаттар жобасы</entry>
+		<entry lang="ENG">Project of Outgoing documents</entry>
+        <entry lang="CHN">项目进展情况</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Проект исходящего документа">
+		<entry lang="KAZ">Шығыс құжаттар жобасы</entry>
+		<entry lang="ENG">Project of Outgoing documents</entry>
+        <entry lang="CHN">即将离任的项目文件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ожидает подпись">
+		<entry lang="KAZ">Қолтаңба күтілуде</entry>
+		<entry lang="ENG">Awaiting signature</entry>
+        <entry lang="CHN">等待签名</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Подписан">
+		<entry lang="KAZ">Қол қойылған</entry>
+		<entry lang="ENG">Signed</entry>
+        <entry lang="CHN">签署</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отклонен">
+		<entry lang="KAZ">Қисайтқан</entry>
+		<entry lang="ENG">Rejected</entry>
+        <entry lang="CHN">拒绝</entry>		
+	</sentence>
+	<sentence mode="on" keyword="На согласовании">
+		<entry lang="KAZ">Келісімде</entry>
+		<entry lang="ENG">On coordination</entry>
+        <entry lang="CHN">统一问题</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Страница">
+		<entry lang="KAZ">Бет</entry>
+		<entry lang="ENG">Page</entry>
+        <entry lang="CHN">首页</entry>		
+	</sentence>
+	<sentence mode="on" keyword="из">
+		<entry lang="KAZ">ішінен</entry>
+		<entry lang="ENG">of</entry>
+        <entry lang="CHN">的</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Кем будет подписан">
+		<entry lang="KAZ">Қол қойылады</entry>
+		<entry lang="ENG">Signer</entry>
+        <entry lang="CHN">谁将会签署</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Проект служебной записки">
+		<entry lang="KAZ">Қызметтік жазба жобасы</entry>
+		<entry lang="ENG">Project of memorandum</entry>
+        <entry lang="CHN">备忘录草案</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отправитель">
+		<entry lang="KAZ">Жіберуші</entry>
+		<entry lang="ENG">Sender</entry>
+        <entry lang="CHN">寄件人</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Вид отправки">
+		<entry lang="KAZ">Жіберу түрі</entry>
+		<entry lang="ENG">Sending type</entry>
+        <entry lang="CHN">形式发送</entry>		
+	</sentence>
+	<sentence mode="on" keyword="На руки">
+		<entry lang="KAZ">Қолға</entry>
+		<entry lang="ENG">On hand</entry>
+        <entry lang="CHN">在手边</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Нарочно (в журнале)">
+		<entry lang="KAZ">Курьер арқылы</entry>
+		<entry lang="ENG">Purposely</entry>
+		<entry lang="CHN">目的（出现）</entry>
+    </sentence>
+	<sentence mode="on" keyword="Письмо">
+		<entry lang="KAZ">Хат</entry>
+		<entry lang="ENG">Letter</entry>
+        <entry lang="CHN">信</entry>		
+	</sentence>
+	<sentence mode="on" keyword="По системе Lotus Notes">
+		<entry lang="KAZ">Lotus Notes жүйесі арқылы</entry>
+		<entry lang="ENG">By Lotus Notes</entry>
+        <entry lang="CHN">该系统 Lotus Notes</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Телеграмма">
+		<entry lang="KAZ">Жеделхат</entry>
+		<entry lang="ENG">Telegram</entry>
+        <entry lang="CHN">电报</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Факс">
+		<entry lang="KAZ">Факс</entry>
+		<entry lang="ENG">Fax</entry>
+        <entry lang="CHN">传真</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Электронная почта">
+		<entry lang="KAZ">Электрондық пошта</entry>
+		<entry lang="ENG">E-mail</entry>
+        <entry lang="CHN">电子邮件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Почта по спецсвязи">
+		<entry lang="KAZ">Арнайы байланыс арқылы</entry>
+		<entry lang="ENG">By Special Communication</entry>
+        <entry lang="CHN">专用通信的电子邮件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Папка">
+		<entry lang="KAZ">Қалта</entry>
+		<entry lang="ENG">Folder</entry>
+        <entry lang="CHN">文件夹</entry>		
+	</sentence>
+	<sentence mode="on" keyword="БЕЗ НАЗВАНИЯ">
+		<entry lang="KAZ">Атаусыз</entry>
+		<entry lang="ENG">No Name</entry>
+        <entry lang="CHN">无题</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Дополнительно">
+		<entry lang="KAZ">Қосымша</entry>
+		<entry lang="ENG">More</entry>
+        <entry lang="CHN">此外</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Файлы">
+		<entry lang="KAZ">Файлы</entry>
+		<entry lang="ENG">Files</entry>
+        <entry lang="CHN">档</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Состояние документа">
+		<entry lang="KAZ">Құжаттың күйі</entry>
+		<entry lang="ENG">Status of document</entry>
+        <entry lang="CHN">文件的状态</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Информация о прочтении">
+		<entry lang="KAZ">Оқу туралы мәлiмет</entry>
+		<entry lang="ENG">Information of read</entry>
+        <entry lang="CHN">信息就讀 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Кем прочтен еще">
+		<entry lang="KAZ">Кiм әлi оқыған</entry>
+		<entry lang="ENG">By whom it is read still</entry>
+        <entry lang="CHN">誰看更多  </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Права доступа">
+		<entry lang="KAZ">Рұқсат алудың құқықтары</entry>
+		<entry lang="ENG">Permissions</entry>
+        <entry lang="CHN">权限</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Выберите файл">
+		<entry lang="KAZ">Файл таңдап ал-</entry>
+		<entry lang="ENG">select file</entry>
+        <entry lang="CHN">选择文件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Файл не выбран">
+		<entry lang="KAZ">Файл таңдап алмаппын</entry>
+		<entry lang="ENG">File is not selected</entry>
+        <entry lang="CHN">该文件未被选中</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отправлять на подпись автоматически">
+		<entry lang="KAZ">Қол қоюға автоматты түрде жіберу</entry>
+		<entry lang="ENG">Send to a signature automatically</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отправлять после подписания автоматически">
+		<entry lang="KAZ">Қол қойылған соң автоматты турде жіберу</entry>
+		<entry lang="ENG">Automatically send after signing</entry>
+        <entry lang="CHN">签名会自动发送到</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Добавить">
+		<entry lang="KAZ">Үсте</entry>
+		<entry lang="ENG">Add</entry>
+        <entry lang="CHN">加</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Добавить блок">
+		<entry lang="KAZ">Блок қосу</entry>
+		<entry lang="ENG">Add block</entry>
+        <entry lang="CHN">新增单位</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Удалить блок">
+		<entry lang="KAZ">Блокты жою</entry>
+		<entry lang="ENG">Delete block</entry>
+        <entry lang="CHN">删除块</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Удалить">
+		<entry lang="KAZ">Жою</entry>
+		<entry lang="ENG">Delete</entry>
+        <entry lang="CHN">删除</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Открыть">
+		<entry lang="KAZ">Ашу</entry>
+		<entry lang="ENG">Open</entry>
+        <entry lang="CHN">开放</entry>		
+	</sentence>
+	
+	<sentence mode="on" keyword="Тип">
+		<entry lang="KAZ">Түрі</entry>
+		<entry lang="ENG">Type</entry>
+        <entry lang="CHN">类型</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Участники">
+		<entry lang="KAZ">Қатысушылар</entry>
+		<entry lang="ENG">Contributors</entry>
+        <entry lang="CHN">与会者</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Время ожидания">
+		<entry lang="KAZ">Күту уақыты</entry>
+		<entry lang="ENG">Waiting time</entry>
+        <entry lang="CHN">等候时间</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Статус">
+		<entry lang="KAZ">Күй</entry>
+		<entry lang="ENG">Status</entry>
+        <entry lang="CHN">状态</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Параллельное">
+		<entry lang="KAZ">Қатарлас</entry>
+		<entry lang="ENG">Parallel</entry>
+        <entry lang="CHN">并行</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Последовательное">
+		<entry lang="KAZ">Тізбектей</entry>
+		<entry lang="ENG">Consistent</entry>
+        <entry lang="CHN">一致</entry>		
+	</sentence>
+	<sentence mode="on" keyword="текущий согл.">
+		<entry lang="KAZ">ағымдағы келісуші</entry>
+		<entry lang="ENG">current coord.</entry>
+        <entry lang="CHN">当前累计。</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ожидает ответа">
+		<entry lang="KAZ">Жауап күтуде</entry>
+		<entry lang="ENG">Awaiting a response</entry>
+        <entry lang="CHN">等待回应</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Неограничено">
+		<entry lang="KAZ">Шексіз</entry>
+		<entry lang="ENG">Unlimited</entry>
+        <entry lang="CHN">无限</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Согласен">
+		<entry lang="KAZ">Келісім беру</entry>
+		<entry lang="ENG">Agree</entry>
+        <entry lang="CHN">同意</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Коментарий">
+		<entry lang="KAZ">Түсініктеме</entry>
+		<entry lang="ENG">Comment</entry>
+        <entry lang="CHN">评论</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Не согласен">	
+		<entry lang="KAZ">Келісім бермеу</entry>
+		<entry lang="ENG">Disagree</entry>
+        <entry lang="CHN">不同意</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Запрос на продление">
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG">Request for an extension</entry>
+        <entry lang="CHN">请求延期</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Согласовать дополнительно">
+		<entry lang="KAZ">Қосымша келісім беру</entry>
+		<entry lang="ENG">Аdditionally coordination</entry>
+        <entry lang="CHN">商定进一步</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Только для чтения">
+		<entry lang="KAZ">Тек оқу үшін</entry>
+		<entry lang="ENG">Reading only</entry>
+        <entry lang="CHN">只读</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Согласован">
+		<entry lang="KAZ">Келісілген</entry>
+		<entry lang="ENG">Agreed</entry>
+        <entry lang="CHN">同意</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Согласование">
+		<entry lang="KAZ">Келісім</entry>
+		<entry lang="ENG">Coordination</entry>
+        <entry lang="CHN">对准</entry>
+	</sentence>
+	<sentence mode="on" keyword="Новый документ">
+		<entry lang="KAZ">Жаңа құжат</entry>
+		<entry lang="ENG">New document</entry>
+        <entry lang="CHN">新的文档</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новая группа">
+		<entry lang="KAZ">Жаңа топ</entry>
+		<entry lang="ENG">New group</entry>
+        <entry lang="CHN">新的组</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новая роль">
+		<entry lang="KAZ">Жаңа рөл</entry>
+		<entry lang="ENG">New role</entry>
+        <entry lang="CHN">新角色</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый проект">
+		<entry lang="KAZ">Жаңа жоба</entry>
+		<entry lang="ENG">New project</entry>
+        <entry lang="CHN">新建项目</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый регион/город">
+		<entry lang="KAZ">Жаңа аймақ/қала</entry>
+		<entry lang="ENG">New Region/City</entry>
+        <entry lang="CHN">新的区域市</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый тип подразделения">
+		<entry lang="KAZ">Бөлімшенің жаңа үлгісі</entry>
+		<entry lang="ENG">New type of unitr</entry>
+        <entry lang="CHN">一个新的单位类型</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый корреспондент">
+		<entry lang="KAZ">Жаңа тілші</entry>
+		<entry lang="ENG">New Questioner</entry>
+        <entry lang="CHN">新的报告</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новая должность">
+		<entry lang="KAZ">Жаңа лауазым</entry>
+		<entry lang="ENG">New position</entry>
+        <entry lang="CHN">新的位置</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новая номенклатура дел">
+		<entry lang="KAZ">Қал-жағдайдың жаңа жиынтығы</entry>
+		<entry lang="ENG">New range of cases</entry>
+        <entry lang="CHN">新的案件范围</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новая категория">
+		<entry lang="KAZ">Жаңа санат</entry>
+		<entry lang="ENG">New category</entry>
+        <entry lang="CHN">新的类别</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый тип документа">
+		<entry lang="KAZ">Құжаттың жаңа үлгісі</entry>
+		<entry lang="ENG">New type of document</entry>
+        <entry lang="CHN">一个新的文件类型</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый вид доставки">
+		<entry lang="KAZ">Жеткізудің жаңа көрінісі</entry>
+		<entry lang="ENG">New type of delivery</entry>
+        <entry lang="CHN">新类型的交付</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый тип контроля">
+		<entry lang="KAZ">Тексерістің жаңа үлгісі</entry>
+		<entry lang="ENG">New type of control</entry>
+        <entry lang="CHN">一个新型的控制</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый характер вопроса">
+		<entry lang="KAZ">Сұрақтың жаңа мінезі</entry>
+		<entry lang="ENG">New nature of the issue</entry>
+        <entry lang="CHN">新问题的性质</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Удалить документ">
+		<entry lang="KAZ">Құжат алып тастау</entry>
+		<entry lang="ENG">Delete document</entry>
+        <entry lang="CHN">删除的文件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Сохранить как черновик">
+		<entry lang="KAZ">Алғашқы түрі ретінде сақтау</entry>
+		<entry lang="ENG">Save as Draft</entry>
+        <entry lang="CHN">保存为草稿</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отправить на подпись">
+		<entry lang="KAZ">Қол қоюға жіберу</entry>
+		<entry lang="ENG">Send to a signature</entry>
+        <entry lang="CHN">发送签名</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отправить на согласование">
+		<entry lang="KAZ">Келісімге жіберу</entry>
+		<entry lang="ENG">Send for coordination</entry>
+        <entry lang="CHN">报批</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Подписать">
+		<entry lang="KAZ">Қол қою</entry>
+		<entry lang="ENG">Sign</entry>
+        <entry lang="CHN">迹象</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отклонить">
+		<entry lang="KAZ">Қабылдамау</entry>
+		<entry lang="ENG">Reject</entry>
+        <entry lang="CHN">拒绝</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отметка о исполнении">
+		<entry lang="KAZ">Орындалғаны жайлы белгі</entry>
+		<entry lang="ENG">Mark of performance</entry>
+        <entry lang="CHN">马克的表现</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнитель">
+		<entry lang="KAZ">Орындаушы</entry>
+		<entry lang="ENG">Performer</entry>
+        <entry lang="CHN">执行</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Дата исполнени">
+		<entry lang="KAZ">Орындалу мерзімі</entry>
+		<entry lang="ENG">date of performance</entry>
+        <entry lang="CHN">执行日期</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Содержание отчета">
+		<entry lang="KAZ">Есептеменің мазмұны</entry>
+		<entry lang="ENG">Report Content</entry>
+        <entry lang="CHN">报告内容</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Содержание">
+		<entry lang="KAZ">Мазмұны</entry>
+		<entry lang="ENG">Content</entry>
+        <entry lang="CHN">内容</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Краткое содержание главного документа">
+		<entry lang="KAZ">Басты құжаттың қысқаша мазмұны</entry>
+		<entry lang="ENG">Summary of main document</entry>
+        <entry lang="CHN">摘要主要文件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Сохранить и закрыть">
+		<entry lang="KAZ">Сақтау және жабу</entry>
+		<entry lang="ENG">Save and close</entry>
+        <entry lang="CHN">保存并关闭</entry>		
+	</sentence>
+	<sentence mode="on" keyword="На контроле">
+		<entry lang="KAZ">Бақылауда</entry>
+		<entry lang="ENG">In control</entry>
+        <entry lang="CHN">在控制</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Контроль">
+		<entry lang="KAZ">Бақылау</entry>
+		<entry lang="ENG">Control</entry>
+        <entry lang="CHN">控制</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Автор резолюции">
+		<entry lang="KAZ">Резолюция авторы</entry>
+		<entry lang="ENG">Resolution author</entry>
+        <entry lang="CHN">作者的决议</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Дата резолюции">
+		<entry lang="KAZ">Резолюция мерзімі</entry>
+		<entry lang="ENG">Date of resolution</entry>
+        <entry lang="CHN">日期的决议</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнители">
+		<entry lang="KAZ">Орындаушылар</entry>
+		<entry lang="ENG">Performers</entry>
+        <entry lang="CHN">艺术家</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Текст резолюции">
+		<entry lang="KAZ">Резолюция мәтіні</entry>
+		<entry lang="ENG">Text of resolution</entry>
+        <entry lang="CHN">决议文本</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Резолюция">
+		<entry lang="KAZ">Резолюция</entry>
+		<entry lang="ENG">Resolution</entry>
+        <entry lang="CHN">决议</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Сохранить">
+		<entry lang="KAZ">Сақтау</entry>
+		<entry lang="ENG">Save</entry>
+        <entry lang="CHN">保存</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Примечание">
+		<entry lang="KAZ">Ескерту</entry>
+		<entry lang="ENG">Note</entry>
+        <entry lang="CHN">注意：</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Тип контроля">
+		<entry lang="KAZ">Бақылау түрі</entry>
+		<entry lang="ENG">Type of control</entry>
+        <entry lang="CHN">控制类型</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Особый контроль">
+		<entry lang="KAZ">Ерекше бақылау</entry>
+		<entry lang="ENG">Special control</entry>
+        <entry lang="CHN">特殊的控制</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Рабочий контроль">
+		<entry lang="KAZ">Жұмыс бақылауы</entry>
+		<entry lang="ENG">Operating control</entry>
+        <entry lang="CHN">工人的控制</entry>		
+	</sentence>
+	<sentence mode="on" keyword="К сведению">
+		<entry lang="KAZ">Мағлұматқа</entry>
+		<entry lang="ENG">For information</entry>
+        <entry lang="CHN">注意：</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Периодичность контроля">
+		<entry lang="KAZ">Бақылаудың қайталануы</entry>
+		<entry lang="ENG">Control frequency</entry>
+        <entry lang="CHN">频率控制</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Разовый">
+		<entry lang="KAZ">Бір жолғы</entry>
+		<entry lang="ENG">Once-only</entry>
+        <entry lang="CHN">特设</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ежедневно">
+		<entry lang="KAZ">Күн сайын</entry>
+		<entry lang="ENG">Daily</entry>
+        <entry lang="CHN">日报</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Еженедельно">
+		<entry lang="KAZ">Апта сайын</entry>
+		<entry lang="ENG">Weekly</entry>
+        <entry lang="CHN">每周</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ежемесячно">
+		<entry lang="KAZ">Ай сайын</entry>
+		<entry lang="ENG">Monthly</entry>
+        <entry lang="CHN">每月</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ежеквартально">
+		<entry lang="KAZ">Тоқсан сайын</entry>
+		<entry lang="ENG">Quarterly</entry>
+        <entry lang="CHN">季刊</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Полугодовой">
+		<entry lang="KAZ">Жарты жыл сайын</entry>
+		<entry lang="ENG">Semiannual</entry>
+        <entry lang="CHN">半年度</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ежегодно">
+		<entry lang="KAZ">Жыл сайын</entry>
+		<entry lang="ENG">Annually</entry>
+        <entry lang="CHN">每年</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Снять с контроля">
+		<entry lang="KAZ">Бақылаудан алу</entry>
+		<entry lang="ENG">Remove from the control</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Снято с контроля">
+		<entry lang="KAZ">Бақылаудан алынған</entry>
+		<entry lang="ENG">It is removed from control</entry>
+        <entry lang="CHN">从控制中删除</entry>		
+	</sentence>
+	<sentence mode="on" keyword="исполнитель">
+		<entry lang="KAZ">орындаушы</entry>
+		<entry lang="ENG">performer</entry>
+        <entry lang="CHN">执行</entry>
+	</sentence>
+	<sentence mode="on" keyword="дата">
+		<entry lang="KAZ">мерзім</entry>
+		<entry lang="ENG">date</entry>
+        <entry lang="CHN">日期</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Дата">
+		<entry lang="KAZ">Мерзім</entry>
+		<entry lang="ENG">Date</entry>
+        <entry lang="CHN">日期</entry>		
+	</sentence>
+	<sentence mode="on" keyword="кто снял">
+		<entry lang="KAZ">бақылаудан алды</entry>
+		<entry lang="ENG">removed by</entry>
+        <entry lang="CHN">谁退出</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отметить исполнение">
+		<entry lang="KAZ">Орындалғанды белгілеу</entry>
+		<entry lang="ENG">Mark the performance</entry>
+        <entry lang="CHN">注意执行</entry>		
+	</sentence>
+		<sentence mode="on" keyword="Вид доставки">
+		<entry lang="KAZ">Жеткізу түрі</entry>
+		<entry lang="ENG">Delivery type</entry>
+        <entry lang="CHN">供货方式</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Подписал">
+		<entry lang="KAZ">Қол қойды</entry>
+		<entry lang="ENG">Signed by</entry>
+        <entry lang="CHN">签署</entry>
+	</sentence>	
+	<sentence mode="on" keyword="Внутренние исполнители">
+		<entry lang="KAZ">Ішкі орындаушылар</entry>
+		<entry lang="ENG">Internal performers</entry>
+        <entry lang="CHN">国内表演</entry>	
+	</sentence>	
+	<sentence mode="on" keyword="Внешние исполнители">
+		<entry lang="KAZ">Сыртқы орындаушылар</entry>
+		<entry lang="ENG">External performers</entry>
+        <entry lang="CHN">外部艺术家</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Ответный исходящий">
+		<entry lang="KAZ">Жауап шығыс құжат</entry>
+		<entry lang="ENG">Back outbound</entry>
+        <entry lang="CHN">返回出境</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Новый исходящий документ">
+		<entry lang="KAZ">Жаңа шығыс құжаты</entry>
+		<entry lang="ENG">New outgoing document</entry>
+        <entry lang="CHN">返回出境</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Перепоручение">
+		<entry lang="KAZ">Қайта тапсыру</entry>
+		<entry lang="ENG">Delegate</entry>
+        <entry lang="CHN">委派</entry>		
+	</sentence>
+		<sentence mode="on" keyword="Сотрудник">
+		<entry lang="KAZ">Қызметкер</entry>
+		<entry lang="ENG">Employee</entry>
+        <entry lang="CHN">雇员</entry>		
+	</sentence>	
+		<sentence mode="on" keyword="Департамент">
+		<entry lang="KAZ">Бөлім</entry>
+		<entry lang="ENG">Department</entry>
+        <entry lang="CHN">部</entry>		
+	</sentence>	
+		<sentence mode="on" keyword="Должность">
+		<entry lang="KAZ">Қызмет</entry>
+		<entry lang="ENG">Position</entry>
+        <entry lang="CHN">文章</entry>		
+	</sentence>	
+		<sentence mode="on" keyword="Сокращенное имя">
+		<entry lang="KAZ">Қысқартылған есімі</entry>
+		<entry lang="ENG">Short name</entry>
+        <entry lang="CHN">简称</entry>		
+	</sentence>	
+		<sentence mode="on" keyword="Полное имя">
+		<entry lang="KAZ">Толық есімі</entry>
+		<entry lang="ENG">Full name</entry>	
+        <entry lang="CHN">全名</entry>		
+	</sentence>	
+		<sentence mode="on" keyword="Notes-адрес">
+		<entry lang="KAZ">Notes-мекен</entry>
+		<entry lang="ENG">Notes-adress</entry>
+        <entry lang="CHN">Notes地址</entry>		
+	</sentence>	
+		<sentence mode="on" keyword="Язык интерфейса">
+		<entry lang="KAZ">Интерфейс тілі</entry>
+		<entry lang="ENG">Interface language</entry>
+        <entry lang="CHN">语言</entry>		
+	</sentence>	
+		<sentence mode="on" keyword="Скин">
+		<entry lang="KAZ">Түрі</entry>
+		<entry lang="ENG">Skin</entry>
+        <entry lang="CHN">皮肤</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Откуда поступил">
+		<entry lang="KAZ">Кімнен</entry>
+		<entry lang="ENG">From</entry>
+        <entry lang="CHN">在哪里</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Кому адресован">
+		<entry lang="KAZ">Кімге</entry>
+		<entry lang="ENG">Recipient</entry>
+        <entry lang="CHN">谁</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Тип документа">
+		<entry lang="KAZ">Құжат түрі</entry>
+		<entry lang="ENG">Document type</entry>
+        <entry lang="CHN">文档类型</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Характер вопроса">
+		<entry lang="KAZ">Сұрақ сипаты</entry>
+		<entry lang="ENG">Question character</entry>
+        <entry lang="CHN">对这个问题的性质</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Язык обращения">
+		<entry lang="KAZ">Жолданым тілі</entry>
+		<entry lang="ENG">Treatment language</entry>
+        <entry lang="CHN">语言治疗</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Кол-во листов">
+		<entry lang="KAZ">Парақ саны</entry>
+		<entry lang="ENG">The number of sheets</entry>
+        <entry lang="CHN">张数</entry>		
+	</sentence>		
+	<sentence mode="on" keyword="от">
+		<entry lang="KAZ">уақыттан</entry>
+		<entry lang="ENG">at</entry>
+        <entry lang="CHN">从</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Дата исполнения">
+		<entry lang="KAZ">Орындалған уақыты</entry>
+		<entry lang="ENG">Date of performance</entry>
+        <entry lang="CHN">执行日期</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Основной текст">
+		<entry lang="KAZ">Негізгі мәтін</entry>
+		<entry lang="ENG">Content</entry>
+        <entry lang="CHN">正文</entry>		
+	</sentence>		
+	<sentence mode="on" keyword="Специалист">
+		<entry lang="KAZ">Маман</entry>
+		<entry lang="ENG">Specialist</entry>
+        <entry lang="CHN">专家</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Ведущий бухгалтер">
+		<entry lang="KAZ">Жетекші есепші</entry>
+		<entry lang="ENG">Lead accountant</entry>
+        <entry lang="CHN">铅会计师</entry>		
+	</sentence> 
+	<sentence mode="on" keyword="Ведущий специалист">
+		<entry lang="KAZ">Жетекші маман</entry>
+		<entry lang="ENG">Lead specialist</entry>
+        <entry lang="CHN">主管专员</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Секретарь">
+		<entry lang="KAZ">Хатшы</entry>
+		<entry lang="ENG">Secretary</entry>
+        <entry lang="CHN">司</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Аудитор">
+		<entry lang="KAZ">Тексеруші</entry>
+		<entry lang="ENG">Auditor</entry>
+        <entry lang="CHN">核数师</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Юрист">
+		<entry lang="KAZ">Заңгер</entry>
+		<entry lang="ENG">Lawyer</entry>
+        <entry lang="CHN">律师</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Главный специалист">
+		<entry lang="KAZ">Бас маман</entry>
+		<entry lang="ENG">Chief specialist</entry>
+        <entry lang="CHN">首席专家</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Главный экономист">
+		<entry lang="KAZ">Бас экономист</entry>
+		<entry lang="ENG">Chief economist</entry>
+        <entry lang="CHN">首席经济学家</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Старший бухгалтер">
+		<entry lang="KAZ">Аға есепші</entry>
+		<entry lang="ENG">Senior accountant</entry>
+        <entry lang="CHN">高级记帐员</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Менеджер">
+		<entry lang="KAZ">Менеджер</entry>
+		<entry lang="ENG">Manager</entry>
+        <entry lang="CHN">经理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Старший аудитор">
+		<entry lang="KAZ">Аға тексеруші</entry>
+		<entry lang="ENG">Senior auditor</entry>
+        <entry lang="CHN">高级审计师</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Старший юрист">
+		<entry lang="KAZ">Аға заңгер</entry>
+		<entry lang="ENG">Senior lawyer</entry>
+        <entry lang="CHN">高级助理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Главный менеджер">
+		<entry lang="KAZ">Бас менеджер</entry>
+		<entry lang="ENG">Senior manager</entry>
+        <entry lang="CHN">总经理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Главный аудитор">
+		<entry lang="KAZ">Бас тексеруші</entry>
+		<entry lang="ENG">Chief auditor</entry>
+        <entry lang="CHN">总稽核</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Главный юрист">
+		<entry lang="KAZ">Бас заңгер</entry>
+		<entry lang="ENG">Chief lawyer</entry>
+        <entry lang="CHN">首席法务官</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Главный менеджер (региональный)">
+		<entry lang="KAZ">Бас менеджер (аймақтық)</entry>
+		<entry lang="ENG">Senior manager (regional)</entry>
+        <entry lang="CHN">高级经理（地区）</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Советник (президента)">
+		<entry lang="KAZ">Президент кеңесшісі</entry>
+		<entry lang="ENG">Advisor (President)</entry>
+        <entry lang="CHN">总统顾问</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Советник (первого вице-президента)">
+		<entry lang="KAZ">Бірінші вице-президент кеңесшісі</entry>
+		<entry lang="ENG">Advisor (First Vice-President)</entry>
+        <entry lang="CHN">顾问第一副总统</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Секретарь Совета директоров">
+		<entry lang="KAZ">Директорлар кеңесінің хатшысы</entry>
+		<entry lang="ENG">Secretary of the board of Directors</entry>
+        <entry lang="CHN">秘书董事会</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Заместитель директора">
+		<entry lang="KAZ">Директор орынбасары</entry>
+		<entry lang="ENG">Deputy director</entry>
+        <entry lang="CHN">副主任</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Заместитель главного бухгалтера">
+		<entry lang="KAZ">Бас есепші орынбасары</entry>
+		<entry lang="ENG">Deputy chief accountant</entry>
+        <entry lang="CHN">副首席会计师</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Директор">
+		<entry lang="KAZ">Директор</entry>
+		<entry lang="ENG">Director</entry>
+        <entry lang="CHN">主任</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Помощник (первого вице-президента)">
+		<entry lang="KAZ">Бірінші вице-президент көмекшісі</entry>
+		<entry lang="ENG">Assistant (First Vice-President)</entry>
+        <entry lang="CHN">助理（第一副会长）</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Помощник (вице-президента)">
+		<entry lang="KAZ">Вице-президент көмекшісі</entry>
+		<entry lang="ENG">Assistant (Vice President)</entry>
+        <entry lang="CHN">助理（副总裁）</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор">
+		<entry lang="KAZ">Атқарушы директор</entry>
+		<entry lang="ENG">Executive Director</entry>
+        <entry lang="CHN">执行董事</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор - Директор ДРНП">
+		<entry lang="KAZ">Атқарушы директор - ДРНТ директоры</entry>
+		<entry lang="ENG">Executive Director - Director ДРНТ</entry>
+        <entry lang="CHN">执行董事 -董事非农产品市场准入</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Помощник(президента)">
+		<entry lang="KAZ">Президент көмекшісі</entry>
+		<entry lang="ENG">Assistant (President)</entry>
+        <entry lang="CHN">总统助理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по правовому обеспечению">
+		<entry lang="KAZ">Құқықтық қамсыздандыру бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive director of enforcement</entry>
+        <entry lang="CHN">执行部执行董事</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по экономике и финансам">
+		<entry lang="KAZ">Экономика және қаржы бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive director for economy and finance</entry>
+        <entry lang="CHN">执行董事为经济和财政</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по техническому развитию">
+		<entry lang="KAZ">Техникалық даму бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive director of technical development</entry>
+        <entry lang="CHN">执行董事技术开发</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по новым и перспективным проектам">
+		<entry lang="KAZ">Жаңа және болашағы бар жобалар бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive Director for a new and promising projects</entry>
+        <entry lang="CHN">执行董事，新的和有前途的项目</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор - директор департамента по связям с Компетентным органом и управлению базой геолого-геофизических данных">
+		<entry lang="KAZ">Атқарушы директор - Құзіретті органдармен байланыс және геолого-геофизикалық мәліметтер қорын басқару бойынша бөлім департаменті</entry>
+		<entry lang="ENG">Executive Director - Director of the Department for Relations with the competent authority and control base of geological and geophysical data</entry>
+        <entry lang="CHN">执行董事 -主任与主管部门和地质和地球物理数据的控制基地的关系部</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по управлению долями в СП">
+		<entry lang="KAZ">БК үлестерін басқару бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive Director of controlling stakes in joint venture</entry>
+        <entry lang="CHN">执行董事在合资企业的控股权</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по управлению проектами СРП - директор департамента Карачаганакского проекта">
+		<entry lang="KAZ">ӨБК жобаларын басқару бойынша атқарушы директор - Қарашығанақ жоба бөлімінің директоры</entry>
+		<entry lang="ENG">Executive Director of Project Management PSA - Director of the Karachaganak project</entry>
+        <entry lang="CHN">执行主任PSA的项目管理-项目主任的Karachaganak</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по транспортной инфраструктуре и сервисным проектам">
+		<entry lang="KAZ">Көліктік инфрақұрылым бойынша және қызметтік жобалар бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive director of transportation infrastructure and service projects</entry>
+        <entry lang="CHN">执行董事的交通基础设施和服务项目</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по корпоративному развитию">
+		<entry lang="KAZ">Бірлескен даму бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive Director of Corporate Development</entry>
+        <entry lang="CHN">企业发展执行董事</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по информационным технологиям">
+		<entry lang="KAZ">Ақпараттық технологиялар бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive Director of Information Technology</entry>
+        <entry lang="CHN">资讯科技执行董事</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор аппарата президента">
+		<entry lang="KAZ">Президент аппаратының атқарушы директоры</entry>
+		<entry lang="ENG">Executive Director of the Office of the President</entry>
+        <entry lang="CHN">执行主任，总统办公室</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор">
+		<entry lang="KAZ">Басқарушы директор</entry>
+		<entry lang="ENG">Managing Director</entry>
+        <entry lang="CHN">董事总经理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор - руководитель аппарата">
+		<entry lang="KAZ">Басқарушы директор - аппарат басқарушысы</entry>
+		<entry lang="ENG">Managing Director - Chief of Staff</entry>
+        <entry lang="CHN">董事总经理 -参谋长</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Главный бухгалтер">
+		<entry lang="KAZ">Бас есепші</entry>
+		<entry lang="ENG">Chief accountant</entry>
+        <entry lang="CHN">总会计师</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по правовому обеспечению">
+		<entry lang="KAZ">Құқықтық қамсыздандыру бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing director of enforcement</entry>
+        <entry lang="CHN">执行董事总经理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по экономике и финансам">
+		<entry lang="KAZ">Экономика және қаражат бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director for Economy and Finance</entry>
+        <entry lang="CHN">董事总经理和财务经济</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по проектам разведки и добычи нефти">
+		<entry lang="KAZ">Барлау және мұнай шығару жобалары бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing director of project exploration and production</entry>
+        <entry lang="CHN">董事总经理勘探和生产项目</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор геолого-технологической службы">
+		<entry lang="KAZ">Геолого-технологиялық қызмет бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director of Geological and technological service</entry>
+        <entry lang="CHN">董事总经理地质和技术服务</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по нефтепереработке и нефтехимии">
+		<entry lang="KAZ">Мұнай өңдеу және мұнай химия бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director for Oil Refining and Petrochemicals</entry>
+        <entry lang="CHN">董事总经理炼油和石化工业</entry>
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по управлению долями в СП">
+		<entry lang="KAZ">БК үлестерін басқару бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director of controlling stakes in joint venture</entry>
+        <entry lang="CHN">董事总经理在合资企业的控股权</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по управлению проектами СРП">
+		<entry lang="KAZ">ӨБК жобаларын басқару бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director of Project Management PSA</entry>
+        <entry lang="CHN">董事总经理PSA的项目管理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по транспортной инфораструктуре и сервисным проектам">
+		<entry lang="KAZ">Көліктік инфрақұрылым бойынша және қызметтік жобалар бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing director of transportation infrastructure and service projects</entry>
+        <entry lang="CHN">常务董事，交通基础设施和服务项目</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по корпоративному развитию">
+		<entry lang="KAZ">Бірлескен даму бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director of Corporate Development</entry>
+        <entry lang="CHN">董事总经理，企业发展</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Вице-президент-директор представительства">
+		<entry lang="KAZ">Вице-президент - өкілдік директоры</entry>
+		<entry lang="ENG">Vice president - Director of Representative</entry>
+        <entry lang="CHN">副总统办公室主任</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Первый вице-президент">
+		<entry lang="KAZ">Бірінші вице-президент</entry>
+		<entry lang="ENG">First Vice President</entry>
+        <entry lang="CHN">第一副总统</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Президент">
+		<entry lang="KAZ">Президент</entry>
+		<entry lang="ENG">President</entry>
+        <entry lang="CHN">总统</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Председатель Совета директоров Общества">
+		<entry lang="KAZ">Қоғамның директорлар Кеңесі төрағасы</entry>
+		<entry lang="ENG">Chairman of the Board of Directors</entry>
+        <entry lang="CHN">主席董事会</entry>		
+	</sentence>
+	<sentence mode="on" keyword="И.О. Заместителя директора">
+		<entry lang="KAZ">Директор орынбасарының міндеттерін атқарушы</entry>
+		<entry lang="ENG"></entry>
+        <entry lang="CHN">印务局副主任</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Стажер">
+		<entry lang="KAZ">Машықтанушы</entry>
+		<entry lang="ENG">Trainee</entry>
+        <entry lang="CHN">实习生</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Секретарь Правления">
+		<entry lang="KAZ">Басқарма хатшысы</entry>
+		<entry lang="ENG">Secretary of the Board</entry>
+        <entry lang="CHN">董事会秘书</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ведущий менеджер">
+		<entry lang="KAZ">Жетекші менеджер</entry>
+		<entry lang="ENG">Lead manager</entry>
+        <entry lang="CHN">牵头经办人</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Заместитель Руководителя Аппарата Президента">
+		<entry lang="KAZ">Президент аппаратының басшы орынбасары</entry>
+		<entry lang="ENG">Deputy Chief of Staff of the President</entry>
+        <entry lang="CHN">副参谋长主席的工作人员</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по газовым проектам">
+		<entry lang="KAZ">Газдық жобалар бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive Director for Gas Projects</entry>
+        <entry lang="CHN">执行主任燃气项目</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по газовым проектам">
+		<entry lang="KAZ">Газдық жобалар бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director for Gas Projects</entry>
+        <entry lang="CHN">董事总经理燃气项目</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Помощник управляющего директора">
+		<entry lang="KAZ">Басқарушы директор көмекшісі</entry>
+		<entry lang="ENG">Assistant of Managing Director</entry>
+        <entry lang="CHN">总经理助理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по нефтепереработке и нефтехимии">
+		<entry lang="KAZ">Мұнай өңдеу және мұнай химиясы бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive Director for Oil Refining and Petrochemicals</entry>
+        <entry lang="CHN">执行主任炼油和石化工业</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Менеджер секретариата Совета Директоров">
+		<entry lang="KAZ">Директорлар кеңесі хатшылар алқасының менеджері</entry>
+		<entry lang="ENG">Secretariat manager of the Board of Directors</entry>
+        <entry lang="CHN">经理，董事局秘书处</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Заместитель директора представительства">
+		<entry lang="KAZ">Өкілдік директорының орынбасары</entry>
+		<entry lang="ENG">Deputy Director of the representation</entry>
+        <entry lang="CHN">代表团副主任</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Советник президента по безопасности">
+		<entry lang="KAZ">Қауіпсіздік бойынша президент кеңесшісі</entry>
+		<entry lang="ENG">Presidential adviser on security</entry>
+        <entry lang="CHN">总统安全顾问</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Директор представительства">
+		<entry lang="KAZ">Өкілдік директоры</entry>
+		<entry lang="ENG">Director of representation</entry>
+        <entry lang="CHN">董事团</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Член Совета Директоров">
+		<entry lang="KAZ">Директорлар кеңесінің мүшесі</entry>
+		<entry lang="ENG">Board Member</entry>
+        <entry lang="CHN">董事会成员</entry>		
+	</sentence>
+	<sentence mode="on" keyword="И.О. директора">
+		<entry lang="KAZ">Директордың міндетін атқарушы</entry>
+		<entry lang="ENG"></entry>
+        <entry lang="CHN">印务局主任</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Вице-президент">
+		<entry lang="KAZ">Вице-президент</entry>
+		<entry lang="ENG">Vice President</entry>
+        <entry lang="CHN">副总统</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Инженер ГСПСО">
+		<entry lang="KAZ">ГСПСО инженері</entry>
+		<entry lang="ENG">Engineer GSPSO</entry>
+        <entry lang="CHN">工程师GSPSO</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Переводчик">
+		<entry lang="KAZ">Аудармашы</entry>
+		<entry lang="ENG">Translator</entry>
+        <entry lang="CHN">翻译</entry>	
+	</sentence>
+	<sentence mode="on" keyword="Секретарь-референт">
+		<entry lang="KAZ">Хатшы-референт</entry>
+		<entry lang="ENG">Office Assistant</entry>
+        <entry lang="CHN">办公室助理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по транспортировке">
+		<entry lang="KAZ">Тасымалдау бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director of Transportation</entry>
+        <entry lang="CHN">董事总经理运输</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Вице-президент по разведке и добыче">
+		<entry lang="KAZ">Барлау және шығару бойынша вице-президент</entry>
+		<entry lang="ENG">Vice-President for Exploration and Production</entry>
+        <entry lang="CHN">副总统勘探与生产</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Вице-президент по транспортировке и переработке">
+		<entry lang="KAZ">Тасымалдау және өңдеу бойынша вице-президент</entry>
+		<entry lang="ENG">Vice president of transportation and processing</entry>
+        <entry lang="CHN">副总裁运销及加工</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Вице-президент по поддержке бизнеса и правовому обеспечению">
+		<entry lang="KAZ">Бизнесті қолдау және құқықтық қамсыздандыру бойынша вице-президент</entry>
+		<entry lang="ENG">Vice president of business support and legal maintenance</entry>
+        <entry lang="CHN">副总裁业务支持和法律支持</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по добыче нефти и газа">
+		<entry lang="KAZ">Мұнай және газ шығару бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director for Oil and Gas</entry>
+        <entry lang="CHN">董事总经理石油和天然气</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по добыче нефти и газа">
+		<entry lang="KAZ">Мұнай және газ шығару бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive Director for Oil and Gas</entry>
+        <entry lang="CHN">执行董事为石油和天然气</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по сопровождению бизнеса по разведке и добыче">
+		<entry lang="KAZ">Барлау және шығару бизнесін алып жүру бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive director of business support for exploration and production</entry>
+        <entry lang="CHN">执行董事的业务支持的勘探和生产</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по новым проектам по разведке и добыче">
+		<entry lang="KAZ">Барлау және шығарудағы жаңа жобалар бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive Director for new projects for exploration and production</entry>
+        <entry lang="CHN">执行主任的勘探和生产的新项目</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по проектам ТШО и Дунга">
+		<entry lang="KAZ">ТШО және Дунга жобалары бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive Director of the project, TCO and Dunga</entry>
+        <entry lang="CHN">该项目的执行主任，TCO和邓加</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по проектам ТШО и Дунга">
+		<entry lang="KAZ">ТШО және Дунга жобалары бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director of Project TCO and Dunga</entry>
+        <entry lang="CHN">董事总经理项目TCO和邓加</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по поддержке бизнеса">
+		<entry lang="KAZ">Бизнесті қолдау бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director of Business Support</entry>
+        <entry lang="CHN">董事总经理的业务支持</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по транспортировке">
+		<entry lang="KAZ">Тасымалдау бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive Director of Transportation</entry>
+        <entry lang="CHN">执行董事运输</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по геологии, геофизике и резервуарам">
+		<entry lang="KAZ">Геология, геофизика және сұйыққойма бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing director for geology, geophysics and reservoirs</entry>
+        <entry lang="CHN">董事总经理地质，地球物理和水库</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Управляющий директор по управлению человеческими ресурсами и корпоративными коммуникациями">
+		<entry lang="KAZ">Адам қорын басқару және бірлескен байланыс бойынша басқарушы директор</entry>
+		<entry lang="ENG">Managing Director of Human Resources and Corporate Communications</entry>
+        <entry lang="CHN">董事总经理，人力资源及企业传讯部</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Директор по управлению нефтегазовыми активами АО Холдинг Самрук">
+		<entry lang="KAZ">"Самрұқ" Холдинг АҚ мұнайгаз активтерін басқару бойынша директор</entry>
+		<entry lang="ENG">Management director for oil and gas assets of JSC Holding "Samruk"</entry>
+        <entry lang="CHN">管理总监石油和天然气资产控股的股份公司Samruk</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Исполнительный директор по геологии, геофизике и резервуарам">
+		<entry lang="KAZ">Геология, геофизика және сұйыққойма бойынша атқарушы директор</entry>
+		<entry lang="ENG">Executive director for geology, geophysics, and reservoirs</entry>
+        <entry lang="CHN">执行董事的地质，地球物理和水库</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Руководитель службы">
+		<entry lang="KAZ">Қазмет басшысы</entry>
+		<entry lang="ENG">Head of service</entry>
+        <entry lang="CHN">服务部主管</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Заместитель руководителя">
+		<entry lang="KAZ">Бастық орынбасары</entry>
+		<entry lang="ENG">Deputy Head</entry>
+        <entry lang="CHN">副团长</entry>
+	</sentence>
+	<sentence mode="on" keyword="Заведующий Секретариатом">
+		<entry lang="KAZ">Хатшылық меңгерушісі</entry>
+		<entry lang="ENG">Head of secretariat</entry>
+        <entry lang="CHN">秘书处负责人</entry>		
+	</sentence>
+	<sentence mode="on" keyword="диспетчер">
+		<entry lang="KAZ">диспечер</entry>
+		<entry lang="ENG">manager</entry>
+        <entry lang="CHN">经理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="И.о. Управляющего директора геологии, геофизики и резервуаров">
+		<entry lang="KAZ">Геология, геофизика және сұйыққойма басқарушы директорының міндетін атқарушы</entry>
+		<entry lang="ENG"></entry>
+        <entry lang="CHN">代理董事总经理地质，地球物理和油藏</entry>		
+	</sentence>
+	<sentence mode="on" keyword="И.о. управляющего директора по нефтепереработке и нефтехимии">
+		<entry lang="KAZ">Мұнай өңдеу және мұнай химия бойынша басқарушы директор міндетін атқарушы</entry>
+		<entry lang="ENG"></entry>
+        <entry lang="CHN">代理董事总经理炼油和石化工业</entry>		
+	</sentence>
+	<sentence mode="on" keyword="И.о. Руководителя Службы">
+		<entry lang="KAZ">Қызмет басшысының міндетін атқарушы</entry>
+		<entry lang="ENG"></entry>
+        <entry lang="CHN">代理服务部主管</entry>		
+	</sentence>
+	<sentence mode="on" keyword="И.о. управляющего директора по управлению проектами СРП">
+		<entry lang="KAZ">ӨБК жобаларын басқару бойынша басқарушы директор міндетін атқарушы</entry>
+		<entry lang="ENG"></entry>
+        <entry lang="CHN">代理董事总经理PSA的项目管理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Старший инженер">
+		<entry lang="KAZ">Аға инженер</entry>
+		<entry lang="ENG">Senior Engineer</entry>
+        <entry lang="CHN">高级工程师</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Заместитель начальника спец. подразделения">
+		<entry lang="KAZ">Арнайы бөлімше бастығының орынбасары</entry>
+		<entry lang="ENG">Deputy chief of special division</entry>
+        <entry lang="CHN">特别部队副参谋长</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Директор филиала">
+		<entry lang="KAZ">Филиал директоры</entry>
+		<entry lang="ENG">Director of the branch</entry>
+        <entry lang="CHN">科主任</entry>		
+	</sentence>
+	<sentence mode="on" keyword="И.о. вице-президента, исполнительный директор по нефтепереработке и нефтехимии">
+		<entry lang="KAZ">Вице-президент міндетін атқарушы, мұнай өңдеу және мұнай химия бойынша атқарушы директор</entry>
+		<entry lang="ENG"></entry>
+        <entry lang="CHN">代理副总裁，执行董事，炼油与化工</entry>		
+	</sentence>
+	<sentence mode="on" keyword="И.о. управляющего директора">
+		<entry lang="KAZ">Басқарушы директор міндетін атқарушы</entry>
+		<entry lang="ENG"></entry>
+        <entry lang="CHN">代理董事总经理</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Инженер по контрактам">
+		<entry lang="KAZ">Келісім бойынша инженер</entry>
+		<entry lang="ENG">Contracts engineer</entry>
+        <entry lang="CHN">工程师合同</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Руководитель группы техподдержки">
+		<entry lang="KAZ">Техникалық қолдау тобының басшысы</entry>
+		<entry lang="ENG">Head of the technical support group</entry>
+        <entry lang="CHN">支援组组长</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ведущий инженер">
+		<entry lang="KAZ">Жетекші  инженер</entry>
+		<entry lang="ENG">Chief engineer</entry>
+        <entry lang="CHN">总工程师</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Инженер">
+		<entry lang="KAZ">Инженер</entry>
+		<entry lang="ENG">Engineer</entry>
+        <entry lang="CHN">工程师</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Начальник охраны объектов">
+		<entry lang="KAZ">Объектіні қорғау бастығы</entry>
+		<entry lang="ENG">Chief of object security</entry>
+        <entry lang="CHN">头对象</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Руководитель группы">
+		<entry lang="KAZ">Топ басшысы</entry>
+		<entry lang="ENG">Head of the group</entry>
+        <entry lang="CHN">队长</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Настройки системы">
+		<entry lang="KAZ">Жүйенiң баптаулары</entry>
+		<entry lang="ENG">System settings</entry>
+        <entry lang="CHN">系统配置</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Режим не определен">
+		<entry lang="KAZ">Тәртiп анықталмаған</entry>
+		<entry lang="ENG">Mode is not defined</entry>
+        <entry lang="CHN">没有定义模式</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Тип не определен">
+		<entry lang="KAZ">Түр анықталмаған</entry>
+		<entry lang="ENG">Type is not defined</entry>
+        <entry lang="CHN">类型未定义</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ожидание начала согласования">
+		<entry lang="KAZ">Келісудің басталуын күту</entry>
+		<entry lang="ENG">Expectation of the beginning coordination</entry>
+        <entry lang="CHN">等待启动</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Открыть документ в Lotus Notes">
+		<entry lang="KAZ">Lotus Notes-те құжатты ашу</entry>
+		<entry lang="ENG">Open document in Lotus Notes</entry>
+        <entry lang="CHN">在Lotus Notes中打开文件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Входящий документ">
+		<entry lang="KAZ">Кіріс құжат</entry>
+		<entry lang="ENG">Incoming document</entry>
+        <entry lang="CHN">入站文件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Адрес">
+		<entry lang="KAZ">Мекенжай</entry>
+		<entry lang="ENG">Address</entry>
+        <entry lang="CHN">地址</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Вид обращения">
+		<entry lang="KAZ">Үндеудi түр</entry>
+		<entry lang="ENG">Circulatuion kind</entry>
+        <entry lang="CHN">种治疗</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Результат рассмотрения">
+		<entry lang="KAZ">Талқылаудың нәтижесi</entry>
+		<entry lang="ENG">Result of consideration</entry>
+        <entry lang="CHN">分析结果</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Район/регион">
+		<entry lang="KAZ">Өлке/аудан</entry>
+		<entry lang="ENG">Area/region</entry>
+        <entry lang="CHN">区/地区</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Телефон">
+		<entry lang="KAZ">Телефон</entry>
+		<entry lang="ENG">Phone</entry>
+        <entry lang="CHN">电话</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Категория">
+		<entry lang="KAZ">Дәреже</entry>
+		<entry lang="ENG">Category</entry>
+        <entry lang="CHN">分类</entry>		
+	</sentence>
+	<sentence mode="on" keyword="экз.">
+		<entry lang="KAZ">Дана</entry>
+		<entry lang="ENG">copy</entry>
+        <entry lang="CHN">复制</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ф.И.О.">
+		<entry lang="KAZ">Ф.А.Ә.</entry>
+		<entry lang="ENG">S.N.P.</entry>
+        <entry lang="CHN">名称</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Список документов">
+		<entry lang="KAZ">Құжаттардың тiзiмi</entry>
+		<entry lang="ENG">Document list</entry>
+        <entry lang="CHN">文件清单</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ознакомить">
+		<entry lang="KAZ">Таныстыру</entry>
+		<entry lang="ENG">To acquaint</entry>
+        <entry lang="CHN">认识</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Напомнить">
+		<entry lang="KAZ">Ескерту</entry>
+		<entry lang="ENG">To remind</entry>
+        <entry lang="CHN">记得</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Головной документ">
+		<entry lang="KAZ">Басты құжат</entry>
+		<entry lang="ENG">Main document</entry>	
+        <entry lang="CHN">主文件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Комментарий">
+		<entry lang="KAZ">Түсініктеме</entry>
+		<entry lang="ENG">Comment</entry>
+        <entry lang="CHN">评论</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Код">
+		<entry lang="KAZ">Код</entry>
+		<entry lang="ENG">Code</entry>
+        <entry lang="CHN">代码</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Структура организации">
+		<entry lang="KAZ">Ұйымның құрылымы</entry>
+		<entry lang="ENG">Structure of the organization</entry>
+        <entry lang="CHN">组织结构</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Номенклатура дел">
+		<entry lang="KAZ">Iс номенклатурасы</entry>
+		<entry lang="ENG">The nomenclature of affairs</entry>
+        <entry lang="CHN">命名事务</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Корреспонденты">
+		<entry lang="KAZ">Корреспонденттер</entry>
+		<entry lang="ENG">Questioners</entry>
+        <entry lang="CHN">记者</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Категория корреспондентов">
+		<entry lang="KAZ">Корреспонденттердiң дәрежесi</entry>
+		<entry lang="ENG">Category questioners</entry>
+        <entry lang="CHN">类别</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Тип подразделения">
+		<entry lang="KAZ">Бөлiмшенiң түрi</entry>
+		<entry lang="ENG">Type of unit</entry>
+        <entry lang="CHN">单位类型</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Город">
+		<entry lang="KAZ">қала</entry>
+		<entry lang="ENG">City</entry>
+        <entry lang="CHN">单位类型</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Регион/Город">
+		<entry lang="KAZ">өңір/шаһар</entry>
+		<entry lang="ENG">Region/City</entry>
+        <entry lang="CHN">单位类型</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Роли пользователей">
+		<entry lang="KAZ">Қолданушылардың рөлдерi</entry>
+		<entry lang="ENG">User roles</entry>
+        <entry lang="CHN">用户角色</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Группы пользователей">
+		<entry lang="KAZ">Қолданушылардың топтары</entry>
+		<entry lang="ENG">User groups</entry>
+        <entry lang="CHN">用户组</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Является ответным на входящий документ">
+		<entry lang="KAZ">Кіріс құжатқа жауап болып табылады</entry>
+		<entry lang="ENG">Is answer on the incoming document</entry>
+        <entry lang="CHN">是一个对传入文档响应</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Ответный входящий документ">
+		<entry lang="KAZ">Кіріс жауап құжат</entry>
+		<entry lang="ENG">The answer incoming document</entry>
+        <entry lang="CHN">回答入境文件</entry>		
+	</sentence>
+	<sentence mode="on" keyword="№ бланка">
+		<entry lang="KAZ">Бланк №</entry>
+		<entry lang="ENG">Blank №</entry>
+        <entry lang="CHN">表格编号</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Язык документа">
+		<entry lang="KAZ">Құжат тiлі</entry>
+		<entry lang="ENG">Document language</entry>
+        <entry lang="CHN">文档语言</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Чужой компьютер">
+		<entry lang="KAZ">Бөгде компьютер</entry>
+		<entry lang="ENG">Another's computer</entry>
+        <entry lang="CHN">别人的电脑</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Корзина">
+		<entry lang="KAZ">Кәрзеңке</entry>
+		<entry lang="ENG">Basket</entry>
+        <entry lang="CHN">篮</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отчеты">
+		<entry lang="KAZ">Есептеу нәтижелерi</entry>
+		<entry lang="ENG">Reports</entry>
+        <entry lang="CHN">篮</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отчет">
+		<entry lang="KAZ">Есептеме</entry>
+		<entry lang="ENG">Report</entry>
+        <entry lang="CHN">篮</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Сформировать отчет">
+		<entry lang="KAZ">Есептеу нәтижесi құрастыру</entry>
+		<entry lang="ENG">Generate a report</entry>
+        <entry lang="CHN">生成报告</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Тип файла отчета">
+		<entry lang="KAZ">Есептеу нәтижесiнiң файлының түрi</entry>
+		<entry lang="ENG">File type report</entry>
+        <entry lang="CHN">文件类型报告</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Открыть отчет">
+		<entry lang="KAZ">Аш-есеп беру</entry>
+		<entry lang="ENG">Open report</entry>
+        <entry lang="CHN">打开报告</entry>		
+	</sentence>
+	<sentence mode="on" keyword="в программе по умолчанию">
+		<entry lang="KAZ">бағдарламада ша умолчанию</entry>
+		<entry lang="ENG">in the default</entry>
+        <entry lang="CHN">在默认</entry>		
+	</sentence>
+	<sentence mode="on" keyword="в окне браузера">
+		<entry lang="KAZ">браузера терезесінде</entry>
+		<entry lang="ENG">in browser window</entry>
+        <entry lang="CHN">在浏览器窗口</entry>		
+	</sentence>
+	<sentence mode="on" keyword="На регистрацию">
+		<entry lang="KAZ">Тiркеуге</entry>
+		<entry lang="ENG">To register</entry>
+        <entry lang="CHN">登记</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Справочники">
+		<entry lang="KAZ">Анықтамалар</entry>
+		<entry lang="ENG">References</entry>
+        <entry lang="CHN">参考文献</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Название">
+		<entry lang="KAZ">Атау</entry>
+		<entry lang="ENG">Name</entry>
+        <entry lang="CHN">名称</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Адрес">
+		<entry lang="KAZ">Мекенжайы</entry>
+		<entry lang="ENG">Address</entry>
+        <entry lang="CHN">地址</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Организация">
+		<entry lang="KAZ">Ұйымдастыру</entry>
+		<entry lang="ENG">Organization</entry>
+        <entry lang="CHN">組織</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Комментарий">
+		<entry lang="KAZ">Түсіндірме</entry>
+		<entry lang="ENG">Сomment</entry>
+        <entry lang="CHN">評論</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Сокращенное название">
+		<entry lang="KAZ">Қысқарт- атау</entry>
+		<entry lang="ENG">Short name</entry>
+        <entry lang="CHN">短名称</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Новый контрагент">
+		<entry lang="KAZ">Жаңа қарсы уәкiл</entry>
+		<entry lang="ENG">New contractor</entry>
+        <entry lang="CHN">承包商</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Замечание">
+		<entry lang="KAZ">Айтылған сөз</entry>
+		<entry lang="ENG">Remark</entry>
+        <entry lang="CHN">评论</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Замечания">
+		<entry lang="KAZ">Айтылған сөз</entry>
+		<entry lang="ENG">Remarks</entry>
+        <entry lang="CHN">评论</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Статистика">
+		<entry lang="KAZ">Санақ</entry>
+		<entry lang="ENG">Statistics</entry>
+        <entry lang="CHN">统计</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Фильтр">
+		<entry lang="KAZ">Сүзгі</entry>
+		<entry lang="ENG">Filter</entry>
+        <entry lang="CHN">过滤</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Помощь">
+		<entry lang="KAZ">Демдеу</entry>
+		<entry lang="ENG">Help</entry>
+        <entry lang="CHN">帮助</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Ответственный участка">
+		<entry lang="KAZ">Жауаптысы бөлiмше</entry>
+		<entry lang="ENG">Responsible land</entry>
+        <entry lang="CHN">负责土地</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Описание">
+		<entry lang="KAZ">Сипаттама</entry>
+		<entry lang="ENG">Description</entry>
+        <entry lang="CHN">說明 </entry>		
+	</sentence>
+	<sentence mode="on" keyword="Черновик">
+		<entry lang="KAZ">Колжазбаның алғашқы түрі</entry>
+		<entry lang="ENG">Draft</entry>
+        <entry lang="CHN">草案</entry>		
+	</sentence>						
+	<sentence mode="on" keyword="Отклоненные">
+		<entry lang="KAZ">Қабылданбағаны</entry>
+		<entry lang="ENG">Rejected</entry>
+        <entry lang="CHN">拒绝</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="На ревизии исполнения">
+		<entry lang="KAZ">Орындаудың тексерулерiне</entry>
+		<entry lang="ENG">In the performance audit</entry>
+        <entry lang="CHN">在绩效审计</entry>		
+	</sentence>	
+	<sentence mode="on" keyword="Категория контрагентов">
+		<entry lang="KAZ">Қарсы уәкiлдердiң дәрежесi</entry>
+		<entry lang="ENG">Category counterparties</entry>
+        <entry lang="CHN">分类对手</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Место замечания">
+		<entry lang="KAZ">Ескертудi орын</entry>
+		<entry lang="ENG">Place comments</entry>
+        <entry lang="CHN">地方的意见</entry>		
+	</sentence>
+	<sentence mode="on" keyword="подробнее...">
+		<entry lang="KAZ">толығырақ...</entry>
+		<entry lang="ENG">more ...</entry>
+        <entry lang="CHN">更多...</entry>		
+	</sentence>
+	<sentence mode="on" keyword="подробнее...">
+		<entry lang="KAZ">толығырақ...</entry>
+		<entry lang="ENG">more ...</entry>
+        <entry lang="CHN">更多...</entry>		
+	</sentence>
+	<sentence mode="on" keyword="кратко...">
+		<entry lang="KAZ">келте...</entry>
+		<entry lang="ENG">brief ...</entry>
+        <entry lang="CHN">简短的...</entry>		
+	</sentence>
+	<sentence mode="on" keyword="кратко">
+		<entry lang="KAZ">келте</entry>
+		<entry lang="ENG">brief</entry>
+        <entry lang="CHN">简短的</entry>		
+	</sentence>
+	<sentence mode="on" keyword="подробнее">
+		<entry lang="KAZ">толық</entry>
+		<entry lang="ENG">more</entry>
+        <entry lang="CHN">更多</entry>		
+	</sentence>
+	<sentence mode="on" keyword="ПО месту возникновения">
+		<entry lang="KAZ">Басталу орны бойынша</entry>
+		<entry lang="ENG">At the place of</entry>
+        <entry lang="CHN">在当地的</entry>		
+	</sentence>
+	<sentence mode="on" keyword="выберите вид работ">
+		<entry lang="KAZ">жұмыстардың түрiн таңдаңыз</entry>
+		<entry lang="ENG">select the type of work</entry>
+        <entry lang="CHN">选择工作类型</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Отправить ответственному участка">
+		<entry lang="KAZ">Жауапты бөлiмшеге жiберу</entry>
+		<entry lang="ENG">Send a responsible site</entry>
+        <entry lang="CHN">发送一个负责任的网站</entry>		
+	</sentence>
+	<sentence mode="on" keyword="Черновики замечаний">
+		<entry lang="KAZ">Ескертулердi жобалар</entry>
+		<entry lang="ENG">Drafts for comment</entry>
+        <entry lang="CHN">草稿征求意见</entry>		
+	</sentence>
+	<sentence mode="on" keyword="№">
+		<entry lang="KAZ">№</entry>
+		<entry lang="ENG">№</entry>
+        <entry lang="CHN">表格编号</entry>		
+	</sentence>						
+	<sentence mode="on" keyword="Все">
+		<entry lang="KAZ">Барлығы</entry>
+		<entry lang="ENG">All</entry>
+        <entry lang="CHN">所有</entry>		
+	</sentence>	
+	
+	<sentence mode="on" keyword="Ответсвенный">
+		<entry lang="KAZ">Жауапты</entry>
+		<entry lang="ENG">Accountable</entry>
+        <entry lang="CHN">问责</entry>		
+	</sentence>	
+</vocabulary>
+

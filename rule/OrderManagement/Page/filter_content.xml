@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="filter_content" mode="on">
+	<description></description>
+	<caching>CACHING_IN_USER_SESSION_SCOPE</caching>
+	<element mode="ON" type="SCRIPT">
+		<name>filter_elements</name>
+		<events>
+			<doscript source="file">page.omfilter.DoScript</doscript>
+		</events>
+	</element> 	
+</rule>

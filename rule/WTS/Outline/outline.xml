@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="outline" id="outline" mode="on">
+	<description>Outline</description>
+	<xsltfile>outline.xsl</xsltfile>
+	<outline>
+		<entry id="mydocs" mode="off">			
+			<caption source="KEYWORD">Мои документы</caption>
+			<hint source="KEYWORD">Мои документы</hint>
+			<granted source="script" mode="off"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole("registrator_incoming1") ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			<entry mode="on"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=toconsider&amp;page=0" id="toconsider">
+				<caption source="KEYWORD">На рассмотрение</caption>
+				<hint source="KEYWORD">На рассмотрение</hint>					
+			</entry>
+			<entry mode="on"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=taskforme&amp;page=0" id="tasksforme">
+				<caption source="KEYWORD">Поручено мне</caption>
+				<hint source="KEYWORD">Поручено мне</hint>
+			</entry>
+			<entry mode="on"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=mytasks&amp;page=0" id="mytasks">
+				<caption source="KEYWORD">Мои задания</caption>
+				<hint source="KEYWORD">Мои задания</hint>
+			</entry>
+			<entry mode="on"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=completetask&amp;page=0" id="completetask">
+				<caption source="KEYWORD">Исполненные</caption>
+				<hint source="KEYWORD">Исполненные</hint>
+			</entry>
+			<entry mode="on"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=favdocs&amp;page=0"
+				hint="На подпись" id="favdocs">
+				<caption source="KEYWORD">Избранные</caption>
+				<hint source="KEYWORD">Избранные</hint>
+			</entry>
+		</entry>
+		<entry id="projects" mode="on">
+			<caption source="KEYWORD">Замечания</caption>
+			<hint source="KEYWORD">Замечания</hint>
+			<entry mode="on" type="link"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=remark&amp;page=0" hint="Служебные записки">
+				<caption source="KEYWORD">Замечания</caption>
+				<hint source="KEYWORD">Замечания</hint>
+			</entry>
+			<entry mode="on" type="link"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=remarkdraft&amp;page=0" hint="Служебные записки">
+				<caption source="KEYWORD">Черновик</caption>
+				<hint source="KEYWORD">Черновик</hint>
+			</entry>
+			<entry mode="on"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=toconsider&amp;page=0" id="toconsider">
+				<caption source="KEYWORD">На исполнении</caption>
+				<hint source="KEYWORD">На исполнении</hint>					
+			</entry>
+			<entry mode="on"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=rejected&amp;page=0" id="rejected">
+				<caption source="KEYWORD">Отклоненные</caption>
+				<hint source="KEYWORD">Отклоненные</hint>					
+			</entry>
+			<entry mode="on"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=complete&amp;page=0" id="completetask">
+				<caption source="KEYWORD">Исполненные</caption>
+				<hint source="KEYWORD">Исполненные</hint>
+			</entry>
+		</entry>
+		<entry id="glossary" mode="on">
+			<caption source="KEYWORD">Справочники</caption>
+			<hint source="KEYWORD">Справочники</hint>
+			 <granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole("chancellery") ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Session session){
+					def user = session.getStructure().getUser(session.getCurrentUser());
+					return getAsArray(user.hasRole("administrator") ? user.getUserID() : "");
+				}
+				]]>
+			</granted>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=structurelist">
+				<caption source="KEYWORD">Структура организации</caption>
+				<hint source="KEYWORD">Структура организации</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=controltype">
+				<caption source="KEYWORD">Тип контроля</caption>
+				<hint source="KEYWORD">Тип контроля</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=folder">
+				<caption source="KEYWORD">Папка</caption>
+				<hint source="KEYWORD">Папка</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=docscat">
+				<caption source="KEYWORD">Категория</caption>
+				<hint source="KEYWORD">Категория</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=subcat">
+				<caption source="KEYWORD">Подкатегория</caption>
+				<hint source="KEYWORD">Подкатегория</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=har">
+				<caption source="KEYWORD">Характер вопроса</caption>
+				<hint source="KEYWORD">Характер вопроса</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=typedoc">
+				<caption source="KEYWORD">Тип документа</caption>
+				<hint source="KEYWORD">Тип документа</hint>
+			</entry>
+			<entry mode="on"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=deliverytype">
+				<caption source="KEYWORD">Вид доставки</caption>
+				<hint source="KEYWORD">Вид доставки</hint>
+			</entry>
+			<entry mode="on"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=cat">
+				<caption source="KEYWORD">Категория граждан</caption>
+				<hint source="KEYWORD">Категория граждан</hint>
+			</entry>
+			<entry mode="on"
+				url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=nomentypelist">
+				<caption source="KEYWORD">Номенклатура дел</caption>
+				<hint source="KEYWORD">Номенклатура дел</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=post">
+				<caption source="KEYWORD">Должность</caption>
+				<hint source="KEYWORD">Должность</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=corrlist">
+				<caption source="KEYWORD">Корреспонденты</caption>
+				<hint source="KEYWORD">Корреспонденты</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=corrcatlist">
+				<caption source="KEYWORD">Категория корреспондентов</caption>
+				<hint source="KEYWORD">Категория корреспондентов</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=subdivisionlist">
+				<caption source="KEYWORD">Тип подразделения</caption>
+				<hint source="KEYWORD">Тип подразделения</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=city">
+				<caption source="KEYWORD">Регион/Город</caption>
+				<hint source="KEYWORD">Регион/Город</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=projectsprav">
+				<caption source="KEYWORD">Проекты</caption>
+				<hint source="KEYWORD">Проекты</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=originplace">
+				<caption source="KEYWORD">Место замечания</caption>
+				<hint source="KEYWORD">Место замечания</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=role">
+				<caption source="KEYWORD">Роли пользователей</caption>
+				<hint source="KEYWORD">Роли пользователей</hint>
+			</entry>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=group">
+				<caption source="KEYWORD">Группы пользователей</caption>
+				<hint source="KEYWORD">Группы пользователей</hint>
+			</entry>
+		</entry>
+		<entry id="recyclebin" mode="on">
+			<caption source="KEYWORD">Корзина</caption>
+			<hint source="KEYWORD">Корзина</hint>
+			<entry mode="on" url="Provider?type=outline&amp;id=outline&amp;subtype=view&amp;subid=recyclebin">
+				<caption source="KEYWORD">Корзина</caption>
+				<hint source="KEYWORD">Корзина</hint>
+			</entry>
+		</entry>
+		<default>
+			<field mode="on">
+				<name>logout</name>
+				<value source="static">logout</value>
+				<caption source="KEYWORD">Завершить работу</caption>
+			</field>
+			<field mode="on">
+				<name>documentmanager</name>
+				<value source="static">documentmanager</value>
+				<caption source="KEYWORD">Документооборот</caption>
+			</field>
+			<field mode="on">
+				<name>outlinetitle</name>
+				<value source="static">outlinetitle</value>
+				<caption source="KEYWORD">Список документов</caption>
+			</field>
+			<field mode="on">
+				<name>orgtitle</name>
+				<value source="static">ТОО Avanti</value>
+			</field>
+		</default>
+	</outline>
+</rule>

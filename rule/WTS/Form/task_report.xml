@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="form" id="task_report" mode="on">
+	<description>Форма отчета</description>
+	<xsltfile>forms/task_report.xsl</xsltfile>
+	<outline>navigator</outline>
+	<doctype>task</doctype>
+	<default>
+		<action mode="on" type="SAVE">
+			<caption source="KEYWORD">Сформировать отчет</caption>
+			<granted source="macro" mode="on">current_user</granted>
+		</action>
+		<field mode="on">
+			<name>close</name>
+			<caption source="KEYWORD">Закрыть</caption>
+		</field>
+		<field mode="on">
+			<name>allcontrol</name>
+		</field>
+		<field mode="on" publishas="USER">
+			<name>taskauthor</name>
+			<caption source="KEYWORD">Автор резолюции</caption>
+		</field>
+		<field mode="on">
+			<name>taskdate</name>
+			<caption source="KEYWORD">Дата резолюции</caption>
+		</field>
+		<field mode="on">
+			<name>controltype</name>
+			<caption source="KEYWORD">Тип контроля</caption>
+		</field>
+		<field mode="on">
+			<name>ctrldate</name>
+			<caption source="KEYWORD">Срок исполнения</caption>
+		</field>
+	</default>
+	<show>
+		<field mode="on">
+			<name>incontrol</name>
+			<caption source="KEYWORD">На контроле</caption>
+		</field>		
+		<action mode="on" type="SAVE">
+			<caption source="KEYWORD">Сохранить и закрыть</caption>
+			<granted source="script" mode="on"><![CDATA[
+				String[] getStringValue(_Document doc){
+					return getAsArray(doc.getValueString('taskauthor'));
+				}
+				]]></granted>
+		</action>
+		<field mode="on" publishas="USER">
+			<name>taskauthor</name>
+			<value source="docfield">taskauthor</value>
+			<caption source="KEYWORD">Автор резолюции</caption>
+		</field>
+		<field mode="on">
+			<name>taskdate</name>
+			<value source="docfield" type="datetime">taskdate</value>
+			<caption source="KEYWORD">Дата резолюции</caption>
+		</field>
+		<field mode="on" publishas="GLOSSARY">
+			<name>controltype</name>
+			<value source="docfield" type="number">controltype</value>
+			<caption source="KEYWORD">Тип контроля</caption>
+		</field>
+		<field mode="on" type="datetime">
+			<name>ctrldate</name>
+			<value source="docfield">ctrldate</value>
+			<caption source="KEYWORD">Срок исполнения</caption>
+		</field>
+		<field mode="on" type="number">
+			<name>allcontrol</name>
+			<value source="docfield" type="number">allcontrol</value>
+		</field>
+	</show>
+	<save push="off" syncrule="kr">
+		<field mode="on">
+			<value source="webformfield">allcontrol</value>
+			<docfield type="number">allcontrol</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">taskauthor</value>
+			<docfield>taskauthor</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">taskdate</value>
+			<docfield type="datetime">taskdate</docfield>
+		</field>	
+		<field mode="on">
+			<value source="webformfield">controltype</value>
+			<docfield type="number">controltype</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">ctrldate</value>
+			<docfield type="datetime">ctrldate</docfield>
+		</field>
+	</save>
+	<querysave><![CDATA[
+		void doQuerySave(_Session ses, _Document doc, String user){
+            def struct = ses.getStructure();
+            def u = struct.getUser(doc.getValueString("taskauthor"));
+            String sh = u.getShortName();
+            def t = (_Task)doc;
+            String rview = "";   
+       		setRedirectView("report_tasks");
+	}
+	]]></querysave>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="attachments" source="KEYWORD">Вложения</caption>
+	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="progress" source="KEYWORD">Ход исполнения</caption>
+	<caption name="performer" source="KEYWORD">исполнитель</caption>
+	<caption name="date" source="KEYWORD">дата</caption>
+	<caption name="removedby" source="KEYWORD">кто снял</caption>
+	<caption name="control" source="KEYWORD">Контроль</caption>
+	<caption name="progress" source="KEYWORD">Ход исполнения</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="onceonly" source="KEYWORD">Разовый</caption>
+	<caption name="daily" source="KEYWORD">Ежедневно</caption>
+	<caption name="weekly" source="KEYWORD">Еженедельно</caption>
+	<caption name="monthly" source="KEYWORD">Ежемесячно</caption>
+	<caption name="quarterly" source="KEYWORD">Ежеквартально</caption>
+	<caption name="semiannual" source="KEYWORD">Полугодовой</caption>
+	<caption name="annually" source="KEYWORD">Ежегодно</caption>
+	<caption name="kr" source="KEYWORD">Резолюция</caption>
+	<caption name="kp" source="KEYWORD">Перепоручение</caption>
+	<caption name="task" source="KEYWORD">Задание</caption>
+	<caption name="incontrol" source="KEYWORD">На контроле</caption>
+	<caption name="removedofcontrol" source="KEYWORD">Снято с контроля</caption>
+	<caption name="briefcontent" source="KEYWORD">Краткое содержание</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	<caption name="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+	<glossary mode="on" id="controltype" source="query">
+		<description>Типы контроля</description>
+		<value>controltype</value>
+	</glossary>
+</rule>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="executers_by_role" mode="on" history="off">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/customer-emp.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>executers</name>
+		<events>
+			<doscript source="file">page.executers.DoScript</doscript>
+		</events>
+	</element> 
+</rule>

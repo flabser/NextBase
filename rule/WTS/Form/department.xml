@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="form" id="department" mode="on">
+	<description>Департамент</description>
+	<xsltfile>forms/department.xsl</xsltfile>
+	<doctype>department</doctype>
+	<outline>navigator</outline>
+	<default>
+		<field mode="on">
+			<name>parentsubkey</name>
+			<caption source="KEYWORD"></caption>
+		</field>
+	</default>
+	<show>
+		<field mode="on">	
+			<name>fullname</name>			
+			<value source="docfield">fullname</value>	
+			<caption source="KEYWORD">Название</caption>
+		</field>
+		<field mode="on">	
+			<name>shortname</name>			
+			<value source="docfield">shortname</value>	
+			<caption source="KEYWORD">Сокращенное название</caption>
+		</field>
+		<field mode="on" publishas="COMPLEX_KEY">	
+			<name>parentsubkey</name>	
+			<value source="script"><![CDATA[
+				String[] getStringValue(_Document document){
+					return getAsArray((document.getParentDocument()?.docType + "~" + document.getParentDocument()?.getDocID())?:"");
+				}				
+				]]></value>	
+			<caption source="KEYWORD"></caption>
+		</field>
+		<field mode="on">	
+			<name>comment</name>			
+			<value source="docfield">comment</value>	
+			<caption source="KEYWORD">Комментарий</caption>
+		</field>
+		<field mode="on">
+			<name>rank</name>
+			<value source="docfield">rank</value>
+			<caption source="KEYWORD">Уровень в должностной иерархии</caption>
+		</field>
+		<field mode="on">
+			<name>index</name>
+			<value source="docfield">index</value>
+			<caption source="KEYWORD">Индекс</caption>
+		</field>
+		<field mode="on" publishas="GLOSSARY">
+			<name>subdivision</name>
+			<value source="docfield">type</value>
+			<caption source="KEYWORD">Тип подразделения</caption>
+		</field>
+		<field mode="on" publishas="GROUP">
+			<name>group</name>
+			<value source="docfield">group</value>
+			<caption source="KEYWORD">Группы</caption>
+		</field>
+	</show>
+	<save>
+		<field mode="on">	
+			<value source="static">department</value>
+			<docfield>form</docfield>				
+		</field>
+		<field mode="on">
+			<value source="static">parentsubkey</value>
+			<docfield>parentsubkey</docfield>
+		</field>
+		
+		<field mode="on">	
+			<value source="webformfield">fullname</value>
+			<docfield>fullname</docfield>				
+		</field>
+		<field mode="on">	
+			<value source="webformfield">shortname</value>
+			<docfield>shortname</docfield>				
+		</field>
+		<field mode="on">
+			<value source="webformfield">comment</value>
+			<docfield>comment</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">rank</value>
+			<docfield type="number">rank</docfield>
+			<iferror>-1</iferror>
+		</field>
+		<field mode="on">
+			<value source="webformfield">index</value>
+			<docfield>index</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">subdivision</value>
+			<docfield type="number">type</docfield>
+		</field>
+		<field mode="on">	
+			<value source="webformfield">fullname</value>
+			<docfield type="viewtext"></docfield>				
+		</field>
+		<field mode="on">
+			<value source="static">departament</value>
+			<docfield>defaultruleid</docfield>
+		</field>
+		
+	</save>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("fullname"));
+		}
+	]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewdate><![CDATA[]]></viewdate>
+	<viewnumber><![CDATA[]]></viewnumber>
+	<querysave>
+		<![CDATA[
+			void doQuerySave(_Session ses, _Document doc, String user){
+            	boolean v = true;
+            	def validate = {
+					if (doc.getValueString("fullname") == ""){
+						localizedMsgBox("Поле \"Название\" не заполнено.");
+						v = false;
+					}
+				
+					if (doc.getValueString("shortname") == ""){
+						localizedMsgBox("Поле \"Сокращенное название\" не заполнено.");
+						v = false;
+					}		
+				}
+            	validate();
+            	if (v){
+            		doc.setViewText(doc.getValueString('fullname'));
+            	}else{
+            		stopSave();
+            	}
+            	
+			}		
+		]]>
+	</querysave>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="newdept" source="KEYWORD">Новый департамент</caption>
+	<caption name="newemp" source="KEYWORD">Новый сотрудник</caption>
+	<caption name="name" source="KEYWORD">Название</caption>
+	<caption name="index" source="KEYWORD">Индекс</caption>
+	<caption name="group" source="KEYWORD">Группы</caption>
+	<caption name="levelhierarhy" source="KEYWORD">Уровень в должностной иерархии</caption>
+	<caption name="shortname" source="KEYWORD">Сокращенное название</caption>
+	<caption name="comment" source="KEYWORD">Комментарий</caption>
+	<caption name="headdivision" source="KEYWORD">Головное подразделение</caption>
+	<caption name="subdivision" source="KEYWORD">Тип подразделения</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	<caption name="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name="department" source="KEYWORD">Департамент</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+	<glossary mode="on" id="subdivision" source="query">
+		<description>Тип подразделения</description>
+		<value>subdivision</value>
+	</glossary>
+	<glossary mode="on" id="group" source="query">
+		<description>Группа</description>
+		<value>group</value>
+	</glossary>
+</rule>

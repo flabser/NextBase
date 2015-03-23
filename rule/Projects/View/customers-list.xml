@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="view" id="customers-list">
+	<description>Заказчик</description>
+	<query>customers</query>
+	<xsltfile>views/dialogbox-list.xsl</xsltfile>
+</rule>

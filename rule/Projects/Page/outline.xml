@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="outline" mode="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/outline.xsl</xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<name>current_outline_entry</name>
+		<events>
+			<doscript source="file">page.current_outline_entry.DoScript</doscript>
+		</events>
+	</element>	
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>share_navi</name>
+		<value>share_navi</value>
+	</element>
+	<element mode="OFF" type="SCRIPT">
+		<name>actual_users_navigator</name>
+		<events>
+			<doscript source="file">page.unexecutedDemandByExecutor.DoScript</doscript>
+		</events>
+	</element>
+	<element mode="OFF" type="SCRIPT">
+		<name>unexecuted_demand_by_author</name>
+		<events>
+			<doscript source="file">page.unexecutedDemandByAuthor.DoScript</doscript>
+		</events>
+	</element>
+	
+</rule>

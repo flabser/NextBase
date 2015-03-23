@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="form" id="projectsprav" mode="on">
+	<description>Проекты организации</description>
+	<xsltfile>forms/projectsprav.xsl</xsltfile>
+	<doctype>glossary</doctype>
+	<outline>navigator</outline>
+	<default>	
+	</default>
+	<show>
+		<field mode="on">
+            <name>rtfcontent</name>
+            <value source="doc_attachment">rtfcontent</value>
+        </field>
+		<field mode="on">	
+			<name>name</name>			
+			<value source="docfield">name</value>	
+			<caption source="KEYWORD">Название</caption>
+		</field>
+		<field mode="on">	
+			<name>code</name>			
+			<value source="docfield">code</value>
+			<caption source="KEYWORD">Код</caption>	
+		</field>
+		<field mode="on" publishas="USER">
+			<name>projectmanager</name>
+			<value source="docfield">projectmanager</value>
+			<caption source="KEYWORD">Руководитель проекта</caption>
+		</field>
+		<field mode="on" publishas="USER">
+			<name>zamprojectmanager</name>
+			<value source="docfield">zamprojectmanager</value>
+			<caption source="KEYWORD">Зам. руководителя проекта</caption>
+		</field>
+		<field mode="on" publishas="EMPLOYER"> 
+			<name>techsupervision</name>
+			<value source="docfield">techsupervision</value>
+			<caption source="KEYWORD">Технический надзор</caption>
+		</field>
+		<field mode="on"> 
+			<name>prefix</name>
+			<value source="docfield">prefix</value>
+			<caption source="KEYWORD">Префикс</caption>
+		</field>
+	</show>
+	<save>	
+		<field mode="on">
+            <value source="webformfile">rtfcontent</value>
+            <docfield type="file">rtfcontent</docfield>
+        </field>	
+		<field mode="on">	
+			<value source="static">projectsprav</value>
+			<docfield>form</docfield>				
+		</field>
+		<field mode="on">	
+			<value source="webformfield">name</value>
+			<docfield>name</docfield>				
+		</field>
+		<field mode="on">
+			<value source="webformfield">projectmanager</value>
+			<docfield>projectmanager</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">zamprojectmanager</value>
+			<docfield>zamprojectmanager</docfield>
+		</field>
+		<field mode="on">
+			<value source="webformfield">techsupervision</value>
+			<docfield>techsupervision</docfield>
+		</field>
+		<field mode="on">	
+			<value source="webformfield">code</value>
+			<docfield type="number">code</docfield>				
+		</field>
+		<field mode="on">	
+			<value source="webformfield">name</value>
+			<docfield type="viewtext"></docfield>				
+		</field>
+		<field mode="on">	
+			<value source="webformfield">prefix</value>
+			<docfield>prefix</docfield>				
+		</field>
+		<field mode="on">
+			<value source="static">projectsprav</value>
+			<docfield>defaultruleid</docfield>
+		</field>
+		
+	</save>
+	<querysave><![CDATA[
+		void doQuerySave(_Session session, _Document document, String user){
+		boolean v = true;
+		def validate = {
+		
+			if (document.getValueString("name") == ""){
+					localizedMsgBox("Поле \"Имя проекта\" не заполнено.");
+					v = false;
+			}
+			if (document.getValueString("code") == ""){
+					localizedMsgBox("Поле \"Код\" не заполнено.");
+					v = false;
+			}
+
+			if (document.getValueString("prefix") == ""){
+					localizedMsgBox("Поле \"Префикс\" не заполнено.");
+					v = false;
+			}
+		}
+		validate();
+		if (v){
+		    document.setViewText(document.getValueString('name'));
+		}else{
+			stopSave();
+		}
+	}
+	]]>
+	</querysave>
+	<viewtext><![CDATA[
+		String[] getStringValue(_Document doc){
+			return getAsArray(doc.getValueString("name"));
+		}
+	]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewtext><![CDATA[]]></viewtext>
+	<viewdate><![CDATA[]]></viewdate>
+	<viewnumber><![CDATA[]]></viewnumber>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="name" source="KEYWORD">Проект организации</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+	<caption name="code" source="KEYWORD">Код</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="rukproject" source="KEYWORD">Руководитель проекта</caption>
+	<caption name="zamrukproject" source="KEYWORD">Зам. руководителя проекта</caption>
+	<caption name="tehnadzor" source="KEYWORD">Технический надзор</caption>
+	<caption name="appcaption" source="KEYWORD">Автоматизированная веб-система технического надзора (WTS)</caption>
+	<caption name="curuserprop" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="documentmarkread" source="KEYWORD">Документ отмечен как прочтенный</caption>
+	<caption name="pleasewaitdocsave" source="KEYWORD">Пожалуйста ждите... Идет сохранение документа</caption>
+	<caption name="prefix" source="KEYWORD">Префикс</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="attachments" source="KEYWORD">Заговоловок печатной формы</caption>
+</rule>

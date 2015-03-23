@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="demand-unexecuted-view-by-author" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/demand.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">page.prjs_actionbar.demand</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="QUERY">
+		<name>view_content</name>
+		<doctype>document</doctype>
+		<query source="static">form = 'demand' and allcontrol != 'reset' and status != 'notActual' and docauthor ~ '$docauthor'</query>
+	</element>	 
+	<caption name="viewdate" source="KEYWORD">Срок исполнения</caption>
+	<caption name="viewtext" source="KEYWORD">Краткое содержание</caption>
+	<caption name="viewtext3" source="KEYWORD">Приоритет</caption>	
+	<caption name="author" source="KEYWORD">Автор</caption>
+</rule>

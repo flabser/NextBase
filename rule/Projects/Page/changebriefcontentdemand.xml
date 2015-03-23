@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="changebriefcontentdemand" mode="on">
+	<description>Script to change briefcontent of demand</description>
+	<rununderuser source="static">[supervisor]</rununderuser>
+	<caching>NO_CACHING</caching>
+	<xsltfile></xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<name>script_result</name>
+		<events>
+			<doscript source="file">page.changebriefcontentdemand.DoScript</doscript>
+		</events>
+	</element>
+	
+</rule>

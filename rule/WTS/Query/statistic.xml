@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="query" id="statistic">
+    <description>Общая статистика</description>
+    <doctype>task</doctype>
+<!--     <query source="macro">statistic</query> -->
+<!--     <sortby source="static">'$sortfield'#'$order'</sortby> -->
+</rule>

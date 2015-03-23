@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><rule id="Forum" mode="on" type="global">
+	<description>Форум</description>
+	<orgname>Форум</orgname>
+	<liccount>100</liccount>
+	<logo/>
+	<appname>Форум</appname>
+	<database autodeploy="ON">
+		<name>Forum</name>
+		<driver>org.postgresql.Driver</driver>
+        <url>jdbc:postgresql://192.168.0.13:5432/polygon_Projects</url>
+        <username/>
+        <password/>
+    <connectionid>QesA89/UU6T4JWB9QTXOvQ==@@@a86ieSFlFlT4JWB9QTXOvQ==</connectionid></database>
+
+	<externalmodule type="STRUCTURE">Structure</externalmodule>
+	 <eds mode="OFF"/>
+	<entrypoint/>
+	<defaultredirecturl>Provider?type=page&amp;id=topic&amp;page=0</defaultredirecturl>
+
+	<markreaddelaysec>5</markreaddelaysec>
+
+	<langs>
+		<entry id="RUS">Русский</entry>
+		<entry id="KAZ">Қазақша</entry>
+		<entry id="ENG">English</entry>	 
+	</langs>
+	<roles>
+		<entry id="administrator">Разрешает ввод и редактирование значении справочников</entry>
+	</roles>
+	<skins>
+		<entry default="on" id="classic" path="./webapps/Forum/classic/xsl">Soria</entry>
+	</skins>
+</rule>

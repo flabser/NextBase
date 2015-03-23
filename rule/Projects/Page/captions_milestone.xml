@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="captions_milestone" mode="on" history="on">
+	<description></description>
+	<caching>CACHING_IN_APPLICATION_SCOPE</caching>
+	<element mode="ON" type="STATIC_TAG"></element>
+	<caption name="viewdate" source="KEYWORD">Срок окончания</caption>
+	<caption name="viewtext" source="KEYWORD">Название вехи</caption>
+	<caption name ="help" source ="KEYWORD">Помощь</caption>
+	<caption name ="logout" source ="KEYWORD">Завершить работу</caption>
+	<caption name ="documents" source ="KEYWORD">Записей</caption>
+	<caption name ="addtofav" source ="KEYWORD">Добавить в избранное</caption>
+	<caption name ="removefromfav" source ="KEYWORD">Удалить с избранного</caption>
+	<caption name ="search" source ="KEYWORD">Поиск</caption>
+	<caption name ="view_userprofile" source ="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+    <caption name ="removefilter" source ="KEYWORD">Удалить фильтрацию</caption>
+</rule>

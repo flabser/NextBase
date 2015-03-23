@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="handler" id="dynamic_report_as_xml">
+    <rununderuser source="macro">CURRENT_USER</rununderuser>
+    <trigger>provider</trigger>
+    <scheduler>
+        <mininterval>5</mininterval>
+    </scheduler>
+    <waitresponse>true</waitresponse>
+    <showfile>false</showfile>
+    <script><![CDATA[
+	String doHandler(_Session ses, Map<String, String[]> formData){
+		try{
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+			SimpleDateFormat sqlDateFormat = new SimpleDateFormat("yyyyMMdd");
+					
+			String reportName = formData.get("id")[0];
+			String sqlConditionForQuery = "";
+
+			String contragent = "";
+			int contragentID = 0;
+
+            String project = "";
+            int projectID = 0;
+
+            String category = "";
+            int categoryID = 0;
+
+            String subcategory = "";
+            int subcategoryID = 0;
+
+            String fromDate = "";
+            String formatFromDate = "";
+            Date from = null;
+
+            String toDate = "";
+            String formatToDate = "";
+            Date to = null;
+
+            String coordstatus = "";
+            int coordstatusID = 0;
+
+            boolean and = false;
+            println(sqlConditionForQuery);
+            println(formData);
+			if (reportName == "dynamic_report_as_xml") {
+                if (formData.containsKey("contragent")) {
+                    contragent = formData.get("contragent")[0];
+                    println("contragent:" + contragent);
+				    if (contragent != null && !"".equalsIgnoreCase(contragent)) {
+                        try {
+                            contragentID = Integer.valueOf(contragent);
+                            sqlConditionForQuery += " contragent = " + contragentID;
+                            and = true;
+                        } catch(NumberFormatException nfe) {
+
+                        }
+                    }
+                }
+                println(sqlConditionForQuery + "1");
+                if (formData.containsKey("project")) {
+                    println("project:" + project);
+                    project = formData.get("project")[0];
+				    try{
+					    projectID = Integer.valueOf(project);
+					    if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					    }
+					    sqlConditionForQuery += " project = " + projectID;
+					    and = true;
+				    } catch(NumberFormatException nfe) {
+
+    				}
+                }
+                  println(sqlConditionForQuery + "2");
+                if (formData.containsKey("category")) {
+                    println("category:" + category);
+				    category = formData.get("category")[0];
+				    try{
+					    categoryID = Integer.valueOf(category);
+					     if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					     }
+					    sqlConditionForQuery += " category = " + category;
+					    and = true;
+				    } catch(NumberFormatException nfe) {
+
+    				}
+                }
+                  println(sqlConditionForQuery + "3");
+                if (formData.containsKey("subcategory")) {
+                    subcategory = formData.get("subcategory")[0];
+                    println("subcategory:" + subcategory);
+				    try{
+					    subcategoryID = Integer.valueOf(subcategory);
+					    if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					     }
+					    sqlConditionForQuery += " subcategory = " + subcategory;
+					    and = true;
+				    } catch(NumberFormatException nfe) {
+
+    				}
+                }
+                   println(sqlConditionForQuery + "4");
+                if (formData.containsKey("coordstatus")) {
+                    coordstatus = formData.get("coordstatus")[0];
+                    println("coordstatus:" + coordstatus);
+				    try{
+					    coordstatusID = Integer.valueOf(coordstatus);
+					    if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					    }
+                        switch(coordstatusID) {
+                            case 0:
+                                sqlConditionForQuery += " coordstatus not in (" + ICoordConst.STATUS_UNDEFINED + ", " + ICoordConst.STATUS_DRAFT + ")";
+                                and = true;
+                                break;
+                            case 1:
+                                sqlConditionForQuery += " coordstatus = " + ICoordConst.STATUS_EXECUTED;
+                                and = true;
+                                break;
+                            case 2:
+                                sqlConditionForQuery += " coordstatus not in (" + ICoordConst.STATUS_UNDEFINED + ", " + ICoordConst.STATUS_DRAFT + ", " + ICoordConst.STATUS_EXECUTED + ")";
+                                and = true;
+                                break;
+                        }
+    				} catch(NumberFormatException nfe) {
+
+    				}
+                }
+                   println(sqlConditionForQuery + "5");
+				//String fromDate = "";
+                //String formatFromDate = "";
+
+
+              if (formData.containsKey("datefrom")) {
+                    fromDate = formData.get("datefrom")[0];
+                    if (fromDate != null && !fromDate.equalsIgnoreCase("")) {
+                        try {
+                            from = dateFormat.parse(fromDate);
+                            formatFromDate = sqlDateFormat.format(from);
+                        } catch(IllegalArgumentException iae) {
+                             iae.printStackTrace();
+                        }
+                    }
+                }
+
+                if (!"".equalsIgnoreCase(formatFromDate)) {
+                      if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					    }
+                     sqlConditionForQuery += " regdate >= '" + formatFromDate + "' ";
+                     and = true;
+                }
+
+
+                //String toDate = "";
+                //String formatToDate = "";
+
+
+                   if (formData.containsKey("dateto")) {
+                    toDate = formData.get("dateto")[0];
+                    if (toDate != null && !toDate.equalsIgnoreCase("")) {
+                    try {
+                            to = dateFormat.parse(toDate);
+                            formatToDate = sqlDateFormat.format(to);
+                        } catch(IllegalArgumentException iae) {
+                            iae.printStackTrace();
+                        }
+                    }
+                }
+
+                if (!"".equalsIgnoreCase(formatToDate)) {
+                      if (and) {
+                            sqlConditionForQuery += " and ";
+                            and = false;
+					    }
+                     sqlConditionForQuery += " regdate <= '" + formatToDate + "' ";
+                     and = true;
+                }
+
+
+			} 
+			//Определяем формат будущего отчета и способ его отображения
+			String typeReportFile = "";
+			String openReportWith = "";
+			
+			typeReportFile = formData.get("typefilereport")[0];
+			//openReportWith = formData.get("openreportwith")[0];
+			
+			Date tmpDate;		
+			
+
+
+			def cdb = ses.getCurrentDatabase();
+			
+			StringBuffer xmlContent = new StringBuffer(10000);
+			def remarks = cdb.getPrjsCollection(sqlConditionForQuery).getBaseCollection();
+
+			HashMap<String, Integer> executed_remarks   = new HashMap<String, Integer>();
+            HashMap<String, Integer> unexecuted_remarks = new HashMap<String, Integer>();
+
+            int exec_count = 0;
+            int unexec_count = 0;
+
+            for (Project projdoc : remarks) {
+                xmlContent.append("<entry docid=\"" + projdoc.getDocID() + "\" doctype=\"" + projdoc.docType + "\" url=\"" + projdoc.getURL().replace("&", "&amp;") + "\" >");
+
+                xmlContent.append("<contragent>");
+                xmlContent.append(projdoc.getContragentGlossary()?.getViewText());
+                xmlContent.append("</contragent>");
+
+                xmlContent.append("<remark_number>");
+                xmlContent.append("Предписание №" + projdoc.getVnNumber());
+                xmlContent.append("</remark_number>");
+
+                xmlContent.append("<content>");
+                xmlContent.append(projdoc.getContentSource());
+                xmlContent.append("</content>");
+
+                xmlContent.append("<status>");
+                xmlContent.append(projdoc.getCoordStatus());
+                xmlContent.append("</status>");
+
+                xmlContent.append("<project>");
+                xmlContent.append(projdoc.getProjectGlossary()?.getViewText());
+                xmlContent.append("</project>");
+
+                xmlContent.append("<amount>");
+                xmlContent.append(projdoc.getAmountDamage() ?: "");
+                xmlContent.append("</amount>");
+
+                xmlContent.append("</entry>");
+
+                Integer tempValue = null;
+                if (projdoc.getCoordStatus() == ICoordConst.STATUS_EXECUTED) {
+                    tempValue = executed_remarks.get(projdoc.getProjectGlossary()?.getViewText());
+                    if (tempValue == null) {
+                        tempValue = new Integer(0);
+                    }
+                    executed_remarks.put(projdoc.getProjectGlossary()?.getViewText(), new Integer(++tempValue));
+                    exec_count++;
+                } else if (projdoc.getCoordStatus() != ICoordConst.STATUS_UNDEFINED && projdoc.getCoordStatus() != ICoordConst.STATUS_DRAFT){
+                    tempValue = unexecuted_remarks.get(projdoc.getProjectGlossary()?.getViewText());
+                    if (tempValue == null) {
+                        tempValue = new Integer(0);
+                    }
+                    unexecuted_remarks.put(projdoc.getProjectGlossary()?.getViewText(), new Integer(++tempValue));
+                    unexec_count++;
+                }
+            }
+
+            xmlContent.append("<total>");
+            xmlContent.append(remarks.size());
+            xmlContent.append("</total>");
+
+            xmlContent.append("<executed count=\"" + exec_count + "\" >");
+
+
+            for (String proj_name : executed_remarks.keySet()) {
+                xmlContent.append("<entry>");
+                xmlContent.append("<projectname>");
+                xmlContent.append(proj_name);
+                xmlContent.append("</projectname>");
+                xmlContent.append("<projectcount>");
+                xmlContent.append(executed_remarks.get(proj_name));
+                xmlContent.append("</projectcount>");
+                xmlContent.append("</entry>");
+            }
+
+            xmlContent.append("</executed>");
+
+            xmlContent.append("<unexecuted count=\"" + unexec_count + "\" >");
+
+
+            for (String proj_name : unexecuted_remarks.keySet()) {
+                xmlContent.append("<entry>");
+                xmlContent.append("<projectname>");
+                xmlContent.append(proj_name);
+                xmlContent.append("</projectname>");
+                xmlContent.append("<projectcount>");
+                xmlContent.append(unexecuted_remarks.get(proj_name));
+                xmlContent.append("</projectcount>");
+                xmlContent.append("</entry>");
+            }
+
+            xmlContent.append("</unexecuted>");
+			System.out.println("Done!");
+			System.out.println(remarks.size());
+			
+			String format = "";
+			String app = "";
+			
+            System.out.println(xmlContent.toString());
+			return xmlContent.toString();
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	]]></script>
+</rule>

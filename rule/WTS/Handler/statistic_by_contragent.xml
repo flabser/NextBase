@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<rule type="handler" id="statistic_contragent">
+    <rununderuser source="macro">CURRENT_USER</rununderuser>
+    <trigger>provider</trigger>
+    <tohandle source="STATIC"></tohandle>
+    <waitresponse>false</waitresponse>
+    <script><![CDATA[
+	    String doHandler(_Session ses, Map<String, String[]> formData){
+            def db = ses.getCurrentDatabase();
+            StringBuffer xml = db.getStatisticByContragent(24752);
+            println(xml.toString());
+            return xml.toString();
+	    }
+	]]></script>
+</rule>

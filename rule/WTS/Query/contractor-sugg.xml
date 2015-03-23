@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="query" id="contractor-sugg">
+	<description>Победители</description>
+	<doctype>glossary</doctype>
+	<query source="static">form = 'contractor' and viewtext ~ '$keyword'</query>
+	<cache mode="OFF"/>
+	<field mode="on">
+		<name>name</name>
+		<value source="resultset">name</value>
+	</field>
+	<field mode="on">
+		<name>isbadperformer</name>
+		<value source="resultset">isbadperformer</value>
+	</field>
+</rule>

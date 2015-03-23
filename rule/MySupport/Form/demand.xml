@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="demand" mode="on">
+	<description>Заявка</description>
+	<xsltfile>forms/demand.xsl</xsltfile>
+	<doctype>main</doctype>
+	<events>
+		<queryopen source="file">form.demand_mysupport.QueryOpen</queryopen>   
+	</events> 
+	<caption name="saveandclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="newdemand" source="KEYWORD">Новая заявка</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="attachments" source="KEYWORD">Вложения</caption>
+	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="delattach" source="KEYWORD">Удалить</caption>
+	<caption name="openattach" source="KEYWORD">Открыть</caption>
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="searchcaption" source="KEYWORD">Поиск</caption>
+	<caption name="title" source="KEYWORD">Заявка</caption>
+	<caption name="docdate" source="KEYWORD">Дата записи</caption>
+	<caption name="docauthor" source="KEYWORD">Автор</caption>
+	<caption name="project" source="KEYWORD">Проект</caption>
+	<caption name="remained_days" source="KEYWORD">Осталось дней</caption>
+	<caption name="ctrldate" source="KEYWORD">Срок исполнения</caption>
+	<caption name="controlisreset" source="KEYWORD">Снято с контроля</caption>
+	<caption name="revokedDemnd" source="KEYWORD">Заявка отменена</caption>
+	<caption name="reason" source="KEYWORD">причина</caption>
+	<caption name="control" source="KEYWORD">Статус</caption>
+	<caption name="incontrol" source="KEYWORD">На контроле</caption>
+	<caption name="documentsavedcaption" source="KEYWORD">Документ сохранен</caption>
+	<caption name="from" source="KEYWORD">от</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+    <caption name ="help" source ="KEYWORD">Помощь</caption>
+	<caption name ="logout" source ="KEYWORD">Завершить работу</caption>
+	<caption name ="attention" source ="KEYWORD">Внимание</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
+	<caption name="permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+    <caption name="comments" source="KEYWORD">комментарий</caption>
+	<caption name="view_userprofile" source="KEYWORD">Посмотреть свойства текущего пользователя</caption>
+    <caption name="newmail" source="KEYWORD">Новое сообщение</caption>
+    <caption name="topic" source="KEYWORD">Тема</caption>
+    <caption name="text" source="KEYWORD">Текст сообщения</caption>
+    <caption name="milestone" source="KEYWORD">Веха</caption>
+    <caption name="blankmessage" source="KEYWORD">Отправить это сообщение без темы и текста?</caption>
+    <caption name="sentMessage" source="KEYWORD">Сообщение отправлено</caption>
+    <caption name="notSentMessage" source="KEYWORD">Сообщение не отправлено</caption>
+
+</rule>
