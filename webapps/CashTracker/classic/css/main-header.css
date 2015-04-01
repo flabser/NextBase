@@ -1,5 +1,9 @@
 .main-header {
-	background: url(../img/yellow_background.jpg) 0 0 no-repeat;
+	background: url(../img/yellow_background.png) 0 0 no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 	height: 100%;
 	overflow: hidden;
 	position: relative;

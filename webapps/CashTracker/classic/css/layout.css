@@ -43,7 +43,7 @@
 }
 
 .touch .layout_aside {
-	background: #FFF url(../img/yellow_background.jpg) 0 0 no-repeat;
+	background: #FFF url(../img/yellow_background.png) 0 0 no-repeat;
 	border: none;
 	z-index: 5;
 }

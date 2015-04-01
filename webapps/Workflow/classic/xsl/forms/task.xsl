@@ -152,22 +152,24 @@
 								maxDate:'<xsl:value-of select="document/fields/maxdate"/>',
 								yearRange: '-0y:+1y',
 								onSelect: function(selectedDate) {
-									instance = $(this).data("datepicker");
-									$("#controldate2").val(selectedDate)
-									var m = 60 * 1000; 
-									var h = m * 60 ; 
-									var d = h * 24 ; 
-								    t=new Date(selectedDate.split(".")[2],selectedDate.split(".")[1]-1,selectedDate.split(".")[0]).getTime()-new Date().getTime();
-									diff= (Math.floor(t/d)+1);
-									$("[name=dbd]").val(diff)
-									if (diff >= 0){
-										diff = "(Осталось дней : " + diff+")"
-										$(".diffdate").css("color","#000");
-									}else{
-										diff = "(Просрочено дней : " + diff.toString().split("-")[1] +")";
-										$(".diffdate").css("color","red");
-									}
-									$(".diffdate").text(diff)
+									$.ajax({
+										url: 'Provider?type=page&amp;id=getdiffctrldate&amp;enddate='+ selectedDate,
+										datatype:'xml',
+										async:'true',
+										cache:false,
+										success: function(data) {
+											diff= $(data).find("getdiffctrldate").find("daydiff").text();
+											$("[name=dbd]").val(diff)
+											if (diff >= 0){
+												diff = "(Осталось дней : " + diff+")"
+												$(".diffdate").css("color","#000");
+											}else{
+												diff = "(Просрочено дней : " + diff.toString().split("-")[1] +")";
+												$(".diffdate").css("color","red");
+											}
+											$(".diffdate").text(diff)
+										}
+									});
 								}
 							});
 						});
@@ -304,6 +306,11 @@
 	                  				<a href="#tabs-5"><xsl:value-of select="document/captions/attachments/@caption"/></a>
 	                  				<img id="loading_attach_img" style="vertical-align:-8px; margin-left:-10px; padding-right:3px; visibility:hidden" src="/SharedResources/img/classic/ajax-loader-small.gif"></img>
 	                  			</li>
+	                  			<xsl:if test="document/@parentdocid !='0'">
+		                  			<li class="ui-state-default ui-corner-top">
+										<a href="#tabs-7"><xsl:value-of select="document/captions/parentdoccontent/@caption"/></a>
+									</li>
+								</xsl:if>
 	                 			<li class="ui-state-default ui-corner-top">
 	                 				<a href="#tabs-6"><xsl:value-of select="document/captions/additional/@caption"/></a>
 	                 			</li>
@@ -371,18 +378,18 @@
 														<td>
 															<input type="text" id="controldate2" maxlength="10" class="td_noteditable" style="width:80px;" value="{substring(document/fields/control/primaryctrldate,1,10)}"/>
 															<xsl:variable name="cd" select="concat(current-date(),' ')"/>
-															<span class="diffdate" style="margin-left:10px; font-size:13px; font-family:Verdana,Arial,Helvetica,sans-serif; vertical-align:3px">
+															<font class="diffdate" style="margin-left:10px; font-size:13px; font-family:Verdana,Arial,Helvetica,sans-serif; vertical-align:3px">
 																<xsl:if test="document/fields/control/diff &lt; 0 ">
 																	<xsl:attribute name="color">red</xsl:attribute>
 																</xsl:if>
-																(<xsl:if test="document/fields/control/diff &gt; 0 or  document/fields/control/diff = 0">
+																(<xsl:if test="document/fields/control/diff &gt; 0 or document/fields/control/diff = 0">
 																	<xsl:value-of select="document/captions/remaineddays/@caption"/>
 																</xsl:if>
 																<xsl:if test="document/fields/control/diff &lt; 0 ">
 																	<xsl:value-of select="document/captions/delayeddays/@caption"/>
 																</xsl:if>
-																: <xsl:value-of select="document/fields/control/diff"/>)
-															</span>
+																: <xsl:value-of select="replace(document/fields/control/diff,'-','')"/>)
+															</font>
 														</td>
 													</tr>
 												</table>
@@ -795,18 +802,18 @@
 												</xsl:if>
 											</input>
 											<xsl:variable name="cd" select="concat(current-date(),' ')"/>
-											<span class="diffdate" style="margin-left:10px; font-size:13px; font-family:Verdana,Arial,Helvetica,sans-serif; vertical-align:7px">
+											<font class="diffdate" style="margin-left:10px; font-size:13px; font-family:Verdana,Arial,Helvetica,sans-serif; vertical-align:3px">
 												<xsl:if test="document/fields/control/diff &lt; 0 ">
 													<xsl:attribute name="color">red</xsl:attribute>
 												</xsl:if>
-												(<xsl:if test="document/fields/control/diff &gt; 0 or  document/fields/control/diff = 0">
+												(<xsl:if test="document/fields/control/diff &gt; 0 or document/fields/control/diff = 0">
 													<xsl:value-of select="document/captions/remaineddays/@caption"/>
 												</xsl:if>
 												<xsl:if test="document/fields/control/diff &lt; 0 ">
 													<xsl:value-of select="document/captions/delayeddays/@caption"/>
 												</xsl:if>
-												: <xsl:value-of select="document/fields/control/diff"/>)
-											</span>
+												: <xsl:value-of select="replace(document/fields/control/diff,'-','')"/>)
+											</font>
 										</td>
 									</tr>
 									<tr>
@@ -967,32 +974,30 @@
 									</tr>
 								</table>
 							</div>
-							<xsl:if test="$status != 'new'">
-								<div id="tabs-4" style="height:500px">
-									<xsl:if test="$status !='new'">
-										<div display="block" style="display:block; width:90%; margin-left:25px; font-size:14px" id="execution">
+							<div id="tabs-4" style="height:500px">
+								<xsl:if test="$status !='new'">
+									<div display="block" style="display:block; width:90%; margin-left:25px; font-size:14px" id="execution">
 											<br/>
 											<div id="progressDiv" style="width:99%; overflow:hidden">
 												<table>
 													<tr>
 														<td>
-															<xsl:if test="document/fields/progress/entry/viewtext !=''">
-							  									<a href="{@url}" class="doclink" style="color:blue; margin-left:3px; vertical-align:7px">
-							  										<xsl:value-of select="document/fields/progress/entry/viewtext"/>
-							  									</a>
-							  								</xsl:if>
+															<xsl:if test="document/fields/progress/entry[1]/viewtext !=''">
+									 							<a href="{document/fields/progress/entry/@url}" class="doclink" style="color:blue; margin-left:3px; vertical-align:7px">
+									 								<xsl:value-of select="document/fields/progress/entry[1]/viewtext"/>
+									  							</a>
+									  						</xsl:if>
 															<xsl:if test="document/fields/progress/entry/viewtext ='' and $status = 'new'">
-							  									<xsl:value-of select="document/fields/title"/>
-							  								</xsl:if>
-					  									</td>
-					  								</tr>
-			  										<xsl:apply-templates select="document/fields/progress/entry/responses[entry]"/>
-			  									</table>
+									  							<xsl:value-of select="document/fields/title"/>
+									  						</xsl:if>
+							  							</td>
+							  						</tr>
+					  								<xsl:apply-templates select="document/fields/progress/entry/responses[entry]"/>
+					  							</table>
 											</div>
 										</div>
 									</xsl:if>
 								</div>
-							</xsl:if>
 							<input type="hidden" name="parentdocid" value="{document/@parentdocid}"/>
 							<input type="hidden" name="parentdoctype" value="{document/@parentdoctype}"/>
 							<xsl:for-each select="extexecid/item">
@@ -1060,6 +1065,34 @@
 								<xsl:call-template name="attach"/>
 							</form>
 						</div>
+						<xsl:if test="document/@parentdocid !='0'">
+								<div id="tabs-7">
+									<br/>
+									<table width="100%" border="0">
+										<!-- поле "Текст резолюции" -->
+											<tr>
+												<td class="fc"><xsl:value-of select="document/captions/content/@caption"/> :</td>
+												<td>
+													<div id="parentdoccontent">
+														<xsl:attribute name="style">width:815px; height:450px; background:#EEEEEE; padding: 3px 5px; overflow-x:auto</xsl:attribute>
+														<script>
+															$("#parentdoccontent").html("<xsl:value-of select='document/fields/pdoccontent'/>")
+														</script>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="2">
+												<div id="textprintpreview" style="display:none; overflow:visible">
+													</div>
+													<script>
+														$("#textprintpreview").html("<xsl:value-of select='document/fields/content'/>");
+													</script>
+												</td>
+											</tr>
+									</table>
+								</div>
+							</xsl:if>
 						<div id="tabs-6">
 							<xsl:call-template name="docinfo"/>
 						</div>
@@ -1071,7 +1104,8 @@
 		</body>
 	</html>
 	</xsl:template>
-	<xsl:template match="responses">
+
+<xsl:template match="responses">
 	<tr class="response{../@docid}">
 		<xsl:attribute name="bgcolor">#FFFFFF</xsl:attribute>
 		<td nowrap="true">

@@ -38,7 +38,7 @@
 				<xsl:with-param name="include" select="$include" />
 			</xsl:call-template>
 			<body class="no_transition {$widescreen}">
-				<xsl:if test="$UI = 'mobile'">
+				<xsl:if test="$UI_CLIENT = 'mobile'">
 					<xsl:attribute name="class" select="concat('no_transition touch mobile ',  $widescreen)" />
 				</xsl:if>
 				<div class="content-overlay js-content-overlay"></div>

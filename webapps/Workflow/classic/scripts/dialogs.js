@@ -44,7 +44,7 @@ function toggleDepTreeStructure(countEl, action, dociddoctype){
 }
 
 function checkallOrg(el, tableid){
-	el.checked ? $(".treetablestructure"+tableid+ " input[type=checkbox]").attr("checked","true") : $(".treetablestructure"+tableid+ " input[type=checkbox]").removeAttr("checked");
+	$(el).prop("checked") ? $(".treetablestructure"+tableid+ " input[type=checkbox]").prop("checked",true) : $(".treetablestructure"+tableid+ " input[type=checkbox]").prop("checked",false);
 	if(queryOpt.fieldname == "executor"){
 		$(".treetablestructure"+tableid+ " input[type=checkbox][id != '']").each(function(indx, element){
 			addToCollectExecutor($(element))
@@ -55,7 +55,7 @@ function checkallOrg(el, tableid){
 function checkDepInp(el, countEl){
 	elem = $(el).parent("div").next("div")
 	for (var i = 0; i < countEl ; i++ ){
-		el.checked ? $(elem).children("input[type=checkbox]").attr("checked","true") : $(elem).children("input[type=checkbox]").removeAttr("checked");
+		$(el).prop("checked") ? $(elem).children("input[type=checkbox]").prop("checked",true) : $(elem).children("input[type=checkbox]").prop("checked",false);
 		if(queryOpt.fieldname == "executor"){
 			addToCollectExecutor($(elem).children("input[type=checkbox]"))
 		}
@@ -766,7 +766,7 @@ function selectItemPicklist(element, event){
 	}
 	if(event.target.nodeName !="INPUT"){
 		target_input = $(element).find("input[type!=hidden]");
-		if($(target_input).attr("checked") == "checked"){
+		if($(target_input).prop("checked")){
 			target_input.prop("checked",false).change();
 		}else{
 			target_input.prop("checked",true).change()
