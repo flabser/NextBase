@@ -1531,12 +1531,21 @@ public class Updates {
 
     public boolean updateToVersion98(Connection conn) throws Exception {
         return (dropColumnConstraint(conn, "COORDBLOCKS", "DOCID")
-                && addColumnConstraint(conn, "COORDBLOCKS", "DOCID", "MAINDOCS", "DOCID"));
+                && addColumnConstraint(conn, "COORDBLOCKS", "DOCID", "MAINDOCS", "DOCID", true));
     }
 
-    private static boolean addColumnConstraint(Connection conn, String baseTableName, String baseColumnName, String foreignTableName, String foreignColumnName) throws SQLException {
+    public boolean updateToVersion99(Connection conn) throws Exception {
+        return (dropColumnConstraint(conn, "COORDBLOCKS", "DOCID")
+                && addColumnConstraint(conn, "COORDBLOCKS", "DOCID", "MAINDOCS", "DOCID", true));
+    }
+
+    private static boolean addColumnConstraint(Connection conn, String baseTableName, String baseColumnName, String foreignTableName, String foreignColumnName, boolean cascadeDeletion) throws SQLException {
         try {
-            PreparedStatement pst = conn.prepareStatement("alter table ? add foreign key (?) REFERENCES ?(?) ");
+            String sql = "alter table ? add foreign key (?) REFERENCES ?(?) ";
+            if (cascadeDeletion) {
+                sql += " ON DELETE CASCADE";
+            }
+            PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, baseTableName);
             pst.setString(2, baseColumnName);
             pst.setString(3, foreignTableName);
