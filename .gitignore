@@ -1,0 +1,14 @@
+/bin/
+/backup/
+/logs/
+/tmp/
+/system_data/
+/webserver/
+
+# app settings
+/rule/*/global.xml
+/rule/*/global.dat
+
+*.class
+.classpath
+.project

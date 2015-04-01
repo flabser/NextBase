@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule id="app-id" mode="on" type="global">
+	<description>Электронный документооборот</description>
+	<orgname>ТОО "Lab of the Future"</orgname>
+	<liccount>100</liccount>
+	<logo>workflow_small.png</logo>
+
+	<database autodeploy="ON">
+		<name>Workflow</name>
+		<driver>org.postgresql.Driver</driver>
+		<url>jdbc:postgresql://localhost/4msflabs</url>
+		<username />
+		<password />
+	</database>
+
+	<!-- TODO add description -->
+	<externalmodule type="STRUCTURE">Structure</externalmodule>
+
+	<!-- TODO add description -->
+	<daemons>
+		<daemon>
+			<class>kz.flabs.appdaemon.CycleControl</class>
+			<scheduler mode="ON">
+				<mininterval daysofweek="WORKWEEK,">360</mininterval>
+			</scheduler>
+		</daemon>
+		<daemon>
+			<class>kz.flabs.appdaemon.Recalculator</class>
+			<scheduler mode="ON">
+				<mininterval daysofweek="WORKWEEK,">360</mininterval>
+			</scheduler>
+		</daemon>
+		<daemon>
+			<class>kz.flabs.appdaemon.TimeWaiting</class>
+			<scheduler mode="ON">
+				<mininterval daysofweek="WORKWEEK,">360</mininterval>
+			</scheduler>
+		</daemon>
+	</daemons>
+
+	<entrypoint>Provider?type=static&amp;id=start</entrypoint>
+	<defaultredirecturl>Provider?type=page&amp;id=taskforme&amp;page=0</defaultredirecturl>
+
+	<!-- supported langs -->
+	<langs>
+		<entry id="RUS" isprimary="1">Русский</entry>
+		<entry id="KAZ">Казакша</entry>
+		<entry id="ENG">English</entry>
+		<entry id="CHN">中国</entry>
+	</langs>
+
+	<!-- app skins -->
+	<skins>
+		<entry id="ipadandtab" path="./webapps/Workflow/ipadandtab/xsl">IPadAndTab</entry>
+		<entry default="on" errorpage="error.xsl" id="classic" path="./webapps/Workflow/classic/xsl">Classic</entry>
+	</skins>
+
+	<roles>
+		<entry id="role-name">decription</entry>
+		<!-- ... -->
+		<entry id="role-name-n">decription</entry>
+	</roles>
+
+	<!-- TODO add description -->
+	<markdelaysec>5</markdelaysec>
+
+	<!-- TODO add description -->
+	<eds mode="OFF">
+		<keypass />
+		<keystore />
+	</eds>
+
+</rule>
