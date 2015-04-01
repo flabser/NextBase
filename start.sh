@@ -1,1 +1,1 @@
-java -jar ./libs/nb.jar &
+java -Dfile.encoding=UTF-8 -jar ./libs/nb.jar &
