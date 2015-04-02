@@ -348,20 +348,7 @@ function resetcontrol(){
 	changeCustomField("allcontrol","0")
 	var count_executors = $("input[type=hidden][name=executor]").length + $("input[type=hidden][name=extexecutor]").length;
 	$("#tabs .ui-state-default:nth-child(3) a").click()
-	$("input[type=hidden][name=executor]").each(function(index){
-		if($("#controlOffDate"+(index+1)).text()==''){
-			n = index+1
-			time = n*50
-			setTimeout(function() {controlOff(index+1,'INTERNAL')},time);
-		}
-	})
-	$("input[type=hidden][name=extexecutor]").each(function(index){
-		n = $("input[type=hidden][name=executor]").length + (index +1);
-		if($("#controlOffDate"+n).text()==''){
-			time = n*50
-			controlOff(n,'EXTERNAL')
-		}
-	})
+	$(".switchControl img[src *='eye.png']").click();
 	setTimeout(function() {
 		$(document).unbind("keydown")
 		divhtml ="<div id='dialog-message' title="+warning+">";

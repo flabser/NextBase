@@ -881,7 +881,7 @@ public class Structure extends DatabaseCore implements IStructure, Const{
                     doc.getViewText()
                     + "', '" +
                     doc.getViewIcon()
-                    + "', 'E', '" +
+                    + "', '" + doc.form + "', '" +
                     doc.getDdbID()
                     + "', 0 , '" + doc.getUserID() + "','" + doc.getFullName() + "', '" +
                     doc.getShortName()
@@ -1009,6 +1009,7 @@ public class Structure extends DatabaseCore implements IStructure, Const{
 					"LASTUPDATE = '" + Database.sqlDateTimeFormat.format(new Date()) + "', " +
 					"VIEWTEXT = '" + doc.getViewText() + "', VIEWICON = '" + doc.getViewIcon() + "', " +
 					"FULLNAME = '" + doc.getFullName() + "', " +
+					"FORM = '" + doc.form + "', " +
 					"DDBID = '" + doc.getDdbID() + "', " +
 					"INDEXNUMBER = '" + doc.getIndex() + "', PHONE = '" + doc.getPhone() + "', " +
 					"RANK = " + doc.getRank() + ", SENDTO = " + doc.getSendto() + ", " +

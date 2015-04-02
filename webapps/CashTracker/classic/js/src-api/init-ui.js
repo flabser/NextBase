@@ -56,5 +56,7 @@ nbApp.initUI = function() {
 	nbApp.attachInitFileUpload('#fileupload');
 
 	//
-	$('#tabs').tabs();
+	if (typeof $.fn.tabs !== 'undefined') {
+		$('#tabs').tabs();
+	}
 };

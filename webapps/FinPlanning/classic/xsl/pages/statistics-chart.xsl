@@ -14,8 +14,6 @@
 				<script type="text/javascript" src="classic/js/statistics.js" />
 				<script type="text/javascript" src="/SharedResources/jquery/js/ui/minified/i18n/jquery.ui.datepicker-ru.min.js" />
 
-				<!-- vizualize -->
-				<script type="text/javascript" src="/SharedResources/jquery/js/visualize/js/visualize.jQuery.js" />
 				<!-- jchartfx -->
 				<link rel="stylesheet" type="text/css" href="/SharedResources/jquery/js/jChartFX/styles/jchartfx.css" />
 				<script type="text/javascript" src="/SharedResources/jquery/js/jChartFX/js/jchartfx.system.js"></script>

@@ -35,7 +35,7 @@ public class DatabaseUtil implements Const {
     public static String getViewTextValues(BaseDocument doc) {
         String viewTextList = "";
         int fieldSize = 0;
-        for (int i = 0; i < DatabaseConst.VIEWTEXT_COUNT; i++) {
+        for (int i = 1; i <= DatabaseConst.VIEWTEXT_COUNT; i++) {
             fieldSize = i < 4 ? 256 : 128;
             viewTextList += "'" + cutText(doc.getViewTextList().get(i).replaceAll("'", "''"), fieldSize) + "',";
         }

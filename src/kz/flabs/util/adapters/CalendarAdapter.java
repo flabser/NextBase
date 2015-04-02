@@ -17,7 +17,7 @@ public class CalendarAdapter extends XmlAdapter<String, Calendar> {
 
     @Override
     public String marshal(Calendar v) throws Exception {
-        //TODO TimeZone   
+        //TODO TimeZone
         return dateFormat.format(v.getTime());
     }
 }

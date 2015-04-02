@@ -1459,13 +1459,22 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
 
     public boolean updateToVersion98(Connection conn) throws Exception {
         dropForeignKey(conn, "COORDBLOCKS", "DOCID");
-        return addForeignKey(conn, "COORDBLOCKS", "DOCID", "MAINDOCS", "DOCID");
+        return addForeignKey(conn, "COORDBLOCKS", "DOCID", "MAINDOCS", "DOCID", true);
     }
 
-    private static boolean addForeignKey(Connection conn, String baseTableName, String baseColumnName, String foreignTableName, String foreignColumnName) throws SQLException {
+    public boolean updateToVersion99(Connection conn) throws Exception {
+        dropForeignKey(conn, "COORDBLOCKS", "DOCID");
+        return addForeignKey(conn, "COORDBLOCKS", "DOCID", "MAINDOCS", "DOCID", true);
+    }
+
+    private static boolean addForeignKey(Connection conn, String baseTableName, String baseColumnName, String foreignTableName, String foreignColumnName, boolean cascadeDeletion) throws SQLException {
         try {
             Statement st = conn.createStatement();
-            st.execute("alter table " + baseTableName + " add foreign key (" + baseColumnName + ") REFERENCES " + foreignTableName + "(" + foreignColumnName + ") ");
+            String sql = "alter table " + baseTableName + " add foreign key (" + baseColumnName + ") REFERENCES " + foreignTableName + "(" + foreignColumnName + ") ";
+            if (cascadeDeletion) {
+                sql += " ON DELETE CASCADE";
+            }
+            st.execute(sql);
             conn.commit();
             return true;
         } catch (SQLException e) {

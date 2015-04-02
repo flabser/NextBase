@@ -1,6 +1,6 @@
 /* nav-ws */
 .nav-ws {
-	background: #FFF url(../img/yellow_background.jpg) 0 0 no-repeat;
+	background: #FFF url(../img/yellow_background.png) 0 0 no-repeat;
 	right: -200px;
 	top: 0 !important;
 	width: 200px;
@@ -31,8 +31,7 @@ body.nav-ws-open {
 	width: 20px;
 }
 
-.nav-ws-toggle:hover,
-.nav-ws-toggle:focus {
+.nav-ws-toggle:hover,.nav-ws-toggle:focus {
 	box-shadow: 0 0 3px #999;
 }
 

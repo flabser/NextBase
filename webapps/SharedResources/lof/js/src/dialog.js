@@ -256,3 +256,32 @@ nb.dialog.Filter = function(_containerNode, _filterNode, _initCount, _triggerLen
 		}
 	}
 };
+
+/**
+ * windowOpen
+ */
+nb.windowOpen = function(url, id, callbacks) {
+	var features, width = 800, height = 600;
+	var top = (window.innerHeight - height) / 2, left = (window.innerWidth - width) / 2;
+	if (top < 0) top = 0;
+	if (left < 0) left = 0;
+	features = 'top=' + top + ',left=' + left;
+	features += ',height=' + height + ',width=' + width + ',resizable=yes,scrollbars=yes,status=no';
+
+	var wid = 'window-' + (id || url.hashCode());
+
+	var w = window.open('', wid, features);
+	if ('about:blank' === w.document.URL || w.document.URL === '') {
+		w = window.open(url, wid, features);
+
+		if (callbacks && callbacks.onclose) {
+			var timer = setInterval(function() {
+				if (w.closed) {
+					clearInterval(timer);
+					callbacks.onclose();
+				}
+			}, 1000);
+		}
+	}
+	w.focus();
+};

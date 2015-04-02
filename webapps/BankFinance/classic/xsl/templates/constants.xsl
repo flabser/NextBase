@@ -13,4 +13,15 @@
 		<xsl:text disable-output-escaping="yes">&lt;</xsl:text>!DOCTYPE html<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
 	</xsl:template>
 
+	<xsl:variable name="UI_CLIENT">
+		<xsl:choose>
+			<xsl:when test="//@useragent = 'IPAD_SAFARI' or //@useragent = 'GALAXY_TAB_SAFARI' or //@useragent = 'ANDROID'">
+				<xsl:value-of select="'mobile'" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="'desctop'" />
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+
 </xsl:stylesheet>

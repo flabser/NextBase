@@ -13,17 +13,6 @@
 	<xsl:decimal-format name="df" grouping-separator=" " />
 	<xsl:variable name="assert_vers" select="'1234'" />
 
-	<xsl:variable name="UI">
-		<xsl:choose>
-			<xsl:when test="//@useragent = 'IPAD_SAFARI' or //@useragent = 'GALAXY_TAB_SAFARI' or //@useragent = 'ANDROID'">
-				<xsl:value-of select="'mobile'" />
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:value-of select="'desctop'" />
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:variable>
-
 	<xsl:template name="layout">
 		<xsl:param name="w_title" select="concat(page/captions/viewnamecaption/@caption, ' - ', $APP_NAME)" />
 		<xsl:param name="active_aside_id" select="//current_outline_entry/response/content/entry/@id" />
@@ -38,7 +27,7 @@
 				<xsl:with-param name="include" select="$include" />
 			</xsl:call-template>
 			<body class="no_transition {$widescreen}">
-				<xsl:if test="$UI = 'mobile'">
+				<xsl:if test="$UI_CLIENT = 'mobile'">
 					<xsl:attribute name="class" select="concat('no_transition touch mobile ',  $widescreen)" />
 				</xsl:if>
 				<div class="content-overlay js-content-overlay"></div>
