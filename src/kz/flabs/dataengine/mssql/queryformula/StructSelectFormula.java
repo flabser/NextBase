@@ -23,7 +23,7 @@ public class StructSelectFormula extends kz.flabs.dataengine.h2.queryformula.Str
         String value = "";
         for (String col : sorting) {
             if (col != null && "".equalsIgnoreCase(col)) {
-                value += "ORGANIZATIONS." + col + ", ";
+                value += "StructureCollection." + col + ", ";
             }
         }
         if (value.length() > 2) {
@@ -36,7 +36,7 @@ public class StructSelectFormula extends kz.flabs.dataengine.h2.queryformula.Str
         String value = "";
         for (Sorting col : sorting) {
             if (col != null && !"".equalsIgnoreCase(col.getName())) {
-                value += "ORGANIZATIONS." + col.getName() + ", ";
+                value += "StructureCollection." + col.getName() + ", ";
             }
         }
         if (value.length() > 2) {
@@ -51,12 +51,16 @@ public class StructSelectFormula extends kz.flabs.dataengine.h2.queryformula.Str
         sysCond = StringUtils.removeEnd(sysCond.trim(), "and");
         String sql =
                 " SELECT foo.count, " + getResponseCondition(checkResponse, "") +
-                        "     orgs.DDBID, orgs.ORGID, orgs.ORGID as DOCID, orgs.DOCTYPE, 0 as has_attachment, null as topicid, orgs.VIEWTEXT, orgs.FORM," +
-                        "     orgs.REGDATE, " + DatabaseUtil.getViewTextList("orgs") + ", orgs.VIEWNUMBER, orgs.VIEWDATE " +
-                        " FROM Organizations orgs, " +
-                        " (SELECT count(o.ORGID) as count FROM Organizations o " +
-                        " WHERE " + sysCond.replaceAll("organizations.", "o.") + ") as foo " +
-                        " WHERE " + sysCond.replaceAll("organizations.", "o.") +
+                        " orgs.empid, orgs.depid, orgs.orgid, orgs.regdate, orgs.author, orgs.doctype, " +
+                        " orgs.parentdocid, orgs.parentdoctype, orgs.viewtext, orgs.ddbid, orgs.form, " +
+                        " orgs.fullname, orgs.shortname, orgs.address, orgs.defaultserver, orgs.comment, " +
+                        " orgs.ismain, orgs.bin, orgs.hits, orgs.indexnumber, orgs.rank, orgs.type, orgs.userid, " +
+                        " orgs.post, orgs.phone, orgs.birthdate, orgs.viewtext1, orgs.viewtext2, orgs.viewtext3, " +
+                        " orgs.viewtext4, orgs.viewtext5, orgs.viewtext6, orgs.viewtext7, orgs.viewnumber, orgs.viewdate, null as topicid " +
+                        " FROM StructureCollection orgs, " +
+                        " (SELECT count(sc.docid) as count FROM StructureCollection o " +
+                        " WHERE " + sysCond.replaceAll("organizations.", "sc.") + ") as foo " +
+                        " WHERE " + sysCond.replaceAll("organizations.", "sc.") +
                         getOrderCondition(sorting) + " " + getPagingCondition(pageSize, offset);
         return sql;
     }
@@ -66,7 +70,7 @@ public class StructSelectFormula extends kz.flabs.dataengine.h2.queryformula.Str
 		String cuID = DatabaseUtil.prepareListToQuery(complexUserID), ij = "", cc = "";
 		String sysCond = getSystemConditions(filters);
 
-		String sql = "SELECT count(DISTINCT ORGANIZATIONS.ORGID) FROM ORGANIZATIONS "  +
+		String sql = "SELECT count(DISTINCT StructureCollection.ORGID) FROM StructureCollection "  +
 				" WHERE " + sysCond + ";";
 		return sql;
 	}
@@ -332,12 +336,12 @@ public class StructSelectFormula extends kz.flabs.dataengine.h2.queryformula.Str
         sysCond = StringUtils.removeEnd(sysCond.trim(), "and");
         String sql =
                 " SELECT foo.count, " + getResponseCondition(checkResponse, "", responseQueryCondition) +
-                        "     orgs.DDBID, orgs.ORGID, orgs.ORGID as DOCID, orgs.DOCTYPE, 0 as has_attachment, null as topicid, orgs.VIEWTEXT, orgs.FORM," +
+                        "     orgs.DDBID, orgs.ORGID, orgs.DOCID, orgs.DOCTYPE, 0 as has_attachment, null as topicid, orgs.VIEWTEXT, orgs.FORM," +
                         "     orgs.REGDATE, " + DatabaseUtil.getViewTextList("orgs") + ", orgs.VIEWNUMBER, orgs.VIEWDATE " +
-                        " FROM Organizations orgs, " +
-                        " (SELECT count(o.ORGID) as count FROM Organizations o " +
-                        " WHERE " + sysCond.replaceAll("organizations.", "o.") + ") as foo " +
-                        " WHERE " + sysCond.replaceAll("organizations.", "o.") +
+                        " FROM StructureCollection orgs, " +
+                        " (SELECT count(sc.docid) as count FROM StructureCollection sc " +
+                        " WHERE " + sysCond.replaceAll("organizations.", "sc.") + ") as foo " +
+                        " WHERE " + sysCond.replaceAll("organizations.", "sc.") +
                         getOrderCondition(sorting) + " " + getPagingCondition(pageSize, offset);
         return sql;
     }
@@ -351,7 +355,7 @@ public class StructSelectFormula extends kz.flabs.dataengine.h2.queryformula.Str
 	public String getCountCondition(Set<String> complexUserID, Set<Filter> filters) {
         String sysCond = getSystemConditions(filters);
 
-        String sql = "SELECT count(md.DOCID) as count FROM MAINDOCS md" +
+        String sql = "SELECT count(md.DOCID) as count FROM StructureCollection md" +
                 " WHERE " + sysCond.replaceAll("maindocs.", "md.");
         return sql;
 	}

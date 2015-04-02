@@ -28,7 +28,7 @@ public class StructSelectFormula implements ISelectFormula {
         String value = "";
         for (String col : sorting) {
             if (col != null && "".equalsIgnoreCase(col)) {
-                value += "MAINDOCS." + col + ", ";
+                value += "StructureCollection." + col + ", ";
             }
         }
         if (value.length() > 2) {
@@ -41,7 +41,7 @@ public class StructSelectFormula implements ISelectFormula {
         String value = "";
         for (Sorting col : sorting) {
             if (col != null && !"".equalsIgnoreCase(col.getName())) {
-                value += "MAINDOCS." + col.getName() + ", ";
+                value += "StructureCollection." + col.getName() + ", ";
             }
         }
         if (value.length() > 2) {
@@ -341,7 +341,7 @@ public class StructSelectFormula implements ISelectFormula {
 
         String sql =
                 " SELECT foo.count, " + getResponseCondition(checkResponse, "", responseQueryCondition) +
-                        "     orgs.DDBID, orgs.ORGID, orgs.ORGID as DOCID, orgs.DOCTYPE, 0 as has_attachment, null as topicid, orgs.VIEWTEXT, orgs.FORM," +
+                        "     orgs.DDBID, orgs.ORGID, orgs.DOCID, orgs.DOCTYPE, 0 as has_attachment, null as topicid, orgs.VIEWTEXT, orgs.FORM," +
                         "     orgs.REGDATE, " + DatabaseUtil.getViewTextList("orgs") + ", orgs.VIEWNUMBER, orgs.VIEWDATE " +
                         " FROM StructureCollection orgs, " +
                         " (SELECT count(sc.docid) as count FROM StructureCollection sc " +
