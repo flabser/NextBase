@@ -2,7 +2,7 @@
 /backup/
 /logs/
 /tmp/
-/system_data/
+/*_data/
 /webserver/
 
 # app settings
