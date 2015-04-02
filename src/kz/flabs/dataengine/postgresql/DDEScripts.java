@@ -41,6 +41,22 @@ public class DDEScripts {
         return createString;
     }
 
+    public static String getStructureCollectionView() {
+        return "create or replace view structurecollection as (\n" +
+                "select 0 as empid, 0 as depid, o.orgid, o.orgid as docid, o.regdate, o.author, o.doctype, o.parentdocid, o.parentdoctype, o.viewtext, o.ddbid, o.form, o.fullname, o.shortname,     o.address,     o.defaultserver, o.comment, o.ismain, o.bin,  0 as hits, '' as indexnumber, 0 as rank, 0 as type,\n" +
+                "'' as userid, 0 as post,  '' as phone, now() as birthdate, \n" +
+                "o.viewtext1, o.viewtext2, o.viewtext3, o.viewtext4, o.viewtext5, o.viewtext6, o.viewtext7, o.viewnumber, o.viewdate from organizations o\n" +
+                "union\n" +
+                "select 0 as empid, d.depid, 0 as orgid, d.depid as docid, d.regdate, d.author, d.doctype, d.parentdocid, d.parentdoctype, d.viewtext, d.ddbid, d.form, d.fullname, d.shortname, '' as address, '' as defaultserver, d.comment, 0 as ismain, '' as bin, d.hits, d.indexnumber, d.rank, d.type, \n" +
+                "'' as userid, 0 as post,  '' as phone, now() as birthdate, \n" +
+                "d.viewtext1, d.viewtext2, d.viewtext3, d.viewtext4, d.viewtext5, d.viewtext6, d.viewtext7, d.viewnumber, d.viewdate from departments d\n" +
+                "union \n" +
+                "select e.empid, 0 as depid, 0 as orgid, e.empid as docid, e.regdate, e.author, e.doctype, e.parentdocid, e.parentdoctype, e.viewtext, e.ddbid, e.form, e.fullname, e.shortname, '' as address, '' as defaultserver, e.comment, 0 as ismain, '' as bin, e.hits, e.indexnumber, e.rank, 0 as type, \n" +
+                "e.userid, e.post, e.phone, e.birthdate,  \n" +
+                "e.viewtext1, e.viewtext2, e.viewtext3, e.viewtext4, e.viewtext5, e.viewtext6, e.viewtext7, e.viewnumber, e.viewdate from employers e\n" +
+                ")\n";
+    }
+
     public static String getStructureTreePath() {
         String createString = "CREATE TABLE STRUCTURE_TREE_PATH (" +
                 " ANCESTOR VARCHAR(16) NOT NULL, " +

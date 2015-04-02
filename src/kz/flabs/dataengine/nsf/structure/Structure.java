@@ -288,5 +288,10 @@ public class Structure implements IStructure, Const{
         return DatabaseType.NSF;
     }
 
+    @Override
+    public _ViewEntryCollection getStructureCollection(ISelectFormula sf, User user, int pageNum, int pageSize, RunTimeParameters parameters) {
+        return null;
+    }
+
 
 }

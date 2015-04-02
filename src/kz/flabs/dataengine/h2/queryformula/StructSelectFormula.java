@@ -17,12 +17,12 @@ import java.util.Set;
 import static org.apache.commons.lang3.StringUtils.removeEnd;
 
 public class StructSelectFormula implements ISelectFormula {
-	protected FormulaBlocks preparedBlocks;
+    protected FormulaBlocks preparedBlocks;
 
 
-	public StructSelectFormula(FormulaBlocks preparedBlocks){
+    public StructSelectFormula(FormulaBlocks preparedBlocks) {
         this.preparedBlocks = preparedBlocks;
-	}
+    }
 
     public String getSortingColumns(String[] sorting) {
         String value = "";
@@ -32,7 +32,7 @@ public class StructSelectFormula implements ISelectFormula {
             }
         }
         if (value.length() > 2) {
-            value = value.substring(0, value.length()-2);
+            value = value.substring(0, value.length() - 2);
         }
         return value;
     }
@@ -45,7 +45,7 @@ public class StructSelectFormula implements ISelectFormula {
             }
         }
         if (value.length() > 2) {
-            value = value.substring(0, value.length()-2);
+            value = value.substring(0, value.length() - 2);
         }
         return value;
     }
@@ -56,37 +56,41 @@ public class StructSelectFormula implements ISelectFormula {
         sysCond = StringUtils.removeEnd(sysCond.trim(), "and");
         String sql =
                 " SELECT foo.count, " + getResponseCondition(checkResponse, "") +
-                        "     orgs.DDBID, orgs.ORGID, orgs.ORGID as DOCID, orgs.DOCTYPE, 0 as has_attachment, null as topicid, orgs.VIEWTEXT, orgs.FORM," +
-                        "     orgs.REGDATE, " + DatabaseUtil.getViewTextList("orgs") + ", orgs.VIEWNUMBER, orgs.VIEWDATE " +
-                        " FROM Organizations orgs, " +
-                        " (SELECT count(o.ORGID) as count FROM Organizations o " +
-                        " WHERE " + sysCond.replaceAll("organizations.", "o.") + ") as foo " +
-                        " WHERE " + sysCond.replaceAll("organizations.", "o.") +
+                        " orgs.empid, orgs.depid, orgs.orgid, orgs.regdate, orgs.author, orgs.doctype, " +
+                        " orgs.parentdocid, orgs.parentdoctype, orgs.viewtext, orgs.ddbid, orgs.form, " +
+                        " orgs.fullname, orgs.shortname, orgs.address, orgs.defaultserver, orgs.comment, " +
+                        " orgs.ismain, orgs.bin, orgs.hits, orgs.indexnumber, orgs.rank, orgs.type, orgs.userid, " +
+                        " orgs.post, orgs.phone, orgs.birthdate, orgs.viewtext1, orgs.viewtext2, orgs.viewtext3, " +
+                        " orgs.viewtext4, orgs.viewtext5, orgs.viewtext6, orgs.viewtext7, orgs.viewnumber, orgs.viewdate, null as topicid " +
+                        " FROM StructureCollection orgs, " +
+                        " (SELECT count(sc.docid) as count FROM StructureCollection o " +
+                        " WHERE " + sysCond.replaceAll("organizations.", "sc.") + ") as foo " +
+                        " WHERE " + sysCond.replaceAll("organizations.", "sc.") +
                         getOrderCondition(sorting) + " " + getPagingCondition(pageSize, offset);
         return sql;
     }
 
     @Override
-	public String getCountCondition(Set<String> complexUserID,String[] filters) {
-		String cuID = DatabaseUtil.prepareListToQuery(complexUserID), ij = "", cc = "";
-		String sysCond = getSystemConditions(filters);
+    public String getCountCondition(Set<String> complexUserID, String[] filters) {
+        String cuID = DatabaseUtil.prepareListToQuery(complexUserID), ij = "", cc = "";
+        String sysCond = getSystemConditions(filters);
 
-		String sql = "SELECT count(DISTINCT ORGANIZATIONS.ORGID) FROM ORGANIZATIONS "  +
-				" WHERE " + sysCond + ";";
-		return sql;
-	}
+        String sql = "SELECT count(DISTINCT StructureCollection.docid) FROM StructureCollection " +
+                " WHERE " + sysCond + ";";
+        return sql;
+    }
 
-    protected String getSystemConditions(Set<Filter> filters){
-        String  where = "";
+    protected String getSystemConditions(Set<Filter> filters) {
+        String where = "";
         boolean and = false;
         for (Block part : preparedBlocks.blocks) {
-            if (part.blockType == FormulaBlockType.SYSTEM_FIELD_CONDITION){
+            if (part.blockType == FormulaBlockType.SYSTEM_FIELD_CONDITION) {
                 where += part.getContent();
             }
         }
-        
-        if(where.trim().length() > 0 && !where.trim().toLowerCase().endsWith("and"))
-        	where += " and ";
+
+        if (where.trim().length() > 0 && !where.trim().toLowerCase().endsWith("and"))
+            where += " and ";
         for (Filter filter : filters) {
             String cond = "";
             if (filter != null && filter.getName() != null && filter.keyWord != null) {
@@ -113,19 +117,19 @@ public class StructSelectFormula implements ISelectFormula {
             }
         }
 
-        if (where.trim().length() != 0 && (!where.trim().endsWith("AND")) && (!where.trim().endsWith("and"))){
+        if (where.trim().length() != 0 && (!where.trim().endsWith("AND")) && (!where.trim().endsWith("and"))) {
             where = where + "AND";
         }
         return where;
     }
 
-	protected String getSystemConditions(String[] filters){
-		String  where = "";
-		for (Block part : preparedBlocks.blocks) {	
-			if (part.blockType == FormulaBlockType.SYSTEM_FIELD_CONDITION){				
-				where += part.getContent();
-			}				
-		}
+    protected String getSystemConditions(String[] filters) {
+        String where = "";
+        for (Block part : preparedBlocks.blocks) {
+            if (part.blockType == FormulaBlockType.SYSTEM_FIELD_CONDITION) {
+                where += part.getContent();
+            }
+        }
 
         for (int i = 0; i < filters.length; i++) {
             String cond = filters[i];
@@ -158,11 +162,11 @@ public class StructSelectFormula implements ISelectFormula {
             }
         }
 
-		if ((!where.trim().endsWith("AND")) && (!where.trim().endsWith("and"))){
-			where = where + "AND";
-		}
-		return where;	
-	}
+        if ((!where.trim().endsWith("AND")) && (!where.trim().endsWith("and"))) {
+            where = where + "AND";
+        }
+        return where;
+    }
 
     protected String getResponseCondition(boolean responseCheck, String cuID, String responseQueryCondition) {
         String sql = "";
@@ -203,9 +207,9 @@ public class StructSelectFormula implements ISelectFormula {
     }
 
     protected String getResponseCondition(boolean responseCheck, String cuID) {
-		String sql = "";
+        String sql = "";
 /*		if (responseCheck) {
-			sql = " case " +
+            sql = " case " +
 			      " when exists( " +
 		          "      select 1 " +    
 		          "      from MAINDOCS " +    
@@ -234,8 +238,8 @@ public class StructSelectFormula implements ISelectFormula {
     		      "  ) then 1  else 0 " +
 	              " end as parent_exists,";
 		} */
-		return sql;
-	}
+        return sql;
+    }
 
     protected String getOrderCondition(String[] sorting) {
         String tmpsql = "";
@@ -299,39 +303,39 @@ public class StructSelectFormula implements ISelectFormula {
         }
     }
 
-    protected String getPagingCondition(int pageSize, int offset){
-		String pageSQL = "";
+    protected String getPagingCondition(int pageSize, int offset) {
+        String pageSQL = "";
         if (pageSize == -1) {
             return pageSQL;
         }
-        if (pageSize > 0 ) {
-			pageSQL += " LIMIT " + pageSize;
+        if (pageSize > 0) {
+            pageSQL += " LIMIT " + pageSize;
         }
         if (offset > 0) {
             pageSQL += " OFFSET " + offset;
         }
 
-		return pageSQL;
+        return pageSQL;
 
-	}
-
-
-	class Condition{
-		String alias;
-		String formula;
+    }
 
 
-		public Condition(String a, String f) {
-			alias = a;
-			formula = f;
-		}
+    class Condition {
+        String alias;
+        String formula;
 
-		public String toString(){
-			return "alias=" + alias + ", formula=" + formula;
-		}
-	}
 
-    public String getCondition(Set<String> complexUserID, int pageSize,	int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, String responseQueryCondition) {
+        public Condition(String a, String f) {
+            alias = a;
+            formula = f;
+        }
+
+        public String toString() {
+            return "alias=" + alias + ", formula=" + formula;
+        }
+    }
+
+    public String getCondition(Set<String> complexUserID, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, String responseQueryCondition) {
         String sysCond = getSystemConditions(filters);
         sysCond = removeEnd(sysCond.trim(), "and");
 
@@ -339,18 +343,18 @@ public class StructSelectFormula implements ISelectFormula {
                 " SELECT foo.count, " + getResponseCondition(checkResponse, "", responseQueryCondition) +
                         "     orgs.DDBID, orgs.ORGID, orgs.ORGID as DOCID, orgs.DOCTYPE, 0 as has_attachment, null as topicid, orgs.VIEWTEXT, orgs.FORM," +
                         "     orgs.REGDATE, " + DatabaseUtil.getViewTextList("orgs") + ", orgs.VIEWNUMBER, orgs.VIEWDATE " +
-                        " FROM Organizations orgs, " +
-                        " (SELECT count(o.ORGID) as count FROM Organizations o " +
-                        " WHERE " + sysCond.replaceAll("organizations.", "o.") + ") as foo " +
-                        " WHERE " + sysCond.replaceAll("organizations.", "o.") +
+                        " FROM StructureCollection orgs, " +
+                        " (SELECT count(sc.docid) as count FROM StructureCollection sc " +
+                        " WHERE " + sysCond.replaceAll("organizations.", "sc.") + ") as foo " +
+                        " WHERE " + sysCond.replaceAll("organizations.", "sc.") +
                         getOrderCondition(sorting) + " " + getPagingCondition(pageSize, offset);
         return sql;
     }
 
-	@Override
-	public String getCondition(Set<String> complexUserID, int pageSize,	int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse) {
+    @Override
+    public String getCondition(Set<String> complexUserID, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse) {
         return this.getCondition(complexUserID, pageSize, offset, filters, sorting, checkResponse, "");
-	}
+    }
 
     @Override
     public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, boolean checkRead) {
@@ -358,14 +362,13 @@ public class StructSelectFormula implements ISelectFormula {
     }
 
     @Override
-	public String getCountCondition(Set<String> complexUserID, Set<Filter> filters) {
+    public String getCountCondition(Set<String> complexUserID, Set<Filter> filters) {
         String sysCond = getSystemConditions(filters);
-
-        String sql = "SELECT count(md.DOCID) as count FROM MAINDOCS md" +
-                " WHERE " + sysCond.replaceAll("maindocs.", "md.");
+        sysCond = removeEnd(sysCond.trim(), "and");
+        String sql = "SELECT count(sc.DOCID) as count FROM StructureCollection sc" +
+                " WHERE " + sysCond.replaceAll("maindocs.", "sc.");
         return sql;
-	}
+    }
 
 
-	
 }

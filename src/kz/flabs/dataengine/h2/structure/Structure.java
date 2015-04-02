@@ -527,7 +527,48 @@ public class Structure extends DatabaseCore implements IStructure, Const{
 		return org;	
 	}
 
-	@Override
+    @Override
+    public _ViewEntryCollection getOrganization(ISelectFormula sf, User user, int pageNum, int pageSize, RunTimeParameters parameters) {
+        ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
+        Connection conn = dbPool.getConnection();
+        try {
+            conn.setAutoCommit(false);
+            Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            if (pageNum == 0){
+                String sql = sf.getCountCondition(Const.supervisorGroupAsSet, parameters.getFilters());
+                ResultSet rs = s.executeQuery(sql);
+                if (rs.next()){
+                    pageNum = RuntimeObjUtil.countMaxPage(rs.getInt(1), pageSize);
+                }
+            }
+            int offset = db.calcStartEntry(pageNum, pageSize);
+            String sql = sf.getCondition(Const.supervisorGroupAsSet, pageSize, offset, parameters.getFilters(), parameters.getSorting(), true);
+            ResultSet rs = s.executeQuery(sql);
+            if (rs.next()){
+                ViewEntry entry = new ViewEntry(this.db, rs, ViewEntryType.ORGANIZATION);
+                coll.add(entry);
+                coll.setCount(rs.getInt(1));
+                while (rs.next()){
+                    entry = new ViewEntry(this.db,rs, new HashSet<DocID>(), new User(Const.sysUser), parameters.getDateFormat());
+                    coll.add(entry);
+                }
+            }
+            conn.commit();
+            s.close();
+            rs.close();
+
+        } catch (SQLException e) {
+            DatabaseUtil.errorPrint(this.db.getDbID(), e);
+        } catch (Exception e) {
+            Database.logger.errorLogEntry(e);
+        } finally {
+            dbPool.returnConnection(conn);
+        }
+        coll.setCurrentPage(pageNum);
+        return coll.getScriptingObj();
+    }
+
+    @Override
 	public int insertDepartment(Department doc){
 		int key = 0;
 		Connection conn = dbPool.getConnection();
@@ -2062,7 +2103,7 @@ public class Structure extends DatabaseCore implements IStructure, Const{
     }
 
     @Override
-	public _ViewEntryCollection getOrganization(ISelectFormula sf, User user, int pageNum,	int pageSize, RunTimeParameters parameters) {
+	public _ViewEntryCollection getStructureCollection(ISelectFormula sf, User user, int pageNum, int pageSize, RunTimeParameters parameters) {
         ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
         Connection conn = dbPool.getConnection();
         try {
@@ -2079,8 +2120,7 @@ public class Structure extends DatabaseCore implements IStructure, Const{
             String sql = sf.getCondition(Const.supervisorGroupAsSet, pageSize, offset, parameters.getFilters(), parameters.getSorting(), true);
             ResultSet rs = s.executeQuery(sql);
             if (rs.next()){
-                //ViewEntry entry = new ViewEntry(this.db, rs, new HashSet<DocID>(), new User(Const.sysUser), parameters.getDateFormat());
-                ViewEntry entry = new ViewEntry(this.db, rs, ViewEntryType.ORGANIZATION);
+                ViewEntry entry = new ViewEntry(this.db, rs, ViewEntryType.STRUCTURE);
                 coll.add(entry);
                 coll.setCount(rs.getInt(1));
                 while (rs.next()){

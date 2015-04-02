@@ -221,7 +221,7 @@ public class _Database implements Const {
 		}
 
 		return dataBase.getGlossaries().getCollectionByCondition(sf, param.getPageNum(), param.getPageSize(),
-				session.getExpandedDocuments(), parameters, param.isCheckResponse());
+                session.getExpandedDocuments(), parameters, param.isCheckResponse());
 	}
 
 	public _ViewEntryCollection getCollectionOfGlossaries(String queryCondition, int pageNum, int pageSize) {
@@ -330,7 +330,7 @@ public class _Database implements Const {
 		}
 
 		ArrayList <BaseDocument> docsCollection = dataBase.getDocumentsForMonth(userGroups, userID, form, fieldName, m,
-				dataBase.calcStartEntry(pageNum, pageSize), pageSize);
+                dataBase.calcStartEntry(pageNum, pageSize), pageSize);
 		for (BaseDocument doc : docsCollection) {
 			col.add(new _Document(doc));
 		}

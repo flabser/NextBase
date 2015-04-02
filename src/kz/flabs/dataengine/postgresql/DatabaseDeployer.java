@@ -97,6 +97,7 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
             }
 
             checkAndCreateView(DDEScripts.getStructureView(), "STRUCTURE");
+            checkAndCreateView(DDEScripts.getStructureCollectionView(), "STRUCTURECOLLECTION");
             checkAndCreateTable(DDEScripts.getStructureTreePath(), "STRUCTURE_TREE_PATH");
 
             checkAndCreateTable(DDEScripts.getUserRolesDDE(), "USER_ROLES");

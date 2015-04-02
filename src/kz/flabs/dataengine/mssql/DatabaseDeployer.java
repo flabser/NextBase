@@ -101,6 +101,7 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
 				executeQuery(DDEScripts.getDepartmentsAlternationDDE());
 			}
             checkAndCreateView(kz.flabs.dataengine.mssql.DDEScripts.getStructureView(), "STRUCTURE");
+            checkAndCreateView(kz.flabs.dataengine.mssql.DDEScripts.getStructureCollectionView(), "STRUCTURECOLLECTION");
             checkAndCreateTable(kz.flabs.dataengine.mssql.DDEScripts.getStructureTreePath(), "STRUCTURE_TREE_PATH");
 			//checkAndCreateTrigger(DDEScripts.getEmployersDelCascadeTrigger(), "EMPDELCASCADETRIGGER");
 			//checkAndCreateTable(DDEScripts.getRolesDDE(), "ROLES");

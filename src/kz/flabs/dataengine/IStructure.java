@@ -77,5 +77,6 @@ public interface IStructure {
 
     ISelectFormula getSelectFormula(FormulaBlocks fb);
     DatabaseType getRDBMSType();
-	
+
+    _ViewEntryCollection getStructureCollection(ISelectFormula sf, User user, int pageNum, int pageSize, RunTimeParameters parameters);
 }

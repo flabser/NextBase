@@ -97,4 +97,13 @@ public class _Structure {
         return this.struct.getOrganization(sf, user, pageNum, pageSize, parameters);
     }
 
+    public _ViewEntryCollection getStructureEntries(String queryCondition, int pageNum, boolean checkResponse) {
+        FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.STRUCTURE);
+        ISelectFormula sf = this.db.getSelectFormula(queryFormulaBlocks);
+        int pageSize = user.getSession().pageSize;
+        RunTimeParameters parameters = new RunTimeParameters();
+        return this.struct.getStructureCollection(sf, user, pageNum, pageSize, parameters);
+    }
+
+
 }
