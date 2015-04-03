@@ -9,6 +9,10 @@
 /rule/*/global.xml
 /rule/*/global.dat
 
+# nodejs modules
+node_modules
+
 *.class
 .classpath
 .project
+.settings
