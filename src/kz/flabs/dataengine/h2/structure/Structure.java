@@ -2120,11 +2120,12 @@ public class Structure extends DatabaseCore implements IStructure, Const{
             String sql = sf.getCondition(Const.supervisorGroupAsSet, pageSize, offset, parameters.getFilters(), parameters.getSorting(), true);
             ResultSet rs = s.executeQuery(sql);
             if (rs.next()){
-                ViewEntry entry = new ViewEntry(this.db, rs, ViewEntryType.STRUCTURE);
+                Set<DocID> emptyDocIDSet =  new HashSet<>();
+                ViewEntry entry = new ViewEntry(this.db,rs, emptyDocIDSet, Const.supervisorUser, parameters.getDateFormat());
                 coll.add(entry);
                 coll.setCount(rs.getInt(1));
                 while (rs.next()){
-                    entry = new ViewEntry(this.db,rs, new HashSet<DocID>(), new User(Const.sysUser), parameters.getDateFormat());
+                    entry = new ViewEntry(this.db,rs, emptyDocIDSet, Const.supervisorUser, parameters.getDateFormat());
                     coll.add(entry);
                 }
             }

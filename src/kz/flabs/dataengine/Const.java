@@ -1,5 +1,7 @@
 package kz.flabs.dataengine;
 
+import kz.flabs.users.User;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +19,7 @@ public interface Const {
 	String sysUser = "supervisor";
 	String DEFAULT_SORT_ORDER = "ASC";
 	String DEFAULT_SORT_COLUMN = "VIEWDATE";
+    public static final User supervisorUser = new User(sysUser);
 	
 	
 	int UNKNOWN = 0;
