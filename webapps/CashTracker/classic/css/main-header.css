@@ -1,5 +1,5 @@
 .main-header {
-	background: url(../img/yellow_background.png) 0 0 no-repeat;
+	background: #fff59d url(../img/yellow_background.png) 0 0 no-repeat;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -57,7 +57,7 @@
 }
 
 .main-header .search .button-submit {
-	background: transparent url(/SharedResources/img/iconset/magnifier.png) no-repeat center;
+	background: transparent url(/SharedResources/img/classic/loupe_blue.gif) no-repeat center;
 	border: none;
 	height: 100%;
 	margin: 0;

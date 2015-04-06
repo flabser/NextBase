@@ -143,7 +143,7 @@ form.search .keyword {
 }
 
 .search-button-submit {
-	background: transparent url(/SharedResources/img/iconset/magnifier.png) no-repeat center center;
+	background: transparent url(/SharedResources/img/classic/loupe_blue.gif) no-repeat center center;
 	border: none;
 	height: 22px;
 	margin-left: 3px;
