@@ -462,7 +462,7 @@ public class DDEScripts {
 				" COORDINATOR nvarchar(256)," + 
 				" COORDNUMBER int," +
 				" DECISION int," +
-				" COMMENT nvarchar(164)," +
+				" COMMENT nvarchar(1024)," +
 				" ISCURRENT int," +
 				" DECISIONDATE datetime," +
 				" COORDATE datetime," +

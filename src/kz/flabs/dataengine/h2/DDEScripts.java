@@ -458,7 +458,7 @@ public class DDEScripts {
                 " COORDINATOR varchar(256)," +
                 " COORDNUMBER int," +
                 " DECISION int," +
-                " COMMENT varchar(164)," +
+                " COMMENT varchar(1024)," +
                 " ISCURRENT int," +
                 " DECISIONDATE timestamp," +
                 " COORDATE timestamp," +
