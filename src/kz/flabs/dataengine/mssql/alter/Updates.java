@@ -706,7 +706,7 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
                 ResultSet rs = pst.executeQuery();
                 if (rs.next() && rs.getString("COLUMN_NAME").equalsIgnoreCase(columnName.toUpperCase())) {
                     Statement st = conn.createStatement();
-                    st.execute("alter table " + tableName + " drop CONSTRAINT " + rs.getString("CONSTRAINT_NAME"));
+                    st.execute("alter  table " + tableName + " drop CONSTRAINT " + rs.getString("CONSTRAINT_NAME"));
                     conn.commit();
                     return true;
                 }
