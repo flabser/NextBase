@@ -700,7 +700,7 @@ public class Provider extends HttpServlet implements Const{
 				doc = db.getStructure().getOrganization(docKey, userSession.currentUser);
 			}else if (id.equalsIgnoreCase("department")){
 				doc = db.getStructure().getDepartment(docKey, userSession.currentUser);
-			}else if (id.equalsIgnoreCase("employer")){														
+			}else if (id.equalsIgnoreCase("employer") || id.equalsIgnoreCase("responsibleperson") || id.equalsIgnoreCase("legalentity") || id.equalsIgnoreCase("individualperson")){
 				doc = db.getStructure().getEmployer(docKey, userSession.currentUser);
 			}else if (id.equalsIgnoreCase("role")) {
 				//	doc = db.getStructure().getRole(docKey, userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());
