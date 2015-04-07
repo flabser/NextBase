@@ -267,6 +267,7 @@ public class _Database implements Const {
 		keyWord = new String(((String) keyWord).getBytes("ISO-8859-1"), "UTF-8");
 		int pageSize = user.getSession().pageSize;
 		return dataBase.getFTSearchEngine().search(keyWord, user, pageNum, pageSize, filter, new String[5]);
+
 	}
 
 	public ArrayList <_ViewEntry> getGroupedEntries(String fieldName, int pageNum, int pageSize)
