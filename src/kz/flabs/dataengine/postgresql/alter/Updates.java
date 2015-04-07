@@ -1467,6 +1467,23 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
         return addForeignKey(conn, "COORDBLOCKS", "DOCID", "MAINDOCS", "DOCID", true);
     }
 
+    public boolean updateToVersion100(Connection conn) throws Exception {
+        return alterColumnAlterType(conn, "COORDINATORS", "COMMENT", "varchar(1024)");
+    }
+    public static boolean alterColumnAlterType(Connection conn, String tableName, String columnName, String typeNameAndSize) throws Exception {
+        Statement statement = conn.createStatement();
+        statement.addBatch("alter table " + tableName + " alter " + columnName + " type " + typeNameAndSize);
+        statement.addBatch("alter table STRUCTURE_TREE_PATH alter DESCENDANT type varchar(16)");
+        try {
+            statement.executeBatch();
+        } catch (Exception e) {
+            DatabaseUtil.debugErrorPrint(e);
+        }
+        statement.close();
+        conn.commit();
+        return true;
+    }
+
     private static boolean addForeignKey(Connection conn, String baseTableName, String baseColumnName, String foreignTableName, String foreignColumnName, boolean cascadeDeletion) throws SQLException {
         try {
             Statement st = conn.createStatement();
