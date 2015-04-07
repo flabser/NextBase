@@ -285,6 +285,8 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
                     case 5:
                         temp = "VIEWDATE = '" + temp + "' ";
                         break;
+                    case 6:
+                        break;
                     default:
                         temp = "VIEWTEXT LIKE '%" + temp + "%'";
                         break;
