@@ -100,7 +100,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	public static Boolean mailEnable = false;
 
 	public static boolean workspaceAuth;
-	private static String defaultRedirectURL = "Workspace";
+	private static String defaultRedirectURL;
 
 	public static RunMode debugMode = RunMode.OFF;
 
@@ -186,8 +186,8 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			}
 
 			//
-			defaultRedirectURL = XMLUtil.getTextContent(xmlDocument, "/nextbase/applications/@default", false,
-					defaultRedirectURL, true);
+			defaultRedirectURL = "/"
+					+ XMLUtil.getTextContent(xmlDocument, "/nextbase/applications/@default", false, "Workspace", true);
 
 			NodeList nodeList = XMLUtil.getNodeList(xmlDocument, "/nextbase/applications");
 			if (nodeList.getLength() > 0) {
