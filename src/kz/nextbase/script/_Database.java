@@ -262,11 +262,12 @@ public class _Database implements Const {
 		return dataBase.getForum().getForumTopics(sf, user, pageNum, pageSize, session.getExpandedThread(), parameters);
 	}
 
-	public _ViewEntryCollection search(String keyWord, int pageNum) throws UnsupportedEncodingException,
+	public _ViewEntryCollection search(String keyWord, int pageNum, String[] filter) throws UnsupportedEncodingException,
 			DocumentException, FTIndexEngineException, RuleException, QueryFormulaParserException {
 		keyWord = new String(((String) keyWord).getBytes("ISO-8859-1"), "UTF-8");
 		int pageSize = user.getSession().pageSize;
-		return dataBase.getFTSearchEngine().search(keyWord, user, pageNum, pageSize, new String[5], new String[5]);
+		return dataBase.getFTSearchEngine().search(keyWord, user, pageNum, pageSize, filter, new String[5]);
+
 	}
 
 	public ArrayList <_ViewEntry> getGroupedEntries(String fieldName, int pageNum, int pageSize)
