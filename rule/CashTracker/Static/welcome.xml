@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="static" id="welcome" mode="on" history="off">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>welcome.xsl</xsltfile>
+
+	<caption name="reg_title" source="KEYWORD">Регистрация</caption>
+	<caption name="reg_first_name" source="KEYWORD">Имя</caption>
+	<caption name="reg_last_name" source="KEYWORD">Фамилия</caption>
+	<caption name="reg_email" source="KEYWORD">E-mail</caption>
+	<caption name="reg_pwd" source="KEYWORD">Новый пароль</caption>
+	<caption name="reg_button_label" source="KEYWORD">Зарегистрироваться</caption>
+	<caption name="reg_social" source="KEYWORD">Залогиниться с помощью соцсетей</caption>
+
+	<caption name="login_title" source="KEYWORD">Вход</caption>
+	<caption name="login_login" source="KEYWORD">E-mail</caption>
+	<caption name="login_pwd" source="KEYWORD">Пароль</caption>
+	<caption name="login_alien_device" source="KEYWORD">Не запоминать меня</caption>
+	<caption name="login_button_label" source="KEYWORD">Войти</caption>
+	<caption name="login_social" source="KEYWORD">Залогиниться с помощью соцсетей</caption>
+</rule>
