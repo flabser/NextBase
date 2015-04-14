@@ -52,15 +52,15 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
             String _keyWord = normalizeKeywordToTSQuery(keyWord);
 
             String sql = "SELECT distinct " + fields + " FROM maindocs, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n" +
-                    " and docid in (select docid from readers_maindocs where username IN (" + cuID + "))" +
+                    (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? "" : " and docid in (select docid from readers_maindocs where username IN (" + cuID + "))") +
                     (filterCondition.length() != 0 ? " and " + filterCondition : "" ) +
                     " union \n" +
                     "SELECT distinct " + fields + " from maindocs where docid in (" +
                     "SELECT id as docid FROM custom_fields, plainto_tsquery('" + _keyWord + "') q where fts @@ q) \n" +
                     (filterCondition.length() != 0 ? " and " + filterCondition : "" ) +
-                    " and docid in (select docid from readers_maindocs where username  IN (" + cuID + ") )" +
+                    (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? "" : " and docid in (select docid from readers_maindocs where username  IN (" + cuID + ") )") +
                     (filterCondition.length() != 0 ? " and " + filterCondition : "" ) +
-                    " union \n" +
+                  /*  " union \n" +
                     "SELECT distinct " + fields + " FROM tasks, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n" +
                     (filterCondition.length() != 0 ? " and " + filterCondition : "" ) +
                     " and docid in (select docid from readers_tasks where username  IN (" + cuID + "))" +
@@ -71,7 +71,7 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
                     " union \n" +
                     "SELECT distinct " + fields + " FROM projects, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n" +
                     (filterCondition.length() != 0 ? " and " + filterCondition : "" ) +
-                    " and docid in (select docid from readers_projects where username  IN (" + cuID + ")) " +
+                    " and docid in (select docid from readers_projects where username  IN (" + cuID + ")) " +*/
                     getOrderCondition(sorting) + " " +
                     getPagingCondition(pageSize, pageNum) + ";";
 
