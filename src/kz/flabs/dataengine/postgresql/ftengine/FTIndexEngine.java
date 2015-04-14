@@ -57,7 +57,6 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
                     " union \n" +
                     "SELECT distinct " + fields + " from maindocs where docid in (" +
                     "SELECT id as docid FROM custom_fields, plainto_tsquery('" + _keyWord + "') q where fts @@ q) \n" +
-                    (filterCondition.length() != 0 ? " and " + filterCondition : "" ) +
                     (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? "" : " and docid in (select docid from readers_maindocs where username  IN (" + cuID + ") )") +
                     (filterCondition.length() != 0 ? " and " + filterCondition : "" ) +
                   /*  " union \n" +
@@ -89,10 +88,14 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
                 coll.add(entry);
             }
 
-            sql = "SELECT count(total) from (SELECT distinct docid FROM maindocs, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n" +
-                    " and docid in (select docid from readers_maindocs where username IN (" + cuID + ")) union \n" +
+            sql = "SELECT count(DISTINCT total) from (SELECT distinct docid FROM maindocs, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n" +
+                    (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? "" : " and docid in (select docid from readers_maindocs where username IN (" + cuID + ")) ") +
+                    (filterCondition.length() != 0 ? " and " + filterCondition : "" ) +
+                    "union \n" +
                     "SELECT distinct docid from maindocs where docid in (SELECT id as docid FROM custom_fields, plainto_tsquery('" + _keyWord + "') q where fts @@ q) \n" +
-                    " and docid in (select docid from readers_maindocs where username  IN (" + cuID + "))) as total;";
+                    (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? "" : " and docid in (select docid from readers_maindocs where username  IN (" + cuID + "))") +
+                    (filterCondition.length() != 0 ? " and " + filterCondition : "" ) +
+                    ") as total;";
 
 
 /*            sql = "SELECT SUM(count) from (SELECT count(distinct docid), 'maindocs' as tablename FROM maindocs, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n" +
