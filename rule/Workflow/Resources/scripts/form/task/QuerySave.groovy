@@ -81,6 +81,7 @@ class QuerySave extends _FormQuerySave {
 
 		if (execs.getResetedExecutorsCount() >= execs.getExecutorsCount()){
 			control.setAllControl(_AllControlType.RESET);
+            control.setResetDate(new Date());
 			def descendants = doc.getDescendants();
 			descendants.each{
 				def relatedDoc = (_Document)it
