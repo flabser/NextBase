@@ -163,7 +163,7 @@ public class _Control implements _IXMLContent  {
 		xmlContent.append("<isold>" + control.getOld() + "</isold>");
 		xmlContent.append("<priority>" + control.getPriority() + "</priority>");
 		xmlContent.append("<complication>" + control.getComplication() + "</complication>");
-		xmlContent.append("<diff>" + control.getDiffBetweenDays((control.getAllControl() == 0) ? control.getResetDate() : Calendar.getInstance()) + "</diff>");
+		xmlContent.append("<diff>" + control.getDiffBetweenDays((control.getAllControl() == 0 && control.getResetDate() != null) ? control.getResetDate() : Calendar.getInstance()) + "</diff>");
 
 		if (!control.getShifts().isEmpty()) {
 			xmlContent.append("<shift>");
