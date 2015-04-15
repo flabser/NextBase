@@ -84,8 +84,20 @@ public class _Control implements _IXMLContent  {
 		}
 	}
 
+    public Date getResettDate() {
+        Calendar resetDate = control.getResetDate();
+        if (resetDate != null) {
+            return resetDate.getTime();
+        } else {
+            return null;
+        }
+    }
+
 	public void setStartDate(Date startDate) {
 		control.setStartDate(startDate);
+	}
+	public void setResetDate(Date resetDate) {
+		control.setResetDate(resetDate);
 	}
 
 	public Date getCtrlDate(){
@@ -151,7 +163,7 @@ public class _Control implements _IXMLContent  {
 		xmlContent.append("<isold>" + control.getOld() + "</isold>");
 		xmlContent.append("<priority>" + control.getPriority() + "</priority>");
 		xmlContent.append("<complication>" + control.getComplication() + "</complication>");
-		xmlContent.append("<diff>" + control.getDiffBetweenDays(Calendar.getInstance()) + "</diff>");
+		xmlContent.append("<diff>" + control.getDiffBetweenDays((control.getAllControl() == 0) ? control.getResetDate() : Calendar.getInstance()) + "</diff>");
 
 		if (!control.getShifts().isEmpty()) {
 			xmlContent.append("<shift>");

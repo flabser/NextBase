@@ -75,6 +75,10 @@ public class Control extends AbstractComplexObject implements Serializable {
     @XmlJavaTypeAdapter(CalendarAdapter.class)
 	private Calendar startDate;
 
+    @XmlElement(name = "resetdate")
+    @XmlJavaTypeAdapter(CalendarAdapter.class)
+    private Calendar resetDate;
+
     @XmlAttribute
     private String className = Control.class.getName();
 
@@ -124,12 +128,22 @@ public class Control extends AbstractComplexObject implements Serializable {
 	public Calendar getStartDate() {
 		return startDate;
 	}
+	public Calendar getResetDate() {
+		return resetDate;
+	}
 
 	public void setStartDate(Date startDate) {
 		if (this.startDate == null) {
 			this.startDate = Calendar.getInstance();
 		}
 		this.startDate.setTime(startDate);
+	}
+
+	public void setResetDate(Date resetDate) {
+		if (this.resetDate == null) {
+			this.resetDate = Calendar.getInstance();
+		}
+		this.resetDate.setTime(resetDate);
 	}
 
 	@Deprecated
