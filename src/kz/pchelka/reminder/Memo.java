@@ -50,7 +50,9 @@ public class Memo {
 			if (smtpAuth) {
 				props.put("mail.smtp.auth", smtpAuth);
 				props.put("mail.smtp.port", smtpPort);
-				// props.put("mail.smtp.ssl.enable", "true");
+				if ("465".equals(smtpPort)) {
+					props.put("mail.smtp.ssl.enable", "true");
+				}
 				Authenticator auth = new SMTPAuthenticator();
 				ses = Session.getInstance(props, auth);
 			} else {
