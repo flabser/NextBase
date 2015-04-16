@@ -133,22 +133,13 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			logger.normalLogEntry("Initialize runtime environment");
 			initMimeTypes();
 
-			try {
-				int v = Integer.parseInt(XMLUtil.getTextContent(xmlDocument, "/nextbase/webserver/version"));
-				if (v == 6) {
-					serverVersion = 6;
-				} else {
-					serverVersion = 7;
-				}
-			} catch (NumberFormatException e) {
-				serverVersion = 7;
-			}
+			serverVersion = XMLUtil.getNumberContent(xmlDocument, "/nextbase/webserver/version", 7);
 
 			webServicesEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/webserver/webservices/@mode")
 					.equalsIgnoreCase("on");
 
 			hostName = XMLUtil.getTextContent(xmlDocument, "/nextbase/hostname");
-			if (hostName.trim().equals("")) {
+			if (hostName.isEmpty()) {
 				hostName = getHostName();
 			}
 
@@ -178,14 +169,8 @@ public class Environment implements Const, ICache, IProcessInitiator {
 				adminConsoleEnable = false;
 			}
 
-			try {
-				delaySchedulerStart = Integer.parseInt(XMLUtil.getTextContent(xmlDocument,
-						"/nextbase/scheduler/startdelaymin"));
-			} catch (Exception nfe) {
-				delaySchedulerStart = 1;
-			}
+			delaySchedulerStart = XMLUtil.getNumberContent(xmlDocument, "/nextbase/scheduler/startdelaymin", 1);
 
-			//
 			defaultRedirectURL = "/"
 					+ XMLUtil.getTextContent(xmlDocument, "/nextbase/applications/@default", false, "Workspace", true);
 
@@ -203,7 +188,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 								"WORKSPACE", false));
 						site.name = XMLUtil.getTextContent(appNode, "name/@sitename", false);
 						String globalAttrValue = XMLUtil.getTextContent(appNode, "name/@global", false);
-						if (!globalAttrValue.equals("")) {
+						if (!globalAttrValue.isEmpty()) {
 							site.global = globalAttrValue;
 						}
 						webAppToStart.put(appName, site);
@@ -216,12 +201,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			try {
 				isSSLEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/@mode").equalsIgnoreCase("on");
 				if (isSSLEnable) {
-					String sslPort = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/port");
-					try {
-						secureHttpPort = Integer.parseInt(sslPort);
-					} catch (NumberFormatException nfe) {
-						secureHttpPort = 38789;
-					}
+					secureHttpPort = XMLUtil.getNumberContent(xmlDocument, "/nextbase/ssl/port", 38789);
 					keyPwd = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/keypass");
 					keyStore = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/keystore");
 					isClientSSLAuthEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/clientauth/@mode")
@@ -289,17 +269,13 @@ public class Environment implements Const, ICache, IProcessInitiator {
 						.equalsIgnoreCase("on")) ? true : false;
 				if (xmppEnable) {
 					XMPPServer = XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/xmppserver");
-					try {
-						String sp = XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/xmppserverport");
-						XMPPServerPort = Integer.parseInt(sp);
-					} catch (NumberFormatException nfe) {
-						XMPPServerPort = 5222;
-					}
+					XMPPServerPort = XMLUtil.getNumberContent(xmlDocument, "/nextbase/instmsgagent/xmppserverport",
+							5222);
 					XMPPLogin = XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/xmpplogin");
 					XMPPPwd = XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/xmpppwd");
 					logger.normalLogEntry("InstantMessengerAgent is going to connect to server: " + XMPPServer);
 
-					if ((!XMPPServer.equals("")) && (!XMPPLogin.equals(""))) {
+					if ((!XMPPServer.isEmpty()) && (!XMPPLogin.isEmpty())) {
 						ConnectManager chMan = new ConnectManager();
 						chMan.start();
 					}
