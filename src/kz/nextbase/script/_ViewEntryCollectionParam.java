@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 
 public class _ViewEntryCollectionParam {
 
+	// private User user;
 	private String query;
 	private int pageNum = 0;
 	private int pageSize = 0;
@@ -15,7 +16,17 @@ public class _ViewEntryCollectionParam {
 
 	public _ViewEntryCollectionParam(_Session ses) {
 		this.pageSize = ses.getUser().getSession().pageSize;
+		// this.user = ses.getUser();
 	}
+
+	/*public _ViewEntryCollectionParam setUser(final User user) {
+		this.user = user;
+		return this;
+	}
+
+	public User getUser() {
+		return user;
+	}*/
 
 	public String getQuery() {
 		return query;
