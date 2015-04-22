@@ -1,19 +1,5 @@
 package kz.flabs.filters;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.DatabaseFactory;
 import kz.flabs.dataengine.ISystemDatabase;
@@ -26,8 +12,14 @@ import kz.flabs.users.UserSession;
 import kz.flabs.workspace.LoggedUser;
 import kz.flabs.workspace.WorkSpaceSession;
 import kz.pchelka.env.AuthTypes;
-
 import org.apache.commons.codec.binary.Base64;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.nio.charset.Charset;
 
 
 public class AccessGuard implements Filter {
@@ -76,7 +68,7 @@ public class AccessGuard implements Filter {
 					ua.postLogin(userSession.browserType, user);
 
 					UserApplicationProfile userAppProfile = user.enabledApps.get(env.appType);
-					if (userAppProfile != null) {
+					if (userAppProfile != null || env.appType.equalsIgnoreCase("Workspace")) {
 						jses.setAttribute("usersession", userSession);
 					} else {
 						request.getRequestDispatcher("/Error?type=access_guard_error").forward(request, resp);
