@@ -1,11 +1,34 @@
 package kz.nextbase.script;
 
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
+
 import kz.flabs.appenv.AppEnv;
-import kz.flabs.dataengine.*;
+import kz.flabs.dataengine.Const;
+import kz.flabs.dataengine.DatabasePoolException;
+import kz.flabs.dataengine.FTIndexEngineException;
+import kz.flabs.dataengine.IDatabase;
+import kz.flabs.dataengine.IGlossaries;
+import kz.flabs.dataengine.IQueryFormula;
+import kz.flabs.dataengine.ISelectFormula;
 import kz.flabs.dataengine.h2.forum.ForumQueryFormula;
 import kz.flabs.dataengine.h2.queryformula.GlossarySelectFormula;
 import kz.flabs.dataengine.h2.queryformula.SelectFormula;
-import kz.flabs.exception.*;
+import kz.flabs.exception.ComplexObjectException;
+import kz.flabs.exception.DocumentAccessException;
+import kz.flabs.exception.DocumentException;
+import kz.flabs.exception.ExceptionType;
+import kz.flabs.exception.RuleException;
 import kz.flabs.parser.FormulaBlocks;
 import kz.flabs.parser.QueryFormulaParserException;
 import kz.flabs.parser.SortByBlock;
@@ -33,11 +56,6 @@ import kz.nextbase.script.project._Project;
 import kz.nextbase.script.struct._Organization;
 import kz.nextbase.script.task._Task;
 
-import java.io.UnsupportedEncodingException;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 
 public class _Database implements Const {
 
@@ -63,10 +81,9 @@ public class _Database implements Const {
 
 	public _ViewEntryCollection getCollectionOfDocuments(_ViewEntryCollectionParam param) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(param.getQuery(), QueryType.DOCUMENT);
-		// ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
 		RunTimeParameters parameters = null;
-		if (param.isUseFilter()) {
+		if (param.withFilter()) {
 			HashMap <String, RunTimeParameters> currConditions = user.getSession().getRuntimeConditions();
 			parameters = currConditions.get(getParent().getInitiator().getOwnerID());
 		}
@@ -75,7 +92,7 @@ public class _Database implements Const {
 		}
 
 		return dataBase.getCollectionByCondition(sf, user, param.getPageNum(), param.getPageSize(),
-				session.getExpandedDocuments(), parameters, param.isCheckResponse());
+				session.getExpandedDocuments(), parameters, param.withResponse());
 	}
 
 	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, boolean checkResponse) {
@@ -86,7 +103,8 @@ public class _Database implements Const {
 				checkResponse);
 	}
 
-	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, boolean checkResponse, boolean checkUnread) {
+	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, boolean checkResponse,
+			boolean checkUnread) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
 		ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		RunTimeParameters parameters = new RunTimeParameters();
@@ -137,22 +155,22 @@ public class _Database implements Const {
 				parameters, checkResponse, expandAllResponses);
 	}
 
-    public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
-                                                         boolean useFilter, boolean expandAllResponses, boolean checkRead) {
-        FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
-        ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
-        int pageSize = user.getSession().pageSize;
-        RunTimeParameters parameters = null;
-        if (useFilter) {
-            HashMap <String, RunTimeParameters> currConditions = user.getSession().getRuntimeConditions();
-            parameters = currConditions.get(getParent().getInitiator().getOwnerID());
-        }
-        if (parameters == null) {
-            parameters = new RunTimeParameters();
-        }
-        return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
-                parameters, checkResponse, expandAllResponses, checkRead);
-    }
+	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
+			boolean useFilter, boolean expandAllResponses, boolean checkRead) {
+		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
+		ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
+		int pageSize = user.getSession().pageSize;
+		RunTimeParameters parameters = null;
+		if (useFilter) {
+			HashMap <String, RunTimeParameters> currConditions = user.getSession().getRuntimeConditions();
+			parameters = currConditions.get(getParent().getInitiator().getOwnerID());
+		}
+		if (parameters == null) {
+			parameters = new RunTimeParameters();
+		}
+		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
+				parameters, checkResponse, expandAllResponses, checkRead);
+	}
 
 	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
 			boolean useFilter, String responseQueryCondition) {
@@ -212,7 +230,7 @@ public class _Database implements Const {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(param.getQuery(), QueryType.DOCUMENT);
 		ISelectFormula sf = new GlossarySelectFormula(queryFormulaBlocks);
 		RunTimeParameters parameters = null;
-		if (param.isUseFilter()) {
+		if (param.withFilter()) {
 			HashMap <String, RunTimeParameters> currConditions = user.getSession().getRuntimeConditions();
 			parameters = currConditions.get(getParent().getInitiator().getOwnerID());
 		}
@@ -221,7 +239,7 @@ public class _Database implements Const {
 		}
 
 		return dataBase.getGlossaries().getCollectionByCondition(sf, param.getPageNum(), param.getPageSize(),
-                session.getExpandedDocuments(), parameters, param.isCheckResponse());
+				session.getExpandedDocuments(), parameters, param.withResponse());
 	}
 
 	public _ViewEntryCollection getCollectionOfGlossaries(String queryCondition, int pageNum, int pageSize) {
@@ -262,8 +280,9 @@ public class _Database implements Const {
 		return dataBase.getForum().getForumTopics(sf, user, pageNum, pageSize, session.getExpandedThread(), parameters);
 	}
 
-	public _ViewEntryCollection search(String keyWord, int pageNum, String[] filter) throws UnsupportedEncodingException,
-			DocumentException, FTIndexEngineException, RuleException, QueryFormulaParserException {
+	public _ViewEntryCollection search(String keyWord, int pageNum, String[] filter)
+			throws UnsupportedEncodingException, DocumentException, FTIndexEngineException, RuleException,
+			QueryFormulaParserException {
 		keyWord = new String(((String) keyWord).getBytes("ISO-8859-1"), "UTF-8");
 		int pageSize = user.getSession().pageSize;
 		return dataBase.getFTSearchEngine().search(keyWord, user, pageNum, pageSize, filter, new String[5]);
@@ -331,7 +350,7 @@ public class _Database implements Const {
 		}
 
 		ArrayList <BaseDocument> docsCollection = dataBase.getDocumentsForMonth(userGroups, userID, form, fieldName, m,
-                dataBase.calcStartEntry(pageNum, pageSize), pageSize);
+				dataBase.calcStartEntry(pageNum, pageSize), pageSize);
 		for (BaseDocument doc : docsCollection) {
 			col.add(new _Document(doc));
 		}

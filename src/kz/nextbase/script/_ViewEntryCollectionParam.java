@@ -5,17 +5,28 @@ import java.text.SimpleDateFormat;
 
 public class _ViewEntryCollectionParam {
 
+	// private User user;
 	private String query;
 	private int pageNum = 0;
 	private int pageSize = 0;
-	private boolean checkResponse;
-	private boolean useFilter;
+	private boolean withResponse;
+	private boolean withFilter;
 	private boolean expandAllResponses;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
 
 	public _ViewEntryCollectionParam(_Session ses) {
 		this.pageSize = ses.getUser().getSession().pageSize;
+		// this.user = ses.getUser();
 	}
+
+	/*public _ViewEntryCollectionParam setUser(final User user) {
+		this.user = user;
+		return this;
+	}
+
+	public User getUser() {
+		return user;
+	}*/
 
 	public String getQuery() {
 		return query;
@@ -54,25 +65,25 @@ public class _ViewEntryCollectionParam {
 		return this;
 	}
 
-	public boolean isCheckResponse() {
-		return checkResponse;
+	public boolean withResponse() {
+		return withResponse;
 	}
 
 	public _ViewEntryCollectionParam setCheckResponse(boolean checkResponse) {
-		this.checkResponse = checkResponse;
+		this.withResponse = checkResponse;
 		return this;
 	}
 
-	public boolean isUseFilter() {
-		return useFilter;
+	public boolean withFilter() {
+		return withFilter;
 	}
 
 	public _ViewEntryCollectionParam setUseFilter(boolean useFilter) {
-		this.useFilter = useFilter;
+		this.withFilter = useFilter;
 		return this;
 	}
 
-	public boolean isExpandAllResponses() {
+	public boolean expandAllResponses() {
 		return expandAllResponses;
 	}
 
@@ -93,7 +104,7 @@ public class _ViewEntryCollectionParam {
 	@Override
 	public String toString() {
 		return "queryCondition: " + query + ",\npageNum: " + pageNum + ",\npageSize: " + pageSize
-				+ ",\ncheckResponse: " + checkResponse + ",\nuseFilter: " + useFilter + ",\nexpandAllResponses: "
+				+ ",\ncheckResponse: " + withResponse + ",\nuseFilter: " + withFilter + ",\nexpandAllResponses: "
 				+ expandAllResponses + ",\nSimpleDateFormat: " + dateFormat.toPattern();
 	}
 }
