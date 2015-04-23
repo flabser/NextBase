@@ -17,8 +17,10 @@ class Trigger extends _DoScheduledHandler {
             def control = (_Control) doc.getValueObject("control")
             //doc.setViewNumber((control.getDiffBetweenDays()))
             if (control) {
-                doc.setValueNumber("duedatedif", control.getDiffBetweenDays())
-                doc.replaceViewText(control.getDiffBetweenDays() as String, 2)
+                int diffdays = control.getDiffBetweenDays();
+                control.addMarkOfExpiration(diffdays);
+                doc.setValueNumber("duedatedif", diffdays)
+                doc.replaceViewText(diffdays as String, 2)
                 doc.setViewDate(control.getCtrlDate())
                 doc.save("[supervisor]")
             }
