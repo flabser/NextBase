@@ -71,6 +71,10 @@ public class _Control implements _IXMLContent  {
 		control.addProlongation(days, reason, ses.getCurrentUserID());
 	}
 
+    public void addMarkOfExpiration(int days) {
+        control.addMarkOfExpiration(days);
+    }
+
 	public Date getPrimaryCtrlDate(){
 		return control.getPrimaryCtrlDate().getTime();
 	} 

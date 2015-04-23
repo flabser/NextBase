@@ -71,6 +71,9 @@ public class Control extends AbstractComplexObject implements Serializable {
     @XmlElement(name = "shift")
 	private ArrayList<Shift> shifts = new ArrayList<>();
 
+    @XmlElement(name = "expiration")
+    private  ArrayList<Expiration> expirations = new ArrayList<>();
+
     @XmlElement(name = "startdate")
     @XmlJavaTypeAdapter(CalendarAdapter.class)
 	private Calendar startDate;
@@ -348,6 +351,13 @@ public class Control extends AbstractComplexObject implements Serializable {
 		shifts.add(prol);
 	}
 
+    public void addMarkOfExpiration(int days) {
+        Expiration expiration = new Expiration();
+        expiration.recalcdate = Calendar.getInstance();
+        expiration.countofdays = days;
+        expirations.add(expiration);
+    }
+
 	public ArrayList<Shift> getShifts() {
 		return shifts;
 	}
@@ -509,6 +519,27 @@ public class Control extends AbstractComplexObject implements Serializable {
 	public double getPriority() {
 		return priority;
 	}
+
+    @XmlRootElement(name = "expiration")
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class Expiration extends AbstractComplexObject {
+        @XmlElement
+        @XmlJavaTypeAdapter(CalendarAdapter.class)
+        public Calendar recalcdate;
+
+        @XmlElement
+        public int countofdays;
+
+        @Override
+        public void init(IDatabase db, String initString) throws ComplexObjectException {
+
+        }
+
+        @Override
+        public String getContent() {
+            return null;
+        }
+    }
 
     @XmlRootElement(name = "shift")
     @XmlAccessorType(XmlAccessType.FIELD)

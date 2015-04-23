@@ -314,8 +314,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
                                         complexObject = (IComplexObject) object;
                                         complexObject.init(this, initString);
                                     }
+                                    doc.addComplexObjectField(fieldName, complexObject);
                                 }
-                                doc.addComplexObjectField(fieldName, complexObject);
                             } catch (ClassCastException e) {
                                 env.logger.warningLogEntry(e.getMessage());
                             } catch (ClassNotFoundException e) {
