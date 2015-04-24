@@ -1,20 +1,5 @@
 package kz.pchelka.env;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.Const;
 import kz.flabs.dataengine.IDatabase;
@@ -38,7 +23,6 @@ import kz.pchelka.scheduler.IDaemon;
 import kz.pchelka.scheduler.IProcessInitiator;
 import kz.pchelka.scheduler.Scheduler;
 import kz.pchelka.server.Server;
-
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.SASLAuthentication;
@@ -47,6 +31,16 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import javax.xml.parsers.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Environment implements Const, ICache, IProcessInitiator {
@@ -113,8 +107,9 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	private static HashMap <String, Object> cache = new HashMap <String, Object>();
 	private static int countOfApp;
 	private static ArrayList <IDatabase> delayedStart = new ArrayList <IDatabase>();
-	public static String backupDir;
+    private static Integer rtfLimitSize = 3892;
 
+    public static String backupDir;
 	public static void init() {
 		logger = Server.logger;
 		initProcess();
@@ -322,6 +317,15 @@ public class Environment implements Const, ICache, IProcessInitiator {
 				verboseLogging = false;
 			}
 
+            try {
+                Integer limitSize = XMLUtil.getNumberContent(xmlDocument, "/nextbase/rtfcontent/limitsize");
+                if (limitSize > 0) {
+                    rtfLimitSize = limitSize;
+                }
+            } catch (NumberFormatException nfe) {
+                logger.normalLogEntry("Default size for rtfcontent field is " + rtfLimitSize + " mb");
+            }
+
 			File tmp = new File("tmp");
 			if (!tmp.exists()) {
 				tmp.mkdir();
@@ -410,6 +414,10 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	public static void reduceApplication() {
 		countOfApp--;
 	}
+
+    public static Integer getRtfLimitSize() {
+        return rtfLimitSize;
+    }
 
 	public static void addApplication(AppEnv env) {
 		applications.put(env.appType, env);
