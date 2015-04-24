@@ -261,6 +261,15 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 		}
 	}
 
+    public void publishDocumentAttachment(_Document document, String entryName, String fieldName) throws _Exception {
+        _Field field = document.getField(fieldName);
+        if (field != null) {
+            toPublish.add(new ScriptShowField(entryName, field.toXML(), true));
+        } else {
+            throw new _Exception(_ExceptionType.ATTACHMENT_FIELD_NOT_FOUND, fieldName);
+        }
+    }
+
 	public String getLocalizedWord(String word, String lang){
 		return getWord(word, vocabulary, lang);
 	}
