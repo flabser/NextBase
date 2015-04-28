@@ -16,3 +16,4 @@ node_modules
 .classpath
 .project
 .settings
+cfg.xml

@@ -30,6 +30,9 @@ class DoScript extends _DoScript {
 		def taskdocs = new _OutlineEntry(getLocalizedWord("Задания",lang), getLocalizedWord("Задания",lang), "task", "Provider?type=page&id=task&page=0");
         orgdocs_outline.addEntry(taskdocs);
 
+		def contractdocs = new _OutlineEntry(getLocalizedWord("Договоры",lang), getLocalizedWord("Договоры",lang), "contract", "Provider?type=page&id=contract&page=0");
+		orgdocs_outline.addEntry(addEntryByGlossary(session, contractdocs, "contract","contracttype", false));
+
         outline.addOutline(orgdocs_outline)
 		list.add(orgdocs_outline)
 		def projects_outline = new _Outline(getLocalizedWord("Проекты организации",lang), getLocalizedWord("Проекты организации",lang), "projects")
@@ -38,6 +41,9 @@ class DoScript extends _DoScript {
 
 		def outgoingprj = new _OutlineEntry(getLocalizedWord("Исходящие",lang), getLocalizedWord("Исходящие",lang), "outgoingprj", "Provider?type=page&id=outgoingprj&page=0");
         projects_outline.addEntry(addEntryByProjects(session, outgoingprj, "outgoingprj", ""));
+
+		def contractprj = new _OutlineEntry(getLocalizedWord("Договоры",lang), getLocalizedWord("Договор",lang), "contractprj", "Provider?type=page&id=contractprj&page=0");
+		projects_outline.addEntry(addEntryByGlossary(session, contractprj, "contractprj","contracttype", true));
 
 		list.add(projects_outline)
 		outline.addOutline(projects_outline)
@@ -68,6 +74,7 @@ class DoScript extends _DoScript {
 			glossary_outline.addEntry(new _OutlineEntry(getLocalizedWord("Адресат",lang), getLocalizedWord("Адресат",lang), "addressee", "Provider?type=page&id=addressee&sortfield=VIEWTEXT1&order=ASC"))
 			glossary_outline.addEntry(new _OutlineEntry(getLocalizedWord("Регион/Город",lang), getLocalizedWord("Регион/Город",lang), "city", "Provider?type=page&id=city"))
 			glossary_outline.addEntry(new _OutlineEntry(getLocalizedWord("Проекты",lang), getLocalizedWord("Проекты",lang), "projectsprav", "Provider?type=page&id=projectsprav"))
+			glossary_outline.addEntry(new _OutlineEntry(getLocalizedWord("Тип договора",lang), getLocalizedWord("Тип договора",lang), "contracttype", "Provider?type=page&id=contracttype"))
 			glossary_outline.addEntry(new _OutlineEntry(getLocalizedWord("Тип конечного документа",lang), getLocalizedWord("Тип конечного документа",lang), "finaldoctype", "Provider?type=page&id=finaldoctype"))
 			outline.addOutline(glossary_outline)
 			list.add(glossary_outline)
@@ -118,4 +125,27 @@ class DoScript extends _DoScript {
 
         return entry;
     }
+
+	def addEntryByGlossary(_Session session, def entry, formid, glossaryform, isproject){
+
+		def projects = session.getCurrentDatabase().getGroupedEntries("$glossaryform#number", 1, 20);
+		def cdb = session.getCurrentDatabase();
+		def pageid ="docsbyglossary";
+		if(isproject){
+			pageid = "docsbyglossaryprj"
+		}
+		projects.each{
+			try{
+				int docid = it.getViewText().toDouble().toInteger()
+				def name = cdb.getGlossaryDocument(docid)?.getName();
+				if(name != null && name != ""){
+					entry.addEntry(new _OutlineEntry(name, name, formid + it.getViewText(), "Provider?type=page&id=$pageid&glossaryform=$glossaryform&glossaryid=$docid&formid=$formid&page=0"));
+				}
+			}catch(Exception e){
+				println(e)
+			}
+		}
+
+		return entry;
+	}
 }
