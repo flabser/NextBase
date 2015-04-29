@@ -287,7 +287,7 @@
 													</span>
 													-->
                                                     <a style="vertical-align:middle;padding:5px 5px; display: inline-block;" href="#" onclick="javascript:sendTestEmail('{document/fields/userid}', 'IM')">
-                                                        <img src="/SharedResources/img/iconset/comment_go.png" title="{document/captions/sendtestemail/@caption}"/>
+                                                        <img src="/SharedResources/img/iconset/comment.png" title="{document/captions/sendtestemail/@caption}"/>
                                                     </a>
 												</td>
 											</tr>		
