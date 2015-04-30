@@ -26,20 +26,20 @@ class QuerySave extends _FormQuerySave {
 		doc.addStringField("totalamount", webFormData.getValueSilently("totalamount"))
 		doc.addStringField("numcontractor", webFormData.getValueSilently("numcontractor"))
 		doc.addStringField("datecontractor", webFormData.getValueSilently("datecontractor"))
+		doc.addStringField("kazcontent_month", webFormData.getValueSilently("kazcontent_month"))
+		doc.addStringField("kazcontent_quarter", webFormData.getValueSilently("kazcontent_quarter"))
+		doc.addStringField("kazcontent_onetime", webFormData.getValueSilently("kazcontent_onetime"))
 		doc.addStringField("contractsubject", webFormData.getValueSilently("contractsubject"))
 		doc.addStringField("comments", webFormData.getValueSilently("comments"))
 		doc.addStringField("vn", webFormData.getValueSilently("vn"))
 		String dvn = webFormData.getValueSilently("dvn")
 		if(dvn != "") doc.addDateField("dvn", _Helper.convertStringToDate(dvn))
-		doc.addGlossaryField("corr", webFormData.getNumberValueSilently("corr",0))
+		doc.addGlossaryField("contractor_one", webFormData.getNumberValueSilently("contractor_one",0))
+		doc.addGlossaryField("contractor_two", webFormData.getNumberValueSilently("contractor_two",0))
 
-        doc.addStringField("initemp", webFormData.getValueSilently("initemp"));
-		doc.setValueString("initdivision", webFormData.getValueSilently("initdivision"))
+        doc.addStringField("curator", webFormData.getValueSilently("curator"));
 		doc.addStringField("briefcontent", webFormData.getValueSilently("briefcontent"))
-		doc.addStringField("corrstring", webFormData.getValueSilently("corrstring"))
 		doc.addNumberField("contracttype", webFormData.getNumberValueSilently("contracttype",0))
-		doc.addNumberField("currency", webFormData.getNumberValueSilently("currency",0))
-		doc.addNumberField("contractor", webFormData.getNumberValueSilently("contractor",0))
 		doc.addStringField("author", webFormData.getValue("author"))
 		doc.addFile("rtfcontent", webFormData)
 		doc.setRichText("contentsource", webFormData.getValue("contentsource"))
@@ -79,8 +79,16 @@ class QuerySave extends _FormQuerySave {
 			return false
 		}
 
-		if (webFormData.getValueSilently("corrstring") == ""){
-			localizedMsgBox("Поле \"Контрагент\" не заполнено.")
+		if (webFormData.getValueSilently("contractor_one") == ""){
+			localizedMsgBox("Поле \"Сторона 1\" не заполнено.")
+			return false
+		}
+		if (webFormData.getValueSilently("contractor_two") == ""){
+			localizedMsgBox("Поле \"Сторона 2\" не заполнено.")
+			return false
+		}
+		if (webFormData.getValueSilently("curator") == ""){
+			localizedMsgBox("Поле \"Куратор\" не заполнено.")
 			return false
 		}
 		return true

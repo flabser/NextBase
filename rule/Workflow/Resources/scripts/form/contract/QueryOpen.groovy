@@ -63,26 +63,26 @@ class QueryOpen extends _FormQueryOpen {
 		publishValue("dvn",doc.getValueString("dvn"))
 		publishValue("numcontractor",doc.getValueString("numcontractor"))
 		publishValue("datecontractor",doc.getValueString("datecontractor"))
+		publishValue("kazcontent_month",doc.getValueString("kazcontent_month"))
+		publishValue("kazcontent_quarter",doc.getValueString("kazcontent_quarter"))
+		publishValue("kazcontent_onetime",doc.getValueString("kazcontent_onetime"))
 		publishValue("contractsubject",doc.getValueString("contractsubject"))
 		publishValue("totalamount",doc.getValueString("totalamount"))
 		publishValue("contracttime",doc.getValueString("contracttime"))
 		publishValue("controldate",doc.getValueString("controldate"))
-		publishValue("corrstring",doc.getValueString("corrstring"))
-		
+		publishEmployer("curator",doc.getValueString("curator"))
 		publishValue("comments",doc.getValueString("comments"))
-		if (doc.getField("initdivision") != null) {
-			publishDepartment("initdivision", doc.getValueString("initdivision") as int)
-		}
+
 		if (doc.getField("contracttype")) {
 			publishGlossaryValue("contracttype",doc.getValueGlossary("contracttype"))
 		}
-		if (doc.getField("currency")) {
-			publishGlossaryValue("currency",doc.getValueGlossary("currency"))
+
+		if (doc.getField("contractor_one")) {
+			publishGlossaryValue("contractor_one",doc.getValueGlossary("contractor_one"))
 		}
-		if (doc.getField("contractor")) {
-			publishGlossaryValue("contractor",doc.getValueGlossary("contractor"))
+		if (doc.getField("contractor_two")) {
+			publishGlossaryValue("contractor_two",doc.getValueGlossary("contractor_two"))
 		}
-		publishEmployer("initemp", doc.getValueString("initemp"))
 		publishValue("briefcontent",doc.getValueString("briefcontent"))
 		publishGlossaryValue("contracttype",doc.getValueNumber("contracttype"))
 		try{
@@ -103,10 +103,4 @@ class QueryOpen extends _FormQueryOpen {
 
 
 	}
-	
-	/*private Collection<String> getRecipient(_Document doc){
-		def recipients = doc.getValueList("recipient");
-		return recipients
-	}*/
-
 }
