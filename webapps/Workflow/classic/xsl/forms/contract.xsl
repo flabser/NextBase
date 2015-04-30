@@ -191,19 +191,6 @@
 				                           		</td>   					
 											</tr>
 										</xsl:if>	
-										<!-- Поле "Ответный проект исходящего" -->
-										<xsl:if test="document/fields/outgoingprjlink/entry != '' and document/fields/outgoingprjlink/entry">
-											<tr>
-												<td class="fc">
-													<xsl:value-of select="document/captions/outgoingprjlink/@caption"/> :
-												</td>
-								            	<td>
-						                      		<a class="doclink" href="{document/fields/outgoingprjlink/entry/@url}">
-														<xsl:value-of select="document/fields/outgoingprjlink/entry"/>
-													</a>
-						                       	</td>   					
-											</tr>
-										</xsl:if>
 										<!-- поля "номер" и "дата регистрации" -->
 										<tr>
 											<td class="fc">
@@ -252,38 +239,62 @@
 												</input>
 											</td>
 										</tr>
-										<!-- поле "Контрагент" -->
+										<!-- поле "Сторона 1" -->
 										<tr>
 											<td class="fc" style="padding-top:5px">
 												<font style="vertical-align:top">
-													<xsl:value-of select="document/captions/contractor/@caption"/> :
+													<xsl:value-of select="document/captions/contractor/@caption"/> 1 :
 												</font>
-												<!--  <xsl:if test="$editmode = 'edit'">
+												<xsl:if test="$editmode = 'edit'">
 													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
-														<xsl:attribute name="onclick">javascript:dialogBoxStructure('corrcat','false','contractor','frm', 'corresptbl');</xsl:attribute>
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('corrcat','false','contractor_one','frm', 'corresptbl');</xsl:attribute>
 													</img>
-												</xsl:if>-->
+												</xsl:if>
 											</td>
 											<td style="padding-top:5px">
-												<input type="text" value="{document/fields/corrstring}" name="corrstring" style="width:500px" class="td_editable">
-													<xsl:if test="$editmode != 'edit'">
-														<xsl:attribute name="class">td_noteditable</xsl:attribute>
-													</xsl:if>
-												</input>
-												<!--  <table id="corresptbl" style="border-spacing:0px 3px; margin-top:-3px">
+												<table id="corresptbl" style="border-spacing:0px 3px; margin-top:-3px">
 													<tr>
 														<td style="width:600px;" class="td_editable">
 															<xsl:if test="$editmode != 'edit'">
 																<xsl:attribute name="class">td_noteditable</xsl:attribute>
 															</xsl:if>
-															<xsl:value-of select="document/fields/contractor"/>&#xA0;
+															<xsl:value-of select="document/fields/contractor_one"/>&#xA0;
 															<span style='float:right; border-left:1px solid #ccc; width:17px; padding-right:10px; padding-left:2px; padding-top:1px; color:#ccc; font-size:10.5px'><font><xsl:value-of select="document/fields/corr/@attrval"/></font></span>
 														</td>
 													</tr>
 												</table>
-												<input type="hidden" value="{document/fields/contractor/@attrval}" id="contractor" name="contractor"/>
-												<input type="hidden" value="{document/captions/contractor/@caption}" id="contractorcaption"/>
-												-->
+												<input type="hidden" value="{document/fields/contractor_one/@attrval}" id="contractor_one" name="contractor_one"/>
+												<input type="hidden" value="{document/captions/contractor/@caption} 1" id="contractor_onecaption"/>
+
+											</td>
+										</tr>
+										<!-- поле "Сторона 2" -->
+										<tr>
+											<td class="fc" style="padding-top:5px">
+												<font style="vertical-align:top">
+													<xsl:value-of select="document/captions/contractor/@caption"/> 2 :
+												</font>
+												<xsl:if test="$editmode = 'edit'">
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('corrcat','false','contractor_two','frm', 'corresptbl_two');</xsl:attribute>
+													</img>
+												</xsl:if>
+											</td>
+											<td style="padding-top:5px">
+												<table id="corresptbl_two" style="border-spacing:0px 3px; margin-top:-3px">
+													<tr>
+														<td style="width:600px;" class="td_editable">
+															<xsl:if test="$editmode != 'edit'">
+																<xsl:attribute name="class">td_noteditable</xsl:attribute>
+															</xsl:if>
+															<xsl:value-of select="document/fields/contractor_two"/>&#xA0;
+															<span style='float:right; border-left:1px solid #ccc; width:17px; padding-right:10px; padding-left:2px; padding-top:1px; color:#ccc; font-size:10.5px'><font><xsl:value-of select="document/fields/corr/@attrval"/></font></span>
+														</td>
+													</tr>
+												</table>
+												<input type="hidden" value="{document/fields/contractor_two/@attrval}" id="contractor_two" name="contractor_two"/>
+												<input type="hidden" value="{document/captions/contractor/@caption} 2" id="contractor_twocaption"/>
+
 											</td>
 										</tr>
 										<!-- поле "Предмет договора" -->
@@ -331,92 +342,33 @@
 												</select>
 											</td>
 										</tr>
-										<!-- Поле "Валюта" -->
-										<tr>
-											<td class="fc" style="padding-top:5px">
-												<xsl:value-of select="document/captions/currency/@caption"/> :
-											</td>
-											<td style="padding-top:5px">
-												<xsl:variable name="currency" select="document/fields/currency/@attrval" />
-												<select size="1" name="currency" style="width:611px;" class="select_editable">
-													<xsl:if test="$editmode != 'edit'">
-														<xsl:attribute name="class">select_noteditable</xsl:attribute>
-														<xsl:attribute name="disabled">disabled</xsl:attribute>
-														<option value="">
-															<xsl:attribute name="selected">selected</xsl:attribute>
-															<xsl:value-of select="document/fields/currency"/>
-														</option>
-													</xsl:if>
-													<xsl:for-each select="document/glossaries/currency/query/entry">
-														<option value="{@docid}">
-															<xsl:if test="$currency = @docid">
-																<xsl:attribute name="selected">selected</xsl:attribute>
-															</xsl:if>
-															<xsl:value-of select="viewcontent/viewtext1"/>
-														</option>
-													</xsl:for-each>
-												</select>
-												<xsl:if test="$editmode !='edit'">
-													<input type="hidden" name="currency" value="{document/fields/currency/@attrval}"/>
-												</xsl:if>
-											</td>
-										</tr>
-										<!-- поле "Инициирующее подразделение" -->
-										<tr>
-											<td class="fc" style="padding-top:5px">
-												<font style="vertical-align:top">
-													<xsl:value-of select="document/captions/initdivision/@caption"/> :
-												</font>
-												<xsl:if test="$editmode = 'edit'">
-													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
-														<xsl:attribute name="onclick">javascript:dialogBoxStructure('deptpicklist','false','initdivision','frm', 'initdivisiontbl');</xsl:attribute>
-													</img>
-												</xsl:if>
-											</td>
-											<td style="padding-top:5px">
-												<table id="initdivisiontbl" style="border-spacing:0px 3px; margin-top:-3px">
-													<tr>
-														<td style="width:600px;" class="td_editable">
-															<xsl:if test="$editmode != 'edit'">
-																<xsl:attribute name="class">td_noteditable</xsl:attribute>
-															</xsl:if>
-															<xsl:value-of select="document/fields/initdivision"/>&#xA0;
-															<span style='float:right; border-left:1px solid #ccc; width:17px; padding-right:10px; padding-left:2px; padding-top:1px; color:#ccc; font-size:10.5px'><font><xsl:value-of select="document/fields/corr/@attrval"/></font></span>
-														</td>
-													</tr>
-												</table>
-												<input type="hidden" value="{document/fields/initdivision/@attrval}" id="initdivision" name="initdivision"/>
-												<input type="hidden" value="{document/captions/initdivision/@caption}" id="initdivisioncaption"/>
-											</td>
-										</tr>
-										<!-- Инициирующий сотрудник -->
+										<!-- Куратор договора -->
 										<tr>
 											<td class="fc">
 												<font style="vertical-align:top">
-													<xsl:value-of select="document/captions/initemp/@caption"/> :
+													<xsl:value-of select="document/captions/curator/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
 													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','false','initemp','frm', 'initemptbl');</xsl:attribute>
+														<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','false','curator','frm', 'curatortbl');</xsl:attribute>
 														<img src="/SharedResources/img/iconset/report_magnify.png"/>
 													</a>
 												</xsl:if>
 											</td>
 											<td>
-<!-- 												<input id="executor" style="width:600px"></input> -->
-												<table id="initemptbl">
-													<xsl:if test="document/fields/initemp !=''">
+												<table id="curatortbl">
+													<xsl:if test="document/fields/curator/entry/user =''">
 														<tr>
-														<!--<input id="tags"/>-->
-															 <td style="width:600px;" class="td_editable">
+															<!--<input id="tags"/>-->
+															<td style="width:600px;" class="td_editable">
 																<xsl:if test="$editmode != 'edit'">
 																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
 																</xsl:if>
-																<xsl:value-of select="document/fields/initemp"/>&#xA0;
-															</td> 
+																<xsl:value-of select="curator"/>&#xA0;
+															</td>
 														</tr>
 													</xsl:if>
-													<xsl:if test="not(document/fields/initemp)">
+													<xsl:if test="not(document/fields/execblock/executors/entry)">
 														<tr>
 															<td style="width:600px;" class="td_editable">
 																<xsl:if test="$editmode != 'edit'">
@@ -426,9 +378,18 @@
 															</td>
 														</tr>
 													</xsl:if>
+													<xsl:for-each select="document/fields/curator/entry">
+														<tr>
+															<td style="width:600px;" class="td_editable">
+																<xsl:if test="$editmode != 'edit'">
+																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
+																</xsl:if>
+																<xsl:value-of select="fullname"/>&#xA0;
+															</td>
+														</tr>
+													</xsl:for-each>
 												</table>
-												<input type="hidden" id="initempcaption" value="{document/captions/initemp/@caption}"/>
-												<input type="hidden" name="initemp" value="{document/fields/initemp/@attrval}"/>
+												<input type="hidden" id="curatorcaption" value="{document/captions/curator/@caption}"/>
 											</td>
 										</tr>
 										<!-- поле "Общая сумма договора" -->
@@ -498,6 +459,60 @@
 													</xsl:if>
 													<xsl:value-of select="document/fields/briefcontent"/>
 												</textarea>
+											</td>
+										</tr>
+										<!-- поле "КазСодержание(Ежемесячно)" -->
+										<tr>
+											<td class="fc" style="padding-top:5px">
+												<xsl:value-of select="document/captions/kazcontent_month/@caption"/> :
+											</td>
+											<td style="padding-top:5px">
+												<input type="text" value="{document/fields/kazcontent_month}" name="kazcontent_month" class="td_editable" style="width:150px;">
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="readonly">readonly</xsl:attribute>
+														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+													</xsl:if>
+													<xsl:if test="$editmode = 'edit'">
+														<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
+														<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
+													</xsl:if>
+												</input>
+											</td>
+										</tr>
+										<!-- поле "КазСодержание(Поквартально)" -->
+										<tr>
+											<td class="fc" style="padding-top:5px">
+												<xsl:value-of select="document/captions/kazcontent_quarter/@caption"/> :
+											</td>
+											<td style="padding-top:5px">
+												<input type="text" value="{document/fields/kazcontent_quarter}" name="kazcontent_quarter" class="td_editable" style="width:150px;">
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="readonly">readonly</xsl:attribute>
+														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+													</xsl:if>
+													<xsl:if test="$editmode = 'edit'">
+														<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
+														<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
+													</xsl:if>
+												</input>
+											</td>
+										</tr>
+										<!-- поле "КазСодержание(Единоразово)" -->
+										<tr>
+											<td class="fc" style="padding-top:5px">
+												<xsl:value-of select="document/captions/kazcontent_onetime/@caption"/> :
+											</td>
+											<td style="padding-top:5px">
+												<input type="text" value="{document/fields/kazcontent_onetime}" name="kazcontent_onetime" class="td_editable" style="width:150px;">
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="readonly">readonly</xsl:attribute>
+														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+													</xsl:if>
+													<xsl:if test="$editmode = 'edit'">
+														<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
+														<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
+													</xsl:if>
+												</input>
 											</td>
 										</tr>
 									</table>
