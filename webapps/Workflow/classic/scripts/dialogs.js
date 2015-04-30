@@ -75,7 +75,7 @@ function keyDown(el, event){
 
 /* выбор одного корреспондента из структуры */
 function pickListSingleOk(docid){
-	text=$("#"+docid).attr("value");
+	text=$("#"+docid.toString().replace(".","\\.")).val();
 	$("input[name="+ queryOpt.fieldname +"]").remove();
 	/* создаем скрытое поле для проектов блок *подписывающий* */
 	if (queryOpt.fieldname == "signer"){
