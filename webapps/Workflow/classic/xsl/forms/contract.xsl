@@ -357,39 +357,19 @@
 											</td>
 											<td>
 												<table id="curatortbl">
-													<xsl:if test="document/fields/curator/entry/user =''">
+
 														<tr>
 															<!--<input id="tags"/>-->
 															<td style="width:600px;" class="td_editable">
 																<xsl:if test="$editmode != 'edit'">
 																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
 																</xsl:if>
-																<xsl:value-of select="curator"/>&#xA0;
+																<xsl:value-of select="document/fields/curator"/>&#xA0;
 															</td>
 														</tr>
-													</xsl:if>
-													<xsl:if test="not(document/fields/execblock/executors/entry)">
-														<tr>
-															<td style="width:600px;" class="td_editable">
-																<xsl:if test="$editmode != 'edit'">
-																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
-																</xsl:if>
-																&#xA0;
-															</td>
-														</tr>
-													</xsl:if>
-													<xsl:for-each select="document/fields/curator/entry">
-														<tr>
-															<td style="width:600px;" class="td_editable">
-																<xsl:if test="$editmode != 'edit'">
-																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
-																</xsl:if>
-																<xsl:value-of select="fullname"/>&#xA0;
-															</td>
-														</tr>
-													</xsl:for-each>
 												</table>
 												<input type="hidden" id="curatorcaption" value="{document/captions/curator/@caption}"/>
+												<input type="hidden" id="curator" value="{document/fields/curator/@attrval}"/>
 											</td>
 										</tr>
 										<!-- поле "Общая сумма договора" -->
@@ -464,55 +444,33 @@
 										<!-- поле "КазСодержание(Ежемесячно)" -->
 										<tr>
 											<td class="fc" style="padding-top:5px">
-												<xsl:value-of select="document/captions/kazcontent_month/@caption"/> :
+												<xsl:value-of select="document/captions/kazcontent/@caption"/> :
 											</td>
 											<td style="padding-top:5px">
-												<input type="text" value="{document/fields/kazcontent_month}" name="kazcontent_month" class="td_editable" style="width:150px;">
+												<select size="1" name="kazcontent" style="width:611px;" class="select_editable">
 													<xsl:if test="$editmode != 'edit'">
-														<xsl:attribute name="readonly">readonly</xsl:attribute>
-														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+														<xsl:attribute name="class">select_noteditable</xsl:attribute>
+														<xsl:attribute name="disabled"/>
 													</xsl:if>
-													<xsl:if test="$editmode = 'edit'">
-														<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
-														<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
-													</xsl:if>
-												</input>
-											</td>
-										</tr>
-										<!-- поле "КазСодержание(Поквартально)" -->
-										<tr>
-											<td class="fc" style="padding-top:5px">
-												<xsl:value-of select="document/captions/kazcontent_quarter/@caption"/> :
-											</td>
-											<td style="padding-top:5px">
-												<input type="text" value="{document/fields/kazcontent_quarter}" name="kazcontent_quarter" class="td_editable" style="width:150px;">
-													<xsl:if test="$editmode != 'edit'">
-														<xsl:attribute name="readonly">readonly</xsl:attribute>
-														<xsl:attribute name="class">td_noteditable</xsl:attribute>
-													</xsl:if>
-													<xsl:if test="$editmode = 'edit'">
-														<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
-														<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
-													</xsl:if>
-												</input>
-											</td>
-										</tr>
-										<!-- поле "КазСодержание(Единоразово)" -->
-										<tr>
-											<td class="fc" style="padding-top:5px">
-												<xsl:value-of select="document/captions/kazcontent_onetime/@caption"/> :
-											</td>
-											<td style="padding-top:5px">
-												<input type="text" value="{document/fields/kazcontent_onetime}" name="kazcontent_onetime" class="td_editable" style="width:150px;">
-													<xsl:if test="$editmode != 'edit'">
-														<xsl:attribute name="readonly">readonly</xsl:attribute>
-														<xsl:attribute name="class">td_noteditable</xsl:attribute>
-													</xsl:if>
-													<xsl:if test="$editmode = 'edit'">
-														<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
-														<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
-													</xsl:if>
-												</input>
+													<option value="month">
+														<xsl:if test="document/fields/kazcontent = 'month'">
+															<xsl:attribute name="selected">selected</xsl:attribute>
+														</xsl:if>
+														Ежемесячно
+													</option>
+													<option value="quarter">
+														<xsl:if test="document/fields/kazcontent = 'quarter'">
+															<xsl:attribute name="selected">selected</xsl:attribute>
+														</xsl:if>
+														Поквартально
+													</option>
+													<option value="onetime">
+														<xsl:if test="document/fields/kazcontent = 'onetime'">
+															<xsl:attribute name="selected">selected</xsl:attribute>
+														</xsl:if>
+														Единоразово
+													</option>
+												</select>
 											</td>
 										</tr>
 									</table>
