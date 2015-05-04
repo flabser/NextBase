@@ -12,6 +12,7 @@
 	<caption name="properties" source="KEYWORD">Свойства</caption>
 	<caption name="attachments" source="KEYWORD">Вложения</caption>
 	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="curator" source="KEYWORD">Куратор договора</caption>
 	<caption name="coordination" source="KEYWORD">Согласование</caption>
 	<caption name="saved" source="KEYWORD">Сохраненный</caption>
 	<caption name="newdoc" source="KEYWORD">Новый документ</caption>

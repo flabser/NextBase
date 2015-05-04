@@ -9,6 +9,9 @@
 		<postsave source="file">form.contract.PostSave</postsave>
 	</events> 
 	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="contractor" source="KEYWORD">Сторона</caption>
+	<caption name="curator" source="KEYWORD">Куратор договора</caption>
+	<caption name="kazcontent" source="KEYWORD">Каз. содержание</caption>
 	<caption name="properties" source="KEYWORD">Свойства</caption>
 	<caption name="attachments" source="KEYWORD">Вложения</caption>
 	<caption name="content" source="KEYWORD">Содержание</caption>
@@ -84,7 +87,6 @@
 	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
 	<caption name="numcontractor" source="KEYWORD">№ договора у контрагента</caption>
 	<caption name="datecontractor" source="KEYWORD">Дата регистрации у контрагента</caption>
-	<caption name="contractor" source="KEYWORD">Контрагент</caption>
 	<caption name="contractsubject" source="KEYWORD">Предмет договора</caption>
 	<caption name="contracttype" source="KEYWORD">Тип договора</caption>
 	<caption name="currency" source="KEYWORD">Валюта договора</caption>
@@ -152,9 +154,5 @@
 	<glossary mode="on" id="contracttype" source="query">
 		<description>Тип договора</description>
 		<value>contracttype</value>
-	</glossary>
-	<glossary mode="on" id="currency" source="query">
-		<description>Валюта</description>
-		<value>currency</value>
 	</glossary>
 </rule>
