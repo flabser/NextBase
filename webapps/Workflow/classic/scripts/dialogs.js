@@ -740,9 +740,13 @@ function openListRespDoc(docid,doctype,num,page) {
 				}
 				corrname = $(this).find("viewtext1").text() || $(this).find("viewtext6").text();
 				viewtext1 = JSON.stringify(corrname);
+				var checkBoxType ="radio"
+				if(queryOpt.isMultiValue == "true"){
+					checkBoxType ="checkbox";
+				}
 				newcontent="<tr><td><table style='border-collapse:collapse; width:100%; text-align:left; cursor:pointer' level='"+newlevel+"' class='tblCorr"+__complexid+"'>" +
 					"<tr onmouseover='javascript:entryOver(this)' onmouseout='javascript:entryOut(this)'>" +
-					"<td ondblclick='javascript:pickListSingleOk("+__docid+")'>"+iconresponse+"<input type='checkbox' name='chbox' ddbid='"+__ddbid+"' value="+viewtext1+" id='"+$(this).attr("docid")+"'/>"+ corrname +"</td></tr></table></td></tr>"
+					"<td ondblclick='javascript:pickListSingleOk("+__docid+")'>"+iconresponse+"<input type='"+checkBoxType+"' name='chbox' ddbid='"+__ddbid+"' value="+viewtext1+" id='"+$(this).attr("docid")+"'/>"+ corrname +"</td></tr></table></td></tr>"
 				$(table).append(newcontent)
 				$(".tblCorr"+__complexid).css("margin-left",level*20+"px")
 				i++;
