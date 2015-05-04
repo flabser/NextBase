@@ -63,9 +63,7 @@ class QueryOpen extends _FormQueryOpen {
 		publishValue("dvn",doc.getValueString("dvn"))
 		publishValue("numcontractor",doc.getValueString("numcontractor"))
 		publishValue("datecontractor",doc.getValueString("datecontractor"))
-		publishValue("kazcontent_month",doc.getValueString("kazcontent_month"))
-		publishValue("kazcontent_quarter",doc.getValueString("kazcontent_quarter"))
-		publishValue("kazcontent_onetime",doc.getValueString("kazcontent_onetime"))
+		publishValue("kazcontent",doc.getValueString("kazcontent"))
 		publishValue("contractsubject",doc.getValueString("contractsubject"))
 		publishValue("totalamount",doc.getValueString("totalamount"))
 		publishValue("contracttime",doc.getValueString("contracttime"))
@@ -90,12 +88,14 @@ class QueryOpen extends _FormQueryOpen {
 		}catch(_Exception e){
 
 		}
-		try{
-			def parentdoc = doc.getParentDocument();
-			def	blockCollection  = (_BlockCollection)parentdoc.getValueObject("coordination")
-			publishValue("coordination", blockCollection)
-		}catch(_Exception e){
-		
+		if(doc.getField("parentdocid") && doc.getValueNumber("parentdocid") != 0){
+			try{
+				def parentdoc = doc.getParentDocument();
+				def	blockCollection  = (_BlockCollection)parentdoc.getValueObject("coordination")
+				publishValue("coordination", blockCollection)
+			}catch(_Exception e){
+
+			}
 		}
 		publishValue("contentsource",doc.getValueString("contentsource"))
 		def link  = (_CrossLink)doc.getValueObject("link")

@@ -19,11 +19,11 @@ class PostSave extends _FormPostSave {
             def msngAgent = ses.getInstMessengerAgent()
 
             xmppmsg = "Уведомление о документе на рассмотрение  \n"
-            xmppmsg += "Входящий документ: " + doc.getValueString("briefcontent") + "\n"
+            xmppmsg += "Договор: " + doc.getValueString("briefcontent") + "\n"
             xmppmsg += doc.getFullURL() + "\n"
             xmppmsg += "Вы получили данное сообщение как получатель"
 
-            def memo = new _Memo("Уведомление о документе на рассмотрение", "Новый входящий документ", "Входящий", doc, true)
+            def memo = new _Memo("Уведомление о документе на рассмотрение", "Новый договор", "Договор", doc, true)
             for (String recipient : recipients) {
                 def rec = ses.getStructure().getEmployer(recipient)
                 def recipientEmail = ses.getStructure().getEmployer(recipient).getEmail()
