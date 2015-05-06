@@ -32,8 +32,8 @@ class QuerySave extends _FormQuerySave {
 		doc.addStringField("vn", webFormData.getValueSilently("vn"))
 		String dvn = webFormData.getValueSilently("dvn")
 		if(dvn != "") doc.addDateField("dvn", _Helper.convertStringToDate(dvn))
-		doc.addGlossaryField("contractor_one", webFormData.getNumberValueSilently("contractor_one",0))
-		doc.addGlossaryField("contractor_two", webFormData.getNumberValueSilently("contractor_two",0))
+		doc.addNumberField("contractor_one", webFormData.getNumberValueSilently("contractor_one",0))
+		doc.addNumberField("contractor_two", webFormData.getNumberValueSilently("contractor_two",0))
 
         doc.addStringField("curator", webFormData.getValueSilently("curator"));
 		doc.addStringField("briefcontent", webFormData.getValueSilently("briefcontent"))

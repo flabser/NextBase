@@ -76,10 +76,10 @@ class QueryOpen extends _FormQueryOpen {
 		}
 
 		if (doc.getField("contractor_one")) {
-			publishGlossaryValue("contractor_one",doc.getValueGlossary("contractor_one"))
+			publishGlossaryValue("contractor_one",doc.getValueNumber("contractor_one"))
 		}
 		if (doc.getField("contractor_two")) {
-			publishGlossaryValue("contractor_two",doc.getValueGlossary("contractor_two"))
+			publishGlossaryValue("contractor_two",doc.getValueNumber("contractor_two"))
 		}
 		publishValue("briefcontent",doc.getValueString("briefcontent"))
 		publishGlossaryValue("contracttype",doc.getValueNumber("contracttype"))

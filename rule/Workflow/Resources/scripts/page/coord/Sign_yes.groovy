@@ -81,7 +81,8 @@ class Sign_yes extends _DoScript {
                 _doc.setViewText(" № " + _doc.getValueString("vn") + " " + _Helper.getDateAsStringShort(_doc.getValueDate("dvn")) + "  " + session.getStructure()?.getEmployer(doc.getAuthorID())?.getShortName() + " " + doc.getValueString("briefcontent"));
                 _doc.addDateField("ctrldate", session.getDatePlusDays(30))
                 _doc.setViewNumber(num)
-            } else {
+            }
+            if(doc.getDocumentForm() == "outgoingprj"){
                 _doc.setForm("out")
                 //_doc.addStringField("author", doc.getValueString("author"))
                 //_doc.addStringField("author",doc.getValueString("author"))
@@ -101,6 +102,20 @@ class Sign_yes extends _DoScript {
                 _doc.addNumberField("vid", 0)
                 _doc.addNumberField("corr", doc.getValueNumber("corr"))
                 _doc.setViewNumber(_doc.getValueString("in").isNumber() ? _doc.getValueString("in").toInteger() : 0)
+            }
+            if (doc.getDocumentForm() == "contractprj") {
+                _doc.setForm("contract")
+                _doc.addStringField("signedby", signerCoord?.getUserID())
+                _doc.addStringField("curator", doc.getValueString("curator"))
+                _doc.addNumberField("contractor_one", doc.getValueNumber("contractor_one"))
+                _doc.addNumberField("contractor_two", doc.getValueNumber("contractor_two"))
+                _doc.addStringField("contractname", doc.getValueString("contractname"))
+                _doc.addStringField("in", doc.getValueString("vn"))
+                _doc.addDateField("dvn", new Date())
+                _doc.addStringField("vn", "")
+                _doc.setViewText("Договор №" + _doc.getValueString("vn") + " " + _Helper.getDateAsStringShort(_doc.getValueDate("dvn")) + "  " + session.getStructure()?.getEmployer(doc.getAuthorID())?.getShortName() + " " + doc.getValueString("briefcontent"));
+                _doc.addNumberField("contracttype", doc.getValueNumber("contracttype"))
+                _doc.setViewNumber(_doc.getValueString("vn").isNumber() ? _doc.getValueString("vn").toInteger() : 0)
             }
             doc.getReaders().each {
                 _doc.addReader(it.userID);

@@ -114,10 +114,10 @@ class QueryOpen extends _FormQueryOpen {
 		//publishValue("corrstring",doc.getValueString("corrstring"))
 		publishValue("coordination", blockCollection)
 		if (doc.getField("contractor_one")) {
-			publishGlossaryValue("contractor_one",doc.getValueGlossary("contractor_one"))
+			publishGlossaryValue("contractor_one",doc.getValueNumber("contractor_one"))
 		}
 		if (doc.getField("contractor_two")) {
-			publishGlossaryValue("contractor_two",doc.getValueGlossary("contractor_two"))
+			publishGlossaryValue("contractor_two",doc.getValueNumber("contractor_two"))
 		}
 		//publishEmployer("contractexec", doc.getValueList("contractexec"))
 		/*if (doc.getField("contractor")) {

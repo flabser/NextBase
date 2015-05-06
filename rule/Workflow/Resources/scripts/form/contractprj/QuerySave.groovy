@@ -44,8 +44,8 @@ class QuerySave extends _FormQuerySave {
 		def contractexec = webFormData.getListOfValuesSilently("contractexec")
 		doc.replaceListField("contractexec", contractexec as ArrayList);
 		doc.addDateField("projectdate", _Helper.convertStringToDate(webFormData.getValue("projectdate")))
-		doc.addGlossaryField("contractor_one", webFormData.getNumberValueSilently("contractor_one",0))
-		doc.addGlossaryField("contractor_two", webFormData.getNumberValueSilently("contractor_two",0))
+		doc.addNumberField("contractor_one", webFormData.getNumberValueSilently("contractor_one",0))
+		doc.addNumberField("contractor_two", webFormData.getNumberValueSilently("contractor_two",0))
 		doc.addStringField("curator", webFormData.getValueSilently("curator"));
 		/*def recipient = session.createEmployerCollection(webFormData.getListOfValuesSilently("recipient"))
 		doc.addField("recipient",recipient)*/
