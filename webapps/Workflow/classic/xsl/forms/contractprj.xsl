@@ -337,42 +337,19 @@
 											<td>
 <!-- 												<input id="executor" style="width:600px"></input> -->
 												<table id="curatortbl">
-													<xsl:if test="document/fields/curator/entry =''">
+
 														<tr>
 														<!--<input id="tags"/>-->
 															 <td style="width:600px;" class="td_editable">
 																<xsl:if test="$editmode != 'edit'">
 																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
 																</xsl:if>
-																<xsl:value-of select="."/>&#xA0;
+																<xsl:value-of select="document/fields/curator"/>&#xA0;
 															</td> 
 														</tr>
-													</xsl:if>
-													<xsl:if test="not(document/fields/curator/entry)">
-														<tr>
-															<td style="width:600px;" class="td_editable">
-																<xsl:if test="$editmode != 'edit'">
-																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
-																</xsl:if>
-																&#xA0;
-															</td>
-														</tr>
-													</xsl:if>
-													<xsl:for-each select="document/fields/curator/entry">
-														<tr>
-															<xsl:variable name="num" select="position()"/>
-															<td style="width:600px;" class="td_editable">
-																<xsl:if test="$editmode != 'edit'">
-																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
-																</xsl:if>
-																<xsl:value-of select="."/>&#xA0;
-															</td>
-															
-														</tr>
-													</xsl:for-each>
 												</table>
 												<input type="hidden" id="curatorcaption" value="{document/captions/curator/@caption}"/>
-												<input type="hidden" name="curator" id="curator" value="{document/fields/curator/entry/@attrval}"/>
+												<input type="hidden" name="curator" id="curator" value="{document/fields/curator/@attrval}"/>
 											</td>
 										</tr>
                                         <tr>
