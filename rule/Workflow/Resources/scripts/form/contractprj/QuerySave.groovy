@@ -44,16 +44,19 @@ class QuerySave extends _FormQuerySave {
 		def contractexec = webFormData.getListOfValuesSilently("contractexec")
 		doc.replaceListField("contractexec", contractexec as ArrayList);
 		doc.addDateField("projectdate", _Helper.convertStringToDate(webFormData.getValue("projectdate")))
+		doc.addGlossaryField("contractor_one", webFormData.getNumberValueSilently("contractor_one",0))
+		doc.addGlossaryField("contractor_two", webFormData.getNumberValueSilently("contractor_two",0))
+		doc.addStringField("curator", webFormData.getValueSilently("curator"));
 		/*def recipient = session.createEmployerCollection(webFormData.getListOfValuesSilently("recipient"))
 		doc.addField("recipient",recipient)*/
 		doc.addNumberField("docversion", webFormData.getNumberValueSilently("docversion",-1))
 		doc.addStringField("briefcontent", webFormData.getValue("briefcontent"))
-		doc.addStringField("corrstring", webFormData.getValue("corrstring"))
+		//doc.addStringField("corrstring", webFormData.getValue("corrstring"))
 		doc.addStringField("contractname", webFormData.getValue("contractname"))
 		doc.addFile("rtfcontent", webFormData)
 		doc.setRichText("contentsource", webFormData.getValueSilently("contentsource"))
 		doc.addNumberField("contracttype", webFormData.getNumberValueSilently("contracttype",0))
-		doc.addNumberField("contractor", webFormData.getNumberValueSilently("contractor",0))
+		//doc.addNumberField("contractor", webFormData.getNumberValueSilently("contractor",0))
 		def struct = session.getStructure()
 		String authorRus = ""
 		def author = struct.getEmployer(doc.getValueString("author"))

@@ -103,6 +103,7 @@ class QueryOpen extends _FormQueryOpen {
 
 		publishValue("title",getLocalizedWord("Проект договора", lang) + " ")
 		publishEmployer("author",doc.getAuthorID())
+		publishEmployer("curator",doc.getValueString("curator"))
 		publishValue("vn",doc.getValueString("vn"))
 		/*publishValue("recipient",doc.getValueObject("recipient"))*/
 		publishValue("projectdate",doc.getValueString("projectdate"))
@@ -110,12 +111,18 @@ class QueryOpen extends _FormQueryOpen {
 		publishValue("briefcontent",doc.getValueString("briefcontent"))
 		publishValue("contentsource",doc.getValueString("contentsource"))
 		publishValue("contractname",doc.getValueString("contractname"))
-		publishValue("corrstring",doc.getValueString("corrstring"))
+		//publishValue("corrstring",doc.getValueString("corrstring"))
 		publishValue("coordination", blockCollection)
-		publishEmployer("contractexec", doc.getValueList("contractexec"))
-		if (doc.getField("contractor")) {
-			publishGlossaryValue("contractor",doc.getValueGlossary("contractor"))
+		if (doc.getField("contractor_one")) {
+			publishGlossaryValue("contractor_one",doc.getValueGlossary("contractor_one"))
 		}
+		if (doc.getField("contractor_two")) {
+			publishGlossaryValue("contractor_two",doc.getValueGlossary("contractor_two"))
+		}
+		//publishEmployer("contractexec", doc.getValueList("contractexec"))
+		/*if (doc.getField("contractor")) {
+			publishGlossaryValue("contractor",doc.getValueGlossary("contractor"))
+		}*/
         try{
             def workdoclink  = (_CrossLink)doc.getValueObject("link")
             publishValue("link", workdoclink)
