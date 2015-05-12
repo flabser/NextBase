@@ -80,6 +80,5 @@ public interface Const {
 	int SCHEDULER_INTIME = 3002;
 
 
-	
-	
+    int DOCTYPE_ACCOUNT = 906;
 }
