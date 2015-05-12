@@ -19,9 +19,7 @@ import kz.flabs.runtimeobj.document.structure.Department;
 import kz.flabs.runtimeobj.document.structure.Employer;
 import kz.flabs.runtimeobj.document.structure.EmployerCollection;
 import kz.flabs.runtimeobj.document.structure.Organization;
-import kz.flabs.runtimeobj.document.task.Control;
-import kz.flabs.runtimeobj.document.task.ExecsBlock;
-import kz.flabs.runtimeobj.document.task.Task;
+import kz.flabs.runtimeobj.document.task.*;
 import kz.flabs.scriptprocessor.ScriptProcessor;
 import kz.flabs.scriptprocessor.ScriptProcessorUtil;
 import kz.flabs.users.*;
@@ -36,9 +34,7 @@ import kz.nextbase.script.struct._Department;
 import kz.nextbase.script.struct._Employer;
 import kz.nextbase.script.struct._EmployerCollection;
 import kz.nextbase.script.struct._Organization;
-import kz.nextbase.script.task._Control;
-import kz.nextbase.script.task._ExecsBlocks;
-import kz.nextbase.script.task._Task;
+import kz.nextbase.script.task.*;
 import kz.pchelka.env.Environment;
 
 import java.io.File;
@@ -174,6 +170,41 @@ public class _Document {
         return doc.docType;
     }
 
+    public void setDocumentType(_DocumentType type) {
+        switch (type) {
+            case MAINDOC:
+                doc.docType = Const.DOCTYPE_MAIN;
+                break;
+            case PROJECT:
+                doc.docType = Const.DOCTYPE_PROJECT;
+                break;
+            case TASK:
+                doc.docType = Const.DOCTYPE_TASK;
+                break;
+            case EXECUTION:
+                doc.docType = Const.DOCTYPE_EXECUTION;
+                break;
+            case GLOSSARY:
+                doc.docType = Const.DOCTYPE_GLOSSARY;
+                break;
+            case EMPLOYER:
+                doc.docType = Const.DOCTYPE_EMPLOYER;
+                break;
+            case UNKNOWN:
+                doc.docType = Const.DOCTYPE_UNKNOWN;
+                break;
+            case ORGANIZATION:
+                doc.docType = Const.DOCTYPE_ORGANIZATION;
+                break;
+            case ACCOUNT:
+                doc.docType = Const.DOCTYPE_ACCOUNT;
+                break;
+            default:
+                doc.docType = Const.DOCTYPE_MAIN;
+                break;
+        }
+    }
+
     public _DocumentType getDocumentType() {
         if (doc.docType == 896) {
             return _DocumentType.MAINDOC;
@@ -254,6 +285,12 @@ public class _Document {
             } else if (obj instanceof BlockCollection) {
                 BlockCollection o = (BlockCollection) obj;
                 return new _BlockCollection(session, o);
+            } else if (obj instanceof GrantedBlock) {
+                GrantedBlock o = (GrantedBlock) obj;
+                return new _GrantedBlock(session, o);
+            } else if (obj instanceof GrantedBlockCollection) {
+                GrantedBlockCollection o = (GrantedBlockCollection) obj;
+                return new _GrantedBlockCollection(session, o);
             }
             return null;
         } catch (DocumentException e) {
@@ -516,6 +553,20 @@ public class _Document {
             BlockCollection o = ((_BlockCollection) value).getBaseObject();
             if (o instanceof IComplexObject) {
                 doc.addCoordinationField(fieldName, (IComplexObject) o);
+            } else {
+                throw new _Exception(_ExceptionType.FORMDATA_INCORRECT, "Object is not implementation of IComplexObject interface, function: _Document.addStringField(" + fieldName + "," + value + ")");
+            }
+        } else if (value instanceof _GrantedBlock) {
+            GrantedBlock o = ((_GrantedBlock) value).getBaseObject();
+            if (o instanceof IComplexObject) {
+                doc.addComplexObjectField(fieldName, o);
+            } else {
+                throw new _Exception(_ExceptionType.FORMDATA_INCORRECT, "Object is not implementation of IComplexObject interface, function: _Document.addStringField(" + fieldName + "," + value + ")");
+            }
+        } else if (value instanceof _GrantedBlockCollection) {
+            GrantedBlockCollection o = ((_GrantedBlockCollection) value).getBaseObject();
+            if (o instanceof IComplexObject) {
+                doc.addComplexObjectField(fieldName, o);
             } else {
                 throw new _Exception(_ExceptionType.FORMDATA_INCORRECT, "Object is not implementation of IComplexObject interface, function: _Document.addStringField(" + fieldName + "," + value + ")");
             }
