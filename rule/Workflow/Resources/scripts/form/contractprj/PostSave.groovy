@@ -15,7 +15,7 @@ class PostSave extends _FormPostSave {
 		def mailAgent = session.getMailAgent()
 		def msngAgent = session.getInstMessengerAgent()
 		def	blocksCollection  = (_BlockCollection)doc.getValueObject("coordination")
-
+		doc.addReader(doc.getValueString("curator"));
 		if(blocksCollection == null){
 			blocksCollection = new _BlockCollection(session)
 		}

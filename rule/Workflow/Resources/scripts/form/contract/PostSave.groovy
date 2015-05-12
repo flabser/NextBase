@@ -13,6 +13,7 @@ class PostSave extends _FormPostSave {
         def xmppmsg = ""
         def recipientsID = []
         doc.addReader(doc.getValueString("recipient"));
+        doc.addReader(doc.getValueString("curator"));
         if (doc.getValueString("mailnotification") == '') {
 
             def mailAgent = ses.getMailAgent();

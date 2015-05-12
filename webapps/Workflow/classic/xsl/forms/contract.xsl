@@ -369,7 +369,7 @@
 														</tr>
 												</table>
 												<input type="hidden" id="curatorcaption" value="{document/captions/curator/@caption}"/>
-												<input type="hidden" id="curator" value="{document/fields/curator/@attrval}"/>
+												<input type="hidden" id="curator" name="curator" value="{document/fields/curator/@attrval}"/>
 											</td>
 										</tr>
 										<!-- поле "Общая сумма договора" -->
