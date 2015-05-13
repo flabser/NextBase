@@ -149,7 +149,7 @@
 	<caption name ="no" source ="KEYWORD">Нет</caption>
 	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
 	<caption name="contractexec" source="KEYWORD">Исполнитель</caption>
-	<caption name="contractor" source="KEYWORD">Контрагент</caption>
+	<caption name="contractor" source="KEYWORD">Сторона</caption>
 	<caption name="contractname" source="KEYWORD">Название договора</caption>
 	<caption name="contracttype" source="KEYWORD">Тип договора</caption>
 	<glossary mode="on" id="contracttype" source="query">
