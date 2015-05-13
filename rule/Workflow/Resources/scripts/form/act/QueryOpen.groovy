@@ -1,4 +1,4 @@
-package form.contract
+package form.act
 
 import kz.nextbase.script.*
 import kz.nextbase.script.actions._Action
@@ -22,8 +22,21 @@ class QueryOpen extends _FormQueryOpen {
 		actionBar.addAction(new _Action(getLocalizedWord("Сохранить и закрыть",lang),getLocalizedWord("Сохранить и закрыть",lang),_ActionType.SAVE_AND_CLOSE))
 		actionBar.addAction(new _Action(getLocalizedWord("Закрыть",lang),getLocalizedWord("Закрыть без сохранения",lang),_ActionType.CLOSE))
 		publishElement(actionBar)
-
-		publishValue("title",getLocalizedWord("Новый договор от", lang))
+		def pDoc
+		if (webFormData.containsField("parentdocid") && webFormData.containsField("parentdoctype") && webFormData.getValue("parentdocid") != '0') {
+			int pdocid = Integer.parseInt(webFormData.getValueSilently("parentdocid"))
+			int pdoctype = Integer.parseInt(webFormData.getValueSilently("parentdoctype"))
+			pDoc = ses.getCurrentDatabase().getDocumentByComplexID(pdoctype, pdocid);
+			publishValue("contractnumber", pDoc.getValueString("vn"))
+			publishValue("contractdate", pDoc.getValueString("dvn"))
+			if (pDoc.getField("contractor_one")) {
+				publishGlossaryValue("contractor_one",pDoc.getValueNumber("contractor_one"))
+			}
+			if (pDoc.getField("contractor_two")) {
+				publishGlossaryValue("contractor_two",pDoc.getValueNumber("contractor_two"))
+			}
+		}
+		publishValue("title",getLocalizedWord("Новый акт от", lang))
 		publishEmployer("author", ses.getCurrentAppUser().getUserID())
 		publishValue("dvn", ses.getCurrentDateAsString())
 		publishValue("ctrldate", ses.getCurrentDateAsString(30))
@@ -41,12 +54,8 @@ class QueryOpen extends _FormQueryOpen {
 		def show_compose_actions = false
 		/*def recipients = doc.getValueList("recipients")*/
 		
-		if(doc.getEditMode() == _DocumentModeType.EDIT && user.hasRole("registrator_outgoing")){
-			if(doc.getValueString("vn") != ''){
-				actionBar.addAction(new _Action(getLocalizedWord("Сохранить и закрыть",lang),getLocalizedWord("Сохранить и закрыть",lang),_ActionType.SAVE_AND_CLOSE))
-			}else{
-				actionBar.addAction(new _Action(getLocalizedWord("Зарегистрировать документ",lang),getLocalizedWord("Зарегистрировать документ",lang),_ActionType.SAVE_AND_CLOSE))
-			}
+		if(doc.getEditMode() == _DocumentModeType.EDIT && user.hasRole("registrator_act")){
+			actionBar.addAction(new _Action(getLocalizedWord("Сохранить и закрыть",lang),getLocalizedWord("Сохранить и закрыть",lang),_ActionType.SAVE_AND_CLOSE))
 		}
 		if(user.hasRole("supervisor")){
 			actionBar.addAction(new _Action(_ActionType.GET_DOCUMENT_ACCESSLIST))
@@ -54,12 +63,9 @@ class QueryOpen extends _FormQueryOpen {
 		if(doc.getAuthorID() == user.getUserID()){
 			actionBar.addAction(new _Action(getLocalizedWord("Ознакомить",lang),getLocalizedWord("Ознакомить",lang),"acquaint"))
 		}
-		if(user.hasRole("registrator_act")){
-			actionBar.addAction(new _Action(getLocalizedWord("Акт",lang),getLocalizedWord("Акт",lang),"compose_act"))
-		}
 		actionBar.addAction(new _Action(getLocalizedWord("Закрыть",lang),getLocalizedWord("Закрыть без сохранения",lang),_ActionType.CLOSE))
 		publishElement(actionBar)
-		def doctitle = "Договор"
+		def doctitle = "Акт"
 		publishValue("title",getLocalizedWord(doctitle, lang) +  " № "+ doc.getValueString("vn") +" " + getLocalizedWord("от", lang) + " " + doc.getValueString("dvn"))
 		publishEmployer("author",doc.getAuthorID())
 		publishValue("vn",doc.getValueString("vn"))
@@ -73,16 +79,19 @@ class QueryOpen extends _FormQueryOpen {
 		publishValue("controldate",doc.getValueString("controldate"))
 		publishEmployer("curator",doc.getValueString("curator"))
 		publishValue("comments",doc.getValueString("comments"))
-
-		if (doc.getField("contracttype")) {
-			publishGlossaryValue("contracttype",doc.getValueGlossary("contracttype"))
-		}
-
-		if (doc.getField("contractor_one")) {
-			publishGlossaryValue("contractor_one",doc.getValueNumber("contractor_one"))
-		}
-		if (doc.getField("contractor_two")) {
-			publishGlossaryValue("contractor_two",doc.getValueNumber("contractor_two"))
+        def pDoc;
+		if (webFormData.containsField("parentdocid") && webFormData.containsField("parentdoctype") && webFormData.getValue("parentdocid") != '0') {
+			int pdocid = Integer.parseInt(webFormData.getValueSilently("parentdocid"))
+			int pdoctype = Integer.parseInt(webFormData.getValueSilently("parentdoctype"))
+			pDoc = ses.getCurrentDatabase().getDocumentByComplexID(pdoctype, pdocid);
+			publishValue("contractnumber", pDoc.getValueString("vn"))
+			publishValue("contractdate", pDoc.getValueString("dvn"))
+			if (pDoc.getField("contractor_one")) {
+				publishGlossaryValue("contractor_one",pDoc.getValueNumber("contractor_one"))
+			}
+			if (pDoc.getField("contractor_two")) {
+				publishGlossaryValue("contractor_two",pDoc.getValueNumber("contractor_two"))
+			}
 		}
 		publishValue("briefcontent",doc.getValueString("briefcontent"))
 		publishGlossaryValue("contracttype",doc.getValueNumber("contracttype"))
