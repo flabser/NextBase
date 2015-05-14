@@ -19,7 +19,6 @@ import kz.flabs.users.User;
 import kz.flabs.util.XMLUtil;
 import kz.flabs.webrule.query.QueryFieldRule;
 import kz.pchelka.env.Environment;
-import org.apache.commons.dbcp.DelegatingConnection;
 
 import java.io.*;
 import java.sql.*;
@@ -440,7 +439,6 @@ public class ProjectOnDatabase extends kz.flabs.dataengine.h2.ProjectOnDatabase 
             throws DocumentException {
         int id = doc.getDocID();
         Connection conn = dbPool.getConnection();
-        Connection dconn = ((DelegatingConnection) conn).getInnermostDelegate();
         int keyProject = 0;
         try {
             conn.setAutoCommit(false);
@@ -675,7 +673,6 @@ public class ProjectOnDatabase extends kz.flabs.dataengine.h2.ProjectOnDatabase 
         if (doc.hasEditor(user.getAllUserGroups())) {
             Project oldDoc = this.getProjectByID(doc.getDocID(), user.getAllUserGroups(), user.getUserID());
             Connection conn = dbPool.getConnection();
-            Connection dconn = ((DelegatingConnection) conn).getInnermostDelegate();
             try {
                 Statement statProject = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
                 conn.setAutoCommit(false);

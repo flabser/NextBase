@@ -2,6 +2,7 @@ package kz.flabs.parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class Block implements IQueryFormulaBlocks{	
@@ -33,7 +34,11 @@ public class Block implements IQueryFormulaBlocks{
 	public HashMap<String, FieldExpression> getParamatrizedExpressList() {
 		return paramatrizedExpressList;
 	}
-	
+
+    public List<FieldExpression> getExpressionList() {
+        return expressionsList;
+    }
+
 	public String getContent(){
 		String formula = "";
 		for(FieldExpression value:expressionsList){

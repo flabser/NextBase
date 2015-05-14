@@ -42,7 +42,7 @@ public class CheckDataBase {
         Connection conn = dbPool.getConnection();
         try {
             conn.setAutoCommit(false);
-            if (needCheck) {
+            while (needCheck) {
                 String sql = "SELECT * FROM DBVERSION";
                 PreparedStatement pst = conn.prepareStatement(sql);
                 ResultSet rs = pst.executeQuery();

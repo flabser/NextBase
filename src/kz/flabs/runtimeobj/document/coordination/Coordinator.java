@@ -3,6 +3,7 @@ package kz.flabs.runtimeobj.document.coordination;
 import kz.flabs.dataengine.IDatabase;
 import kz.flabs.exception.ComplexObjectException;
 import kz.flabs.runtimeobj.document.AbstractComplexObject;
+import kz.flabs.runtimeobj.document.BlobField;
 import kz.flabs.runtimeobj.document.structure.Employer;
 import kz.flabs.util.adapters.DateAdapter;
 
@@ -12,7 +13,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Coordinator extends AbstractComplexObject implements Serializable{
@@ -39,6 +42,11 @@ public class Coordinator extends AbstractComplexObject implements Serializable{
     @XmlTransient
     private static final long serialVersionUID = 1L;
 
+    @XmlTransient
+    private ArrayList<Integer> attachID;
+    @XmlTransient
+    public HashMap<String, BlobField> blobFieldsMap = new HashMap<String, BlobField>();
+
     @Deprecated
     public Coordinator() {
     }
@@ -51,6 +59,18 @@ public class Coordinator extends AbstractComplexObject implements Serializable{
 		this.db = db;
 		user = db.getStructure().getAppUser(userID);
 	}
+
+    public ArrayList<Integer> getAttachID() {
+        return attachID;
+    }
+
+    public void addAttachID(int id) {
+        attachID.add(id);
+    }
+
+    public void setAttachID(ArrayList<Integer> attachID) {
+        this.attachID = attachID;
+    }
 
 	public void setType(int coordinatorTypeSigner) {
 		type = 	coordinatorTypeSigner;	

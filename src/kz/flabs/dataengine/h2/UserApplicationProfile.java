@@ -40,7 +40,7 @@ public class UserApplicationProfile implements Serializable, _IXMLContent{
 		}
 		return "<entry><appname>" + appName + "</appname><loginmode>" + loginMod + "</loginmode>" + qaText + "</entry>";
 	}
-	
+
 	public QuestionAnswer getSomeQuestion(){
 		return getQuestionAnswer().get(Util.getRandomNumber(getQuestionAnswer().size()));
 	}

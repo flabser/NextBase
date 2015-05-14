@@ -1,17 +1,18 @@
 package kz.nextbase.script.coordination;
 
 import kz.flabs.dataengine.IDatabase;
+import kz.flabs.runtimeobj.document.BlobField;
+import kz.flabs.runtimeobj.document.Document;
 import kz.flabs.runtimeobj.document.coordination.Coordinator;
 import kz.flabs.runtimeobj.document.coordination.Decision;
 import kz.flabs.runtimeobj.document.coordination.ICoordConst;
 import kz.flabs.runtimeobj.document.structure.Employer;
 import kz.flabs.util.Util;
-import kz.nextbase.script._Exception;
-import kz.nextbase.script._IXMLContent;
-import kz.nextbase.script._Session;
+import kz.nextbase.script.*;
 import kz.nextbase.script.constants._DecisionType;
 import kz.nextbase.script.struct._Employer;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class _Coordinator implements _IXMLContent, ICoordConst {
@@ -83,6 +84,20 @@ public class _Coordinator implements _IXMLContent, ICoordConst {
 		co.setCurrent(isCurrent);
 	}
 
+    public void addAttachID(int id) {
+        if (id != 0) {
+            co.addAttachID(id);
+        }
+    }
+
+    public ArrayList<Integer> getAttachID() {
+        return co.getAttachID();
+    }
+
+    public void setAttachID(ArrayList<Integer> ids) {
+        co.setAttachID(ids);
+    }
+
 	public void setUserID(String coordinator) {
 		co.setUserID(coordinator);
 		
@@ -106,6 +121,11 @@ public class _Coordinator implements _IXMLContent, ICoordConst {
 					xmlContent.append("<decision>" + _DecisionType.UNDEFINED +  "</decision>");
 			}
 			xmlContent.append("<comment>" + d.getComment() +  "</comment>");
+
+            for (BlobField field : co.blobFieldsMap.values()) {
+                xmlContent.append(new _BlobField(field).toXML());
+            }
+
 			xmlContent.append("<decisiondate>" + Util.convertDataTimeToStringSilently(d.getDecisionDate()) +  "</decisiondate>");
 		}		
 		return xmlContent.toString();

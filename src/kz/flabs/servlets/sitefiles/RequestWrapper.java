@@ -73,7 +73,7 @@ public class RequestWrapper extends HttpServletRequestWrapper{
 		}
 
         UserSession userSession = (UserSession)session.getAttribute("usersession");
-        IDatabase db = userSession.currentUser.getAppEnv().getDataBase();
+;        IDatabase db = userSession.currentUser.getAppEnv().getDataBase();
         try {
             uploadedFiles = db.insertBlobTables(items);
         } catch (SQLException e) {

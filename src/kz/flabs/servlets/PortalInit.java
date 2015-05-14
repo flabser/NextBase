@@ -70,7 +70,15 @@ public class PortalInit extends HttpServlet{
 						IDatabase db = new kz.flabs.dataengine.nsf.Database(env);
 						env.setDataBase(db);
 						env.globalSetting.serializeKey();
-					} else {
+					} else if (env.globalSetting.databaseType == DatabaseType.POSTGRESQL_CT) {
+                        dd = new kz.flabs.dataengine.postgresql.ct.DatabaseDeployer(env);
+                        if (env.globalSetting.autoDeployEnable) {
+                            AppEnv.logger.normalLogEntry("Checking database structure... ");
+                            dd.deploy();
+                        }
+                        env.setDataBase(new kz.flabs.dataengine.postgresql.ct.Database(env));
+                        env.globalSetting.serializeKey();
+                    } else {
 						dd = new kz.flabs.dataengine.h2.DatabaseDeployer(env);
 						if (env.globalSetting.autoDeployEnable){
 							AppEnv.logger.normalLogEntry("Checking database structure ...");

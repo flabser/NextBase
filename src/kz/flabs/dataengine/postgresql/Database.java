@@ -591,7 +591,15 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
                             for (Block block : blockCollection.getBlocks()) {
                                 int blockID = insertBlock(doc.getDocID(), block, conn);
                                 for (Coordinator coordinator : block.getCoordinators()) {
-                                    insertCoordinator(blockID, coordinator, conn);
+                                    int coordID = insertCoordinator(blockID, coordinator, conn);
+                                    recoverCommAttachRelations(conn, coordID, coordinator.getAttachID());
+                                  /*  sql = "UPDATE CUSTOM_BLOBS_MAINDOCS SET DOCID = ? WHERE docid = ?" + (ids.size() > 0 ? " and id not in (" + StringUtils.join(ids, ",") + ") " : "");
+                                    pst = conn.prepareStatement(sql);
+                                    pst.setInt(1, 0);
+                                    pst.setInt(2, key);
+                                    pst.executeUpdate();
+                                    conn.commit();
+                                    pst.close();*/
                                 }
                             }
 
@@ -1113,6 +1121,9 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
         try {
             String tableSuffix = "MAINDOCS";
             for (FileItem item : fileItems) {
+                if ("decision_comment_uploadfield".equalsIgnoreCase(item.getFieldName())) {
+                    tableSuffix = "COORDINATORS";
+                }
                 if (item != null && item.getName() != null && !"".equalsIgnoreCase(item.getName())) {
                     PreparedStatement ps = conn.prepareStatement("INSERT INTO CUSTOM_BLOBS_" + tableSuffix + " (DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE_OID, REGDATE)values(?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
                     String hash = Util.getHexHash(item.getInputStream());

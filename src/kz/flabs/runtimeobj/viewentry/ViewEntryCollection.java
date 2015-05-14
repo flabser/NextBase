@@ -1,7 +1,10 @@
 package kz.flabs.runtimeobj.viewentry;
 
 import kz.flabs.appenv.AppEnv;
+import kz.flabs.dataengine.IDatabase;
+import kz.flabs.exception.ComplexObjectException;
 import kz.flabs.runtimeobj.RuntimeObjUtil;
+import kz.flabs.runtimeobj.document.AbstractComplexObject;
 import kz.flabs.users.RunTimeParameters;
 import kz.flabs.users.User;
 import kz.nextbase.script._Session;
@@ -12,7 +15,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 
 
-public class ViewEntryCollection implements IViewEntryCollection {
+public class ViewEntryCollection extends AbstractComplexObject implements IViewEntryCollection {
 
 	private int count = -1;
     private int unreadcount = 0;
@@ -140,4 +143,14 @@ public class ViewEntryCollection implements IViewEntryCollection {
 		result[total] = result[plus].add(result[minus]);
 		return result;
 	}
+
+    @Override
+    public void init(IDatabase db, String initString) throws ComplexObjectException {
+
+    }
+
+    @Override
+    public String getContent() {
+        return null;
+    }
 }
