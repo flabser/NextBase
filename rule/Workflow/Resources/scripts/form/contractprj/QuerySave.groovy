@@ -44,6 +44,13 @@ class QuerySave extends _FormQuerySave {
 		def contractexec = webFormData.getListOfValuesSilently("contractexec")
 		doc.replaceListField("contractexec", contractexec as ArrayList);
 		doc.addDateField("projectdate", _Helper.convertStringToDate(webFormData.getValue("projectdate")))
+		doc.addStringField("contracttime", webFormData.getValueSilently("contracttime"))
+		doc.addStringField("controldate", webFormData.getValueSilently("controldate"))
+		doc.addStringField("totalamount", webFormData.getValueSilently("totalamount"))
+		doc.addStringField("numcontractor", webFormData.getValueSilently("numcontractor"))
+		doc.addStringField("datecontractor", webFormData.getValueSilently("datecontractor"))
+		doc.addStringField("kazcontent", webFormData.getValueSilently("kazcontent"))
+		doc.addStringField("contractsubject", webFormData.getValueSilently("contractsubject"))
 		doc.addNumberField("contractor_one", webFormData.getNumberValueSilently("contractor_one",0))
 		doc.addNumberField("contractor_two", webFormData.getNumberValueSilently("contractor_two",0))
 		doc.addStringField("curator", webFormData.getValueSilently("curator"));
@@ -52,7 +59,6 @@ class QuerySave extends _FormQuerySave {
 		doc.addNumberField("docversion", webFormData.getNumberValueSilently("docversion",-1))
 		doc.addStringField("briefcontent", webFormData.getValue("briefcontent"))
 		//doc.addStringField("corrstring", webFormData.getValue("corrstring"))
-		doc.addStringField("contractname", webFormData.getValue("contractname"))
 		doc.addFile("rtfcontent", webFormData)
 		doc.setRichText("contentsource", webFormData.getValueSilently("contentsource"))
 		doc.addNumberField("contracttype", webFormData.getNumberValueSilently("contracttype",0))

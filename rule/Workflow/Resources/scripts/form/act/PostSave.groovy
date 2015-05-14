@@ -12,8 +12,9 @@ class PostSave extends _FormPostSave {
         def recipients = doc.getValueList("recipient");
         def xmppmsg = ""
         def recipientsID = []
-        doc.addReader(doc.getValueString("recipient"));
-        doc.addReader(doc.getValueString("curator"));
+        //doc.addReader(doc.getValueString("recipient"));
+        doc.addReader(doc.getValueString("responsible"));
+        doc.save("[supervisor]")
         if (doc.getValueString("mailnotification") == '') {
 
             def mailAgent = ses.getMailAgent();
@@ -24,7 +25,7 @@ class PostSave extends _FormPostSave {
             xmppmsg += doc.getFullURL() + "\n"
             xmppmsg += "Вы получили данное сообщение как получатель"
 
-            def memo = new _Memo("Уведомление о документе на рассмотрение", "Новый договор", "Договор", doc, true)
+            def memo = new _Memo("Уведомление о документе на рассмотрение", "Новый акт", "Акт", doc, true)
             for (String recipient : recipients) {
                 def rec = ses.getStructure().getEmployer(recipient)
                 def recipientEmail = ses.getStructure().getEmployer(recipient).getEmail()
