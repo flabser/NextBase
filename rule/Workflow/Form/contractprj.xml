@@ -10,9 +10,18 @@
 	</events>  
 	<caption name="close" source="KEYWORD">Закрыть</caption>
 	<caption name="properties" source="KEYWORD">Свойства</caption>
+    <caption name="customer" source="KEYWORD">Заказчик</caption>
+    <caption name="performer" source="KEYWORD">Исполнитель</caption>
 	<caption name="attachments" source="KEYWORD">Вложения</caption>
 	<caption name="content" source="KEYWORD">Содержание</caption>
 	<caption name="curator" source="KEYWORD">Куратор договора</caption>
+	<caption name="kazcontent" source="KEYWORD">Каз. содержание</caption>
+    <caption name="numcontractor" source="KEYWORD">№ договора у контрагента</caption>
+	<caption name="datecontractor" source="KEYWORD">Дата регистрации у контрагента</caption>
+	<caption name="contractsubject" source="KEYWORD">Предмет договора</caption>
+    <caption name="totalamount" source="KEYWORD">Общая сумма договора</caption>
+    <caption name="contracttime" source="KEYWORD">Срок действия договора</caption>
+    <caption name="controldate" source="KEYWORD">Срок исполнения договора</caption>
 	<caption name="coordination" source="KEYWORD">Согласование</caption>
 	<caption name="saved" source="KEYWORD">Сохраненный</caption>
 	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
@@ -148,7 +157,6 @@
     <caption name ="yes" source ="KEYWORD">Да</caption>
 	<caption name ="no" source ="KEYWORD">Нет</caption>
 	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
-	<caption name="contractexec" source="KEYWORD">Исполнитель</caption>
 	<caption name="contractor" source="KEYWORD">Сторона</caption>
 	<caption name="contractname" source="KEYWORD">Название договора</caption>
 	<caption name="contracttype" source="KEYWORD">Тип договора</caption>

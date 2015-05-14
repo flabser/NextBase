@@ -15,7 +15,8 @@
 	<caption name="properties" source="KEYWORD">Свойства</caption>
 	<caption name="attachments" source="KEYWORD">Вложения</caption>
 	<caption name="content" source="KEYWORD">Содержание</caption>
-	<caption name="performer" source="KEYWORD">исполнитель</caption>
+	<caption name="customer" source="KEYWORD">Заказчик</caption>
+	<caption name="performer" source="KEYWORD">Исполнитель</caption>
 	<caption name="date" source="KEYWORD">дата</caption>
 	<caption name="removedby" source="KEYWORD">кто снял</caption>
 	<caption name="control" source="KEYWORD">Контроль</caption>
