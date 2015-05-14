@@ -15,5 +15,5 @@ public class SimpleIXMLContentWrapper implements _IXMLContent{
 	public String toXML() throws _Exception {
 		return xmlPiece;
 	}
-	
+
 }

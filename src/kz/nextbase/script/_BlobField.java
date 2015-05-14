@@ -10,13 +10,17 @@ import static org.apache.commons.lang3.StringEscapeUtils.escapeXml11;
 
 public class _BlobField extends _Field {		
 	private BlobField blobField;
-	
-	protected _BlobField(_Document doc, String name) {
+
+    public _BlobField(_Document doc, String name) {
 		super(doc, name);	
 		blobField = doc.getBaseObject().blobFieldsMap.get(name);	
 	}
-	
-	protected _BlobField (_Document doc, String name, BlobField blobField) {
+
+	public _BlobField(BlobField blobField) {
+		this.blobField = blobField;
+	}
+
+    public _BlobField (_Document doc, String name, BlobField blobField) {
 		super(doc, name);	
 		this.blobField = blobField;
 	}

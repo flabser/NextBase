@@ -172,6 +172,9 @@ public class GlobalSetting {
 					} 
 					
 					databaseType = getDatabaseType(dbURL);
+                    if (databaseType == DatabaseType.POSTGRESQL && databaseName.equalsIgnoreCase("CashTracker")) {
+                        databaseType = DatabaseType.POSTGRESQL_CT;
+                    }
 					databaseHost = XMLUtil.getTextContent(doc, "/rule/database/host");
 					databaseEnable = true;
 					String ru = XMLUtil.getTextContent(doc, "/rule/database/responseused");

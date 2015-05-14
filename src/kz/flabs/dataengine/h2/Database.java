@@ -61,6 +61,7 @@ import kz.pchelka.log.Log4jLogger;
 import kz.pchelka.server.Server;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.sql.*;
@@ -373,6 +374,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
                                     coord.setCurrent(coordsResultSet.getInt("ISCURRENT") == 1);
                                     coord.setCoorDate(coordsResultSet.getTimestamp("COORDATE"));
+                                    fillBlobs(conn, coord.blobFieldsMap, "coordinators", coordsResultSet.getInt("ID"));
                                     block.addCoordinator(coord);
                                 }
                                 coordsResultSet.close();
@@ -413,6 +415,25 @@ public class Database extends DatabaseCore implements IDatabase, Const {
         int pageNumMinusOne = pageNum;
         pageNumMinusOne--;
         return pageNumMinusOne * pageSize;
+    }
+
+    public void fillBlobs(Connection conn, Map<String, BlobField> blobFieldsMap, String customBlobTableSuffix, int docID) throws SQLException {
+        Statement statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery("select * from CUSTOM_BLOBS_" + customBlobTableSuffix + "  where CUSTOM_BLOBS_" + customBlobTableSuffix + ".DOCID = " + docID + " ORDER BY ID");
+        HashMap<String, BlobFile> files = new HashMap<String, BlobFile>();
+        String name = "";
+        while (rs.next()) {
+            name = rs.getString("NAME");
+            BlobFile bf = new BlobFile();
+            bf.originalName = rs.getString("ORIGINALNAME");
+            bf.checkHash = rs.getString("CHECKSUM");
+            bf.comment = rs.getString("COMMENT");
+            bf.id = String.valueOf(rs.getInt("ID"));
+            bf.docid = rs.getInt("DOCID");
+            files.put(bf.originalName, bf);
+        }
+        BlobField newBlobField = new BlobField(name, files);
+        blobFieldsMap.put(newBlobField.name, newBlobField);
     }
 
     public void fillBlobs(Connection conn, BaseDocument doc, String customBlobTableSuffix) throws SQLException {
@@ -1005,8 +1026,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
         }
     }
 
-    protected int insertBlock(int key, Block block, Connection conn){
-        try{
+    protected int insertBlock(int key, Block block, Connection conn) {
+        try {
             String sqlBlock = "insert into COORDBLOCKS(DOCID, TYPE, DELAYTIME, BLOCKNUMBER, STATUS, COORDATE) values(?, ?, ?, ?, ?, ?)";
             PreparedStatement statBlock = conn.prepareStatement(sqlBlock, Statement.RETURN_GENERATED_KEYS);
             statBlock.setInt(1, key);
@@ -1032,10 +1053,39 @@ public class Database extends DatabaseCore implements IDatabase, Const {
         return -1;
     }
 
-    protected int insertCoordinator(int blockKey, Coordinator coordinator, Connection conn){
-        try{
+    protected int recoverCommAttachRelations(Connection conn, int coordinatorID, ArrayList<Integer> ids) {
+        try {// id not in (" + StringUtils.join(ids, ",")
+            PreparedStatement pst = conn.prepareStatement("update custom_blobs_coordinators set docid = ? where id in (" + StringUtils.join(ids, ",") + ")");
+            pst.setInt(1, coordinatorID);
+            int res = pst.executeUpdate();
+            conn.commit();
+            pst.close();
+            return res;
+        } catch (SQLException e) {
+            DatabaseUtil.errorPrint(dbID, e);
+            return -1;
+        }
+    }
+
+    protected int recoverCommAttachRelations(Connection conn, int coordinatorID, int attachID) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("update custom_blobs_coordinators set docid = ? where id = ?");
+            pst.setInt(1, coordinatorID);
+            pst.setInt(2, attachID);
+            int res = pst.executeUpdate();
+            conn.commit();
+            pst.close();
+            return res;
+        } catch (SQLException e) {
+            DatabaseUtil.errorPrint(dbID, e);
+            return -1;
+        }
+    }
+
+    protected int insertCoordinator(int blockKey, Coordinator coordinator, Connection conn) {
+        try {
             PreparedStatement pst = conn.prepareStatement("insert into COORDINATORS(BLOCKID, COORDTYPE, COORDINATOR, COORDNUMBER, ISCURRENT, COMMENT, DECISION, COORDATE, " +
-                    "DECISIONDATE) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "DECISIONDATE) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setInt(1, blockKey);
             pst.setInt(2, coordinator.getCoordType());
             pst.setString(3, coordinator.getUserID());
@@ -1054,9 +1104,14 @@ public class Database extends DatabaseCore implements IDatabase, Const {
                 pst.setNull(9, Types.TIMESTAMP);
             }
 
-            int res = pst.executeUpdate();
+            pst.executeUpdate();
+            int key = 0;
+            ResultSet rs = pst.getGeneratedKeys();
+            if (rs.next()) {
+                key = rs.getInt(1);
+            }
             pst.close();
-            return res;
+            return key;
         } catch (SQLException e) {
             DatabaseUtil.errorPrint(dbID, e);
             return -1;
