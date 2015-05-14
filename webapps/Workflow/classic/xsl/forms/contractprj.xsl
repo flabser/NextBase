@@ -130,7 +130,29 @@
 				}
 			]]>
 				</script>
+				<xsl:if test="document/@editmode = 'edit'">
+
+				</xsl:if>
 				<xsl:if test="$editmode = 'edit'">
+					<script>
+						var _calendarLang = "<xsl:value-of select="/request/@lang" />";
+						$(function() {
+						$('#datecontractor, #contracttime, #controldate').datepicker({
+						showOn: 'button',
+						buttonImage: '/SharedResources/img/iconset/calendar.png',
+						buttonImageOnly: true,
+						regional:['ru'],
+						showAnim: '',
+						monthNames: calendarStrings[_calendarLang].monthNames,
+						monthNamesShort: calendarStrings[_calendarLang].monthNamesShort,
+						dayNames: calendarStrings[_calendarLang].dayNames,
+						dayNamesShort: calendarStrings[_calendarLang].dayNamesShort,
+						dayNamesMin: calendarStrings[_calendarLang].dayNamesMin,
+						weekHeader: calendarStrings[_calendarLang].weekHeader,
+						yearSuffix: calendarStrings[_calendarLang].yearSuffix,
+						});
+						});
+					</script>
 					<xsl:call-template name="htmlareaeditor"/>
 				</xsl:if>
 			</head>
@@ -294,64 +316,8 @@
                                                 </td>
                                             </tr>
                                         </xsl:if>
-                                        <!-- поле "Тип договора" -->
-										<tr>
-											<td class="fc">
-												<xsl:value-of select="document/captions/contracttype/@caption"/> :
-											</td>
-											<td>
-												<select size="1" name="contracttype" style="width:611px;" class="select_editable">
-													<xsl:if test="$editmode != 'edit'">
-														<xsl:attribute name="class">select_noteditable</xsl:attribute>
-														<xsl:attribute name="disabled"/>
-														<option value="">
-															<xsl:attribute name="selected">selected</xsl:attribute>
-															<xsl:value-of select="document/fields/contracttype"/>
-														</option>
-													</xsl:if>
-													<xsl:variable name="contracttype" select="document/fields/contracttype/@attrval"/>
-													<xsl:for-each select="document/glossaries/contracttype/query/entry">
-														<option value="{@docid}">
-															<xsl:if test="$contracttype=@docid">
-																<xsl:attribute name="selected">selected</xsl:attribute>
-															</xsl:if>
-															<xsl:value-of select="viewcontent/viewtext1"/>
-														</option>
-													</xsl:for-each>
-												</select>
-											</td>
-										</tr>
-                                        <!-- Исполнитель -->
-                                        <tr>
-											<td class="fc">
-												<font style="vertical-align:top">
-													<xsl:value-of select="document/captions/curator/@caption"/> :
-												</font>
-												<xsl:if test="$editmode = 'edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','false','curator','frm', 'curatortbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
-												</xsl:if>
-											</td>
-											<td>
-<!-- 												<input id="executor" style="width:600px"></input> -->
-												<table id="curatortbl">
 
-														<tr>
-														<!--<input id="tags"/>-->
-															 <td style="width:600px;" class="td_editable">
-																<xsl:if test="$editmode != 'edit'">
-																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
-																</xsl:if>
-																<xsl:value-of select="document/fields/curator"/>&#xA0;
-															</td> 
-														</tr>
-												</table>
-												<input type="hidden" id="curatorcaption" value="{document/captions/curator/@caption}"/>
-												<input type="hidden" name="curator" id="curator" value="{document/fields/curator/@attrval}"/>
-											</td>
-										</tr>
+                                        <!--Поле подписывающий-->
                                         <tr>
 											<td class="fc">
 												<font style="vertical-align:top">
@@ -403,59 +369,17 @@
 												</script>
 											</td>
 										</tr>
-										<!-- Получатель -->
-										<!--<tr>
-											<td class="fc">
-												<font style="vertical-align:top">
-													<xsl:value-of select="$captions/recipients/@caption"/>:
-												</font>
-												<xsl:if test="$editmode = 'edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','true','recipient','frm', 'recipienttbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
-												</xsl:if>
-											</td>
-											<td>
-												<table id="recipienttbl" style="border-spacing:0px 3px;">
-													<xsl:for-each select="$fields/recipient/employer">
-														<tr>
-															<td class="td_editable" style="width:600px;">
-																<xsl:if test="$editmode != 'edit'">
-																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
-																</xsl:if>
-																<xsl:value-of select="fullname"/>
-																&#xA0;
-															</td>
-														</tr>
-													</xsl:for-each>
-													<xsl:if test="not($fields/recipient/employer[node()])">
-														<tr>
-															<td class="td_editable" style="width:600px;">
-																<xsl:if test="$editmode != 'edit'">
-																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
-																</xsl:if>
-																&#xA0;
-															</td>
-														</tr>
-													</xsl:if>
-												</table>
-												<xsl:for-each select="$fields/recipient/employer">
-													<input type="hidden" id="recipient" name="recipient" value="{userid}"/>
-												</xsl:for-each>
-												<input type="hidden" id="recipientcaption" value="{$captions/recipients/@caption}"/>
-											</td>
-										</tr>-->
-										<!-- поле "Название договора" -->
+										<!-- поле "Номер договора у контрагента" -->
 										<tr>
 											<td class="fc" style="padding-top:5px">
-												<xsl:value-of select="document/captions/contractname/@caption"/> :
+												<xsl:value-of select="document/captions/numcontractor/@caption"/> :
 											</td>
 											<td style="padding-top:5px">
-												<input type="text" value="{document/fields/contractname}" name="contractname" class="td_editable" style="width:400px;">
+												<input type="text" value="{document/fields/numcontractor}" name="numcontractor" class="td_editable" style="width:80px; vertical-align:top">
 													<xsl:if test="$editmode != 'edit'">
 														<xsl:attribute name="readonly">readonly</xsl:attribute>
 														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+														<xsl:attribute name="onfocus">javascript:$(this).blur()</xsl:attribute>
 													</xsl:if>
 													<xsl:if test="$editmode = 'edit'">
 														<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
@@ -464,38 +388,29 @@
 												</input>
 											</td>
 										</tr>
-										<!-- Краткое содержание -->
+										<!-- поле "Дата договора у контрагента" -->
 										<tr>
 											<td class="fc" style="padding-top:5px">
-												<xsl:value-of select="$captions/briefcontent/@caption"/> :
+												<xsl:value-of select="document/captions/datecontractor/@caption"/> :
 											</td>
 											<td style="padding-top:5px">
-												<div>
-													<textarea name="briefcontent" style="overflow:hidden; width:752px"
-														cols="83" onkeypress="maxCountSymbols (this, 172, event)"
-														rows="3" class="textarea_editable">
-														<xsl:if test="$editmode != 'edit'">
-															<xsl:attribute name="onfocus">javascript: $(this).blur()</xsl:attribute>
-															<xsl:attribute name="class">textarea_noteditable</xsl:attribute>
-														</xsl:if>
-														<xsl:if test="$editmode = 'edit'">
-															<xsl:attribute name="onfocus">javascript: fieldOnFocus(this)</xsl:attribute>
-															<xsl:attribute name="onblur">javascript: fieldOnBlur(this)</xsl:attribute>
-														</xsl:if>
-														<xsl:value-of select="$fields/briefcontent"/>
-													</textarea>
-												</div>
-												<xsl:if test="$editmode !='edit'">
-													<input type="hidden" name="briefcontent"
-														value="{document/fields/briefcontent}"/>
-												</xsl:if>
+												<input type="text" value="{substring(document/fields/datecontractor,1,10)}" name="datecontractor" readonly="readonly" onfocus="javascript:$(this).blur()" style="width:80px; vertical-align:top" class="td_editable">
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="readonly">readonly</xsl:attribute>
+														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+														<xsl:attribute name="onfocus">javascript:$(this).blur()</xsl:attribute>
+													</xsl:if>
+													<xsl:if test="$editmode = 'edit'">
+														<xsl:attribute name="id">datecontractor</xsl:attribute>
+													</xsl:if>
+												</input>
 											</td>
 										</tr>
-										<!-- поле "Сторона 1" -->
+										<!-- поле "Заказчик" -->
 										<tr>
 											<td class="fc" style="padding-top:5px">
 												<font style="vertical-align:top">
-													<xsl:value-of select="document/captions/contractor/@caption"/> 1 :
+													<xsl:value-of select="document/captions/customer/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
 													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
@@ -516,15 +431,15 @@
 													</tr>
 												</table>
 												<input type="hidden" value="{document/fields/contractor_one/@attrval}" id="contractor_one" name="contractor_one"/>
-												<input type="hidden" value="{document/captions/contractor/@caption} 1" id="contractor_onecaption"/>
+												<input type="hidden" value="{document/captions/customer/@caption} 1" id="contractor_onecaption"/>
 
 											</td>
 										</tr>
-										<!-- поле "Сторона 2" -->
+										<!-- поле "Исполнитель" -->
 										<tr>
 											<td class="fc" style="padding-top:5px">
 												<font style="vertical-align:top">
-													<xsl:value-of select="document/captions/contractor/@caption"/> 2 :
+													<xsl:value-of select="document/captions/performer/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
 													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
@@ -545,10 +460,190 @@
 													</tr>
 												</table>
 												<input type="hidden" value="{document/fields/contractor_two/@attrval}" id="contractor_two" name="contractor_two"/>
-												<input type="hidden" value="{document/captions/contractor/@caption} 2" id="contractor_twocaption"/>
+												<input type="hidden" value="{document/captions/performer/@caption} 2" id="contractor_twocaption"/>
 
 											</td>
 										</tr>
+										<!-- поле "Предмет договора" -->
+										<tr>
+											<td class="fc" style="padding-top:5px">
+												<xsl:value-of select="document/captions/contractsubject/@caption"/> :
+											</td>
+											<td style="padding-top:5px">
+												<input type="text" value="{document/fields/contractsubject}" name="contractsubject" class="td_editable" style="width:400px;">
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="readonly">readonly</xsl:attribute>
+														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+													</xsl:if>
+													<xsl:if test="$editmode = 'edit'">
+														<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
+														<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
+													</xsl:if>
+												</input>
+											</td>
+										</tr>
+										<!-- поле "Тип договора" -->
+										<tr>
+											<td class="fc">
+												<xsl:value-of select="document/captions/contracttype/@caption"/> :
+											</td>
+											<td>
+												<select size="1" name="contracttype" style="width:611px;" class="select_editable">
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="class">select_noteditable</xsl:attribute>
+														<xsl:attribute name="disabled"/>
+														<option value="">
+															<xsl:attribute name="selected">selected</xsl:attribute>
+															<xsl:value-of select="document/fields/contracttype"/>
+														</option>
+													</xsl:if>
+													<xsl:variable name="contracttype" select="document/fields/contracttype/@attrval"/>
+													<xsl:for-each select="document/glossaries/contracttype/query/entry">
+														<option value="{@docid}">
+															<xsl:if test="$contracttype=@docid">
+																<xsl:attribute name="selected">selected</xsl:attribute>
+															</xsl:if>
+															<xsl:value-of select="viewcontent/viewtext1"/>
+														</option>
+													</xsl:for-each>
+												</select>
+											</td>
+										</tr>
+										<!-- Куратор договора -->
+										<tr>
+											<td class="fc">
+												<font style="vertical-align:top">
+													<xsl:value-of select="document/captions/curator/@caption"/> :
+												</font>
+												<xsl:if test="$editmode = 'edit'">
+													<a href="">
+														<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','false','curator','frm', 'curatortbl');</xsl:attribute>
+														<img src="/SharedResources/img/iconset/report_magnify.png"/>
+													</a>
+												</xsl:if>
+											</td>
+											<td>
+												<table id="curatortbl">
+
+													<tr>
+														<!--<input id="tags"/>-->
+														<td style="width:600px;" class="td_editable">
+															<xsl:if test="$editmode != 'edit'">
+																<xsl:attribute name="class">td_noteditable</xsl:attribute>
+															</xsl:if>
+															<xsl:value-of select="document/fields/curator"/>&#xA0;
+														</td>
+													</tr>
+												</table>
+												<input type="hidden" id="curatorcaption" value="{document/captions/curator/@caption}"/>
+												<input type="hidden" id="curator" name="curator" value="{document/fields/curator/@attrval}"/>
+											</td>
+										</tr>
+										<!-- поле "Общая сумма договора" -->
+										<tr>
+											<td class="fc" style="padding-top:5px">
+												<xsl:value-of select="document/captions/totalamount/@caption"/> :
+											</td>
+											<td style="padding-top:5px">
+												<input type="text" value="{document/fields/totalamount}" name="totalamount" class="td_editable" style="width:150px;">
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="readonly">readonly</xsl:attribute>
+														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+													</xsl:if>
+													<xsl:if test="$editmode = 'edit'">
+														<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
+														<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
+													</xsl:if>
+												</input>
+											</td>
+										</tr>
+										<!-- поле "Срок действия договора" -->
+										<tr>
+											<td class="fc" style="padding-top:5px;position:relative;top:0px;">
+												<xsl:value-of select="document/captions/contracttime/@caption"/> :
+											</td>
+											<td style="padding-top:5px">
+												<input type="text" name="contracttime" maxlength="10" class="td_editable" style="width:80px; vertical-align:top" readonly="readonly" onfocus="javascript:$(this).blur()" value="{substring(document/fields/contracttime,1,10)}">
+													<xsl:if test="$editmode = 'edit'">
+														<xsl:attribute name="id">contracttime</xsl:attribute>
+													</xsl:if>
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+													</xsl:if>
+												</input>
+											</td>
+										</tr>
+										<!-- поле "Срок исполнения договора" -->
+										<tr>
+											<td class="fc" style="padding-top:5px;position:relative;top:0px;">
+												<xsl:value-of select="document/captions/controldate/@caption"/> :
+											</td>
+											<td style="padding-top:5px">
+												<input type="text" name="controldate" maxlength="10" class="td_editable" style="width:80px; vertical-align:top" readonly="readonly" onfocus="javascript:$(this).blur()" value="{substring(document/fields/controldate,1,10)}">
+													<xsl:if test="$editmode = 'edit'">
+														<xsl:attribute name="id">controldate</xsl:attribute>
+													</xsl:if>
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+													</xsl:if>
+												</input>
+											</td>
+										</tr>
+										<!-- поле "Комментарии" -->
+										<tr>
+											<td class="fc" style="padding-top:5px">
+												<xsl:value-of select="document/captions/briefcontent/@caption"/> :
+											</td>
+											<td style="padding-top:5px">
+												<textarea name="briefcontent" rows="3" class="textarea_editable" style="width:750px">
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="readonly">readonly</xsl:attribute>
+														<xsl:attribute name="class">textarea_noteditable</xsl:attribute>
+													</xsl:if>
+													<xsl:if test="$editmode = 'edit'">
+														<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
+														<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
+													</xsl:if>
+													<xsl:value-of select="document/fields/briefcontent"/>
+												</textarea>
+											</td>
+										</tr>
+										<!-- поле "КазСодержание(Ежемесячно)" -->
+										<tr>
+											<td class="fc" style="padding-top:5px">
+												<xsl:value-of select="document/captions/kazcontent/@caption"/> :
+											</td>
+											<td style="padding-top:5px">
+												<select size="1" name="kazcontent" style="width:611px;" class="select_editable">
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="class">select_noteditable</xsl:attribute>
+														<xsl:attribute name="disabled"/>
+													</xsl:if>
+													<option value="month">
+														<xsl:if test="document/fields/kazcontent = 'month'">
+															<xsl:attribute name="selected">selected</xsl:attribute>
+														</xsl:if>
+														Ежемесячно
+													</option>
+													<option value="quarter">
+														<xsl:if test="document/fields/kazcontent = 'quarter'">
+															<xsl:attribute name="selected">selected</xsl:attribute>
+														</xsl:if>
+														Поквартально
+													</option>
+													<option value="onetime">
+														<xsl:if test="document/fields/kazcontent = 'onetime'">
+															<xsl:attribute name="selected">selected</xsl:attribute>
+														</xsl:if>
+														Единоразово
+													</option>
+												</select>
+											</td>
+										</tr>
+
+
+
+
 									</table>
 									<br />
 								</div>

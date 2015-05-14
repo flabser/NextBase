@@ -31,11 +31,11 @@
 			 	<table style="width:auto; border-collapse:collapse">
 					<tr class="notviewtr">
 						<td style="max-width:35px; width:35px;  padding-left:3px; text-align:center">
-							<xsl:if test="/request/@id = 'workdocprj' or /request/@id = 'outgoingprj' or /request/@id ='officememoprj' or //current_outline_entry/response/content/entry/@formid = ' memoprj' or //current_outline_entry/response/content/entry/@formid = 'outgoingprj'">
+							<xsl:if test="/request/@id = 'contractprj' or /request/@id = 'workdocprj' or /request/@id = 'outgoingprj' or /request/@id ='officememoprj' or //current_outline_entry/response/content/entry/@formid = ' memoprj' or //current_outline_entry/response/content/entry/@formid = 'outgoingprj'">
 								<xsl:attribute name="style">width:20px; padding-left:3px;</xsl:attribute>
 							</xsl:if>
 						</td>
-						<xsl:if test="/request/@id != 'workdocprj' and /request/@id != 'outgoingprj' and /request/@id !='officememoprj' and /request/@id != 'waitforsign' and /request/@id != 'waitforcoord' and //current_outline_entry/response/content/entry/@formid != 'officememoprj' and //current_outline_entry/response/content/entry/@formid != 'outgoingprj'">
+						<xsl:if test="/request/@id != 'contractprj' and /request/@id != 'workdocprj' and /request/@id != 'outgoingprj' and /request/@id !='officememoprj' and /request/@id != 'waitforsign' and /request/@id != 'waitforcoord' and //current_outline_entry/response/content/entry/@formid != 'officememoprj' and //current_outline_entry/response/content/entry/@formid != 'outgoingprj'">
 							<td style="min-width:16px; padding-left:3px">
 								<xsl:if test="viewcontent/viewtext3 = '0' or /request/@id = 'completetask' or viewcontent/viewtext3 = '0'">
 									<img id="control" title="Документ снят с контроля" src="/SharedResources/img/classic/icons/tick.png"/>
@@ -52,7 +52,7 @@
 			</td>
 				
 			<!-- Number -->
-			<xsl:if test="/request/@id != 'outgoingprj' and /request/@id != 'outdocreg' and /request/@id != 'officememoprj' and //current_outline_entry/response/content/entry/@formid != 'officememoprj' and //current_outline_entry/response/content/entry/@formid != 'outgoingprj'">
+			<xsl:if test="/request/@id != 'contractprj' and /request/@id != 'outgoingprj' and /request/@id != 'outdocreg' and /request/@id != 'officememoprj' and //current_outline_entry/response/content/entry/@formid != 'officememoprj' and //current_outline_entry/response/content/entry/@formid != 'outgoingprj'">
 				<td  style="border:1px solid #ccc;width:60px;">
 					<div style="overflow:hidden; width:99%;">
 						<xsl:if test="@hasresponse='1'">
@@ -78,7 +78,7 @@
 				</td>
 			</xsl:if>
 			<!-- Status -->
-			<xsl:if test ="/request/@id='outgoingprj' or /request/@id ='officememoprj' or //current_outline_entry/response/content/entry/@formid = 'officememoprj' or //current_outline_entry/response/content/entry/@formid = 'outgoingprj'">
+			<xsl:if test ="/request/@id='contractprj' or /request/@id='outgoingprj' or /request/@id ='officememoprj' or //current_outline_entry/response/content/entry/@formid = 'officememoprj' or //current_outline_entry/response/content/entry/@formid = 'outgoingprj'">
 				<td style="border:1px solid #ccc;width:160px;">
 					<div style="overflow:hidden; width:99%;">
 						<a href="{@url}" class="doclink" style="width:100%; margin-left:5px">
@@ -401,7 +401,7 @@
 														</xsl:call-template>
 													</td>
 												</xsl:if>
-												<xsl:if test ="/request/@id='outgoingprj' or /request/@id='officememoprj' or //current_outline_entry/response/content/entry/@formid = 'officememoprj' or //current_outline_entry/response/content/entry/@formid = 'outgoingprj'">
+												<xsl:if test ="/request/@id='contractprj' or /request/@id='outgoingprj' or /request/@id='officememoprj' or //current_outline_entry/response/content/entry/@formid = 'officememoprj' or //current_outline_entry/response/content/entry/@formid = 'outgoingprj'">
 													<td width ="160px" class ="thcell">
 														<xsl:value-of select ="page/captions/status/@caption"/>
 													</td>
