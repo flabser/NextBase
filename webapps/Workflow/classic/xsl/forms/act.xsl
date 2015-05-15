@@ -104,7 +104,7 @@
 					<script>
 						var _calendarLang = "<xsl:value-of select="/request/@lang"/>";
 						$(function() {
-							var dates = $("#startexecperiod, #endcontractperiod").datepicker({
+							var dates = $("#startexecperiod, #endexecperiod").datepicker({
 								defaultDate: "+1w",
 								showOn: "button",
 								buttonImage: '/SharedResources/img/iconset/calendar.png',
@@ -149,7 +149,7 @@
 							<xsl:call-template name="get_document_accesslist"/>
 							<xsl:call-template name="save"/>
 							<xsl:call-template name="acquaint"/>
-							<xsl:call-template name="newact"/>
+							<xsl:call-template name="newmark"/>
 							<xsl:call-template name="ECPsign"/>
 
 						</span>
@@ -248,11 +248,6 @@
 												<font style="vertical-align:top">
 													<xsl:value-of select="document/captions/customer/@caption"/> :
 												</font>
-												<xsl:if test="$editmode = 'edit'">
-													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
-														<xsl:attribute name="onclick">javascript:dialogBoxStructure('corrcat','false','contractor_one','frm', 'corresptbl');</xsl:attribute>
-													</img>
-												</xsl:if>
 											</td>
 											<td style="padding-top:5px">
 												<table id="corresptbl" style="border-spacing:0px 3px; margin-top:-3px">
@@ -277,11 +272,6 @@
 												<font style="vertical-align:top">
 													<xsl:value-of select="document/captions/performer/@caption"/> :
 												</font>
-												<xsl:if test="$editmode = 'edit'">
-													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
-														<xsl:attribute name="onclick">javascript:dialogBoxStructure('corrcat','false','contractor_two','frm', 'corresptbl_two');</xsl:attribute>
-													</img>
-												</xsl:if>
 											</td>
 											<td style="padding-top:5px">
 												<table id="corresptbl_two" style="border-spacing:0px 3px; margin-top:-3px">
@@ -364,9 +354,9 @@
 												</xsl:if>
 											</input>
 											<font style="vertical-align:3px">&#xA0;&#xA0;<xsl:value-of select="document/captions/to/@caption"/>&#xA0;&#xA0;</font>
-											<input type="text" name="endcontractperiod" maxlength="10" class="td_editable" style="width:80px; vertical-align:top" readonly="readonly" onfocus="javascript:$(this).blur()" value="{substring(document/fields/endcontractperiod,1,10)}">
+											<input type="text" name="endexecperiod" maxlength="10" class="td_editable" style="width:80px; vertical-align:top" readonly="readonly" onfocus="javascript:$(this).blur()" value="{substring(document/fields/endexecperiod,1,10)}">
 												<xsl:if test="$editmode = 'edit'">
-													<xsl:attribute name="id">endcontractperiod</xsl:attribute>
+													<xsl:attribute name="id">endexecperiod</xsl:attribute>
 												</xsl:if>
 												<xsl:if test="$editmode != 'edit'">
 													<xsl:attribute name="class">td_noteditable</xsl:attribute>
@@ -471,7 +461,7 @@
 								</div>
 								<!-- Скрытые поля документа -->
 								<input type="hidden" name="type" value="save"/>
-								<input type="hidden" name="id" value="contract"/>
+								<input type="hidden" name="id" value="act"/>
 								<input type="hidden" name="author" value="{document/fields/author/@attrval}"/>
 								<input type="hidden" name="allcontrol" value="{document/fields/allcontrol}"/>
 								<input type="hidden" name="doctype" value="{document/@doctype}"/>

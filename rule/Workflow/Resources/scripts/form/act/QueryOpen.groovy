@@ -63,6 +63,9 @@ class QueryOpen extends _FormQueryOpen {
 		if(doc.getAuthorID() == user.getUserID()){
 			actionBar.addAction(new _Action(getLocalizedWord("Ознакомить",lang),getLocalizedWord("Ознакомить",lang),"acquaint"))
 		}
+		if(doc.getValueString("responsible") == user.getUserID()){
+			actionBar.addAction(new _Action(getLocalizedWord("Отметка",lang),getLocalizedWord("Отметка",lang),"compose_mark"))
+		}
 		actionBar.addAction(new _Action(getLocalizedWord("Закрыть",lang),getLocalizedWord("Закрыть без сохранения",lang),_ActionType.CLOSE))
 		publishElement(actionBar)
 		def doctitle = "Акт"
@@ -71,19 +74,15 @@ class QueryOpen extends _FormQueryOpen {
 		publishValue("vn",doc.getValueString("vn"))
 		publishValue("dvn",doc.getValueString("dvn"))
 		publishValue("numcontractor",doc.getValueString("numcontractor"))
-		publishValue("datecontractor",doc.getValueString("datecontractor"))
-		publishValue("kazcontent",doc.getValueString("kazcontent"))
-		publishValue("contractsubject",doc.getValueString("contractsubject"))
 		publishValue("totalamount",doc.getValueString("totalamount"))
-		publishValue("contracttime",doc.getValueString("contracttime"))
-		publishValue("controldate",doc.getValueString("controldate"))
-		publishEmployer("curator",doc.getValueString("curator"))
-		publishValue("comments",doc.getValueString("comments"))
+		publishValue("startexecperiod",doc.getValueString("startexecperiod"))
+		publishValue("endexecperiod",doc.getValueString("endexecperiod"))
+		publishEmployer("responsible",doc.getValueString("responsible"))
+        publishValue("numinvoice",doc.getValueString("numinvoice"))
+		//publishValue("comments",doc.getValueString("comments"))
         def pDoc;
-		if (webFormData.containsField("parentdocid") && webFormData.containsField("parentdoctype") && webFormData.getValue("parentdocid") != '0') {
-			int pdocid = Integer.parseInt(webFormData.getValueSilently("parentdocid"))
-			int pdoctype = Integer.parseInt(webFormData.getValueSilently("parentdoctype"))
-			pDoc = ses.getCurrentDatabase().getDocumentByComplexID(pdoctype, pdocid);
+		if (doc.getField("parentdocid") && doc.getValueNumber("parentdocid") != 0) {
+			pDoc = doc.getParentDocument()
 			publishValue("contractnumber", pDoc.getValueString("vn"))
 			publishValue("contractdate", pDoc.getValueString("dvn"))
 			if (pDoc.getField("contractor_one")) {
@@ -93,26 +92,12 @@ class QueryOpen extends _FormQueryOpen {
 				publishGlossaryValue("contractor_two",pDoc.getValueNumber("contractor_two"))
 			}
 		}
-		publishValue("briefcontent",doc.getValueString("briefcontent"))
-		publishGlossaryValue("contracttype",doc.getValueNumber("contracttype"))
+		//publishValue("briefcontent",doc.getValueString("briefcontent"))
 		try{
 			publishAttachment("rtfcontent","rtfcontent")
 		}catch(_Exception e){
 
 		}
-		if(doc.getField("parentdocid") && doc.getValueNumber("parentdocid") != 0){
-			try{
-				def parentdoc = doc.getParentDocument();
-				def	blockCollection  = (_BlockCollection)parentdoc.getValueObject("coordination")
-				publishValue("coordination", blockCollection)
-			}catch(_Exception e){
-
-			}
-		}
 		publishValue("contentsource",doc.getValueString("contentsource"))
-		def link  = (_CrossLink)doc.getValueObject("link")
-		publishValue("link", link)
-
-
 	}
 }

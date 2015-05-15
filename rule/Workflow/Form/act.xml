@@ -14,6 +14,7 @@
 	<caption name="properties" source="KEYWORD">Свойства</caption>
 	<caption name="attachments" source="KEYWORD">Вложения</caption>
 	<caption name="content" source="KEYWORD">Содержание</caption>
+	<caption name="customer" source="KEYWORD">Заказчик</caption>
 	<caption name="performer" source="KEYWORD">Исполнитель</caption>
 	<caption name="responsible" source="KEYWORD">Ответственный</caption>
 	<caption name="execperiod" source="KEYWORD">Период оказания услуг</caption>
@@ -90,7 +91,6 @@
 	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
 	<caption name="contractnumber" source="KEYWORD">Договор №</caption>
 	<caption name="numinvoice" source="KEYWORD">№ счет-фактуры</caption>
-	<caption name="customer" source="KEYWORD">Заказчик</caption>
 	<caption name="datecontractor" source="KEYWORD">Дата регистрации у контрагента</caption>
 	<caption name="initemp" source="KEYWORD">Инициирующий сотрудник</caption>
 	<caption name="comments" source="KEYWORD">Комментарии</caption>

@@ -240,11 +240,11 @@
 												</input>
 											</td>
 										</tr>
-										<!-- поле "Сторона 1" -->
+										<!-- поле "Заказчик" -->
 										<tr>
 											<td class="fc" style="padding-top:5px">
 												<font style="vertical-align:top">
-													<xsl:value-of select="document/captions/contractor/@caption"/> 1 :
+													<xsl:value-of select="document/captions/customer/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
 													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
@@ -265,15 +265,15 @@
 													</tr>
 												</table>
 												<input type="hidden" value="{document/fields/contractor_one/@attrval}" id="contractor_one" name="contractor_one"/>
-												<input type="hidden" value="{document/captions/contractor/@caption} 1" id="contractor_onecaption"/>
+												<input type="hidden" value="{document/captions/customer/@caption} 1" id="contractor_onecaption"/>
 
 											</td>
 										</tr>
-										<!-- поле "Сторона 2" -->
+										<!-- поле "Исполнитель" -->
 										<tr>
 											<td class="fc" style="padding-top:5px">
 												<font style="vertical-align:top">
-													<xsl:value-of select="document/captions/contractor/@caption"/> 2 :
+													<xsl:value-of select="document/captions/performer/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
 													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
@@ -294,7 +294,7 @@
 													</tr>
 												</table>
 												<input type="hidden" value="{document/fields/contractor_two/@attrval}" id="contractor_two" name="contractor_two"/>
-												<input type="hidden" value="{document/captions/contractor/@caption} 2" id="contractor_twocaption"/>
+												<input type="hidden" value="{document/captions/performer/@caption} 2" id="contractor_twocaption"/>
 
 											</td>
 										</tr>

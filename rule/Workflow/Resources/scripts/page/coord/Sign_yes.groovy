@@ -109,11 +109,19 @@ class Sign_yes extends _DoScript {
                 _doc.addStringField("curator", doc.getValueString("curator"))
                 _doc.addNumberField("contractor_one", doc.getValueNumber("contractor_one"))
                 _doc.addNumberField("contractor_two", doc.getValueNumber("contractor_two"))
-                _doc.addStringField("contractname", doc.getValueString("contractname"))
+                _doc.addStringField("contracttime", doc.getValueString("contracttime"))
+                _doc.addStringField("controldate", doc.getValueString("controldate"))
+                _doc.addStringField("totalamount", doc.getValueString("totalamount"))
+                _doc.addStringField("numcontractor", doc.getValueString("numcontractor"))
+                _doc.addStringField("datecontractor", doc.getValueString("datecontractor"))
+                _doc.addStringField("kazcontent", doc.getValueString("kazcontent"))
+                _doc.addStringField("briefcontent", doc.getValueString("briefcontent"))
+                _doc.addStringField("contractsubject", doc.getValueString("contractsubject"))
                 _doc.addStringField("in", doc.getValueString("vn"))
                 _doc.addDateField("dvn", new Date())
-                _doc.addStringField("vn", "")
-                _doc.setViewText("Договор №" + _doc.getValueString("vn") + " " + _Helper.getDateAsStringShort(_doc.getValueDate("dvn")) + "  " + session.getStructure()?.getEmployer(doc.getAuthorID())?.getShortName() + " " + doc.getValueString("briefcontent"));
+                int num = cdb.getRegNumber("contract");
+                _doc.addStringField("vn", num.toString());
+                _doc.setViewText("Договор №" + num.toString() + " " + _Helper.getDateAsStringShort(_doc.getValueDate("dvn")) + "  " + session.getStructure()?.getEmployer(doc.getAuthorID())?.getShortName() + " " + doc.getValueString("briefcontent"));
                 _doc.addNumberField("contracttype", doc.getValueNumber("contracttype"))
                 _doc.setViewNumber(_doc.getValueString("vn").isNumber() ? _doc.getValueString("vn").toInteger() : 0)
             }

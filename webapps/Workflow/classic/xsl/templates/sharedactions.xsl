@@ -164,7 +164,31 @@
 			</button>
 		</xsl:if>
 	</xsl:template>
-	
+
+	<xsl:template name="newact">
+		<xsl:if test="document/actionbar/action[@id='compose_act']/@mode = 'ON'">
+			<button title ="{document/actionbar/action[@id = 'compose_act']/@hint}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="btnexecution" style="margin-right:5px" autocomplete="off">
+				<xsl:attribute name="onclick">javascript:window.location.href="Provider?type=edit&amp;element=document&amp;id=act&amp;docid=&amp;parentdocid=<xsl:value-of select="document/@docid"/>&amp;parentdoctype=<xsl:value-of select="document/@doctype"/>"</xsl:attribute>
+				<span>
+					<img src="/SharedResources/img/classic/icons/page_white.png" class="button_img"/>
+					<font class="button_text"><xsl:value-of select="document/actionbar/action[@id='compose_act']/@caption"/></font>
+				</span>
+			</button>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template name="newmark">
+		<xsl:if test="document/actionbar/action[@id='compose_mark']/@mode = 'ON'">
+			<button title ="{document/actionbar/action[@id = 'compose_mark']/@hint}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="btnexecution" style="margin-right:5px" autocomplete="off">
+				<xsl:attribute name="onclick">javascript:window.location.href="Provider?type=edit&amp;element=document&amp;id=mark&amp;docid=&amp;parentdocid=<xsl:value-of select="document/@docid"/>&amp;parentdoctype=<xsl:value-of select="document/@doctype"/>"</xsl:attribute>
+				<span>
+					<img src="/SharedResources/img/classic/icons/page_done.png" class="button_img"/>
+					<font class="button_text"><xsl:value-of select="document/actionbar/action[@id='compose_mark']/@caption"/></font>
+				</span>
+			</button>
+		</xsl:if>
+	</xsl:template>
+
 	<!--кнопка закрыть-->
 	<xsl:template name="cancel">
 		<button title= "{document/captions/close/@hint}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="canceldoc" autocomplete="off">
