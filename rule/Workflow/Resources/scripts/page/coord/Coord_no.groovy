@@ -1,11 +1,5 @@
 package page.coord
-
-import kz.nextbase.script._CrossLink
-import kz.nextbase.script._Document
-import kz.nextbase.script._Exception
-import kz.nextbase.script._Helper
-import kz.nextbase.script._Session
-import kz.nextbase.script._WebFormData
+import kz.nextbase.script.*
 import kz.nextbase.script.constants._BlockStatusType
 import kz.nextbase.script.constants._BlockType
 import kz.nextbase.script.constants._CoordStatusType
@@ -84,7 +78,9 @@ class Coord_no extends _DoScript {
 		for (coord in coordlist){
 			if(coord.getUserID() == session.getUser().userID){
 				coord.setDecision(_DecisionType.DISAGREE, formData.getValueSilently("comment"))
-				if (block.getBlockType() == _BlockType.SERIAL_COORDINATION){
+                println block.getBlockType() == _BlockType.SERIAL_COORDINATION
+                println session.getGlobalSettings().stopCoordAfterNo == Boolean.TRUE
+                if (block.getBlockType() == _BlockType.SERIAL_COORDINATION || session.getGlobalSettings().stopCoordAfterNo == Boolean.TRUE){
 					block.setBlockStatus(_BlockStatusType.COORDINATED);
 					rejectProject(doc);
 				}else{
@@ -126,7 +122,7 @@ class Coord_no extends _DoScript {
 											decisions.add(c.getDecisionType())
 										}
 									}
-									if (!decisions.any{it == _DecisionType.DISAGREE }) {
+									if (!decisions.any{it == _DecisionType.DISAGREE } || session.getGlobalSettings().sendToSignAfterNo == Boolean.TRUE) {
 										doc_blc.setCoordStatus(_CoordStatusType.COORDINATED);
 										doc_blc.setCoordStatus(_CoordStatusType.SIGNING);
 										nextBlock.setBlockStatus(_BlockStatusType.COORDINATING);

@@ -70,6 +70,8 @@ public class GlobalSetting {
 	public ScheduleSettings timeWaitingSchedSettings;
 	public ScheduleSettings recalcualtorSchedSettings;
 	public String vocabulary = "vocabulary.xml";
+    public boolean stopCoordAfterNo = Boolean.FALSE;
+    public boolean sendToSignAfterNo = Boolean.TRUE;
 
 	public UserRoleCollection roleCollection = new UserRoleCollection();
 	public HashMap <String, ExternalModule> extModuleMap = new HashMap <String, ExternalModule>();
@@ -205,6 +207,9 @@ public class GlobalSetting {
 			if(defaultRedirectURL.equalsIgnoreCase("")){
 				defaultRedirectURL = "Error?type=default_url_not_defined";
 			}
+
+            stopCoordAfterNo = XMLUtil.getBooleanContent(doc, "/rule/coordination/parallel/stopcoordafterno");
+            sendToSignAfterNo = XMLUtil.getBooleanContent(doc, "/rule/coordination/parallel/sendtosignafterno");
 
 			NodeList rules = XMLUtil.getNodeList(doc, "/rule/rules/entry");
 			for (int i = 0; i < rules.getLength(); i++) {

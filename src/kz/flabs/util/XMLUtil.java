@@ -123,6 +123,22 @@ public class XMLUtil {
 		return textResult;
 	}
 
+    public static boolean getBooleanContent(Document doc, String xPathExpression){
+        boolean boolResult = Boolean.FALSE;
+        XPathFactory factory = XPathFactory.newInstance();
+        XPath xpath = factory.newXPath();
+        try {
+            Object result = xpath.compile(xPathExpression).evaluate(doc, XPathConstants.NODESET);
+            NodeList nodes = (NodeList) result;
+            Node node = nodes.item(0);
+            if (node!=null)boolResult = Boolean.parseBoolean(node.getTextContent());
+
+        } catch (Exception e) {
+            AppEnv.logger.warningLogEntry("Error of the rule file structure (" + xPathExpression +")");
+        }
+        return boolResult;
+    }
+
 	public static int getNumberContent(Document doc, String xPathExpression){
 		int intResult = 0;
 		XPathFactory factory = XPathFactory.newInstance();
