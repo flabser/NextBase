@@ -38,9 +38,9 @@ public class Server{
 		Environment.init();
 		 
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
-		webServerInst.init(Environment.hostName);
-		
-		if(Environment.adminConsoleEnable){				
+        webServerInst.init(Environment.hostName);
+
+        if(Environment.adminConsoleEnable){
 			Host host = webServerInst.addApplication("Administrator", "/Administrator", "Administrator");
 			if(Environment.remoteConsole){
 			    rmiServer = RMIServer.getInstance();

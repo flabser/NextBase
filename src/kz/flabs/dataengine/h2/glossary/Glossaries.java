@@ -1087,7 +1087,8 @@ public class Glossaries extends DatabaseCore implements IGlossaries, Const{
 	@Override
 	public _ViewEntryCollection getCollectionByCondition(ISelectFormula sf,	int pageNum, int pageSize, Set<DocID> expandedDocuments, RunTimeParameters parameters,	boolean checkResponse) {
         ViewEntryCollection coll = new ViewEntryCollection(pageSize, new User(Const.sysUser, env), parameters);
-        Set<String> users = new HashSet<>();
+        Set<String> users = new HashSet<String>();
+		users.add(Const.sysUser);
         Connection conn = dbPool.getConnection();
         try {
             conn.setAutoCommit(false);
