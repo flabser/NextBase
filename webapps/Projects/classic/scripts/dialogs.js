@@ -48,6 +48,9 @@ function pickListSingleOk(docid){
 		}else{
 			$(table).append("<tr><td width='500px' class='td_editable'>"+ text +"</td></tr>")
 			$("#frm").append("<input type='hidden' name='"+ queryOpt.fieldname +"' id='"+queryOpt.fieldname+"' value='"+docid+"'/>")
+            if(queryOpt.fieldname == "executer"){
+                calcRating(docid)
+            }
 		}
 	}
 	pickListClose(); 
@@ -97,7 +100,9 @@ function pickListBtnOk(){
 							}
 							$(table).append("<tr><td style='width:500px;' class='td_editable'>"+hidfields[indx].value +" <input type='hidden' name='executer' value='"+ hidfields[indx].id +"'/>" +
 								"<input style='margin:2px 2px 2px 0px; float:right' type='radio' "+checked+" name='responsible' value='"+hidfields[indx].id+"' title='Выбор ответственного исполнителя'/></td></tr>");
+
 						})
+                        calcRating(hidfields[hidfields.length-1].id)
 					}else{
 						$('input[name=chbox]:checked').each(function(indx, element){
 							$(table).append("<tr><td style='width:500px;' class='td_editable'>"+$(this).val() +"</td></tr>");
@@ -120,6 +125,26 @@ function pickListBtnOk(){
 			msgtxt ="选择";
 		infoDialog(msgtxt);
 	}
+}
+
+function calcRating(executers){
+    //alert(document.getElementById('rating') )
+    if(document.getElementById('rating')==null)
+        return false;
+    $("#rating").html("")
+    $("#rating_star_img").attr("src", "/SharedResources/img/iconset/star.gif").attr("style","width:30px;opacity:0.6")
+    $.ajax({
+        type:"GET",
+        async: true,
+        datetype: "xml",
+        url: "Provider?type=page&id=calc_rating&executers=" + executers,
+        success: function(xml){
+            $("#rating_star_img").attr("src", "/SharedResources/img/iconset/star2.png").attr("style","width:22px;opacity:0.6;vertical-align: 3px;")
+            $("#rating").html($(xml).find("result").text())
+        },
+        error: function(data,status,xhr){
+        }
+    })
 }
 
 function pickListClose(){ 
@@ -243,9 +268,10 @@ function dialogBoxStructure(query,isMultiValue, field, form, table) {
 	centring('picklist',500,500);
 	$("#picklist").focus().css('display', "none");
 	$("#headertext").text($("#"+field+"caption").val());
-	
+
 	$.ajax({
 		type: "get",
+        async: true,
 		url: 'Provider?type='+_type+'&id='+query+'&keyword='+queryOpt.keyword+'&page='+queryOpt.pagenum,
 		success:function (data){
 			elem = $(data);

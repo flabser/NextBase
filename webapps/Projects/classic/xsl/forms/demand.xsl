@@ -315,7 +315,7 @@
 											<img src="/SharedResources/img/iconset/document_mark_as_final.png" class="button_img"/>
 											<font class="button_text">
 												<xsl:value-of select="$captions/resetControl/@caption"/>	
-											</font>
+					 						</font>
 										</span>
 									</button> 
 								</xsl:if>
@@ -519,7 +519,7 @@
 												</xsl:if>
 											</td>
 											<td style="padding:0px">
-												<table id="executerbl">
+												<table id="executerbl" style="display:inline-block">
 													<xsl:if test="$status = 'new'">
 														<tr>
 															<td width="500px" class="td_editable">
@@ -543,7 +543,17 @@
 															</td>
 														</tr>
 													</xsl:for-each>
-												</table> 
+                                                    <xsl:if test="document/@status ='new'">
+                                                        <input type="hidden" id="executer" name="executer" onChange="javascript:alert('ss')" />
+                                                    </xsl:if>
+												</table>
+                                                <xsl:if test="document/current_userid = 'kkuliyev' or document/current_userid = 'bnurlanbekova' or document/current_userid = 'ppadalko'">
+                                                    <div style="display:inline-block">
+                                                        <img title="рейтинг" src="/SharedResources/img/iconset/star2.png" id="rating_star_img" style="width:22px; opacity:0.6;  vertical-align: 3px;"/>
+                                                        <span id="rating" style="vertical-align: 5px;color: #febd0c;padding-left: 5px;">
+                                                        </span>
+                                                    </div>
+                                                </xsl:if>
 												<xsl:if test="document/fields/responsible">
 													<input type="hidden" name="responsible" value="{document/fields/responsible}"/>
 												</xsl:if>
