@@ -5,9 +5,9 @@
 	<doctype>post</doctype>
 	<title source="KEYWORD">Комментарий</title>
 	<events>
-		<queryopen source="file">form.comment.QueryOpen</queryopen> 
-		<querysave source="file">form.comment.QuerySave</querysave>
-		<postsave source="file">form.comment.PostSave</postsave>   
+		<queryopen source="file">projects.form.comment.QueryOpen</queryopen>
+		<querysave source="file">projects.form.comment.QuerySave</querysave>
+		<postsave source="file">projects.form.comment.PostSave</postsave>
 	</events> 
 	<caption name="commenttext" source="KEYWORD">Текст комментария</caption>
 	<caption name="close" source="KEYWORD">Закрыть</caption>

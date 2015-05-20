@@ -10,7 +10,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name>executers</name>
 		<events>
-			<doscript source="file">page.executers.DoScript</doscript>
+			<doscript source="file">projects.page.executers.DoScript</doscript>
 		</events>
 	</element> 
 </rule>

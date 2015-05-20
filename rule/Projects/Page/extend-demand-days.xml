@@ -6,7 +6,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name>script_result</name>
 		<events>
-			<doscript source="file">page.extend_demand_days.DoScript</doscript>
+			<doscript source="file">projects.page.extend_demand_days.DoScript</doscript>
 		</events>
 	</element>
 </rule>

@@ -5,7 +5,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name>share_navi</name>
 		<events>
-			<doscript source="file">page.share_navi.DoScript</doscript>
+			<doscript source="file">projects.page.share_navi.DoScript</doscript>
 		</events>
 	</element>
 </rule>

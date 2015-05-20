@@ -4,9 +4,9 @@
 	<xsltfile>forms/project.xsl</xsltfile>
 	<doctype>main</doctype>
 	<events>
-		<queryopen source="file">form.project.QueryOpen</queryopen>
-		<querysave source="file">form.project.QuerySave</querysave>
-		<postsave source="file">form.project.PostSave</postsave>
+		<queryopen source="file">projects.form.project.QueryOpen</queryopen>
+		<querysave source="file">projects.form.project.QuerySave</querysave>
+		<postsave source="file">projects.form.project.PostSave</postsave>
 	</events> 
 	<caption name="close" source="KEYWORD">Закрыть</caption>
 	<caption name="newproject" source="KEYWORD">Новый проект</caption>

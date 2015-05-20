@@ -10,19 +10,19 @@
     <element mode="ON" type="SCRIPT">
         <name>filter_elements</name>
         <events>
-            <doscript source="file">page.filter_content.DoScriptProjects</doscript>
+            <doscript source="file">projects.page.filter_content.DoScriptProjects</doscript>
         </events>
     </element>
     <element mode="ON" type="SCRIPT">
 		<name>action_bar</name>
 		<events>
-			<doscript source="file">page.prjs_actionbar.projects</doscript>
+			<doscript source="file">projects.page.prjs_actionbar.projects</doscript>
 		</events>
 	</element>
 	<element mode="ON" type="SCRIPT">
 		<name>view_content</name>
 		<events>
-			<doscript source="file">page.getDocsListProjects.DoScript</doscript>
+			<doscript source="file">projects.page.getDocsListProjects.DoScript</doscript>
 		</events>
 	</element>
 	<!--  <caption name="viewdate" source="KEYWORD">Срок окончания</caption>

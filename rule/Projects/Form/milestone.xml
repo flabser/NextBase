@@ -64,9 +64,9 @@
 	</show>
 	
 	<events> 
-		<querysave source="file">form.milestone.QuerySave</querysave> 
-		<postsave source="file">form.milestone.PostSave</postsave>
-		<queryopen source="file">form.milestone.QueryOpen</queryopen>
+		<querysave source="file">projects.form.milestone.QuerySave</querysave>
+		<postsave source="file">projects.form.milestone.PostSave</postsave>
+		<queryopen source="file">projects.form.milestone.QueryOpen</queryopen>
 	</events> 
 
 	<viewtext><![CDATA[

@@ -5,7 +5,7 @@
 	<doctype>system</doctype>
 	<title source="KEYWORD">Свойства пользователя</title>
 	<events>
-		<queryopen source="file">form.userprofile.QueryOpenProjects</queryopen>
+		<queryopen source="file">projects.form.userprofile.QueryOpenProjects</queryopen>
 	</events>
 	<default>
 	</default>

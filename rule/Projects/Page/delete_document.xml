@@ -5,7 +5,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name></name>
 		<events>
-			<doscript source="file">page.prjs_delete_document.DoScript</doscript>
+			<doscript source="file">projects.page.prjs_delete_document.DoScript</doscript>
 		</events>
 	</element>
 </rule>

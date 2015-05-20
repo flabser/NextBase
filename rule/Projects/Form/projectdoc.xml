@@ -5,9 +5,9 @@
 	<doctype>main</doctype>
 	<title></title>
 	<events>
-		<queryopen source="file">form.projectdoc.QueryOpen</queryopen>
-		<querysave source="file">form.projectdoc.QuerySave</querysave>
-		<postsave source="file">form.projectdoc.PostSave</postsave>
+		<queryopen source="file">projects.form.projectdoc.QueryOpen</queryopen>
+		<querysave source="file">projects.form.projectdoc.QuerySave</querysave>
+		<postsave source="file">projects.form.projectdoc.PostSave</postsave>
 	</events> 
 	<default>
 		<action mode="on" type="SAVE">

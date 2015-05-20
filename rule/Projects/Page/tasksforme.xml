@@ -14,13 +14,13 @@
 	<element mode="ON" type="SCRIPT">
 		<name>action_bar</name>
 		<events>
-			<doscript source="file">page.prjs_actionbar.demand</doscript>
+			<doscript source="file">projects.page.prjs_actionbar.demand</doscript>
 		</events>
 	</element>
 	<element mode="ON" type="SCRIPT">
 		<name>script_result</name>
 		<events>
-			<doscript source="file">page.getDocsListTasksForMe.DoScript</doscript>
+			<doscript source="file">projects.page.getDocsListTasksForMe.DoScript</doscript>
 		</events>
 	</element> 
 	<element mode="ON" type="INCLUDED_PAGE">

@@ -7,7 +7,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name>script_result</name>
 		<events>
-			<doscript source="file">page.changebriefcontentdemand.DoScript</doscript>
+			<doscript source="file">projects.page.changebriefcontentdemand.DoScript</doscript>
 		</events>
 	</element>
 	

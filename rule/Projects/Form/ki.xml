@@ -5,9 +5,9 @@
 	<doctype>main</doctype>
 
 	<events> 
-		<querysave source="file">form.ki.QuerySave</querysave>
-		<postsave source="file">form.ki.PostSave</postsave>   
-		<queryopen source="file">form.ki.QueryOpen</queryopen>   
+		<querysave source="file">projects.form.ki.QuerySave</querysave>
+		<postsave source="file">projects.form.ki.PostSave</postsave>
+		<queryopen source="file">projects.form.ki.QueryOpen</queryopen>
 	</events> 
 	
 

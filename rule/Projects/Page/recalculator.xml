@@ -6,7 +6,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name>script_result</name>
 		<events>
-			<doscript source="file">page.recalculator.DoScript</doscript>
+			<doscript source="file">projects.page.recalculator.DoScript</doscript>
 		</events>
 	</element>
 </rule>

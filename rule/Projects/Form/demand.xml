@@ -4,9 +4,9 @@
 	<xsltfile>forms/demand.xsl</xsltfile>
 	<doctype>main</doctype>
 	<events>
-		<queryopen source="file">form.demand.QueryOpen</queryopen> 
-		<querysave source="file">form.demand.QuerySave</querysave>
-		<postsave source="file">form.demand.PostSave</postsave>   
+		<queryopen source="file">projects.form.demand.QueryOpen</queryopen>
+		<querysave source="file">projects.form.demand.QuerySave</querysave>
+		<postsave source="file">projects.form.demand.PostSave</postsave>
 	</events> 
 	<caption name="saveandclose" source="KEYWORD">Сохранить и закрыть</caption>
 	<caption name="close" source="KEYWORD">Закрыть</caption>

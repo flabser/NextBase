@@ -10,13 +10,13 @@
 	<element mode="ON" type="SCRIPT">
 		<name>action_bar</name>
 		<events>
-			<doscript source="file">page.prjs_actionbar.search</doscript>
+			<doscript source="file">projects.page.prjs_actionbar.search</doscript>
 		</events>
 	</element>
 	<element mode="ON" type="SCRIPT">
 		<name>view_content</name>
 		<events>
-			<doscript source="file">page.prjs_search.DoScript</doscript>
+			<doscript source="file">projects.page.prjs_search.DoScript</doscript>
 		</events>
 	</element> 	
 </rule>

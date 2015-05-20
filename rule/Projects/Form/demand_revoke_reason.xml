@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rule type="form" id="demand_revoke_reason" mode="on">
 	<description>Причины отмены заявки</description>
-	<xsltfile>forms/glossary-form.xsl</xsltfile>
+	<xsltfile>forms/glossary-projects.form.xsl</xsltfile>
 	<doctype>glossary</doctype>
 
 	<events> 
-		<queryopen source="file">form.demand_revoke_reason.QueryOpen</queryopen>
-		<querysave source="file">form.demand_revoke_reason.QuerySave</querysave>   
+		<queryopen source="file">projects.form.demand_revoke_reason.QueryOpen</queryopen>
+		<querysave source="file">projects.form.demand_revoke_reason.QuerySave</querysave>
 	</events>
 
 	<caption name="close" source="KEYWORD">Закрыть</caption>

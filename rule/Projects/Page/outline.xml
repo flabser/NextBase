@@ -6,7 +6,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name>current_outline_entry</name>
 		<events>
-			<doscript source="file">page.current_outline_entry.DoScript</doscript>
+			<doscript source="file">projects.page.current_outline_entry.DoScript</doscript>
 		</events>
 	</element>	
 	<element mode="ON" type="INCLUDED_PAGE">
@@ -16,13 +16,13 @@
 	<element mode="OFF" type="SCRIPT">
 		<name>actual_users_navigator</name>
 		<events>
-			<doscript source="file">page.unexecutedDemandByExecutor.DoScript</doscript>
+			<doscript source="file">projects.page.unexecutedDemandByExecutor.DoScript</doscript>
 		</events>
 	</element>
 	<element mode="OFF" type="SCRIPT">
 		<name>unexecuted_demand_by_author</name>
 		<events>
-			<doscript source="file">page.unexecutedDemandByAuthor.DoScript</doscript>
+			<doscript source="file">projects.page.unexecutedDemandByAuthor.DoScript</doscript>
 		</events>
 	</element>
 	

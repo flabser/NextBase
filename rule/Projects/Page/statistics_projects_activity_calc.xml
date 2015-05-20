@@ -6,7 +6,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name>view_content</name>
 		<events>
-			<doscript source="file">page.statistics_projects_activity_calc.DoScript</doscript>
+			<doscript source="file">projects.page.statistics_projects_activity_calc.DoScript</doscript>
 		</events>
 	</element> 
 	<element mode="ON" type="INCLUDED_PAGE">

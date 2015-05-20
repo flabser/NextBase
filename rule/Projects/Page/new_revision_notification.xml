@@ -7,7 +7,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name>script_result</name>
 		<events>
-			<doscript source="file">page.newRevisionNotification.DoScript</doscript>
+			<doscript source="file">projects.page.newRevisionNotification.DoScript</doscript>
 		</events>
 	</element>
 </rule>

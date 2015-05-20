@@ -5,7 +5,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name>filter_elements</name>
 		<events>
-			<doscript source="file">page.filter_content.DoScript</doscript>
+			<doscript source="file">projects.page.filter_content.DoScript</doscript>
 		</events>
 	</element> 	
 </rule>

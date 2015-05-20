@@ -8,6 +8,6 @@
         <days>MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY</days>
     </scheduler>
     <events>
-        <trigger source="file">handler.activatedemand.Trigger</trigger>
+        <trigger source="file">projects.handler.activatedemand.Trigger</trigger>
     </events>
 </rule>

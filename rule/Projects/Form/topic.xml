@@ -5,9 +5,9 @@
 	<doctype>TOPIC</doctype>
 	<title source="KEYWORD">Тема форума</title>
 	<events>
-		<queryopen source="file">form.topic.QueryOpen</queryopen> 
-		<querysave source="file">form.topic.QuerySave</querysave>
-		<postsave source="file">form.topic.PostSave</postsave>   
+		<queryopen source="file">projects.form.topic.QueryOpen</queryopen>
+		<querysave source="file">projects.form.topic.QuerySave</querysave>
+		<postsave source="file">projects.form.topic.PostSave</postsave>
 	</events> 
 	<caption name="close" source="KEYWORD">Закрыть</caption>
 	<caption name="properties" source="KEYWORD">Свойства</caption>

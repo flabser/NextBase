@@ -11,7 +11,7 @@
 	 <element mode="ON" type="SCRIPT">
 		<name>projects</name>
 		<events>
-			<doscript source="file">page.getDocsListAllProjects.DoScript</doscript>
+			<doscript source="file">projects.page.getDocsListAllProjects.DoScript</doscript>
 		</events>
 	</element> 
 	<element mode="ON" type="INCLUDED_PAGE">

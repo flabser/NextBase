@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rule type="form" id="demand_type" mode="on">
 	<description>Типы заявок</description>
-	<xsltfile>forms/glossary-form.xsl</xsltfile>
+	<xsltfile>forms/glossary-projects.form.xsl</xsltfile>
 	<doctype>glossary</doctype>
 
 	<events> 
-		<queryopen source="file">form.demand_type.QueryOpen</queryopen>
-		<querysave source="file">form.demand_type.QuerySave</querysave>   
+		<queryopen source="file">projects.form.demand_type.QueryOpen</queryopen>
+		<querysave source="file">projects.form.demand_type.QuerySave</querysave>
 	</events>
 
 	<caption name="close" source="KEYWORD">Закрыть</caption>

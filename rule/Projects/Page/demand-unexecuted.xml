@@ -10,19 +10,19 @@
 	<element mode="ON" type="SCRIPT">
 		<name>action_bar</name>
 		<events>
-			<doscript source="file">page.prjs_actionbar.demand</doscript>
+			<doscript source="file">projects.page.prjs_actionbar.demand</doscript>
 		</events>
 	</element>
 	<element mode="ON" type="SCRIPT">
 		<name>script_result</name>
 		<events>
-			<doscript source="file">page.getDocsListDemandUnexecuted.DoScript</doscript>
+			<doscript source="file">projects.page.getDocsListDemandUnexecuted.DoScript</doscript>
 		</events>
 	</element>
 	<element mode="ON" type="SCRIPT">
 		<name>filter_elements</name>
 		<events>
-			<doscript source="file">page.filter_content.DoScript</doscript>
+			<doscript source="file">projects.page.filter_content.DoScript</doscript>
 		</events>
 	</element> 	
 	<element mode="ON" type="INCLUDED_PAGE">

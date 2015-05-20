@@ -7,7 +7,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name>script_result</name>
 		<events>
-			<doscript source="file">page.revokeDemand.DoScript</doscript>
+			<doscript source="file">projects.page.revokeDemand.DoScript</doscript>
 		</events>
 	</element>
 </rule>
