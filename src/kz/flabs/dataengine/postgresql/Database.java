@@ -7,6 +7,7 @@ import kz.flabs.dataengine.h2.glossary.GlossaryQueryFormula;
 import kz.flabs.dataengine.h2.queryformula.GroupQueryFormula;
 import kz.flabs.dataengine.h2.queryformula.ProjectQueryFormula;
 import kz.flabs.dataengine.h2.structure.StructQueryFormula;
+import kz.flabs.dataengine.postgresql.queryformula.GlossarySelectFormula;
 import kz.flabs.dataengine.postgresql.filters.Filters;
 import kz.flabs.dataengine.postgresql.glossary.Glossaries;
 import kz.flabs.dataengine.postgresql.queryformula.QueryFormula;
@@ -1307,6 +1308,8 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
     @Override
     public ISelectFormula getSelectFormula(FormulaBlocks blocks) {
         switch (blocks.docType) {
+            case GLOSSARY:
+                return new GlossarySelectFormula(blocks);
             case STRUCTURE:
                 return this.getStructure().getSelectFormula(blocks);
             case DOCUMENT:
