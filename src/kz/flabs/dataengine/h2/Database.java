@@ -2637,7 +2637,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
         try {
             conn.setAutoCommit(false);
             Statement statement = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM COUNTERS";
+            String sql = "SELECT * FROM COUNTERS ORDER BY KEYS ASC";
             ResultSet rs = statement.executeQuery(sql);
 
             while (rs.next()) {
