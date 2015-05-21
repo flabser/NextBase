@@ -3,7 +3,7 @@
     <rununderuser source="STATIC" type="TEXT">[observer]</rununderuser>
     <trigger>SCHEDULER</trigger>
     <scheduler mode="ON">
-        <starttime>15:02</starttime>
+        <starttime>00:30</starttime>
         <nextstart/>
         <days>MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY</days>
     </scheduler>
