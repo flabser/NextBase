@@ -95,6 +95,7 @@ class QuerySave extends _FormQuerySave {
                         it.resetDate = new Date()
                         it.setReset(Boolean.TRUE)
                     }
+					relatedDoc.setViewText(c.getAllControl(),3);
 					relatedDoc.save("[supervisor]");
 				}
 			}
