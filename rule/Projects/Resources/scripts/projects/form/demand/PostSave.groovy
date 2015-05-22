@@ -16,8 +16,6 @@ class PostSave extends _FormPostSave{
         for (String observer: observers) {
             doc.addReader(observer);
         }
-        if (doc.getValueString("publishforcustomer") == "1")
-            doc.addReaders(parentProject.getValueList("customer_emp"));
 
         def author = doc.authorID;
         def control = (_Control) doc.getValueObject("control")
@@ -107,6 +105,21 @@ class PostSave extends _FormPostSave{
                 }
             }
         }
+
+        if (doc.getValueString("publishforcustomer") == "1"){
+            doc.addReaders(parentProject.getValueList("customer_emp"));
+            def customers_memo = new _Memo(doc.getGrandParentDocument().getValueString("project_name") + ": документ ${doc.getValueString('vn')} на исполнение. ${_Helper.removeHTMLTags(briefcontent)}", "", body, null, true)
+            def customers = parentProject.getValueList("customer_emp");
+            for (String customer: customers) {
+                def customerrecipient = [struct.getEmployer(customer)?.getEmail()];
+                try{
+                    ma.sendMail(customerrecipient, customers_memo)
+                }catch (Exception e){
+                    e.printStackTrace()
+                }
+            }
+        }
+
         //ma.sendMail(recipients, "документ ${doc.getValueString('vn')} на исполнение. ${briefcontent}",body)
         body+='<div width="100%"><font size="1" face="Arial" color="#444444">Вы получили данное уведомление как наблюдатель проекта<font></div>';
         def observers_memo = new _Memo(doc.getGrandParentDocument().getValueString("project_name") + ": документ ${doc.getValueString('vn')} на исполнение. ${_Helper.removeHTMLTags(briefcontent)}", "", body, null, true)
@@ -121,6 +134,7 @@ class PostSave extends _FormPostSave{
                 }
             }
         }
+
 
            // doc.addStringField("mailnotification", "sent")
         doc.save("[supervisor]")
