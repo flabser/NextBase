@@ -86,8 +86,15 @@ class QuerySave extends _FormQuerySave {
 			descendants.each{
 				def relatedDoc = (_Document)it
 				if(relatedDoc.getDocumentForm() == "task"){
+                    def desc_execblock = (_ExecsBlocks)relatedDoc.getValueObject("execblock")
 					def	c  = (_Control)relatedDoc.getValueObject("control")
-					c.setAllControl(_AllControlType.RESET);
+                    c.setAllControl(_AllControlType.RESET);
+                    c.setResetDate(new Date());
+                    desc_execblock.executors.each {
+                        it.resetAuthorID = session.getCurrentAppUser().userID
+                        it.resetDate = new Date()
+                        it.setReset(Boolean.TRUE)
+                    }
 					relatedDoc.save("[supervisor]");
 				}
 			}
