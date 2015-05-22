@@ -40,6 +40,10 @@ public class _Executor {
         return exec.getID();
     }
 
+    public void setReset(boolean isReset) {
+        exec.isReset = isReset;
+    }
+
     public String getShortName() {
         try {
             switch (exec.type) {
