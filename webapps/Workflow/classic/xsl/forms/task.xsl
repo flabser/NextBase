@@ -974,30 +974,30 @@
 									</tr>
 								</table>
 							</div>
-							<div id="tabs-4" style="height:500px">
-								<xsl:if test="$status !='new'">
+							<xsl:if test="$status !='new'">
+								<div id="tabs-4" style="height:500px">
 									<div display="block" style="display:block; width:90%; margin-left:25px; font-size:14px" id="execution">
-											<br/>
-											<div id="progressDiv" style="width:99%; overflow:hidden">
-												<table>
-													<tr>
-														<td>
-															<xsl:if test="document/fields/progress/entry[1]/viewtext !=''">
-									 							<a href="{document/fields/progress/entry/@url}" class="doclink" style="color:blue; margin-left:3px; vertical-align:7px">
-									 								<xsl:value-of select="document/fields/progress/entry[1]/viewtext"/>
-									  							</a>
-									  						</xsl:if>
-															<xsl:if test="document/fields/progress/entry/viewtext ='' and $status = 'new'">
-									  							<xsl:value-of select="document/fields/title"/>
-									  						</xsl:if>
-							  							</td>
-							  						</tr>
-					  								<xsl:apply-templates select="document/fields/progress/entry/responses[entry]"/>
-					  							</table>
-											</div>
+										<br/>
+										<div id="progressDiv" style="width:99%; overflow:hidden">
+											<table>
+												<tr>
+													<td>
+														<xsl:if test="document/fields/progress/entry[1]/viewtext !=''">
+									 						<a href="{document/fields/progress/entry/@url}" class="doclink" style="color:blue; margin-left:3px; vertical-align:7px">
+									 							<xsl:value-of select="document/fields/progress/entry[1]/viewtext"/>
+									  						</a>
+									  					</xsl:if>
+														<xsl:if test="document/fields/progress/entry/viewtext ='' and $status = 'new'">
+									  						<xsl:value-of select="document/fields/title"/>
+									  					</xsl:if>
+							  						</td>
+							  					</tr>
+					  							<xsl:apply-templates select="document/fields/progress/entry/responses[entry]"/>
+					  						</table>
 										</div>
-									</xsl:if>
+									</div>
 								</div>
+							</xsl:if>
 							<input type="hidden" name="parentdocid" value="{document/@parentdocid}"/>
 							<input type="hidden" name="parentdoctype" value="{document/@parentdoctype}"/>
 							<xsl:for-each select="extexecid/item">
@@ -1066,33 +1066,33 @@
 							</form>
 						</div>
 						<xsl:if test="document/@parentdocid !='0'">
-								<div id="tabs-7">
-									<br/>
-									<table width="100%" border="0">
-										<!-- поле "Текст резолюции" -->
-											<tr>
-												<td class="fc"><xsl:value-of select="document/captions/content/@caption"/> :</td>
-												<td>
-													<div id="parentdoccontent">
-														<xsl:attribute name="style">width:815px; height:450px; background:#EEEEEE; padding: 3px 5px; overflow-x:auto</xsl:attribute>
-														<script>
-															$("#parentdoccontent").html("<xsl:value-of select='document/fields/pdoccontent'/>")
-														</script>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td colspan="2">
-												<div id="textprintpreview" style="display:none; overflow:visible">
-													</div>
+							<div id="tabs-7">
+								<br/>
+								<table width="100%" border="0">
+									<!-- поле "Текст резолюции" -->
+										<tr>
+											<td class="fc"><xsl:value-of select="document/captions/content/@caption"/> :</td>
+											<td>
+												<div id="parentdoccontent">
+													<xsl:attribute name="style">width:815px; height:450px; background:#EEEEEE; padding: 3px 5px; overflow-x:auto</xsl:attribute>
 													<script>
-														$("#textprintpreview").html("<xsl:value-of select='document/fields/content'/>");
+														$("#parentdoccontent").html("<xsl:value-of select='document/fields/pdoccontent'/>")
 													</script>
-												</td>
-											</tr>
-									</table>
-								</div>
-							</xsl:if>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+											<div id="textprintpreview" style="display:none; overflow:visible">
+												</div>
+												<script>
+													$("#textprintpreview").html("<xsl:value-of select='document/fields/content'/>");
+												</script>
+											</td>
+										</tr>
+								</table>
+							</div>
+						</xsl:if>
 						<div id="tabs-6">
 							<xsl:call-template name="docinfo"/>
 						</div>

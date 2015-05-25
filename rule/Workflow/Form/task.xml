@@ -99,6 +99,7 @@
     <caption name ="yes" source ="KEYWORD">Да</caption>
 	<caption name ="no" source ="KEYWORD">Нет</caption>
 	<caption name="saveclose" source="KEYWORD">Сохранить и закрыть</caption>
+	<caption name="parentdoccontent" source="KEYWORD">Содержание головного документа</caption>
 
 	<glossary mode="on" id="controltype" source="query">
 		<description>Типы контроля</description>
