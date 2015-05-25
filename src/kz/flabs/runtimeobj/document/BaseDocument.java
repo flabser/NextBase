@@ -25,6 +25,7 @@ import kz.nextbase.script._Exception;
 import kz.nextbase.script._Helper;
 import kz.pchelka.env.Environment;
 import kz.pchelka.server.Server;
+import org.apache.commons.dbcp.DelegatingConnection;
 import org.postgresql.largeobject.LargeObject;
 import org.postgresql.largeobject.LargeObjectManager;
 import org.w3c.dom.Node;
@@ -109,8 +110,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
                 if (!new File(toPutFolder + File.separator + (folderIdx)).exists())
                     new File(toPutFolder + File.separator + (folderIdx)).mkdirs();
 
-                org.postgresql.jdbc4.Jdbc4Connection jdbc4conn = (org.postgresql.jdbc4.Jdbc4Connection) conn;
-                LargeObjectManager lobj = jdbc4conn.getLargeObjectAPI();
+                LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
                 //LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
                 long oid = attachResultSet.getLong("VALUE_OID");
                 LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);

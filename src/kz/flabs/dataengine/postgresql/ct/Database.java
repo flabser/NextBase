@@ -22,6 +22,7 @@ import kz.flabs.servlets.sitefiles.UploadedFile;
 import kz.flabs.users.User;
 import kz.flabs.util.Util;
 import kz.pchelka.env.Environment;
+import org.apache.commons.dbcp.DelegatingConnection;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -56,7 +57,6 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
     @Override
     public void fillBlobsContent(BaseDocument doc) throws SQLException {
         Connection conn = dbPool.getConnection();
-
         try {
             doc.blobFieldsMap.clear();
             Statement statement = conn.createStatement();
@@ -69,8 +69,7 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
                 bf.originalName = rs.getString("ORIGINALNAME");
                 bf.checkHash = rs.getString("CHECKSUM");
                 bf.comment = rs.getString("COMMENT");
-                org.postgresql.jdbc4.Jdbc4Connection jdbc4conn = (org.postgresql.jdbc4.Jdbc4Connection) conn;
-                LargeObjectManager lobj = jdbc4conn.getLargeObjectAPI();
+                LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
                 long oid = rs.getLong("VALUE_OID");
                 LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
                 bf.setContent(obj.read(obj.size()));
@@ -931,8 +930,7 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
                 BlobField bf = blob.getValue();
                 for (BlobFile bfile : bf.getFiles()) {
                     if (bfile != null) {
-                        org.postgresql.jdbc4.Jdbc4Connection jdbc4conn = (org.postgresql.jdbc4.Jdbc4Connection) conn;
-                        LargeObjectManager lobj = jdbc4conn.getLargeObjectAPI();
+                        LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
                         long oid = lobj.createLO(LargeObjectManager.READ | LargeObjectManager.WRITE);
                         LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
                         ps.setInt(1, key);
@@ -997,8 +995,7 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
             PreparedStatement ps = conn.prepareStatement("SELECT ID, DOCID, NAME, ORIGINALNAME, COMMENT, CHECKSUM, VALUE_OID " +
                     "FROM CUSTOM_BLOBS_" + tableSuffix + " WHERE DOCID = ? AND NAME = ? AND CHECKSUM = ?", ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
             for (BlobFile bfile : blob.getValue().getFiles()) {
-                org.postgresql.jdbc4.Jdbc4Connection jdbc4conn = (org.postgresql.jdbc4.Jdbc4Connection) conn;
-                LargeObjectManager lobj = jdbc4conn.getLargeObjectAPI();
+                LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
                 long oid = lobj.createLO(LargeObjectManager.READ | LargeObjectManager.WRITE);
                 LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
                 ps.setInt(1, doc.getDocID());
@@ -1061,8 +1058,7 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
                         pst.setString(4, hash);
                         pst.setString(5, "");
 
-                        org.postgresql.jdbc4.Jdbc4Connection jdbc4conn = (org.postgresql.jdbc4.Jdbc4Connection) conn;
-                        LargeObjectManager lobj = jdbc4conn.getLargeObjectAPI();
+                        LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
                         long oid = lobj.createLO(LargeObjectManager.READ | LargeObjectManager.WRITE);
                         LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
                         File file = new File(f.path);
@@ -1122,8 +1118,7 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
                     ps.setString(3, FilenameUtils.getName(item.getName()));
                     ps.setString(4, hash);
                     ps.setString(5, "");
-                    org.postgresql.jdbc4.Jdbc4Connection jdbc4conn = (org.postgresql.jdbc4.Jdbc4Connection) conn;
-                    LargeObjectManager lobj = jdbc4conn.getLargeObjectAPI();
+                    LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
                     long oid = lobj.createLO(LargeObjectManager.READ | LargeObjectManager.WRITE);
                     LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
                     obj.write(item.get());
@@ -1177,8 +1172,7 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
                 do {
                     String originalName = rs.getString("ORIGINALNAME");
                     if (originalName.equals(fileName)) {
-                        org.postgresql.jdbc4.Jdbc4Connection jdbc4conn = (org.postgresql.jdbc4.Jdbc4Connection) conn;
-                        LargeObjectManager lobj = jdbc4conn.getLargeObjectAPI();
+                        LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
                         long oid = rs.getLong("VALUE_OID");
                         LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
                         InputStream is = obj.getInputStream();
@@ -1259,8 +1253,7 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
                         do {
                             String originalName = attachResultSet.getString("ORIGINALNAME");
                             if (originalName.equals(fileName)) {
-                                org.postgresql.jdbc4.Jdbc4Connection jdbc4conn = (org.postgresql.jdbc4.Jdbc4Connection) conn;
-                                LargeObjectManager lobj = jdbc4conn.getLargeObjectAPI();
+                                LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
                                 long oid = attachResultSet.getLong("VALUE_OID");
                                 LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
                                 InputStream is = obj.getInputStream();

@@ -17,6 +17,7 @@ import kz.flabs.runtimeobj.document.structure.Employer;
 import kz.flabs.users.User;
 import kz.flabs.webrule.query.QueryFieldRule;
 import kz.pchelka.env.Environment;
+import org.apache.commons.dbcp.DelegatingConnection;
 import org.postgresql.largeobject.LargeObject;
 import org.postgresql.largeobject.LargeObjectManager;
 
@@ -95,8 +96,7 @@ public class ProjectOnDatabase extends kz.flabs.dataengine.h2.ProjectOnDatabase 
         int keyProject = 0;
         try {
             conn.setAutoCommit(false);
-            org.postgresql.jdbc4.Jdbc4Connection dconn = (org.postgresql.jdbc4.Jdbc4Connection) conn;
-            LargeObjectManager lobj = dconn.getLargeObjectAPI();
+            LargeObjectManager lom = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
             Date viewDate = doc.getViewDate();
             String fieldsAsText = "LASTUPDATE, AUTHOR, AUTOSENDAFTERSIGN, "
                     + "AUTOSENDTOSIGN, BRIEFCONTENT, CONTENTSOURCE, COORDSTATUS, "
@@ -119,7 +119,6 @@ public class ProjectOnDatabase extends kz.flabs.dataengine.h2.ProjectOnDatabase 
             statProject.setInt(4, doc.getAutoSendToSign());
             statProject.setString(5, doc.getBriefContent());
 
-            LargeObjectManager lom = ((org.postgresql.PGConnection) dconn).getLargeObjectAPI();
             long oid = lom.createLO(LargeObjectManager.READ | LargeObjectManager.WRITE);
             LargeObject lo = lom.open(oid, LargeObjectManager.WRITE);
             lo.write(doc.getContentSource().getBytes(Charset.forName("UTF-8")), 0, doc.getContentSource().getBytes(Charset.forName("UTF-8")).length); //.write(baos.toByteArray(), 0, baos.toByteArray().length);
@@ -313,8 +312,6 @@ public class ProjectOnDatabase extends kz.flabs.dataengine.h2.ProjectOnDatabase 
             Project oldDoc = this.getProjectByID(doc.getDocID(), user.getAllUserGroups(), user.getUserID());
             Connection conn = dbPool.getConnection();
             try {
-                org.postgresql.jdbc4.Jdbc4Connection dconn = (org.postgresql.jdbc4.Jdbc4Connection) conn;
-                LargeObjectManager lobj = dconn.getLargeObjectAPI();
                 Statement statProject = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
                 conn.setAutoCommit(false);
                 PreparedStatement updatePrj = conn.prepareStatement("UPDATE PROJECTS set LASTUPDATE = ?, " +
@@ -336,7 +333,7 @@ public class ProjectOnDatabase extends kz.flabs.dataengine.h2.ProjectOnDatabase 
                 updatePrj.setInt(4, doc.getAutoSendToSign());
                 updatePrj.setString(5, doc.getBriefContent());
 
-                LargeObjectManager lom = ((org.postgresql.PGConnection) dconn).getLargeObjectAPI();
+                LargeObjectManager lom = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
                 long oid = lom.createLO(LargeObjectManager.READ | LargeObjectManager.WRITE);
                 LargeObject lo = lom.open(oid, LargeObjectManager.WRITE);
                 lo.write(doc.getContentSource().getBytes(Charset.forName("UTF-8")), 0, doc.getContentSource().getBytes(Charset.forName("UTF-8")).length);
