@@ -73,10 +73,9 @@ class QueryOpen extends _FormQueryOpen {
 		publishValue("controldate",doc.getValueString("controldate"))
 		publishEmployer("curator",doc.getValueString("curator"))
 		publishValue("comments",doc.getValueString("comments"))
+		publishValue("contractsignedwith",doc.getValueString("contractsignedwith"))
 
-		if (doc.getField("contracttype")) {
-			publishGlossaryValue("contracttype",doc.getValueGlossary("contracttype"))
-		}
+
 
 		if (doc.getField("contractor_one")) {
 			publishGlossaryValue("contractor_one",doc.getValueNumber("contractor_one"))

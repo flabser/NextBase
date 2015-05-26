@@ -37,7 +37,7 @@ class QuerySave extends _FormQuerySave {
 
         doc.addStringField("curator", webFormData.getValueSilently("curator"));
 		doc.addStringField("briefcontent", webFormData.getValueSilently("briefcontent"))
-		doc.addNumberField("contracttype", webFormData.getNumberValueSilently("contracttype",0))
+		doc.addStringField("contractsignedwith", webFormData.getValueSilently("contractsignedwith"))
 		doc.addStringField("author", webFormData.getValue("author"))
 		doc.addFile("rtfcontent", webFormData)
 		doc.setRichText("contentsource", webFormData.getValue("contentsource"))
@@ -72,17 +72,17 @@ class QuerySave extends _FormQuerySave {
 			localizedMsgBox("Поле \"Cодержание\" не заполнено.")
 			return false
 		}
-		if (webFormData.getValueSilently("contracttype") == ""){
-			localizedMsgBox("Поле \"Тип договора\" не указано.")
+		if (webFormData.getValueSilently("contractsignedwith") == ""){
+			localizedMsgBox("Поле \"Договор заключен с\" не указано.")
 			return false
 		}
 
 		if (webFormData.getValueSilently("contractor_one") == ""){
-			localizedMsgBox("Поле \"Сторона 1\" не заполнено.")
+			localizedMsgBox("Поле \"Заказчик\" не заполнено.")
 			return false
 		}
 		if (webFormData.getValueSilently("contractor_two") == ""){
-			localizedMsgBox("Поле \"Сторона 2\" не заполнено.")
+			localizedMsgBox("Поле \"Исполнитель\" не заполнено.")
 			return false
 		}
 		if (webFormData.getValueSilently("curator") == ""){

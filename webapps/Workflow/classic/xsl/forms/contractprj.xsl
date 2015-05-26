@@ -482,30 +482,35 @@
 												</input>
 											</td>
 										</tr>
-										<!-- поле "Тип договора" -->
+										<!-- поле "Договор заключен с" -->
 										<tr>
 											<td class="fc">
-												<xsl:value-of select="document/captions/contracttype/@caption"/> :
+												<xsl:value-of select="document/captions/contractsignedwith/@caption"/> :
 											</td>
 											<td>
-												<select size="1" name="contracttype" style="width:611px;" class="select_editable">
+												<select size="1" name="contractsignedwith" style="width:611px;" class="select_editable">
 													<xsl:if test="$editmode != 'edit'">
 														<xsl:attribute name="class">select_noteditable</xsl:attribute>
 														<xsl:attribute name="disabled"/>
-														<option value="">
-															<xsl:attribute name="selected">selected</xsl:attribute>
-															<xsl:value-of select="document/fields/contracttype"/>
-														</option>
 													</xsl:if>
-													<xsl:variable name="contracttype" select="document/fields/contracttype/@attrval"/>
-													<xsl:for-each select="document/glossaries/contracttype/query/entry">
-														<option value="{@docid}">
-															<xsl:if test="$contracttype=@docid">
-																<xsl:attribute name="selected">selected</xsl:attribute>
-															</xsl:if>
-															<xsl:value-of select="viewcontent/viewtext1"/>
-														</option>
-													</xsl:for-each>
+													<option value="supplier">
+														<xsl:if test="document/fields/contractsignedwith = 'supplier'">
+															<xsl:attribute name="selected">selected</xsl:attribute>
+														</xsl:if>
+														Поставщиком
+													</option>
+													<option value="contractor">
+														<xsl:if test="document/fields/contractsignedwith = 'contractor'">
+															<xsl:attribute name="selected">selected</xsl:attribute>
+														</xsl:if>
+														Подрядчиком
+													</option>
+													<option value="customer">
+														<xsl:if test="document/fields/contractsignedwith = 'customer'">
+															<xsl:attribute name="selected">selected</xsl:attribute>
+														</xsl:if>
+														Заказчиком
+													</option>
 												</select>
 											</td>
 										</tr>
