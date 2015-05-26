@@ -23,14 +23,16 @@ class DoScript extends _DoScript {
         def rootTag = new _Tag("executers");
 		if(glos.getValueString("role")){
 			def roleslist = glos.getValueString("role").split("#");
-			roleslist.each{
-				def emplist = session.getStructure().getAppUsersByRoles(it);
+			roleslist.each{ role ->
+				def emplist = session.getStructure().getAppUsersByRoles(role);
 				emplist.each{
 	                if(it.getStatus() != _EmployerStatusType.FIRED){
-	                    def entryTag = new _Tag("entry");
-	                    entryTag.setAttr("userid", it.getUserID())
-	                    entryTag.setAttr("viewtext", it.getFullName())
-	                    rootTag.addTag(entryTag);
+                        if( !(it.getUserID() == session.getCurrentUserID() && role.equals("support_specialist"))) {
+                            def entryTag = new _Tag("entry");
+                            entryTag.setAttr("userid", it.getUserID())
+                            entryTag.setAttr("viewtext", it.getFullName())
+                            rootTag.addTag(entryTag);
+                        }
 	                }
 				}			  
 			}
