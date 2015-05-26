@@ -31,12 +31,13 @@ class QuerySave extends _FormQuerySave{
 			return;
 		}
 
-		String author = webFormData.getValueSilently("docauthor")
+		//String author = webFormData.getValueSilently("docauthor")
 		def struct = ses.getStructure()
 		def emp = struct.getEmployer(doc.getAuthorID())
 
 		doc.form = "kip"
 		doc.addFile("rtfcontent", webFormData)
+        /*
 		String docdate = webFormData.getValueSilently("docdate")
 
 
@@ -44,10 +45,10 @@ class QuerySave extends _FormQuerySave{
 		if(docdate != "")
 			tDate = _Helper.convertStringToDate(docdate)
 		doc.addDateField("docdate", tDate);
-
+         */
 		//doc.addStringField("docauthor", author)
 		doc.addStringField("report", webFormData.getValueSilently("report"))
-
+        doc.addStringField("rating", webFormData.getValueSilently("rating"))
 		doc.addEditor(doc.getAuthorID());
 		doc.addReader(doc.getAuthorID())
 

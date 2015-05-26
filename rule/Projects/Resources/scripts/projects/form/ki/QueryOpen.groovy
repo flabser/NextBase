@@ -11,6 +11,7 @@ class QueryOpen extends _FormQueryOpen {
 		publishValue("title",getLocalizedWord("Карточка исполнения", lang))
 		publishEmployer("docauthor", session.currentUserID);
 		publishValue("docdate", session.getCurrentDateAsString())
+        publishValue("rating", "")
 		def nav = session.getPage("outline", webFormData)
 		publishElement(nav)
 	//	publishElement(getActionBar(session))
@@ -32,22 +33,19 @@ class QueryOpen extends _FormQueryOpen {
 		def pdoc = doc.getParentDocument()
 		publishValue("parentdocid",doc.getDocID().toString())
 		publishValue("parentdoctype",doc.getDocType().toString())
-		/*publishValue("version",doc.getValueNumber("version"))*/ 
-		/*publishValue("status", doc.getValueString("status"))*/
 		publishValue("link_to_demand", pdoc.getURL())
 		publishValue("viewtext_parentdemand", pdoc.getViewText());
-		def nav = session.getPage("outline", webFormData)
-		publishElement(nav)
-		//publishElement(getActionBar(session, doc))
+
 		try{
 			publishAttachment("rtfcontent","rtfcontent")
-		}catch(Exception e){
-		
-		}
-		
+		}catch(Exception e){}
+
+        def cuserID = session.getCurrentAppUser().getUserID();
+
+        if(doc.doc.hasField("rating") && doc.getAuthorID() == cuserID)
+            publishValue("rating", doc.getValueString("rating"))
+
 		def actionBar = new _ActionBar(session)
-		def cuserID = session.getCurrentAppUser().getUserID();
-		//def pdoc = doc.getParentDocument()
 		def pauthor  = pdoc.getValueString('docauthor')
 		def user = session.getCurrentAppUser();
 		if(cuserID == pauthor && user.hasRole("registrator_demand")){
@@ -58,27 +56,6 @@ class QueryOpen extends _FormQueryOpen {
 		}
 		actionBar.addAction(new _Action(getLocalizedWord("Закрыть", lang),getLocalizedWord("Закрыть без сохранения", lang),_ActionType.CLOSE))
 		publishElement(actionBar)
+        publishElement(session.getPage("outline", webFormData))
 	}
-
-	/*private getActionBar(_Session session, _Document doc){
-		def actionBar = new _ActionBar(session)
-		def cuserID = session.getCurrentAppUser().getUserID();
-		def pdoc = doc.getParentDocument()
-		def pauthor  = pdoc.getValueString('docauthor')
-		if(cuserID == pauthor){
-			actionBar.addAction(new _Action("Новая заявка","Новая заявка", "NEW_DOCUMENT"))
-		}	
-		actionBar.addAction(new _Action("Закрыть","Закрыть без сохранения",_ActionType.CLOSE))
-		return actionBar
-	}
-	
-	private getActionBar(_Session session){
-		
-		def actionBar = new _ActionBar(session)		
-		actionBar.addAction(new _Action("Сохранить и закрыть","Сохранить и закрыть",_ActionType.SAVE_AND_CLOSE))
-		actionBar.addAction(new _Action("Закрыть","Закрыть без сохранения",_ActionType.CLOSE))
-		
-		return actionBar
-	}*/
-
 }
