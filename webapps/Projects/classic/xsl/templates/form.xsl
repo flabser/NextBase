@@ -86,7 +86,8 @@
 		<link type="text/css" rel="stylesheet" href="classic/css/dialogs.css?ver=3"/>
 		<link type="text/css" rel="stylesheet" href="/SharedResources/jquery/css/smoothness/jquery-ui-1.8.20.custom.css"/>
 		<link type="text/css" rel="stylesheet" href="/SharedResources/jquery/js/hotnav/jquery.hotnav.css"/>
-		<script type="text/javascript" src="/SharedResources/jquery/js/jquery-1.4.2.js"/>
+		<!--<script type="text/javascript" src="/SharedResources/jquery/js/jquery-1.4.2.js"/>-->
+        <script src="/SharedResources/jquery/js/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="/SharedResources/jquery/js/ui/minified/jquery.ui.core.min.js"/>
 		<script type="text/javascript" src="/SharedResources/jquery/js/ui/minified/jquery.effects.core.min.js"/>
 		<script type="text/javascript" src="/SharedResources/jquery/js/ui/minified/jquery.ui.widget.min.js"/>
@@ -109,6 +110,7 @@
 		<script type="text/javascript" src="/SharedResources/jquery/js/ckeditor/ckeditor.js"/>
 		<script type="text/javascript" src="/SharedResources/jquery/js/hotnav/jquery.hotkeys.js"/>
 		<script type="text/javascript" src="/SharedResources/jquery/js/hotnav/jquery.hotnav.js"/>
+
 		<script type="text/javascript">    
 			$(function() {
 				$("#tabs").tabs();
