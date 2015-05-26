@@ -17,8 +17,13 @@
 				<title>
 					<xsl:value-of select="concat('Projects - ', document/captions/title/@caption)"/>
 				</title>
-				<xsl:call-template name="cssandjs"/>
+
+                 <xsl:call-template name="cssandjs"/>
+                <script type="text/javascript" src="/SharedResources/jquery/js/jquery-bar-rating-master/jquery.barrating.js" />
+                <link type="text/css" rel="stylesheet" href="/SharedResources/jquery/js/jquery-bar-rating-master/examples/css/large.css" />
+
 				<script type="text/javascript">
+
 					$(document).bind('keydown', function(e){
 	 					if (e.ctrlKey) {
 	 						switch (e.keyCode) {
@@ -128,7 +133,71 @@
 								</ul>							
 								<div class="ui-tabs-panel" id="tabs-1" >
 									<div display="block"  id="property" width="100%">									 
-										<table width="80%" border="0" style="margin-top:8px">		
+										<table width="90%" border="0" style="margin-top:8px">
+                                            <xsl:if test="document/fields/rating">
+                                                <tr style="height: 35px;">
+                                                    <td class="fc"><xsl:value-of select="document/captions/rating/@caption" />: </td>
+                                                    <td >
+                                                        <select id="rating" name="rating">
+                                                            <option value="1">
+                                                                <xsl:if test="document/fields/rating = '1'">
+                                                                    <xsl:attribute name="selected">selected</xsl:attribute>
+                                                                </xsl:if>
+                                                                <xsl:value-of select="document/captions/rating1/@caption" />
+                                                            </option>
+                                                            <option value="2" >
+                                                                <xsl:if test="document/fields/rating = '2' or document/@status = 'new'">
+                                                                    <xsl:attribute name="selected">selected</xsl:attribute>
+                                                                </xsl:if>
+                                                                <xsl:value-of select="document/captions/rating2/@caption" />
+                                                            </option>
+                                                            <option value="3">
+                                                                <xsl:if test="document/fields/rating = '3'">
+                                                                    <xsl:attribute name="selected">selected</xsl:attribute>
+                                                                </xsl:if>
+                                                                <xsl:value-of select="document/captions/rating3/@caption" />
+                                                            </option>
+                                                            <option value="4">
+                                                                <xsl:if test="document/fields/rating = '4'">
+                                                                    <xsl:attribute name="selected">selected</xsl:attribute>
+                                                                </xsl:if>
+                                                                <xsl:value-of select="document/captions/rating4/@caption" />
+                                                            </option>
+                                                            <option value="5">
+                                                                <xsl:if test="document/fields/rating = '5'">
+                                                                    <xsl:attribute name="selected">selected</xsl:attribute>
+                                                                </xsl:if>
+                                                                <xsl:value-of select="document/captions/rating5/@caption" />
+                                                            </option>
+                                                            <option value="6">
+                                                                <xsl:if test="document/fields/rating = '6'">
+                                                                    <xsl:attribute name="selected">selected</xsl:attribute>
+                                                                </xsl:if>
+                                                                <xsl:value-of select="document/captions/rating6/@caption" />
+                                                            </option>
+                                                            <option value="7">
+                                                                <xsl:if test="document/fields/rating = '7'">
+                                                                    <xsl:attribute name="selected">selected</xsl:attribute>
+                                                                </xsl:if>
+                                                                <xsl:value-of select="document/captions/rating7/@caption" />
+                                                            </option>
+                                                        </select>
+
+                                                        <script type="text/javascript">
+                                                            $(document).ready(function() {
+                                                                <xsl:if test="document/@status = 'new'">
+                                                                    $('#rating').barrating();
+                                                                </xsl:if>
+                                                                <xsl:if test="document/@status = 'existing'">
+                                                                    $('#rating').barrating({
+                                                                        readonly: true
+                                                                    });
+                                                                </xsl:if>
+                                                            });
+                                                        </script>
+                                                    </td>
+                                                </tr>
+                                            </xsl:if>
 											<!-- Kratkoe soderzhanie -->
 											<tr>
 												<td class="fc">
