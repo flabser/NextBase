@@ -117,6 +117,7 @@ class QueryOpen extends _FormQueryOpen {
 		publishValue("totalamount",doc.getValueString("totalamount"))
 		publishValue("contracttime",doc.getValueString("contracttime"))
 		publishValue("controldate",doc.getValueString("controldate"))
+		publishValue("contractsignedwith",doc.getValueString("contractsignedwith"))
 		//publishValue("comments",doc.getValueString("comments"))
 		//publishValue("corrstring",doc.getValueString("corrstring"))
 		publishValue("coordination", blockCollection)
@@ -147,7 +148,6 @@ class QueryOpen extends _FormQueryOpen {
 		}catch(_Exception e){
 
 		}
-		publishGlossaryValue("contracttype",doc.getValueNumber("contracttype"))
 
 		
 

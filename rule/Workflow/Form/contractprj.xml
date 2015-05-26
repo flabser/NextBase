@@ -160,8 +160,5 @@
 	<caption name="contractor" source="KEYWORD">Сторона</caption>
 	<caption name="contractname" source="KEYWORD">Название договора</caption>
 	<caption name="contracttype" source="KEYWORD">Тип договора</caption>
-	<glossary mode="on" id="contracttype" source="query">
-		<description>Тип договора</description>
-		<value>contracttype</value>
-	</glossary>
+	<caption name="contractsignedwith" source="KEYWORD">Договор заключен с</caption>
 </rule>

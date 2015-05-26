@@ -54,6 +54,7 @@ class QuerySave extends _FormQuerySave {
 		doc.addNumberField("contractor_one", webFormData.getNumberValueSilently("contractor_one",0))
 		doc.addNumberField("contractor_two", webFormData.getNumberValueSilently("contractor_two",0))
 		doc.addStringField("curator", webFormData.getValueSilently("curator"));
+		doc.addStringField("contractsignedwith", webFormData.getValueSilently("contractsignedwith"));
 		/*def recipient = session.createEmployerCollection(webFormData.getListOfValuesSilently("recipient"))
 		doc.addField("recipient",recipient)*/
 		doc.addNumberField("docversion", webFormData.getNumberValueSilently("docversion",-1))
@@ -61,7 +62,6 @@ class QuerySave extends _FormQuerySave {
 		//doc.addStringField("corrstring", webFormData.getValue("corrstring"))
 		doc.addFile("rtfcontent", webFormData)
 		doc.setRichText("contentsource", webFormData.getValueSilently("contentsource"))
-		doc.addNumberField("contracttype", webFormData.getNumberValueSilently("contracttype",0))
 		//doc.addNumberField("contractor", webFormData.getNumberValueSilently("contractor",0))
 		def struct = session.getStructure()
 		String authorRus = ""
@@ -243,7 +243,22 @@ class QuerySave extends _FormQuerySave {
 			localizedMsgBox("Поле \"Краткое содержание\" не заполнено.")
 			return false
 		}
-
+		if (webFormData.getValueSilently("contractsignedwith") == ""){
+			localizedMsgBox("Поле \"Договор заключен с\" не указано.")
+			return false
+		}
+		if (webFormData.getValueSilently("contractor_one") == ""){
+			localizedMsgBox("Поле \"Заказчик\" не заполнено.")
+			return false
+		}
+		if (webFormData.getValueSilently("contractor_two") == ""){
+			localizedMsgBox("Поле \"Исполнитель\" не заполнено.")
+			return false
+		}
+		if (webFormData.getValueSilently("curator") == ""){
+			localizedMsgBox("Поле \"Куратор\" не заполнено.")
+			return false
+		}
 		/*if (webFormData.getValueSilently("recipient") == "" || !webFormData.containsField("recipient")){
 			localizedMsgBox("Поле \"Получатель\" не выбрано.")
 			return false
