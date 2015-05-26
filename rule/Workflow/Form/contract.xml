@@ -90,6 +90,7 @@
 	<caption name="datecontractor" source="KEYWORD">Дата регистрации у контрагента</caption>
 	<caption name="contractsubject" source="KEYWORD">Предмет договора</caption>
 	<caption name="contracttype" source="KEYWORD">Тип договора</caption>
+	<caption name="contractsignedwith" source="KEYWORD">Договор заключен с</caption>
 	<caption name="currency" source="KEYWORD">Валюта договора</caption>
 	<caption name="initdivision" source="KEYWORD">Инициирующее подразделение</caption>
 	<caption name="initemp" source="KEYWORD">Инициирующий сотрудник</caption>
@@ -152,8 +153,4 @@
 	<caption name="hourss" source="KEYWORD">часа</caption>
 	<caption name="unlimited" source="KEYWORD">Неограничено</caption>
 	<caption name="tosign" source="KEYWORD">На подпись</caption>
-	<glossary mode="on" id="contracttype" source="query">
-		<description>Тип договора</description>
-		<value>contracttype</value>
-	</glossary>
 </rule>
