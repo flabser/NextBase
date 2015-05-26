@@ -30,8 +30,7 @@ class DoScript extends _DoScript {
 		def taskdocs = new _OutlineEntry(getLocalizedWord("Задания",lang), getLocalizedWord("Задания",lang), "task", "Provider?type=page&id=task&page=0");
         orgdocs_outline.addEntry(taskdocs);
 
-		def contractdocs = new _OutlineEntry(getLocalizedWord("Договоры",lang), getLocalizedWord("Договоры",lang), "contract", "Provider?type=page&id=contract&page=0");
-		orgdocs_outline.addEntry(addEntryByGlossary(session, contractdocs, "contract","contracttype", false));
+		orgdocs_outline.addEntry(new _OutlineEntry(getLocalizedWord("Договоры",lang), getLocalizedWord("Договоры",lang), "contract", "Provider?type=page&id=contract&page=0"));
 
         outline.addOutline(orgdocs_outline)
 		list.add(orgdocs_outline)
@@ -42,8 +41,7 @@ class DoScript extends _DoScript {
 		def outgoingprj = new _OutlineEntry(getLocalizedWord("Исходящие",lang), getLocalizedWord("Исходящие",lang), "outgoingprj", "Provider?type=page&id=outgoingprj&page=0");
         projects_outline.addEntry(addEntryByProjects(session, outgoingprj, "outgoingprj", ""));
 
-		def contractprj = new _OutlineEntry(getLocalizedWord("Договоры",lang), getLocalizedWord("Договор",lang), "contractprj", "Provider?type=page&id=contractprj&page=0");
-		projects_outline.addEntry(addEntryByGlossary(session, contractprj, "contractprj","contracttype", true));
+		projects_outline.addEntry(new _OutlineEntry(getLocalizedWord("Договоры",lang), getLocalizedWord("Договор",lang), "contractprj", "Provider?type=page&id=contractprj&page=0"));
 
 		list.add(projects_outline)
 		outline.addOutline(projects_outline)
