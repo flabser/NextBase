@@ -665,11 +665,30 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
     }
 
     public boolean updateToVersion101(Connection connection) throws Exception {
-        return addNewColumn(connection, "CUSTOM_BLOBS_EMPLOYERS", "COMMENT", "TEXT");
+        return addColumn(connection, "CUSTOM_BLOBS_EMPLOYERS", "COMMENT", "TEXT");
     }
 
     public boolean updateToVeriosn102(Connection connection) throws Exception {
         return dropForeignKey(connection, "CUSTOM_BLOBS_EMPLOYERS", "DOCID");
+    }
+
+    public static boolean addColumn(Connection conn, String tableName, String columnName, String typeNameAndSize) throws Exception {
+        Statement statement = conn.createStatement();
+        statement.addBatch("IF COL_LENGTH('" + tableName + "', '" + columnName + "') IS NULL\n" +
+                "\n" +
+                "BEGIN\n" +
+                "\n" +
+                "        ALTER TABLE " + tableName + "\n" +
+                "        ADD [" + columnName + "] " + typeNameAndSize + "\n" +
+                "END");
+        try {
+            statement.executeBatch();
+        } catch (Exception e) {
+            DatabaseUtil.debugErrorPrint(e);
+        }
+        statement.close();
+        conn.commit();
+        return true;
     }
 
     public static boolean alterColumnAlterType(Connection conn, String tableName, String columnName, String typeNameAndSize) throws Exception {
@@ -685,7 +704,13 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
         conn.commit();
         return true;
     }
-
+/*("IF COL_LENGTH('topics', 'DDBID') IS NULL\n" +
+                "\n" +
+                "BEGIN\n" +
+                "\n" +
+                "        ALTER TABLE topics\n" +
+                "        ADD [DDBID] varchar(16)\n" +
+                "END");*/
     private static boolean addForeignKey(Connection conn, String baseTableName, String baseColumnName, String foreignTableName, String foreignColumnName, boolean cascadeDeletion) throws SQLException {
         try {
             Statement st = conn.createStatement();

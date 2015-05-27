@@ -1472,8 +1472,8 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
     }
 
     public boolean updateToVersion101(Connection connection) throws Exception {
-        return addNewColumn(connection, "CUSTOM_BLOBS_EMPLOYERS", "COMMENT", "TEXT") &&
-                addNewColumn(connection, "CUSTOM_BLOBS_EMPLOYERS", "VALUE_OID", "OID");
+        return addColumn(connection, "CUSTOM_BLOBS_EMPLOYERS", "COMMENT", "TEXT") &&
+                addColumn(connection, "CUSTOM_BLOBS_EMPLOYERS", "VALUE_OID", "OID");
     }
 
     public boolean updateToVersion102(Connection connection) throws Exception {

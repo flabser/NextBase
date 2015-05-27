@@ -1553,7 +1553,7 @@ public class Updates {
 
     public static boolean addNewColumn(Connection conn, String tableName, String columnName, String typeNameAndSize) throws SQLException {
         Statement statement = conn.createStatement();
-        statement.addBatch("alter table " + tableName + " add column " + columnName + " " + typeNameAndSize);
+        statement.addBatch("alter table " + tableName + " add IF NOT EXISTS " + columnName + " " + typeNameAndSize);
         statement.executeBatch();
         statement.close();
         return true;
