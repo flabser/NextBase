@@ -3,6 +3,7 @@ package kz.flabs.dataengine.postgresql;
 
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.*;
+import kz.flabs.dataengine.h2.DBConnectionPool;
 import kz.flabs.dataengine.h2.glossary.GlossaryQueryFormula;
 import kz.flabs.dataengine.h2.queryformula.GroupQueryFormula;
 import kz.flabs.dataengine.h2.queryformula.ProjectQueryFormula;
@@ -1053,15 +1054,7 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
             ArrayList<String> ids = new ArrayList<>();
             for (BlobField field : doc.blobFieldsMap.values()) {
                 for (BlobFile f : field.getFiles()) {
-                    if (f.id != null) {
-                        ids.add(f.id);
-                        sql = "UPDATE CUSTOM_BLOBS_MAINDOCS SET DOCID = ?, COMMENT = ? WHERE id = ?";
-                        pst = conn.prepareStatement(sql);
-                        pst.setInt(1, key);
-                        pst.setString(2, f.getComment());
-                        pst.setInt(3, Integer.valueOf(f.id));
-                        pst.executeUpdate();
-                    } else {
+                    if (f.id == null) {
                         pst = conn.prepareStatement("INSERT INTO CUSTOM_BLOBS_MAINDOCS (DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE_OID, REGDATE)VALUES(?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
                         String hash = Util.getHexHash(f.path);
                         pst.setInt(1, key);
@@ -1094,6 +1087,14 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
                             ids.add(String.valueOf(rs.getInt(1)));
                         }
                         pst.close();
+                    } else {
+                        ids.add(f.id);
+                        sql = "UPDATE CUSTOM_BLOBS_MAINDOCS SET DOCID = ?, COMMENT = ? WHERE id = ?";
+                        pst = conn.prepareStatement(sql);
+                        pst.setInt(1, key);
+                        pst.setString(2, f.getComment());
+                        pst.setInt(3, Integer.valueOf(f.id));
+                        pst.executeUpdate();
                     }
                 }
             }
@@ -1117,15 +1118,26 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
 
     @Override
     public ArrayList<UploadedFile> insertBlobTables(List<FileItem> fileItems) throws SQLException, IOException {
-        Connection conn = dbPool.getConnection();
+        IDBConnectionPool pool = this.dbPool;
+        Connection conn = null;
         ArrayList<UploadedFile> files = new ArrayList<>();
+        String tableSuffix;
         try {
-            String tableSuffix = "MAINDOCS";
             for (FileItem item : fileItems) {
-                if ("decision_comment_uploadfield".equalsIgnoreCase(item.getFieldName())) {
-                    tableSuffix = "COORDINATORS";
-                }
                 if (item != null && item.getName() != null && !"".equalsIgnoreCase(item.getName())) {
+                    switch(item.getFieldName().toLowerCase(Locale.ENGLISH)) {
+                        case "decision_comment_uploadfield":
+                            tableSuffix = "COORDINATORS";
+                            break;
+                        case "employer_uploadfield":
+                            tableSuffix = "EMPLOYERS";
+                            pool = this.structDbPool;
+                            break;
+                        default:
+                            tableSuffix = "MAINDOCS";
+                            break;
+                    }
+                    conn = pool.getConnection();
                     PreparedStatement ps = conn.prepareStatement("INSERT INTO CUSTOM_BLOBS_" + tableSuffix + " (DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE_OID, REGDATE)values(?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
                     String hash = Util.getHexHash(item.getInputStream());
                     ps.setInt(1, 1);
@@ -1156,7 +1168,7 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
         } catch (Exception e) {
             DatabaseUtil.errorPrint(dbID, e);
         } finally {
-            dbPool.returnConnection(conn);
+            pool.returnConnection(conn);
         }
         return files;
     }

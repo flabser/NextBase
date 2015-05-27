@@ -1470,10 +1470,20 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
     public boolean updateToVersion100(Connection conn) throws Exception {
         return alterColumnAlterType(conn, "COORDINATORS", "COMMENT", "varchar(1024)");
     }
+
+    public boolean updateToVersion101(Connection connection) throws Exception {
+        return addNewColumn(connection, "CUSTOM_BLOBS_EMPLOYERS", "COMMENT", "TEXT") &&
+                addNewColumn(connection, "CUSTOM_BLOBS_EMPLOYERS", "VALUE_OID", "OID");
+    }
+
+    public boolean updateToVersion102(Connection connection) throws Exception {
+        return dropForeignKey(connection, "CUSTOM_BLOBS_EMPLOYERS", "DOCID");
+    }
+
     public static boolean alterColumnAlterType(Connection conn, String tableName, String columnName, String typeNameAndSize) throws Exception {
         Statement statement = conn.createStatement();
         statement.addBatch("alter table " + tableName + " alter " + columnName + " type " + typeNameAndSize);
-        statement.addBatch("alter table STRUCTURE_TREE_PATH alter DESCENDANT type varchar(16)");
+       // statement.addBatch("alter table STRUCTURE_TREE_PATH alter DESCENDANT type varchar(16)");
         try {
             statement.executeBatch();
         } catch (Exception e) {
@@ -1528,7 +1538,7 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
             } catch (SQLException e) {
                 DatabaseUtil.debugErrorPrint(e);
                 conn.rollback();
-                return false;
+                throw e;
             }
         }
         return false;
