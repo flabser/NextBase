@@ -1542,6 +1542,23 @@ public class Updates {
     public boolean updateToVersion100(Connection conn) throws Exception {
         return alterColumnAlterType(conn, "COORDINATORS", "COMMENT", "varchar(1024)");
     }
+
+    public boolean updateToVersion101(Connection connection) throws Exception {
+        return addNewColumn(connection, "CUSTOM_BLOBS_EMPLOYERS", "COMMENT", "TEXT");
+    }
+
+    public boolean updateToVersion102(Connection connection) throws Exception {
+        return dropColumnConstraint(connection, "CUSTOM_BLOBS_EMPLOYERS", "DOCID");
+    }
+
+    public static boolean addNewColumn(Connection conn, String tableName, String columnName, String typeNameAndSize) throws SQLException {
+        Statement statement = conn.createStatement();
+        statement.addBatch("alter table " + tableName + " add column " + columnName + " " + typeNameAndSize);
+        statement.executeBatch();
+        statement.close();
+        return true;
+    }
+
     public static boolean alterColumnAlterType(Connection conn, String tableName, String columnName, String typeNameAndSize) throws Exception {
         Statement statement = conn.createStatement();
         statement.addBatch("alter table " + tableName + " alter " + columnName + " type " + typeNameAndSize);
@@ -1578,26 +1595,19 @@ public class Updates {
     }
 
     private static boolean dropColumnConstraint(Connection conn, String tableName, String columnName) throws SQLException {
-        try {
-            PreparedStatement pst = conn.prepareStatement("select distinct constraint_name from information_schema.constraints\n" +
-                    "where table_name = ? and column_list = ?");
+        PreparedStatement pst = conn.prepareStatement("select distinct constraint_name from information_schema.constraints\n" +
+                "where table_name = ? and column_list = ?");
+        pst.setString(1, tableName);
+        pst.setString(2, columnName);
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            pst = conn.prepareStatement("alter table ? drop CONSTRAINT ?");
             pst.setString(1, tableName);
-            pst.setString(2, columnName);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                pst = conn.prepareStatement("alter table ? drop CONSTRAINT ?");
-                pst.setString(1, tableName);
-                pst.setString(2, rs.getString(1));
-                pst.execute();
-                conn.commit();
-                return true;
-            }
-        } catch (SQLException e) {
-            DatabaseUtil.debugErrorPrint(e);
-            conn.rollback();
-            return false;
+            pst.setString(2, rs.getString(1));
+            pst.execute();
+            conn.commit();
+            return true;
         }
         return false;
     }
-
 }

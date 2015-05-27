@@ -1,8 +1,8 @@
 package kz.flabs.servlets.sitefiles;
 
+import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.IDatabase;
 import kz.flabs.servlets.FileUploadListener;
-import kz.flabs.users.UserSession;
 import kz.flabs.util.Util;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -72,16 +72,16 @@ public class RequestWrapper extends HttpServletRequestWrapper{
 			}
 		}
 
-        UserSession userSession = (UserSession)session.getAttribute("usersession");
-;        IDatabase db = userSession.currentUser.getAppEnv().getDataBase();
+        AppEnv env = (AppEnv) hreq.getServletContext().getAttribute("portalenv");
         try {
+            IDatabase db = env.getDataBase();
             uploadedFiles = db.insertBlobTables(items);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-	}
+    }
 
 	public UploadedFile[] getFilesArray(){
 		UploadedFile[] files = new UploadedFile[uploadedFiles.size()];
