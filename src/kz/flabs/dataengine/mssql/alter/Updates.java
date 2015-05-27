@@ -9,61 +9,61 @@ import java.sql.*;
 
 
 public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
-	
-	public static boolean runPatch(int version, Connection conn) throws Throwable{
-		boolean result = false;
-		Class c = Class.forName("kz.flabs.dataengine.mssql.alter.Updates");
-		String methodName = "updateToVersion" + Integer.toString(version);
-		Class partypes[] = new Class[1];
-		partypes[0] = Connection.class;
-		Method m = c.getMethod(methodName, partypes);
-		Object arglist[] = new Object[1];
-		arglist[0] = conn;
-		try{
-			result = (Boolean)m.invoke(c, arglist);
-		}catch(InvocationTargetException e){
-			throw e.getCause();
-		}
-		return  result;
 
-	}
+    public static boolean runPatch(int version, Connection conn) throws Throwable {
+        boolean result = false;
+        Class c = Class.forName("kz.flabs.dataengine.mssql.alter.Updates");
+        String methodName = "updateToVersion" + Integer.toString(version);
+        Class partypes[] = new Class[1];
+        partypes[0] = Connection.class;
+        Method m = c.getMethod(methodName, partypes);
+        Object arglist[] = new Object[1];
+        arglist[0] = conn;
+        try {
+            result = (Boolean) m.invoke(c, arglist);
+        } catch (InvocationTargetException e) {
+            throw e.getCause();
+        }
+        return result;
 
-	
-	public static boolean updateToVersion2(Connection conn) throws SQLException{			
-		Statement statement  = conn.createStatement();		
-		statement.addBatch("DROP TABLE RECYCLE_BIN;");
-		statement.addBatch("DROP TABLE USERS_ACTIVITY_CHANGES;");
-		statement.addBatch("DROP TABLE USERS_ACTIVITY;");	
+    }
 
-		statement.addBatch(UsersActivityDDEScripts.getUsersActivityDDE());
-		statement.addBatch(UsersActivityDDEScripts.getUsersActivityChangesDDE());
-		statement.addBatch(UsersActivityDDEScripts.getRecycleBinDDE());
 
-		statement.executeBatch();
-		conn.commit();
-		statement.close();		
-		return true;		
-	}
+    public static boolean updateToVersion2(Connection conn) throws SQLException {
+        Statement statement = conn.createStatement();
+        statement.addBatch("DROP TABLE RECYCLE_BIN;");
+        statement.addBatch("DROP TABLE USERS_ACTIVITY_CHANGES;");
+        statement.addBatch("DROP TABLE USERS_ACTIVITY;");
 
-	public static boolean updateToVersion3(Connection conn) throws SQLException{			
-		Statement statement  = conn.createStatement();		
-		statement.addBatch("alter table projects add RESPOST nvarchar(256);");
-		statement.executeBatch();
-		conn.commit();
-		statement.close();		
-		return true;		
-	}
-	
-	public boolean updateToVersion50(Connection conn) throws Exception {
-		Statement statement = null;		
-		for(String table:tableWithBlobs){
-			statement = conn.createStatement();
-			statement.addBatch("alter table CUSTOM_BLOBS_" + table + " add column COMMENT varchar(64);");		
-			statement.executeBatch();	
-		}	
-		statement.close();		
-		return true;
-	}
+        statement.addBatch(UsersActivityDDEScripts.getUsersActivityDDE());
+        statement.addBatch(UsersActivityDDEScripts.getUsersActivityChangesDDE());
+        statement.addBatch(UsersActivityDDEScripts.getRecycleBinDDE());
+
+        statement.executeBatch();
+        conn.commit();
+        statement.close();
+        return true;
+    }
+
+    public static boolean updateToVersion3(Connection conn) throws SQLException {
+        Statement statement = conn.createStatement();
+        statement.addBatch("alter table projects add RESPOST nvarchar(256);");
+        statement.executeBatch();
+        conn.commit();
+        statement.close();
+        return true;
+    }
+
+    public boolean updateToVersion50(Connection conn) throws Exception {
+        Statement statement = null;
+        for (String table : tableWithBlobs) {
+            statement = conn.createStatement();
+            statement.addBatch("alter table CUSTOM_BLOBS_" + table + " add column COMMENT varchar(64);");
+            statement.executeBatch();
+        }
+        statement.close();
+        return true;
+    }
 
     public boolean updateToVersion60(Connection conn) throws Exception {
         Statement statement = null;
@@ -500,6 +500,7 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
     public boolean updateToVersion88(Connection conn) throws Exception {
         return true;
     }
+
     public boolean updateToVersion89(Connection conn) throws Exception {
         return true;
     }
@@ -518,7 +519,7 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
         return true;
     }
 
-    public boolean updateToVersion91(Connection conn) throws Exception{
+    public boolean updateToVersion91(Connection conn) throws Exception {
         Statement statement = conn.createStatement();
         statement.addBatch("alter table user_roles alter column appid varchar(256)");
         try {
@@ -649,7 +650,7 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
         return true;
     }
 
-       public boolean updateToVersion98(Connection conn) throws Exception {
+    public boolean updateToVersion98(Connection conn) throws Exception {
         dropForeignKey(conn, "COORDBLOCKS", "DOCID");
         return addForeignKey(conn, "COORDBLOCKS", "DOCID", "MAINDOCS", "DOCID", true);
     }
@@ -662,6 +663,15 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
     public boolean updateToVersion100(Connection conn) throws Exception {
         return alterColumnAlterType(conn, "COORDINATORS", "COMMENT", "varchar(1024)");
     }
+
+    public boolean updateToVersion101(Connection connection) throws Exception {
+        return addNewColumn(connection, "CUSTOM_BLOBS_EMPLOYERS", "COMMENT", "TEXT");
+    }
+
+    public boolean updateToVeriosn102(Connection connection) throws Exception {
+        return dropForeignKey(connection, "CUSTOM_BLOBS_EMPLOYERS", "DOCID");
+    }
+
     public static boolean alterColumnAlterType(Connection conn, String tableName, String columnName, String typeNameAndSize) throws Exception {
         Statement statement = conn.createStatement();
         statement.addBatch("alter table " + tableName + " alter " + columnName + " type " + typeNameAndSize);
@@ -694,30 +704,21 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
     }
 
     private static boolean dropForeignKey(Connection conn, String tableName, String columnName) throws SQLException {
-
         if (tableName != null && columnName != null) {
-            try {
-                PreparedStatement pst = conn.prepareStatement("SELECT *" +
-                        "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE\n" +
-                        "WHERE TABLE_NAME =  ?\n" +
-                        "AND COLUMN_NAME =  ?");
-                pst.setString(1, tableName.toLowerCase());
-                pst.setString(2, columnName.toLowerCase());
-                ResultSet rs = pst.executeQuery();
-                if (rs.next() && rs.getString("COLUMN_NAME").equalsIgnoreCase(columnName.toUpperCase())) {
-                    Statement st = conn.createStatement();
-                    st.execute("alter  table " + tableName + " drop CONSTRAINT " + rs.getString("CONSTRAINT_NAME"));
-                    conn.commit();
-                    return true;
-                }
-
-            } catch (SQLException e) {
-                DatabaseUtil.debugErrorPrint(e);
-                conn.rollback();
-                return false;
+            PreparedStatement pst = conn.prepareStatement("SELECT *" +
+                    "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE\n" +
+                    "WHERE TABLE_NAME =  ?\n" +
+                    "AND COLUMN_NAME =  ?");
+            pst.setString(1, tableName.toLowerCase());
+            pst.setString(2, columnName.toLowerCase());
+            ResultSet rs = pst.executeQuery();
+            if (rs.next() && rs.getString("COLUMN_NAME").equalsIgnoreCase(columnName.toUpperCase())) {
+                Statement st = conn.createStatement();
+                st.execute("alter  table " + tableName + " drop CONSTRAINT " + rs.getString("CONSTRAINT_NAME"));
+                conn.commit();
+                return true;
             }
         }
         return false;
     }
-
 }

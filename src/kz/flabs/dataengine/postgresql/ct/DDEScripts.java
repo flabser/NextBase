@@ -676,6 +676,7 @@ public class DDEScripts {
                 " DECLARE" +
                 " docID integer;" +
                 " idColName varchar;" +
+                " mainColName varchar;" +
                 " mainTableName varchar;" +
                 " sourceRow record;" +
                 " query varchar;" +
@@ -685,15 +686,17 @@ public class DDEScripts {
                 " ELSE" +
                 " sourceRow := OLD;" +
                 " END IF;" +
-                " IF TG_TABLE_NAME = 'CUSTOM_BLOBS_BOSS' OR TG_TABLE_NAME = 'CUSTOM_BLOBS_EMPLOYERS' THEN" +
+                " IF upper(TG_TABLE_NAME) = 'CUSTOM_BLOBS_BOSS' OR upper(TG_TABLE_NAME) = 'CUSTOM_BLOBS_EMPLOYERS' THEN" +
                 " docID := sourceRow.ID;" +
                 " idColName := 'ID';" +
+                " mainColName := 'EMPID';" +
                 " ELSE" +
                 " docID := sourceRow.DOCID;" +
                 " idColName := 'DOCID';" +
+                " mainColName := 'DOCID';" +
                 " END IF;" +
                 " mainTableName := substring(TG_TABLE_NAME from 14 for (length(TG_TABLE_NAME) - 13));" +
-                " query := 'UPDATE ' || mainTableName || ' SET HAS_ATTACHMENT = (SELECT COUNT(*) FROM ' || TG_TABLE_NAME || ' WHERE ' || TG_TABLE_NAME || '.DOCID = ' || docID || ') WHERE ' || mainTableName || '.' || idColName || ' = ' || docID;" +
+                " query := 'UPDATE ' || mainTableName || ' SET HAS_ATTACHMENT = (SELECT COUNT(*) FROM ' || TG_TABLE_NAME || ' WHERE ' || TG_TABLE_NAME || '.' || idColName || ' = ' || docID || ') WHERE ' || mainTableName || '.' || mainColName || ' = ' || docID;" +
                 " EXECUTE(query);" +
                 " RETURN NULL;" +
                 " END;" +
