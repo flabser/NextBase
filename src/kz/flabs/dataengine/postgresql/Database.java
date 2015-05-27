@@ -3,14 +3,13 @@ package kz.flabs.dataengine.postgresql;
 
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.*;
-import kz.flabs.dataengine.h2.DBConnectionPool;
 import kz.flabs.dataengine.h2.glossary.GlossaryQueryFormula;
 import kz.flabs.dataengine.h2.queryformula.GroupQueryFormula;
 import kz.flabs.dataengine.h2.queryformula.ProjectQueryFormula;
 import kz.flabs.dataengine.h2.structure.StructQueryFormula;
-import kz.flabs.dataengine.postgresql.queryformula.GlossarySelectFormula;
 import kz.flabs.dataengine.postgresql.filters.Filters;
 import kz.flabs.dataengine.postgresql.glossary.Glossaries;
+import kz.flabs.dataengine.postgresql.queryformula.GlossarySelectFormula;
 import kz.flabs.dataengine.postgresql.queryformula.QueryFormula;
 import kz.flabs.dataengine.postgresql.queryformula.SelectFormula;
 import kz.flabs.dataengine.postgresql.queryformula.TaskQueryFormula;
@@ -1087,6 +1086,12 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
                             ids.add(String.valueOf(rs.getInt(1)));
                         }
                         pst.close();
+                    } else if (f.id != null && doc.getDocID() != 0 && doc.getDocID() != key) {
+                        sql = "INSERT INTO CUSTOM_BLOBS_MAINDOCS (DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE_OID, REGDATE) SELECT " + key + ", NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE_OID, REGDATE FROM CUSTOM_BLOBS_MAINDOCS WHERE DOCID = ? AND ID = ?";
+                        pst = conn.prepareStatement(sql);
+                        pst.setInt(1, doc.getDocID());
+                        pst.setInt(2, Integer.valueOf(f.id));
+                        pst.executeUpdate();
                     } else {
                         ids.add(f.id);
                         sql = "UPDATE CUSTOM_BLOBS_MAINDOCS SET DOCID = ?, COMMENT = ? WHERE id = ?";
