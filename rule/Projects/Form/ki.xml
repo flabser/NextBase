@@ -51,11 +51,11 @@
 	<caption name="comments" source="KEYWORD">комментарий</caption>
 	<caption name ="view_userprofile" source ="KEYWORD">Посмотреть свойства текущего пользователя</caption>
     <caption name="rating" source="KEYWORD">Рейтинг автору заявки</caption>
-    <caption name="rating1" source="KEYWORD">Задание было правильно сформулировано, соотвует концепции приложения, мне было понятно полностью.</caption>
-    <caption name="rating2" source="KEYWORD">Задание было не достаточно информативным, пришлось уточнять детали дополнительно.</caption>
-    <caption name="rating3" source="KEYWORD">Задание было не верно сформулировано, пришлось уточнять суть.</caption>
+    <caption name="rating7" source="KEYWORD">Задание было правильно сформулировано, соотвует концепции приложения, мне было понятно полностью.</caption>
+    <caption name="rating6" source="KEYWORD">Задание было не достаточно информативным, пришлось уточнять детали дополнительно.</caption>
+    <caption name="rating5" source="KEYWORD">Задание было не верно сформулировано, пришлось уточнять суть.</caption>
     <caption name="rating4" source="KEYWORD">Задание на мой взгляд противоречило идее приложения, пришлось спорить с автором.</caption>
-    <caption name="rating5" source="KEYWORD">Я не исполнил заявку т.к. оно не верно составлено в корне.</caption>
-    <caption name="rating6" source="KEYWORD">Это не ко мне вообще.</caption>
-    <caption name="rating7" source="KEYWORD">Я сомневась что автор задания в адеквате, заявка отклонена.</caption>
+    <caption name="rating3" source="KEYWORD">Я не исполнил заявку т.к. оно не верно составлено в корне.</caption>
+    <caption name="rating2" source="KEYWORD">Это не ко мне вообще.</caption>
+    <caption name="rating1" source="KEYWORD">Я сомневась что автор задания в адеквате, заявка отклонена.</caption>
 </rule>
