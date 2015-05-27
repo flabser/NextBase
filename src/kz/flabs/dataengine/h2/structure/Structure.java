@@ -193,6 +193,7 @@ public class Structure extends DatabaseCore implements IStructure, Const {
             ResultSet rs = s.executeQuery(sql);
             if (rs.next()) {
                 emp = fillEmpDoc(rs, conn);
+                fillBlobs(conn, emp, "EMPLOYERS");
             } else {
                 emp = new Employer(this);
                 ISystemDatabase sysDb = Environment.systemBase;
@@ -204,10 +205,8 @@ public class Structure extends DatabaseCore implements IStructure, Const {
                 }
                 emp.setFullName(systemUser.getUserID() + "*");
                 emp.setUser(systemUser);
-
             }
             s.close();
-            fillBlobs(conn, emp, "EMPLOYERS");
             conn.commit();
         } catch (SQLException e) {
             DatabaseUtil.errorPrint(db.getDbID(), e);
@@ -227,9 +226,9 @@ public class Structure extends DatabaseCore implements IStructure, Const {
             ResultSet rs = s.executeQuery(sql);
             if (rs.next()) {
                 emp = fillEmpDoc(rs, conn);
+                fillBlobs(conn, emp, "EMPLOYERS");
             }
             s.close();
-            fillBlobs(conn, emp, "EMPLOYERS");
             conn.commit();
         } catch (SQLException e) {
             DatabaseUtil.errorPrint(db.getDbID(), e);
@@ -1319,8 +1318,8 @@ public class Structure extends DatabaseCore implements IStructure, Const {
                 } else {
                     emp.editMode = EDITMODE_READONLY;
                 }
+                fillBlobs(conn, emp, "EMPLOYERS");
             }
-            fillBlobs(conn, emp, "EMPLOYERS");
             s.close();
             conn.commit();
         } catch (SQLException e) {
