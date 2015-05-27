@@ -134,11 +134,49 @@
 								<div class="ui-tabs-panel" id="tabs-1" >
 									<div display="block"  id="property" width="100%">									 
 										<table width="90%" border="0" style="margin-top:8px">
+
+											<!-- Kratkoe soderzhanie -->
+											<tr>
+												<td class="fc">
+													<xsl:value-of select="document/captions/report/@caption"/> : 
+												</td>
+												<td>
+													<textarea id="report" name="report" cols="93" rows="25" style="width:610px; height:150px;">														
+														<xsl:if test="$editmode = 'edit' and $status != 'new'">
+															<xsl:attribute name="class">textarea_noteditable</xsl:attribute>
+															<xsl:attribute name="readonly">true</xsl:attribute>
+														</xsl:if>
+														<xsl:if test="$editmode = 'edit' and $status = 'new'">
+															<xsl:attribute name="onkeydown">javascript:resetquickanswerbutton()</xsl:attribute>
+														</xsl:if>	
+														<xsl:value-of select="document/fields/report"/>
+													</textarea>
+													<xsl:if test="$editmode = 'edit' and $status = 'new'">
+														<br/>
+														<br/>
+														<a href="javascript:$.noop()" class="button-auto-value" title="{document/captions/executed/@caption}">
+															<xsl:attribute name="onclick">javascript:addquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
+															<xsl:attribute name="onmouseover">javascript:previewquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
+															<xsl:attribute name="onmouseout">javascript:endpreviewquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
+															<xsl:value-of select ="document/captions/executed/@caption"/>
+														</a>
+														<a href="javascript:$.noop()" class="button-auto-value" style="margin-left:10px" title="{document/captions/noted/@caption}">
+															<xsl:attribute name="onclick">javascript:addquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
+															<xsl:attribute name="onmouseover">javascript:previewquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
+															<xsl:attribute name="onmouseout">javascript:endpreviewquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
+															<xsl:value-of select ="document/captions/noted/@caption"/>
+														</a>					
+													</xsl:if>	
+												</td>
+											</tr>
+
                                             <xsl:if test="document/fields/rating">
-                                                <tr style="height: 35px;">
-                                                    <td class="fc"><xsl:value-of select="document/captions/rating/@caption" />: </td>
-                                                    <td >
-                                                        <select id="rating" name="rating">
+                                                <tr style="height: 35px; padding-top: 10px">
+                                                    <td class="fc" style=" padding-top: 13px"><xsl:value-of select="document/captions/rating/@caption" />: </td>
+                                                    <td  style=" padding-top: 13px">
+                                                        <select id="rating" name="rating" autocomplete="off">
+                                                            <option value="">
+                                                            </option>
                                                             <option value="1">
                                                                 <xsl:if test="document/fields/rating = '1'">
                                                                     <xsl:attribute name="selected">selected</xsl:attribute>
@@ -146,7 +184,7 @@
                                                                 <xsl:value-of select="document/captions/rating1/@caption" />
                                                             </option>
                                                             <option value="2" >
-                                                                <xsl:if test="document/fields/rating = '2' or document/@status = 'new'">
+                                                                <xsl:if test="document/fields/rating = '2'">
                                                                     <xsl:attribute name="selected">selected</xsl:attribute>
                                                                 </xsl:if>
                                                                 <xsl:value-of select="document/captions/rating2/@caption" />
@@ -185,53 +223,19 @@
 
                                                         <script type="text/javascript">
                                                             $(document).ready(function() {
-                                                                <xsl:if test="document/@status = 'new'">
-                                                                    $('#rating').barrating();
-                                                                </xsl:if>
-                                                                <xsl:if test="document/@status = 'existing'">
-                                                                    $('#rating').barrating({
-                                                                        readonly: true
-                                                                    });
-                                                                </xsl:if>
+                                                            <xsl:if test="document/@status = 'new'">
+                                                                $('#rating').barrating({initialRating:null});
+                                                            </xsl:if>
+                                                            <xsl:if test="document/@status = 'existing'">
+                                                                $('#rating').barrating({
+                                                                readonly: true
+                                                                });
+                                                            </xsl:if>
                                                             });
                                                         </script>
                                                     </td>
                                                 </tr>
                                             </xsl:if>
-											<!-- Kratkoe soderzhanie -->
-											<tr>
-												<td class="fc">
-													<xsl:value-of select="document/captions/report/@caption"/> : 
-												</td>
-												<td>
-													<textarea id="report" name="report" cols="93" rows="25" style="width:610px; height:150px;">														
-														<xsl:if test="$editmode = 'edit' and $status != 'new'">
-															<xsl:attribute name="class">textarea_noteditable</xsl:attribute>
-															<xsl:attribute name="readonly">true</xsl:attribute>
-														</xsl:if>
-														<xsl:if test="$editmode = 'edit' and $status = 'new'">
-															<xsl:attribute name="onkeydown">javascript:resetquickanswerbutton()</xsl:attribute>
-														</xsl:if>	
-														<xsl:value-of select="document/fields/report"/>
-													</textarea>
-													<xsl:if test="$editmode = 'edit' and $status = 'new'">
-														<br/>
-														<br/>
-														<a href="javascript:$.noop()" class="button-auto-value" title="{document/captions/executed/@caption}">
-															<xsl:attribute name="onclick">javascript:addquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
-															<xsl:attribute name="onmouseover">javascript:previewquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
-															<xsl:attribute name="onmouseout">javascript:endpreviewquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
-															<xsl:value-of select ="document/captions/executed/@caption"/>
-														</a>
-														<a href="javascript:$.noop()" class="button-auto-value" style="margin-left:10px" title="{document/captions/noted/@caption}">
-															<xsl:attribute name="onclick">javascript:addquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
-															<xsl:attribute name="onmouseover">javascript:previewquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
-															<xsl:attribute name="onmouseout">javascript:endpreviewquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
-															<xsl:value-of select ="document/captions/noted/@caption"/>
-														</a>					
-													</xsl:if>	
-												</td>
-											</tr>
 											<!-- 	Ссылка на заявку	-->
 											<xsl:if test="document/@status != 'new'">
 											 <tr>

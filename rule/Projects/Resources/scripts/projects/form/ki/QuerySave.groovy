@@ -19,6 +19,10 @@ class QuerySave extends _FormQuerySave{
 			localizedMsgBox('Поле \'Краткое содержание\' содержит значение превышающее 2046 символов');
 			return false;
 		}
+        if (webFormData.getValueSilently("rating") == "" ){
+            localizedMsgBox("Поставьте рейтинг автору заявки");
+            return false;
+        }
 		return true;
 	}
 
