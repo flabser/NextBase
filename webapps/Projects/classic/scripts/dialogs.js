@@ -131,13 +131,8 @@ function calcRating(executers){
 
     if(document.getElementById('rating')==null)
         return false;
-      $("input[type='radio'][name='responsible']").attr("disabled", "disabled");
-   /* var i = 1;
-    while(i <= chk.length){
-        $(chk.get(i-1)).attr("disabled", "disabled")
-        i++
-    }
-      */
+    $("input[type='radio'][name='responsible']").attr("disabled", "disabled");
+
     $(".br-widget a").removeAttr("class")
     $(".br-wrapper").attr("title", "")
     var count = 1;
