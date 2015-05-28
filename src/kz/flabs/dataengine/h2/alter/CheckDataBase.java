@@ -71,6 +71,8 @@ public class CheckDataBase {
                             res = (boolean) method.invoke(updates, conn);
                             if (res) {
                                 updateDBVersion(conn, currentDBVersion, i+1);
+                            } else {
+                                needCheck = false;
                             }
                         }
                     }
