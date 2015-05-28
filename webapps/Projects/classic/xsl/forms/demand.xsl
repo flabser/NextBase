@@ -18,8 +18,12 @@
 				<title>
 					<xsl:value-of select="concat('Projects - ', document/captions/title/@caption)"/>
 				</title>
-				<xsl:call-template name="cssandjs"/>
-				<script type="text/javascript">
+
+                <xsl:call-template name="cssandjs"/>
+                <script type="text/javascript" src="/SharedResources/jquery/js/jquery-bar-rating-master/jquery.barrating.js" />
+                <link type="text/css" rel="stylesheet" href="/SharedResources/jquery/js/jquery-bar-rating-master/examples/css/small.css" />
+
+                <script type="text/javascript">
    					$(document).ready(function(){
 
 						<xsl:if test="document/@topicid != 0 and document/@topicid != 'null'">
@@ -547,20 +551,53 @@
                                                         <input type="hidden" id="executer" name="executer" onChange="javascript:alert('ss')" />
                                                     </xsl:if>
 												</table>
-                                                <xsl:if test="document/current_userid = 'kkuliyev' or document/current_userid = 'bnurlanbekova' or document/current_userid = 'ppadalko'">
-                                                    <div style="display:inline-block">
-                                                        <img title="рейтинг" src="/SharedResources/img/iconset/star2.png" id="rating_star_img" style="width:22px; opacity:0.6;  vertical-align: 3px;"/>
-                                                        <span id="rating" style="vertical-align: 5px;color: #febd0c;padding-left: 5px;">
-                                                        </span>
-                                                    </div>
-                                                </xsl:if>
+
 												<xsl:if test="document/fields/responsible">
 													<input type="hidden" name="responsible" value="{document/fields/responsible}"/>
 												</xsl:if>
 												<input type="hidden" id="executercaption" value="{$captions/executer/@caption}"/>
 											</td>
 										</tr>
+                                         <!-- Рейтинг -->
+                                        <xsl:if test="document/current_userid = 'kkuliyev' or document/current_userid = 'bnurlanbekova' or document/current_userid = 'ppadalko'">
+                                            <tr>
+                                                <td class="fc">
+                                                    <font style="vertical-align:top"><xsl:value-of select="$captions/rating/@caption"/> : </font>
+                                                </td>
+                                                <td>
+                                                    <xsl:variable name="count" select="50"/>
+                                                    <select id="rating" >
+                                                        <option value="" />
+                                                        <xsl:for-each select="for $i in 1 to $count return $i">
+                                                            <option value="{.}"><xsl:value-of select="." /></option>
+                                                        </xsl:for-each>
+                                                    </select>
+                                                    <script type="text/javascript" defer="defer">
+                                                        $(document).ready(function(){
+                                                            <xsl:if test="document/@status = 'new'">
+                                                                $('#rating').barrating({
+                                                                    readonly: true
+                                                                });
+                                                            </xsl:if>
+                                                            <xsl:if test="document/@status = 'existing'">
+                                                                $('#rating').barrating({
+                                                                    readonly: true
+                                                                });
 
+                                                                <xsl:if test="document/fields/responsible != ''">
+                                                                    var r = calcRating('<xsl:value-of select="document/fields/responsible" />');
+
+                                                                </xsl:if>
+                                                                <xsl:if test="document/fields/responsible = ''">
+                                                                    var r = calcRating('<xsl:value-of select="document/fields/executer/entry/@attrval" />');
+
+                                                                </xsl:if>
+                                                            </xsl:if>
+                                                        });
+                                                    </script>
+                                                </td>
+                                            </tr>
+                                        </xsl:if>
                                         <!-- Приступить к работе с -->
                                         <tr>
                                             <td  class="fc">

@@ -99,10 +99,10 @@ function pickListBtnOk(){
 								checked = ''
 							}
 							$(table).append("<tr><td style='width:500px;' class='td_editable'>"+hidfields[indx].value +" <input type='hidden' name='executer' value='"+ hidfields[indx].id +"'/>" +
-								"<input style='margin:2px 2px 2px 0px; float:right' type='radio' "+checked+" name='responsible' value='"+hidfields[indx].id+"' title='Выбор ответственного исполнителя'/></td></tr>");
+								"<input style='margin:2px 2px 2px 0px; float:right' onchange='calcRating(&#34" + hidfields[indx].id + "&#34)' type='radio' "+checked+" name='responsible' value='"+hidfields[indx].id+"' title='Выбор ответственного исполнителя'/></td></tr>");
 
 						})
-                        calcRating(hidfields[hidfields.length-1].id)
+                        calcRating(hidfields[0].id)
 					}else{
 						$('input[name=chbox]:checked').each(function(indx, element){
 							$(table).append("<tr><td style='width:500px;' class='td_editable'>"+$(this).val() +"</td></tr>");
@@ -128,23 +128,58 @@ function pickListBtnOk(){
 }
 
 function calcRating(executers){
-    //alert(document.getElementById('rating') )
+
     if(document.getElementById('rating')==null)
         return false;
-    $("#rating").html("")
-    $("#rating_star_img").attr("src", "/SharedResources/img/iconset/star.gif").attr("style","width:30px;opacity:0.6")
+    $("input[type='radio'][name='responsible']").attr("disabled", "disabled");
+
+    $(".br-widget a").removeAttr("class")
+    $(".br-wrapper").attr("title", "")
+    var count = 1;
+    var timerVar = setInterval(function(){
+        $(".br-widget a[data-rating-value='"+count+"']").attr("class", "br-selected br-current")
+        count++
+        if(count == 51){
+            count = 1;
+            $(".br-widget a").removeAttr("class")
+        }
+    },500);
+
     $.ajax({
         type:"GET",
         async: true,
         datetype: "xml",
         url: "Provider?type=page&id=calc_rating&executers=" + executers,
         success: function(xml){
-            $("#rating_star_img").attr("src", "/SharedResources/img/iconset/star2.png").attr("style","width:22px;opacity:0.6;vertical-align: 3px;")
-            $("#rating").html($(xml).find("result").text())
+            //$("#rating_star_img").attr("src", "/SharedResources/img/iconset/statistics-icon1.png").attr("style","opacity:0.6;vertical-align: 3px;")
+           // $("#rating").html($(xml).find("result").text())
+            //alert($(xml).find("result").text())
+           result = $(xml).find("result").text();
+           clearInterval(timerVar)
+            while(result >= count){
+                $(".br-widget a[data-rating-value='"+count+"']").attr("class", "br-selected br-current")
+                count ++
+            }
+            while(result < count){
+                $(".br-widget a[data-rating-value='"+count+"']").removeAttr("class")
+                count --
+            }
+
+            if(result > 50){
+                $(".br-widget a").attr("class", "br-selected br-current")
+            }
+
+            $(".br-wrapper").attr("title", $(xml).find("result").attr("shortName") + " рейтинг: " + result)
+            $("input[type='radio'][name='responsible']").removeAttr("disabled")
         },
         error: function(data,status,xhr){
-        }
+            $(".br-widget a").removeAttr("class")
+            $(".br-wrapper").attr("title", "")
+            $("input[type='radio'][name='responsible']").removeAttr("disabled")
+        },
+        complete: function() {}
     })
+
 }
 
 function pickListClose(){ 
