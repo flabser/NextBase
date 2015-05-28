@@ -5,9 +5,9 @@
 }
 .br-wrapper .br-widget a {
   display: block;
-  width: 30px;
+  width: 8.2px;
   padding: 5px 0;
-  height: 6px;
+  height: 10px;
   float: left;
   background-color: #e3e3e3;
   margin: 1px;
@@ -18,11 +18,11 @@
   background-color: #edb867;
 }
 .br-wrapper .br-widget .br-current-rating {
-    clear:both;
+    /*clear:both;*/
   /*font-size: 14px;*/
-  line-height: 1.5;
-  /*float: left;*/
-  /*padding: 0 0px 0 20px;*/
+  /*line-height: 1.5;*/
+  float: left;
+  margin: 0 0px 0 5px;
   color: #444444;
   /*color: #59a6d6;*/
   /*font-weight: 600;*/
@@ -30,8 +30,9 @@
 /* Center in container */
 .br-wrapper {
   /*width: 240px;*/
-  /*position: absolute;*/
-  /*margin: 0px 0 0 -120px;*/
+    /*position: absolute;*/
+    /*margin: -20px 0 0 520px;*/
+    font-size: 12px;
   /*left: 50%;*/
     padding-bottom: 5px;
 }
