@@ -172,6 +172,7 @@ class QuerySave extends _FormQuerySave {
         doc.setViewDate(dDate)
 		doc.setViewText(vt)
 		doc.addViewText(doc.getValueString('briefcontent'))
+		doc.addViewText('')
 		doc.addViewText(blocksCollection.getStatus())
 		doc.addViewText(blocksCollection.getSignBlock().getFirstCoordinator().getUserID())
 		dDate = doc.getRegDate()
