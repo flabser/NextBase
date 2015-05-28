@@ -1534,7 +1534,6 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
                     conn.commit();
                 }
                 return true;
-
             } catch (SQLException e) {
                 DatabaseUtil.debugErrorPrint(e);
                 conn.rollback();
