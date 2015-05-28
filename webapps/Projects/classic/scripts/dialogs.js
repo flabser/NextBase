@@ -178,6 +178,8 @@ function calcRating(executers){
             $("input[type='radio'][name='responsible']").removeAttr("disabled")
         },
         error: function(data,status,xhr){
+            $(".br-widget a").removeAttr("class")
+            $(".br-wrapper").attr("title", "")
             $("input[type='radio'][name='responsible']").removeAttr("disabled")
         },
         complete: function() {}
