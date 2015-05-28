@@ -63,7 +63,7 @@ class QuerySave extends _FormQuerySave{
 		}
         setRedirectURL(returnURL)
 
-        doc.setViewText(emp.getShortName() +" " + doc.getValueString('docdate') + " " + emp.getShortName() + "  (" + doc.getValueString('report')+ ")")
+        doc.setViewText(emp.getShortName() +" " + (new Date()).format("dd.MM.yyyy hh:mm") + "  (" + doc.getValueString('report')+ ")")
 
         //setParentDocReadyToReset(doc);
 		def parentDoc = doc.getParentDocument()
