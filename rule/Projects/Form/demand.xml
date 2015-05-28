@@ -101,4 +101,5 @@
     <caption name="fill_topic_title" source="KEYWORD">Заполните название темы</caption>
     <caption name="fill_comment" source="KEYWORD">Заполните текст комментария</caption>
     <caption name="startdate" source="KEYWORD">Приступить к работе с</caption>
+    <caption name="rating" source="KEYWORD">Рейтинг ответственного исполнителя</caption>
 </rule>
