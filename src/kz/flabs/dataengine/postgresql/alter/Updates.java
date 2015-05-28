@@ -1532,8 +1532,8 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
                     Statement st = conn.createStatement();
                     st.execute("alter table " + tableName + " drop CONSTRAINT " + rs.getString(1));
                     conn.commit();
-                    return true;
                 }
+                return true;
 
             } catch (SQLException e) {
                 DatabaseUtil.debugErrorPrint(e);

@@ -1088,10 +1088,14 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
                         pst.close();
                     } else if (f.id != null && doc.getDocID() != 0 && doc.getDocID() != key) {
                         sql = "INSERT INTO CUSTOM_BLOBS_MAINDOCS (DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE_OID, REGDATE) SELECT " + key + ", NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE_OID, REGDATE FROM CUSTOM_BLOBS_MAINDOCS WHERE DOCID = ? AND ID = ?";
-                        pst = conn.prepareStatement(sql);
+                        pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                         pst.setInt(1, doc.getDocID());
                         pst.setInt(2, Integer.valueOf(f.id));
                         pst.executeUpdate();
+                        ResultSet rs = pst.getGeneratedKeys();
+                        if (rs.next()) {
+                            ids.add(String.valueOf(rs.getInt(1)));
+                        }
                     } else {
                         ids.add(f.id);
                         sql = "UPDATE CUSTOM_BLOBS_MAINDOCS SET DOCID = ?, COMMENT = ? WHERE id = ?";
