@@ -524,7 +524,7 @@ public class UsersActivity implements IUsersActivity {
                     UsersActivityType activityType = UsersActivityType.getType(type);
                     String sql = "SELECT * FROM USERS_ACTIVITY WHERE USERID ='" + userID + "' AND TYPE = " + activityType.getCode() + " LIMIT " + pageSize + " OFFSET " + offset;
                     if (activityType == UsersActivityType.DELETED) {
-                        sql = "SELECT ua.id as id, type, dbid, userid, eventtime, rb.id as docid, ddbid,  " + Const.DOCTYPE_RECYCLE_BIN_ENTRY + " as doctype, viewtext from recycle_bin as rb" +
+                        sql = "SELECT ua.id as id, type, dbid, userid, eventtime, rb.id as docid, ddbid, clientip, " + Const.DOCTYPE_RECYCLE_BIN_ENTRY + " as doctype, viewtext from recycle_bin as rb" +
                                 " left join users_activity as ua on rb.aid = ua.id " + " LIMIT " + pageSize + " OFFSET " + offset;
                     }
                     ResultSet rs = s.executeQuery(sql);
