@@ -193,7 +193,8 @@ class QuerySave extends _FormQuerySave {
 		}else{
 			if (doc.getViewNumber()== -1 && blocksCollection.getStatus() != _CoordStatusType.DRAFT){
 
-                int num = db.getRegNumber("contractprj_" + webFormData.getValueSilently("contracttype"))
+                //int num = db.getRegNumber("contractprj_" + webFormData.getValueSilently("contracttype"))
+                int num = db.getRegNumber("contractprj")
 				String vnAsText = Integer.toString(num)
 				doc.addStringField("vn",vnAsText)
 				doc.setViewNumber(num)
