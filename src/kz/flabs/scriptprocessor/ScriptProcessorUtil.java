@@ -1,7 +1,6 @@
 package kz.flabs.scriptprocessor;
 
 import kz.flabs.runtimeobj.document.BaseDocument;
-import kz.flabs.runtimeobj.document.Document;
 import kz.flabs.runtimeobj.document.Execution;
 import kz.flabs.runtimeobj.document.glossary.Glossary;
 import kz.flabs.runtimeobj.document.project.Project;
@@ -35,11 +34,14 @@ public class ScriptProcessorUtil {
         "import net.sf.jasperreports.engine.export.JExcelApiExporter;" +
         "import net.sf.jasperreports.engine.export.JRHtmlExporter;" +
         "import net.sf.jasperreports.engine.export.JRHtmlExporterParameter;" +
+        "import net.sf.jasperreports.engine.data.*;" +
 
 		"import java.text.*;" +
 		"import java.util.*;" +
 		"import java.sql.*;" +
-		
+
+        "import org.apache.commons.lang3.StringUtils;" +
+
 		"import kz.flabs.dataengine.Const;" +
 		"import kz.flabs.dataengine.IDatabase;" +
 		"import kz.flabs.runtimeobj.document.task.Task;" +
