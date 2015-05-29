@@ -179,8 +179,8 @@
 							 								
 							$("#sliderI").slider({
 								min: 1, 
-								max: 20,									
-								step: 0.1,
+								max: 3,
+								step: 1,
 								value: $("input#complication").val(),
 								range: false,
 								animate:true,
@@ -189,14 +189,28 @@
 								 },
 								stop: function(event, ui) {											 						 
 									$("input#complication").val(jQuery("#sliderI").slider("values",0)); 
-									$("input#imp_int").val(ui.value);
-									$("input#imp_int").attr("class", "level" + $("#sliderI").slider("values",0));
+
+									if(ui.value == 1)
+									    $("input#imp_int").val('простое');
+									else if(ui.value == 2)
+									    $("input#imp_int").val('обычное');
+									else if(ui.value == 3)
+									    $("input#imp_int").val('сложное');
+
+									//$("input#imp_int").attr("class", "level" + $("#sliderI").slider("values",0));
 							    	//callChangeCtrlDate();
 							    	//changeTime();
 							    },
 							    slide: function(event, ui){								    
-							    	$("input#complication, input#imp_int").val(ui.value); 
-									$("input#imp_int").attr("class", "level" + ui.value);
+							    	$("input#complication").val(ui.value);
+							    	 if(ui.value == 1)
+									    $("input#imp_int").val('простое');
+									else if(ui.value == 2)
+									    $("input#imp_int").val('обычное');
+									else if(ui.value == 3)
+									    $("input#imp_int").val('сложное');
+
+									//$("input#imp_int").attr("class", "level" + ui.value);
 									//callChangeCtrlDate();
 									//changeTime();
 							    }
@@ -242,11 +256,16 @@
 						 	if (typeof k == 'undefined') {
 								k =  parseInt($("input#complication").val());
 							}
-							if (k &lt;20){
-							 	k+=2;
+							if (k &lt;3){
+							 	k+=1;
 								$("#sliderI").slider({ value:k});
-								$("input#imp_int, input#complication").val(k);
-								$("input#imp_int").attr("class", "level" + k);
+								$("input#complication").val(k);
+                                if(k == 1)
+                                    $("input#imp_int").val('простое');
+                                else if(k == 2)
+                                    $("input#imp_int").val('обычное');
+                                else if(k == 3)
+                                    $("input#imp_int").val('сложное');
 								callChangeCtrlDate();
 							}
 						}
@@ -255,10 +274,15 @@
 								k =  parseInt($("input#complication").val());
 							}
 							if (k &gt;1){
-							 	k-=2;
+							 	k-=1;
 								$("#sliderI").slider({ value:k});
-								$("input#imp_int, input#complication").val(k);
-								$("input#imp_int").attr("class", "level" + k);
+								$("input#complication").val(k);
+                                if(k == 1)
+                                    $("input#imp_int").val('простое');
+                                else if(k == 2)
+                                    $("input#imp_int").val('обычное');
+                                else if(k == 3)
+                                    $("input#imp_int").val('сложное');
 								callChangeCtrlDate();
 							}
 						}
@@ -636,7 +660,10 @@
 											</td>
 											<td>
 												<button  type="button" id="soon" style="width:80px; background:none !important; border:none; background-color: transparent; text-decoration:underline !important; vertical-align:top" onclick="moveDownP()">
-													<span>
+                                                    <xsl:if test="document/@editmode = 'readonly'">
+                                                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                                                    </xsl:if>
+                                                    <span>
 														<font class="button_text">
 															<xsl:value-of select="document/captions/soon/@caption"/>
 														</font>
@@ -648,7 +675,10 @@
 											 	</input>
 											 	<input type="hidden"  id="priority" name="priority" value="{document/fields/control/priority}"/>											 			
 												<button type="button" id="slowly" style="width:90px; background:none !important; border:none; background-color: transparent; text-decoration: underline !important; vertical-align:top" onclick ="moveUpP()">
-													<span>
+                                                    <xsl:if test="document/@editmode = 'readonly'">
+                                                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                                                    </xsl:if>
+                                                    <span>
 														<font class="button_text">
 															<xsl:value-of select="document/captions/later/@caption"/>
 														</font>
@@ -663,19 +693,38 @@
 											</td>
 											<td>
 												<button type="button" id="easy" style="width:80px; background:none !important; border:none; background-color: transparent; text-decoration: underline !important ; vertical-align:top; vertical-align:top" onclick ="moveDownC()">
+                                                    <xsl:if test="document/@editmode = 'readonly'">
+                                                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                                                    </xsl:if>
 													<span>
 														<font style="font-size:12px"><xsl:value-of select="document/captions/easier/@caption"/></font>
 													</span>
 												</button>
-												<div id="sliderI" class="slider" style="margin:8px 0 0 8px; width:400px;  display:inline-block"/>
-												<input type="text" readonly="true" style="width:30px; border:1px solid #555555; margin-left:14px" id="imp_int" value="{$fields/control/complication}">
-												 		<xsl:attribute name="class" select="concat('level',$fields/control/complication)"/>
+												<div id="sliderI" class="slider" style="margin:8px 0 0 8px; width:365px;  display:inline-block"/>
+												<input type="text" readonly="true" style="width:65px; border:1px solid #555555; margin-left:14px;  text-align:center" id="imp_int" value="{$fields/control/complication}">
+                                                    <xsl:choose>
+                                                        <xsl:when test="$fields/control/complication = 1">
+                                                            <xsl:attribute name="value">простое</xsl:attribute>
+                                                        </xsl:when>
+                                                        <xsl:when test="$fields/control/complication = 2">
+                                                            <xsl:attribute name="value">обычное</xsl:attribute>
+                                                        </xsl:when>
+                                                        <xsl:when test="$fields/control/complication = 3">
+                                                            <xsl:attribute name="value">сложное</xsl:attribute>
+                                                        </xsl:when>
+                                                        <xsl:otherwise>
+
+                                                        </xsl:otherwise>
+                                                    </xsl:choose>
 												 </input> 
 												 <input type="hidden"  id="complication" name="complication" value="{$fields/control/complication}"/> 
-												 <button type="button" id="difficult" style="width:90px; background:none !important; border:none; background-color: transparent; text-decoration: underline !important; vertical-align:top" onclick ="moveUpC()">
-														<span>
-															<font class="button_text"><xsl:value-of select="document/captions/complicated/@caption"/></font>
-														</span>
+												<button type="button" id="difficult" style="width:90px; background:none !important; border:none; background-color: transparent; text-decoration: underline !important; vertical-align:top" onclick ="moveUpC()">
+                                                    <xsl:if test="document/@editmode = 'readonly'">
+                                                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                                                    </xsl:if>
+                                                    <span>
+														<font class="button_text"><xsl:value-of select="document/captions/complicated/@caption"/></font>
+													</span>
 												</button>
 											</td>
 										</tr> 
