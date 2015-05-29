@@ -30,7 +30,7 @@ class QueryOpen extends _FormQueryOpen {
 			def pdoc = session.getCurrentDatabase().getDocumentByComplexID(pdoctype, pdocid);
 			publishParentDocs(pdoc, session, "new")
 		} else{
-            def control = new _Control(session, new Date(), false, 6.3, 1)
+            def control = new _Control(session, new Date(), false, 6.3, 2)
             publishValue("control", control)
             publishValue("ctrlDateInJsFormat", control.getCtrlDate().format("MM/dd/yyyy"))
         }
