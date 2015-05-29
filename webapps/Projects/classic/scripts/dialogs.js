@@ -171,6 +171,7 @@ function calcRating(executers){
 
             $(".br-wrapper").attr("title", $(xml).find("result").attr("shortName") + " рейтинг: " + result)
             $("input[type='radio'][name='responsible']").removeAttr("disabled")
+            $(".br-current-rating").append(result);
         },
         error: function(data,status,xhr){
             $(".br-widget a").removeAttr("class")
