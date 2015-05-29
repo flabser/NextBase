@@ -22,8 +22,13 @@
   /*font-size: 14px;*/
   /*line-height: 1.5;*/
   float: left;
-  margin: 3px 0px 0 5px;
+  margin: 1px 0px 0 5px;
   color: #444444;
+  background-color: #e3e3e3;
+  height: 18px;
+  width: 25px;
+  text-align: center;
+  padding-top: 2px;
   /*color: #59a6d6;*/
   /*font-weight: 600;*/
 }
