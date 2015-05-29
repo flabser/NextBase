@@ -1,10 +1,7 @@
 package kz.flabs.runtimeobj.document;
 
 import kz.flabs.appenv.AppEnv;
-import kz.flabs.dataengine.Const;
-import kz.flabs.dataengine.DatabaseUtil;
-import kz.flabs.dataengine.IDatabase;
-import kz.flabs.dataengine.IStructure;
+import kz.flabs.dataengine.*;
 import kz.flabs.dataengine.h2.usersactivity.UsersActivity;
 import kz.flabs.exception.*;
 import kz.flabs.runtimeobj.DocumentCollection;
@@ -26,6 +23,7 @@ import kz.nextbase.script._Helper;
 import kz.pchelka.env.Environment;
 import kz.pchelka.server.Server;
 import org.apache.commons.dbcp.DelegatingConnection;
+import org.apache.commons.lang3.StringUtils;
 import org.postgresql.largeobject.LargeObject;
 import org.postgresql.largeobject.LargeObjectManager;
 import org.w3c.dom.Node;
@@ -128,6 +126,61 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
             DatabaseUtil.errorPrint(dbID, e);
         }
         db.getConnectionPool().returnConnection(conn);
+    }
+
+    public void getAttachments(String fieldName, String toPutFolder, ArrayList<String> attachIDS) {
+        if (attachIDS.isEmpty()) {
+            return;
+        }
+        if (!new File(toPutFolder).exists())
+            new File(toPutFolder).mkdirs();
+
+        int folderIdx = 0;
+        IDBConnectionPool pool;
+        String tableName = "";
+        switch (this.docType) {
+            case DOCTYPE_EMPLOYER:
+                tableName = "EMPLOYERS";
+                pool = db.getStructureConnectionPool();
+                break;
+            default:
+                tableName = "MAINDOCS";
+                pool = db.getConnectionPool();
+                break;
+        }
+        Connection conn = pool.getConnection();
+        try {
+            Statement attachStatement = conn.createStatement();
+            ResultSet attachResultSet = attachStatement.executeQuery("select * from CUSTOM_BLOBS_" + tableName +
+                    " where CUSTOM_BLOBS_" + tableName + ".ID IN (" + StringUtils.join(attachIDS, ",") + ") " +
+                    " AND CUSTOM_BLOBS_" + tableName + ".NAME = '"
+                    + fieldName + "' ");
+            while (attachResultSet.next()) {
+                if(attachResultSet.getLong("VALUE_OID") == 0)
+                    continue;
+
+                folderIdx++;
+                if (!new File(toPutFolder + File.separator + (folderIdx)).exists())
+                    new File(toPutFolder + File.separator + (folderIdx)).mkdirs();
+
+                LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
+                long oid = attachResultSet.getLong("VALUE_OID");
+                LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
+                InputStream is = obj.getInputStream();
+
+                FileOutputStream out = new FileOutputStream(toPutFolder + File.separator + (folderIdx) + File.separator + attachResultSet.getString("ORIGINALNAME"));
+                byte[] b = new byte[1048576];
+                int len = 0;
+                while ((len = is.read(b)) > 0) {
+                    out.write(b, 0, len);
+                }
+                out.close();
+            }
+        } catch (Exception e) {
+            DatabaseUtil.errorPrint(dbID, e);
+        } finally {
+            pool.returnConnection(conn);
+        }
     }
 
     public void setCurrentUserID(String currentID) {

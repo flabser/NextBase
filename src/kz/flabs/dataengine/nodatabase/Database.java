@@ -108,8 +108,13 @@ public class Database implements IDatabase, Const{
 		return structDbPool;
 	}
 
+    @Override
+    public IDBConnectionPool getStructureConnectionPool() {
+        return null;
+    }
 
-	@Override
+
+    @Override
 	public IFTIndexEngine getFTSearchEngine() {
 		return null;
 	}

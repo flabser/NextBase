@@ -41,7 +41,10 @@ public interface IDatabase {
 	String initExternalPool(ExternalModuleType extModule);
 	IGlossaries getGlossaries();
 	IDBConnectionPool getConnectionPool();
-	IFTIndexEngine getFTSearchEngine();
+
+    IDBConnectionPool getStructureConnectionPool();
+
+    IFTIndexEngine getFTSearchEngine();
 	ITasks getTasks();
 	IExecutions getExecutions();
 	IProjects getProjects();
