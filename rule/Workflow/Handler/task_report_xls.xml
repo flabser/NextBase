@@ -32,21 +32,21 @@
         int c = 1;
 
         StringBuilder formula = new StringBuilder("form = 'task'")
-        String controltype = formData.getValueSilently("controltype");
-        if (controltype) {
-            formula.append(" and controltype#number = " + controltype)
+        String[] controltype = formData.get("controltype");
+        if (controltype && controltype[0] != '') {
+            formula.append(" and controltype#number = " + controltype[0])
         }
-        String taskdatefrom = formData.getValueSilently("taskdatefrom")
-        if (taskdatefrom) {
-            formula.append(" and  taskdate#datetime >= '" + taskdatefrom + "'")
+        String[] taskdatefrom = formData.get("taskdatefrom")
+        if (taskdatefrom && taskdatefrom[0] != '') {
+            formula.append(" and  taskdate#datetime >= '" + taskdatefrom[0] + "'")
         }
-        String taskdateto = formData.getValueSilently("taskdateto")
-        if (taskdateto) {
-            formula.append(" and taskdate#datetime <= '" + taskdateto + "'")
+        String[] taskdateto = formData.get("taskdateto")
+        if (taskdateto && taskdateto[0] != '') {
+            formula.append(" and taskdate#datetime <= '" + taskdateto[0] + "'")
         }
-        String taskauthor = formData.getValueSilently("taskauthor")
-        if (taskauthor) {
-            formula.append(" and taskauthor = '" + taskauthor + "'")
+        String[] taskauthor = formData.get("taskauthor")
+        if (taskauthor && taskauthor[0] != '') {
+            formula.append(" and taskauthor = '" + taskauthor[0] + "'")
         }
 
 
@@ -138,7 +138,7 @@
        //def columnNames = ["Author","Creation Date", "Executors", "Responsible executor", "Briefcontent", "Type of control", "Control date", "Date diff"];
        //def columnIndexes = [0,1,2,3,4,5,6,7];
         def ds = new ExcelDataSource(task_report);
-        ds.useFirstRowAsHeader = Boolean.TRUE;
+        ds.useFirstRowAsHeader = true;
         //ds.setColumnNames(columnNames as String[], columnIndexes as int[]);
 
         JRFileVirtualizer virtualizer = new JRFileVirtualizer(10, pathToReportDir);
@@ -198,7 +198,8 @@
         }
         virtualizer.cleanup();
         task_report.delete();
-        return "${new File("").absolutePath}\\webapps\\Workflow\\reports\\$reportName.$format";
+        println ("finish!");
+        return "${new File("").absolutePath}\\webapps\\Workflow\\reports\\$reportName.$repformat";
 			
 			
 		}catch(Exception e){
