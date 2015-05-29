@@ -43,7 +43,8 @@ class QuerySave extends _FormQuerySave {
 		
 		if (doc.isNewDoc || !doc.getValueString("vn")){
 			def db = session.getCurrentDatabase()
-            int num = db.getRegNumber("out_" + webFormData.getValueSilently("project"))
+          //  int num = db.getRegNumber("out_" + webFormData.getValueSilently("project"))
+            int num = db.getRegNumber("out")
 			String vnAsText = Integer.toString(num)
 			doc.replaceStringField("vn", vnAsText)
 			doc.replaceIntField("vnnumber",num)
