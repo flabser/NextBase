@@ -46,7 +46,7 @@ public class User extends BaseDocument implements Const {
     private String instMsgAddress = "";
     private boolean isSupervisor;
     private int hash;
-    private UserSession session;
+    transient private UserSession session;
     private String publicKey = "";
 
     public User() {
