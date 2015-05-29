@@ -60,7 +60,7 @@ class QueryOpen extends _FormQueryOpen {
 				publishValue("control",new _Control(session,new Date(), false, control.getBaseObject().priority,
                         control.getBaseObject().complication) )
             }else if(status == "new"){
-                def control = new _Control(session,new Date(), false, 6.3, 1)
+                def control = new _Control(session,new Date(), false, 6.3, 2)
                 publishValue("control", control)
             }
         }catch(Exception e){}
