@@ -3667,6 +3667,11 @@ public class Database extends DatabaseCore implements IDatabase, Const {
     }
 
     @Override
+    public IDBConnectionPool getStructureConnectionPool() {
+        return structDbPool;
+    }
+
+    @Override
     public IFTIndexEngine getFTSearchEngine() {
         return new FTIndexEngine(this);
     }

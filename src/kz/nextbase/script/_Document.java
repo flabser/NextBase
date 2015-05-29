@@ -957,6 +957,10 @@ public class _Document {
         doc.getAttachments(fieldName, toPutFolder);
     }
 
+    public void getAttachments(String fieldName, String toPutFolder, ArrayList<String> ids) {
+        doc.getAttachments(fieldName, toPutFolder, ids);
+    }
+
     public boolean save() throws ComplexObjectException {
         try {
             User user = new User(currentUserID);

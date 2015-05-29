@@ -78,7 +78,12 @@ public class Database extends AbstractDatabase {
 		return null;
 	}
 
-	@Override
+    @Override
+    public IDBConnectionPool getStructureConnectionPool() {
+        return null;
+    }
+
+    @Override
 	public IFTIndexEngine getFTSearchEngine() {
 		return null;
 	}
