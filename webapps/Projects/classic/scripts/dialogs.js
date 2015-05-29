@@ -135,6 +135,7 @@ function calcRating(executers){
 
     $(".br-widget a").removeAttr("class")
     $(".br-wrapper").attr("title", "")
+    $(".br-current-rating").html("")
     var count = 1;
     var timerVar = setInterval(function(){
         $(".br-widget a[data-rating-value='"+count+"']").attr("class", "br-selected br-current")
@@ -177,6 +178,7 @@ function calcRating(executers){
             $(".br-widget a").removeAttr("class")
             $(".br-wrapper").attr("title", "")
             $("input[type='radio'][name='responsible']").removeAttr("disabled")
+            $(".br-current-rating").html("")
         },
         complete: function() {}
     })
