@@ -491,7 +491,12 @@ public class Database extends AbstractDatabase {
 		return null;
 	}
 
-	@Override
+    @Override
+    public String removeDocumentFromRecycleBin(int id) {
+        return null;
+    }
+
+    @Override
 	public ArrayList<Integer> getAllDocumentsIDS(int docType,
 			Set<String> complexUserID, String absoluteUserID, int start, int end)
 			throws DocumentException, DocumentAccessException {

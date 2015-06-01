@@ -448,8 +448,13 @@ public class Database implements IDatabase, Const{
 		return null;
 	}
 
+    @Override
+    public String removeDocumentFromRecycleBin(int id) {
+        return null;
+    }
 
-	@Override
+
+    @Override
 	public ArrayList<Integer> getAllDocumentsIDS(int docType,Set<String> complexUserID, String absoluteUserID, int start, int end)	throws DocumentException, DocumentAccessException {
 		return null;
 	}

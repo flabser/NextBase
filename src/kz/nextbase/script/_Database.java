@@ -619,6 +619,10 @@ public class _Database implements Const {
 		return new _Glossary(glos, session);
 	}
 
+    public String removeDocumentFromRecycleBin(int id) {
+        return dataBase.removeDocumentFromRecycleBin(id);
+    }
+
 	@Deprecated
 	public _Document getDocumentByComplexID(int docType, int docID) throws _Exception {
 		BaseDocument doc;

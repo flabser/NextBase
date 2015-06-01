@@ -130,7 +130,10 @@ public interface IDatabase {
 	int randomBinary();
 	@Deprecated
 	ArrayList<Integer> getAllDocumentsIDS(int docType, Set<String> complexUserID, String absoluteUserID, String[] fields,int offset, int pageSize) throws DocumentException, DocumentAccessException;
-	@Deprecated
+
+    String removeDocumentFromRecycleBin(int id);
+
+    @Deprecated
 	ArrayList<Integer> getAllDocumentsIDS(int docType, Set<String> complexUserID, String absoluteUserID, int start, int end) throws DocumentException, DocumentAccessException;
 	@Deprecated
     ArrayList <Integer> getAllDocumentsIDsByCondition(String query,int docType, Set <String> complexUserID, String absoluteUserID);

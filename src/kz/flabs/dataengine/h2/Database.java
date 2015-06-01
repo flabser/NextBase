@@ -1642,6 +1642,32 @@ public class Database extends DatabaseCore implements IDatabase, Const {
         return documents;
     }
 
+    @Override
+    public String removeDocumentFromRecycleBin(int id) {
+        String viewtext = "";
+        Connection conn = dbPool.getConnection();
+        try {
+            String sql = "select viewtext from users_activity where id in (select aid from recycle_bin where id = ?)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                viewtext = rs.getString(1);
+            }
+            sql = "delete from recycle_bin where id = ?";
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, id);
+            pst.executeUpdate();
+            conn.commit();
+            pst.close();
+        } catch (Exception e) {
+            DatabaseUtil.errorPrint(dbID, e);
+        } finally {
+            dbPool.returnConnection(conn);
+        }
+        return viewtext;
+    }
+
     @Deprecated
     public ArrayList<Integer> getAllDocumentsIDS(int docType, Set<String> complexUserID, String absoluteUserID, int start, int end) throws DocumentException, DocumentAccessException {
         ArrayList<Integer> documents = new ArrayList<Integer>();
