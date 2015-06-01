@@ -143,7 +143,7 @@
 								<div style="clear:both"/>
 							</div>
 							<div id="viewtablediv">
-								<div id="tableheader">
+								<div id="tableheader" style="top:73px">
 									<table class="viewtable" id="viewtable" width="100%">
 										<tr class="th">
 											<td style="text-align:center; height:30px" width="3%" class="thcell">
