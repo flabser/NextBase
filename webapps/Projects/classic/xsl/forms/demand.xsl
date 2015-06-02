@@ -483,7 +483,7 @@
 												<font style="vertical-align:top"><xsl:value-of select="$captions/milestone/@caption"/> : </font>
 											</td>
 											<td>			
-												<table id="milestonetbl" style="border-collapse:collapse">
+												<!--<table id="milestonetbl" style="border-collapse:collapse">
 													<tr>
 														<td width="500px" class="td_editable">
 															<xsl:if test="$editmode != 'edit'">
@@ -502,8 +502,21 @@
 															</a>
 														</td>
 													</tr>
-												</table> 
-												<input type="hidden" id="parentdocid" name="parentdocid" value="{document/@parentdocid}"/>	
+												</table> -->
+												<select class="select_noteditable" name="parentdocid" style="width:511px" disabled="disabled" autocomplete="off">
+													<xsl:if test="$fields/parentMilestone">
+														<option><xsl:value-of select="$fields/parentMilestone"/></option>
+													</xsl:if>
+												</select>
+												<xsl:if test="$fields/parentMilestone">
+													<a href="{document/fields/parentMilestoneUrl}" id="milestoneURL" target="blank" style="text-decoration:underline !important; margin-left:3px">
+														<xsl:if test="$fields/parentMilestoneUrl = '' or not($fields/parentMilestoneUrl)">
+															<xsl:attribute name="style">display:none</xsl:attribute>
+														</xsl:if>
+														<xsl:value-of select="$captions/go/@caption"/>
+													</a>
+													<input  type="hidden" id="parentdocid" name="parentdocid" value="{document/@parentdocid}"/>
+												</xsl:if>
 											</td> 
 										</tr>
                                         <!-- Тип заявки -->
@@ -513,7 +526,7 @@
                                             </td>
                                             <td>
                                                 <xsl:if test="$editmode ='edit'">
-                                                    <select size="1" name="demand_type" style="width:510px;" class="select_editable">
+                                                    <select size="1" name="demand_type" style="width:511px;" class="select_editable">
                                                         <xsl:variable name="demand_type" select="$fields/demand_type/@attrval"/>
                                                         <xsl:for-each select="document/glossaries/demand_type/entry">
                                                         	<xsl:sort select="."/>
