@@ -36,16 +36,22 @@ class DoScript extends _DoScript {
 					try{									
 						for(def mdoc in pdoc.getResponses()){	
 							if(mdoc.form == "milestone"){
-								if(mdoc.getValueAsString("current")[0] == "on"){
+								/*if(mdoc.getValueAsString("current")[0] == "on"){
 									
 									current_m_doc = mdoc;								
-								}
+								}*/
+								def entryTag = new _Tag("milestone", mdoc.getValueAsString("description")[0]);
+								entryTag.setAttr("url", mdoc.getFullURL());
+								entryTag.setAttr("docid", mdoc.getDocID());
+
+								rootTag.addTag(entryTag);
+
 							}
 						}
 					}catch(Exception ex){}					
 					Date cdate = new Date();
 					
-					if(current_m_doc == null){
+					/*if(current_m_doc == null){
 						for(def mdoc in pdoc.getResponses()){
 							if(mdoc.form == "milestone"){							
 								current_m_doc = mdoc;							
@@ -55,20 +61,21 @@ class DoScript extends _DoScript {
 								}
 							}
 						}
-					}
-					
-									
-					if(current_m_doc != null){
+					}*/
+
+
+					/*if(current_m_doc != null){
 						def entryTag = new _Tag("milestone", current_m_doc.getValueAsString("description")[0]);
 						entryTag.setAttr("url", current_m_doc.getFullURL());
 						entryTag.setAttr("docid", current_m_doc.getDocID());
 						
-						rootTag.addTag(entryTag);								
+						rootTag.addTag(entryTag);
 						def xml = new _XMLDocument(rootTag);						
 						 
 						setContent(xml);
-					}					 				
-				
+					}*/
+					def xml = new _XMLDocument(rootTag);
+					setContent(xml);
 					
 				} 		
 				
