@@ -30,15 +30,25 @@ function pickListSingleOk(docid){
 	$(table).empty();
 	$("input[name="+ queryOpt.fieldname +"]").remove();
 	if(queryOpt.queryname == 'project-list'){
-		$("input[name=parentdocid]").val(docid);
-		name=$("#"+docid).prev(".projectinfo").val();
-		prjid=$("#"+docid).prev(".projectinfo").attr("id");
-		prjdocid=$("#"+docid).prev(".projectinfo").attr("name");
-		var m_data = text.split('#`');
-		$(table).append("<tr><td width='500px' class='td_editable'><font id='parentProjectfont'>"+m_data[0]+"</font></td><td><a target='blank' id='projectURL' href='"+m_data[1]+"'>Перейти</a></td></tr>");
-		$("#projectURL").attr("href",m_data[1]).attr("style","display:block");
-		$("#parentMilestonefont").html(m_data[2]);		 
-		$("#milestoneURL").attr("href",m_data[3]).attr("style","display:block");
+		//$("input[name=parentdocid]").val(docid);
+		name=$("#"+docid).val();
+		prjdocid=$("#"+docid).attr("id");
+		prjid=$("#"+docid).data("projectid");
+		prjurl=$("#"+docid).data("projecturl");
+		milestones = $(".milestone[data-projectid='"+prjid+"']");
+		$("select[name=parentdocid]").empty().attr("class","select_editable").removeAttr("disabled");
+		milestones.each(function(){
+			milestoneid = $(this).data("milestoneid");
+			$("select[name=parentdocid]").append("<option value='"+milestoneid+"'>"+$(this).val()+"</option>")
+		})
+		//alert(milestones)
+		//alert(".milestone[data-projectid='"+prjid+"']")
+		//alert($(".milestone[data-projectid='"+prjid+"']").length);
+		//var m_data = text.split('#`');
+		$(table).append("<tr><td width='500px' class='td_editable'><font id='parentProjectfont'>"+name+"</font></td><td><a target='blank' id='projectURL' href='"+prjurl+"'>Перейти</a></td></tr>");
+		$("#projectURL").attr("href",prjurl).attr("style","display:block");
+		//$("#parentMilestonefont").html(m_data[2]);
+		//$("#milestoneURL").attr("href",m_data[3]).attr("style","display:block");
 		$("#projectname").val(name.replace("\"","'"))
 		$("#projectid").val(prjid)
 		$("#projectdocid").val(prjdocid)
@@ -72,17 +82,24 @@ function pickListBtnOk(){
 		}else{
 			if(queryOpt.queryname == 'project-list'){
 				$('input[name=chbox]:checked').each(function(indx, element){
-					name=$("#"+$(this).attr("id")).prev(".projectinfo").val();
-					prjid=$("#"+$(this).attr("id")).prev(".projectinfo").attr("id");
-					prjdocid=$("#"+$(this).attr("id")).prev(".projectinfo").attr("name");
+					name=$("#"+$(this).attr("id")).val();
+					prjdocid=$(this).attr("id");
+					prjid=$("#"+$(this).attr("id")).data("projectid");
+					prjurl=$("#"+$(this).attr("id")).data("projecturl");
+					milestones = $(".milestone[data-projectid='"+prjid+"']");
+					$("select[name=parentdocid]").empty().attr("class","select_editable").removeAttr("disabled");
+					milestones.each(function(){
+						milestoneid = $(this).data("milestoneid");
+						$("select[name=parentdocid]").append("<option value='"+milestoneid+"'>"+$(this).val()+"</option>")
+					})
 					$("#projectname").val(name.replace("\"","'"))
 					$("#projectid").val(prjid)
 					$("#projectdocid").val(prjdocid)
 					$("input[name=parentdocid]").val($("#"+$(this).attr("id")).attr("id"));
-					var m_data = $(this).val().split('#`');
-					$(table).append("<tr><td width='500px' class='td_editable'><font id='parentProjectfont'>"+m_data[0]+"</font></td><td><a target='blank' id='projectURL' href='"+m_data[1]+"'>Перейти</a></td></tr>");
-					$("#parentMilestonefont").html(m_data[2]);		 
-					$("#milestoneURL").attr("href",m_data[3]).attr("style","display:block");
+					//var m_data = $(this).val().split('#`');
+					$(table).append("<tr><td width='500px' class='td_editable'><font id='parentProjectfont'>"+name+"</font></td><td><a target='blank' id='projectURL' href='"+prjurl+"'>Перейти</a></td></tr>");
+					//$("#parentMilestonefont").html(m_data[2]);
+					//$("#milestoneURL").attr("href",m_data[3]).attr("style","display:block");
 				})
 			}else{
 				if(queryOpt.fieldname == "parentsubkey"){
