@@ -14,9 +14,9 @@
 				<xsl:attribute name="onmouseover">javascript:entryOver(this)</xsl:attribute>
 				<xsl:attribute name="onmouseout">javascript:entryOut(this)</xsl:attribute>
 				<xsl:attribute name="onclick">javascript:selectItemPicklist(this,event)</xsl:attribute>
-	    		<xsl:attribute name="ondblclick">javascript:pickListSingleOk('<xsl:value-of select="milestone/@docid"/>')</xsl:attribute>
-				<input class='projectinfo' type="hidden" name="{@docid}" id="{@id}" value="{@name}"/> 
-				<input type="checkbox" name="chbox" id="{milestone/@docid}" value="{@name}#`{@url}#`{milestone}#`{milestone/@url}">
+	    		<xsl:attribute name="ondblclick">javascript:pickListSingleOk('<xsl:value-of select="@docid"/>')</xsl:attribute>
+				<!--<input class='projectinfo' type="hidden" name="{@docid}" id="{@id}" value="{@name}"/> -->
+				<input type="checkbox" name="chbox" id="{@docid}" data-projectid="{@id}" data-projecturl="{@url}" value="{@name}">
 					<xsl:if test="userid =''">
 						<xsl:attribute name="disabled">disabled</xsl:attribute>
 					</xsl:if>	
@@ -27,6 +27,9 @@
 						<xsl:value-of select="@name"/>
 					</font>
 				</input>
+				<xsl:for-each select="milestone">
+					<input type="hidden" class="milestone" value="{.}" data-milestoneid="{@docid}" data-projectid="{../@id}"/>
+				</xsl:for-each>
 			</div>
 		</xsl:for-each>
 	</xsl:template>
