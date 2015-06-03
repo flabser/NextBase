@@ -22,6 +22,7 @@ import kz.flabs.webrule.Role;
 import kz.flabs.webrule.constants.TagPublicationFormatType;
 import kz.flabs.webrule.module.ExternalModuleType;
 import kz.nextbase.script._ViewEntryCollection;
+import kz.nextbase.script.constants._ReadConditionType;
 import org.apache.commons.fileupload.FileItem;
 
 import java.io.File;
@@ -164,6 +165,8 @@ public interface IDatabase {
 	void addCounter(String key, int num);
 
     _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, boolean checkUnread);
+
+    _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, _ReadConditionType type);
 
     _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses);
 

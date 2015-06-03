@@ -55,6 +55,7 @@ import kz.flabs.webrule.constants.TagPublicationFormatType;
 import kz.flabs.webrule.module.ExternalModule;
 import kz.flabs.webrule.module.ExternalModuleType;
 import kz.nextbase.script._ViewEntryCollection;
+import kz.nextbase.script.constants._ReadConditionType;
 import kz.pchelka.env.Environment;
 import kz.pchelka.log.ILogger;
 import kz.pchelka.log.Log4jLogger;
@@ -3454,6 +3455,69 @@ public class Database extends DatabaseCore implements IDatabase, Const {
             }
             int offset = calcStartEntry(pageNum, pageSize);
             String sql = condition.getCondition(user, pageSize, offset, parameters.getFilters(), parameters.getSorting(), checkResponse, checkUnread);
+            ResultSet rs = s.executeQuery(sql);
+            if (rs.next()) {
+                if (expandAllResponses) {
+                    toExpandResponses.add(new DocID(rs.getInt("DOCID"), rs.getInt("DOCTYPE")));
+                }
+                ViewEntry entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat());
+                coll.add(entry);
+                coll.setCount(rs.getInt(1));
+                while (rs.next()) {
+                    if (expandAllResponses) {
+                        toExpandResponses.add(new DocID(rs.getInt("DOCID"), rs.getInt("DOCTYPE")));
+                    }
+                    entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat());
+                    coll.add(entry);
+                }
+            }
+            conn.commit();
+            s.close();
+            rs.close();
+
+        } catch (SQLException e) {
+            DatabaseUtil.errorPrint(dbID, e);
+        } catch (Exception e) {
+            Database.logger.errorLogEntry(e);
+        } finally {
+            dbPool.returnConnection(conn);
+        }
+        coll.setCurrentPage(pageNum);
+        return coll.getScriptingObj();
+    }
+
+    @Override
+    public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, _ReadConditionType type) {
+        ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
+        Set<String> users = user.getAllUserGroups();
+        Connection conn = dbPool.getConnection();
+        SelectFormula.ReadCondition cond;
+        switch (type) {
+            case ONLY_READ:
+                cond = SelectFormula.ReadCondition.ONLY_READ;
+                break;
+            case ONLY_UNREAD:
+                cond = SelectFormula.ReadCondition.ONLY_UNREAD;
+                break;
+            case ALL:
+                cond = SelectFormula.ReadCondition.ALL;
+                break;
+            default:
+                cond = SelectFormula.ReadCondition.ALL;
+                break;
+        }
+        try {
+            conn.setAutoCommit(false);
+            Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            if (pageNum == 0) {
+                String sql = condition.getCountCondition(user, parameters.getFilters(), cond);
+                ResultSet rs = s.executeQuery(sql);
+                if (rs.next()) {
+                    pageNum = RuntimeObjUtil.countMaxPage(rs.getInt(1), pageSize);
+                }
+            }
+            int offset = calcStartEntry(pageNum, pageSize);
+            String sql = condition.getCondition(user, pageSize, offset, parameters.getFilters(), parameters.getSorting(), checkResponse, cond);
             ResultSet rs = s.executeQuery(sql);
             if (rs.next()) {
                 if (expandAllResponses) {

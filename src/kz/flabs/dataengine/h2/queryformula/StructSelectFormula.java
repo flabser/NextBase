@@ -352,12 +352,22 @@ public class StructSelectFormula implements ISelectFormula {
     }
 
     @Override
+    public String getCountCondition(User user, Set<Filter> filters, SelectFormula.ReadCondition readCondition) {
+        return null;
+    }
+
+    @Override
     public String getCondition(Set<String> complexUserID, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse) {
         return this.getCondition(complexUserID, pageSize, offset, filters, sorting, checkResponse, "");
     }
 
     @Override
     public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, boolean checkRead) {
+        return null;
+    }
+
+    @Override
+    public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, SelectFormula.ReadCondition condition) {
         return null;
     }
 

@@ -1,5 +1,6 @@
 package kz.flabs.dataengine;
 
+import kz.flabs.dataengine.h2.queryformula.SelectFormula;
 import kz.flabs.users.RunTimeParameters.Filter;
 import kz.flabs.users.RunTimeParameters.Sorting;
 import kz.flabs.users.User;
@@ -16,7 +17,11 @@ public interface ISelectFormula {
 
     String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, boolean checkRead);
 
+    String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, SelectFormula.ReadCondition condition);
+
     String getCountCondition(Set<String> complexUserID, Set<Filter> filters);
 
     String getCondition(Set<String> users, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, String responseQueryCondition);
+
+    String getCountCondition(User user, Set<Filter> filters, SelectFormula.ReadCondition readCondition);
 }

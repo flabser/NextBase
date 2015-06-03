@@ -26,6 +26,7 @@ import kz.flabs.webrule.WebRuleProvider;
 import kz.flabs.webrule.constants.TagPublicationFormatType;
 import kz.flabs.webrule.module.ExternalModuleType;
 import kz.nextbase.script._ViewEntryCollection;
+import kz.nextbase.script.constants._ReadConditionType;
 import kz.pchelka.log.ILogger;
 import kz.pchelka.log.Log4jLogger;
 import org.apache.commons.fileupload.FileItem;
@@ -623,6 +624,11 @@ public class Database extends AbstractDatabase {
 
     @Override
     public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, boolean checkUnread) {
+        return null;
+    }
+
+    @Override
+    public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, _ReadConditionType type) {
         return null;
     }
 

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static kz.flabs.dataengine.h2.queryformula.SelectFormula.ReadCondition;
+
 
 public class SelectFormula implements ISelectFormula {
 
@@ -403,7 +405,12 @@ public class SelectFormula implements ISelectFormula {
 		return sql;
 	}
 
-	@Override
+    @Override
+    public String getCountCondition(User user, Set<Filter> filters, ReadCondition readCondition) {
+        return null;
+    }
+
+    @Override
 	public String getCondition(Set <String> complexUserID, int pageSize, int offset, Set <Filter> filters,
 			Set <Sorting> sorting, boolean checkResponse) {
 		String cuID = DatabaseUtil.prepareListToQuery(complexUserID), existCond = "";
@@ -464,6 +471,8 @@ public class SelectFormula implements ISelectFormula {
         return sql;
     }
 
+
+
     @Override
     public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, boolean checkRead) {
         String cuID = DatabaseUtil.prepareListToQuery(user.getAllUserGroups()), existCond = "";
@@ -491,6 +500,67 @@ public class SelectFormula implements ISelectFormula {
                         " WHERE " + sysCond.replaceAll("maindocs.", "mdocs.") +
                         " exists(select 1 from READERS_MAINDOCS where mdocs.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME IN (" + cuID + ")) " +
                         existCond.replace("md.", "mdocs.") + " " + getOrderCondition(sorting) + " " + getPagingCondition(pageSize, offset);
+        return sql;
+    }
+
+    @Override
+    public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, ReadCondition condition) {
+        String cuID = DatabaseUtil.prepareListToQuery(user.getAllUserGroups()), existCond = "";
+        String sysCond = getSystemConditions(filters);
+        ArrayList<Condition> conds = getConditions();
+
+        for(Condition c:conds){
+            String exCond = c.formula;
+            if(exCond.trim().toLowerCase().endsWith("and"))
+                exCond = exCond.trim().substring(0, exCond.trim().length() - 3);
+
+            existCond += " and exists(select 1 from CUSTOM_FIELDS " + c.alias + " where md.DOCID = " + c.alias + ".DOCID and " + exCond + ") ";
+        }
+
+        String sql =
+                " SELECT foo.count, " +
+                        "     mdocs.DDBID, mdocs.has_response, mdocs.DOCID, mdocs.DOCTYPE, mdocs.HAS_ATTACHMENT, mdocs.VIEWTEXT, mdocs.FORM," +
+                        "     mdocs.REGDATE, " + DatabaseUtil.getViewTextList("mdocs") + ", mdocs.VIEWNUMBER, mdocs.VIEWDATE, mdocs.TOPICID " +
+                        " FROM MAINDOCS mdocs, " +
+                        " (SELECT count(md.DOCID) as count FROM MAINDOCS md " +
+                        " WHERE " + sysCond.replaceAll("maindocs.", "md.") +
+                        " exists(select 1 from READERS_MAINDOCS where md.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME IN (" + cuID + ")) " +
+                        existCond + ") as foo " +
+
+                        " WHERE " + sysCond.replaceAll("maindocs.", "mdocs.") +
+                        " exists(select 1 from READERS_MAINDOCS where mdocs.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME IN (" + cuID + ")) " +
+                        existCond.replace("md.", "mdocs.") + " " + getReadConditionByType(condition, user.getUserID()) + getOrderCondition(sorting) + " " + getPagingCondition(pageSize, offset);
+        return sql;
+    }
+
+    protected String getReadConditionByType(ReadCondition type, String userid) {
+        String sql;
+        switch (type) {
+            case ONLY_READ:
+                sql = " and exists( " +
+                        "      select 1 " +
+                        "      from users_activity " +
+                        "      where type = " + UsersActivityType.MARKED_AS_READ.getCode() + " and " +
+                        "          userid in ('" + userid + "')" + " and " +
+                        "          users_activity.docid = mdocs.docid " +
+                        "  ) ";
+                break;
+            case ONLY_UNREAD:
+                sql = " and not exists( " +
+                        "      select 1 " +
+                        "      from users_activity " +
+                        "      where type = " + UsersActivityType.MARKED_AS_READ.getCode() + " and " +
+                        "          userid in ('" + userid + "')" + " and " +
+                        "          users_activity.docid = mdocs.docid " +
+                        "  ) ";
+                break;
+            case ALL:
+                sql = "";
+                break;
+            default:
+                sql = "";
+                break;
+        }
         return sql;
     }
 

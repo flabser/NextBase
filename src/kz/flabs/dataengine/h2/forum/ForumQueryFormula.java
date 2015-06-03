@@ -2,6 +2,7 @@ package kz.flabs.dataengine.h2.forum;
 
 import kz.flabs.dataengine.DatabaseUtil;
 import kz.flabs.dataengine.ISelectFormula;
+import kz.flabs.dataengine.h2.queryformula.SelectFormula;
 import kz.flabs.parser.FormulaBlocks;
 import kz.flabs.users.RunTimeParameters.Filter;
 import kz.flabs.users.RunTimeParameters.Sorting;
@@ -40,6 +41,11 @@ public class ForumQueryFormula implements ISelectFormula {
     }
 
     @Override
+    public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, SelectFormula.ReadCondition condition) {
+        return null;
+    }
+
+    @Override
 	public String getCountCondition(Set<String> complexUserID,	Set<Filter> filters) {
 		return null;
 	}
@@ -48,5 +54,10 @@ public class ForumQueryFormula implements ISelectFormula {
 	public String getCondition(Set<String> users, int pageSize, int offset,	Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, String responseQueryCondition) {
 		return null;
 	}
+
+    @Override
+    public String getCountCondition(User user, Set<Filter> filters, SelectFormula.ReadCondition readCondition) {
+        return null;
+    }
 
 }

@@ -25,10 +25,7 @@ import kz.flabs.users.RunTimeParameters;
 import kz.flabs.users.RunTimeParameters.Sorting;
 import kz.flabs.users.User;
 import kz.flabs.webrule.constants.QueryType;
-import kz.nextbase.script.constants.Month;
-import kz.nextbase.script.constants._Direction;
-import kz.nextbase.script.constants._DocumentType;
-import kz.nextbase.script.constants._QueryMacroType;
+import kz.nextbase.script.constants.*;
 import kz.nextbase.script.project._Project;
 import kz.nextbase.script.struct._Organization;
 import kz.nextbase.script.task._Task;
@@ -153,6 +150,23 @@ public class _Database implements Const {
 		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
 				parameters, checkResponse, expandAllResponses, checkRead);
 	}
+
+    public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
+                                                         boolean useFilter, boolean expandAllResponses, _ReadConditionType type) {
+        FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
+        ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
+        int pageSize = user.getSession().pageSize;
+        RunTimeParameters parameters = null;
+        if (useFilter) {
+            HashMap <String, RunTimeParameters> currConditions = user.getSession().getRuntimeConditions();
+            parameters = currConditions.get(getParent().getInitiator().getOwnerID());
+        }
+        if (parameters == null) {
+            parameters = new RunTimeParameters();
+        }
+        return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
+                parameters, checkResponse, expandAllResponses, type);
+    }
 
 	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
 			boolean useFilter, String responseQueryCondition) {

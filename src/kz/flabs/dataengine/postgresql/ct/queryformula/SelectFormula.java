@@ -4,7 +4,6 @@ import kz.flabs.dataengine.DatabaseUtil;
 import kz.flabs.dataengine.ISelectFormula;
 import kz.flabs.dataengine.UsersActivityType;
 import kz.flabs.parser.Block;
-import kz.flabs.parser.FieldExpression;
 import kz.flabs.parser.FormulaBlockType;
 import kz.flabs.parser.FormulaBlocks;
 import kz.flabs.runtimeobj.constants.SortingType;
@@ -404,7 +403,12 @@ public class SelectFormula implements ISelectFormula {
 		return sql;
 	}
 
-	@Override
+    @Override
+    public String getCountCondition(User user, Set<Filter> filters, kz.flabs.dataengine.h2.queryformula.SelectFormula.ReadCondition readCondition) {
+        return null;
+    }
+
+    @Override
     public String getCondition(Set <String> complexUserID, int pageSize, int offset, Set <Filter> filters,
                                Set <Sorting> sorting, boolean checkResponse) {
         String cuID = DatabaseUtil.prepareListToQuery(complexUserID), existCond = "";
@@ -493,6 +497,11 @@ public class SelectFormula implements ISelectFormula {
                         " exists(select 1 from READERS_MAINDOCS where mdocs.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME IN (" + cuID + ")) " +
                         existCond.replace("md.", "mdocs.") + " " + getOrderCondition(sorting) + " " + getPagingCondition(pageSize, offset);
         return sql;
+    }
+
+    @Override
+    public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, kz.flabs.dataengine.h2.queryformula.SelectFormula.ReadCondition condition) {
+        return null;
     }
 
     @Override

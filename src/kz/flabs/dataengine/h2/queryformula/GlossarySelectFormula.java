@@ -348,6 +348,11 @@ public class GlossarySelectFormula implements ISelectFormula {
     }
 
     @Override
+    public String getCountCondition(User user, Set<Filter> filters, SelectFormula.ReadCondition readCondition) {
+        return null;
+    }
+
+    @Override
     public String getCondition(Set<String> complexUserID, int pageSize,	int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse) {
         String cuID = DatabaseUtil.prepareListToQuery(complexUserID), existCond = "";
         String sysCond = getSystemConditions(filters);
@@ -382,6 +387,11 @@ public class GlossarySelectFormula implements ISelectFormula {
 
     @Override
     public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, boolean checkRead) {
+        return null;
+    }
+
+    @Override
+    public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, SelectFormula.ReadCondition condition) {
         return null;
     }
 

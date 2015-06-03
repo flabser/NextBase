@@ -17,6 +17,29 @@ import java.util.Set;
 public class SelectFormula implements ISelectFormula {
 	protected FormulaBlocks preparedBlocks;
 
+    public enum ReadCondition {
+        ONLY_READ(1001), ONLY_UNREAD(1002), ALL(1003);
+
+        ReadCondition(int code){
+            this.code = code;
+        }
+
+        private int code;
+
+        public int getCode(){
+            return code;
+        }
+
+        public static ReadCondition getType(int code){
+            for (ReadCondition type : values()){
+                if (type.code == code){
+                    return type;
+                }
+            }
+            return ALL;
+        }
+
+    }
 
 	public SelectFormula(FormulaBlocks preparedBlocks){
 		this.preparedBlocks = preparedBlocks;		
@@ -492,7 +515,71 @@ public class SelectFormula implements ISelectFormula {
         return sql;
     }
 
-	@Override
+    protected String getReadConditionByType(ReadCondition type, String userid) {
+        String sql;
+        switch (type) {
+            case ONLY_READ:
+                sql = "and exists( " +
+                        "      select 1 " +
+                        "      from users_activity " +
+                        "      where type = " + UsersActivityType.MARKED_AS_READ.getCode() + " and " +
+                        "          userid in ('" + userid + "')" + " and " +
+                        "          users_activity.docid = mdocs.docid " +
+                        "  ) ";
+                break;
+            case ONLY_UNREAD:
+                sql = "and  not exists( " +
+                        "      select 1 " +
+                        "      from users_activity " +
+                        "      where type = " + UsersActivityType.MARKED_AS_READ.getCode() + " and " +
+                        "          userid in ('" + userid + "')" + " and " +
+                        "          users_activity.docid = mdocs.docid " +
+                        "  ) ";
+                break;
+            case ALL:
+                sql = "";
+                break;
+            default:
+                sql = "";
+                break;
+        }
+        return sql;
+    }
+
+    @Override
+    public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, ReadCondition condition) {
+        String cuID = DatabaseUtil.prepareListToQuery(user.getAllUserGroups()), existCond = "";
+        String sysCond = getSystemConditions(filters);
+        ArrayList<Condition> conds = getConditions();
+
+        for(Condition c:conds){
+            String exCond = c.formula;
+            if(exCond.trim().toLowerCase().endsWith("and"))
+                exCond = exCond.trim().substring(0, exCond.trim().length() - 3);
+
+            existCond += " and exists(select 1 from CUSTOM_FIELDS " + c.alias + " where md.DOCID = " + c.alias + ".DOCID and " + exCond + ") ";
+        }
+
+        String sql =
+                " SELECT foo.count, " +
+                        "     mdocs.DDBID, mdocs.has_response, mdocs.DOCID, mdocs.DOCTYPE, mdocs.HAS_ATTACHMENT, mdocs.VIEWTEXT, mdocs.FORM," +
+                        "     mdocs.REGDATE, " + DatabaseUtil.getViewTextList("mdocs") + ", mdocs.VIEWNUMBER, mdocs.VIEWDATE, mdocs.TOPICID " +
+                        " FROM MAINDOCS mdocs, " +
+                        " (SELECT count(md.DOCID) as count FROM MAINDOCS md " +
+                        " WHERE " + sysCond.replaceAll("maindocs.", "md.") +
+                        " exists(select 1 from READERS_MAINDOCS where md.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME IN (" + cuID + ")) " +
+                        existCond +
+                        getReadConditionByType(condition, user.getUserID()).replaceAll("mdocs.", "md.") +
+                        ") " +
+                        " as foo " +
+
+                        " WHERE " + sysCond.replaceAll("maindocs.", "mdocs.") +
+                        " exists(select 1 from READERS_MAINDOCS where mdocs.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME IN (" + cuID + ")) " +
+                        existCond.replace("md.", "mdocs.") + " " + getReadConditionByType(condition, user.getUserID()) + getOrderCondition(sorting) + " " + getPagingCondition(pageSize, offset);
+        return sql;
+    }
+
+    @Override
 	public String getCountCondition(Set<String> complexUserID, Set<Filter> filters) {
         String cuID = DatabaseUtil.prepareListToQuery(complexUserID), existCond = "";
         String sysCond = getSystemConditions(filters);
@@ -512,6 +599,24 @@ public class SelectFormula implements ISelectFormula {
         return sql;
 	}
 
+    @Override
+    public String getCountCondition(User user, Set<Filter> filters, SelectFormula.ReadCondition readCondition) {
+        String cuID = DatabaseUtil.prepareListToQuery(user.getAllUserGroups()), existCond = "";
+        String sysCond = getSystemConditions(filters);
+        ArrayList<Condition> conds = getConditions();
+        for(Condition c:conds){
+            String exCond = c.formula;
+            if(exCond.trim().toLowerCase().endsWith("and"))
+                exCond = exCond.trim().substring(0, exCond.trim().length() - 3);
 
+            existCond += " and exists(select 1 from CUSTOM_FIELDS " + c.alias + " where mdocs.DOCID = " + c.alias + ".DOCID and " + exCond + ") ";
+        }
+
+        String sql = "SELECT count(mdocs.DOCID) as count FROM MAINDOCS mdocs" +
+                " WHERE " + sysCond.replaceAll("maindocs.", "mdocs.") +
+                " exists(select 1 from READERS_MAINDOCS where mdocs.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME IN (" + cuID + ")) " +
+                existCond + getReadConditionByType(readCondition, user.getUserID()) + ";";
+        return sql;
+    }
 	
 }
