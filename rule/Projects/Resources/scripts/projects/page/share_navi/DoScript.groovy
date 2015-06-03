@@ -17,6 +17,7 @@ class DoScript extends _DoScript {
 		mydoc_outline.addEntry(new _OutlineEntry(getLocalizedWord("Мои задания",lang), getLocalizedWord("Мои задания",lang), "mytasks", "Provider?type=page&id=mytasks&page=0"))
 		mydoc_outline.addEntry(new _OutlineEntry(getLocalizedWord("Поручено мне",lang), getLocalizedWord("Поручено мне",lang), "tasksforme", "Provider?type=page&id=tasksforme&page=0"))
 		mydoc_outline.addEntry(new _OutlineEntry(getLocalizedWord("Необработанные мной",lang), getLocalizedWord("Необработанные мной",lang), "tasksforme-unprocessed", "Provider?type=page&id=tasksforme-unprocessed&page=0"))
+		mydoc_outline.addEntry(new _OutlineEntry(getLocalizedWord("Готовые к проверке",lang), getLocalizedWord("Готовые к проверке",lang), "tasksforme-readytocheck", "Provider?type=page&id=tasksforme-readytocheck&page=0"))
 		mydoc_outline.addEntry(new _OutlineEntry(getLocalizedWord("Исполненные",lang), getLocalizedWord("Исполненные",lang), "completetasks", "Provider?type=page&id=completetasks&page=0"))
 		mydoc_outline.addEntry(new _OutlineEntry(getLocalizedWord("Избранные",lang), getLocalizedWord("Избранные",lang), "favdocs", "Provider?type=page&id=favdocs&page=0"))
 		
