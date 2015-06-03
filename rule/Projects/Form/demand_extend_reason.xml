@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rule type="form" id="demand_extend_reason" mode="on">
 	<description>Причины продления заявки</description>
-	<xsltfile>forms/glossary-projects.form.xsl</xsltfile>
+	<xsltfile>forms/glossary-form.xsl</xsltfile>
 	<doctype>glossary</doctype>
 
 	<events> 

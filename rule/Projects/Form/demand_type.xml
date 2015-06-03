@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rule type="form" id="demand_type" mode="on">
 	<description>Типы заявок</description>
-	<xsltfile>forms/glossary-projects.form.xsl</xsltfile>
+	<xsltfile>forms/glossary-form.xsl</xsltfile>
 	<doctype>glossary</doctype>
 
 	<events> 
