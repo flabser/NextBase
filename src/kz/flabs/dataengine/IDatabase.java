@@ -168,6 +168,8 @@ public interface IDatabase {
 
     _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, _ReadConditionType type);
 
+    _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, _ReadConditionType type, String customFieldName);
+
     _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses);
 
     _ViewEntryCollection getCollectionByCondition(ISelectFormula sf, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse);

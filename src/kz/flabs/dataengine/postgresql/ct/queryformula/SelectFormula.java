@@ -409,6 +409,11 @@ public class SelectFormula implements ISelectFormula {
     }
 
     @Override
+    public String getCountCondition(User user, Set<Filter> filters, kz.flabs.dataengine.h2.queryformula.SelectFormula.ReadCondition readCondition, String customFieldName) {
+        return null;
+    }
+
+    @Override
     public String getCondition(Set <String> complexUserID, int pageSize, int offset, Set <Filter> filters,
                                Set <Sorting> sorting, boolean checkResponse) {
         String cuID = DatabaseUtil.prepareListToQuery(complexUserID), existCond = "";
@@ -501,6 +506,11 @@ public class SelectFormula implements ISelectFormula {
 
     @Override
     public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, kz.flabs.dataengine.h2.queryformula.SelectFormula.ReadCondition condition) {
+        return null;
+    }
+
+    @Override
+    public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, kz.flabs.dataengine.h2.queryformula.SelectFormula.ReadCondition condition, String customFieldName) {
         return null;
     }
 

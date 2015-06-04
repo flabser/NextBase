@@ -633,6 +633,11 @@ public class Database extends AbstractDatabase {
     }
 
     @Override
+    public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, _ReadConditionType type, String customFieldName) {
+        return null;
+    }
+
+    @Override
 	public _ViewEntryCollection getCollectionByCondition(
 			ISelectFormula condition, User user, int pageNum, int pageSize,
 			Set<DocID> toExpandResponses, RunTimeParameters parameters,

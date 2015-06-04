@@ -411,6 +411,11 @@ public class SelectFormula implements ISelectFormula {
     }
 
     @Override
+    public String getCountCondition(User user, Set<Filter> filters, ReadCondition readCondition, String customFieldName) {
+        return null;
+    }
+
+    @Override
 	public String getCondition(Set <String> complexUserID, int pageSize, int offset, Set <Filter> filters,
 			Set <Sorting> sorting, boolean checkResponse) {
 		String cuID = DatabaseUtil.prepareListToQuery(complexUserID), existCond = "";
@@ -531,6 +536,11 @@ public class SelectFormula implements ISelectFormula {
                         " exists(select 1 from READERS_MAINDOCS where mdocs.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME IN (" + cuID + ")) " +
                         existCond.replace("md.", "mdocs.") + " " + getReadConditionByType(condition, user.getUserID()) + getOrderCondition(sorting) + " " + getPagingCondition(pageSize, offset);
         return sql;
+    }
+
+    @Override
+    public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, ReadCondition condition, String customFieldName) {
+        return null;
     }
 
     protected String getReadConditionByType(ReadCondition type, String userid) {

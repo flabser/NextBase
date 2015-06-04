@@ -168,6 +168,23 @@ public class _Database implements Const {
                 parameters, checkResponse, expandAllResponses, type);
     }
 
+    public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
+                                                         boolean useFilter, boolean expandAllResponses, _ReadConditionType type, String customFieldName) {
+        FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
+        ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
+        int pageSize = user.getSession().pageSize;
+        RunTimeParameters parameters = null;
+        if (useFilter) {
+            HashMap <String, RunTimeParameters> currConditions = user.getSession().getRuntimeConditions();
+            parameters = currConditions.get(getParent().getInitiator().getOwnerID());
+        }
+        if (parameters == null) {
+            parameters = new RunTimeParameters();
+        }
+        return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
+                parameters, checkResponse, expandAllResponses, type, customFieldName);
+    }
+
 	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
 			boolean useFilter, String responseQueryCondition) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);

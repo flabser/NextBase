@@ -354,6 +354,11 @@ public class GlossarySelectFormula implements ISelectFormula {
     }
 
     @Override
+    public String getCountCondition(User user, Set<Filter> filters, SelectFormula.ReadCondition readCondition, String customFieldName) {
+        return null;
+    }
+
+    @Override
     public String getCondition(Set<String> complexUserID, int pageSize,	int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse) {
 
         for (Block block : preparedBlocks.blocks) {
@@ -403,6 +408,11 @@ public class GlossarySelectFormula implements ISelectFormula {
 
     @Override
     public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, SelectFormula.ReadCondition condition) {
+        return null;
+    }
+
+    @Override
+    public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, SelectFormula.ReadCondition condition, String customFieldName) {
         return null;
     }
 
