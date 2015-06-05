@@ -43,7 +43,7 @@ public class Coordinator extends AbstractComplexObject implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @XmlTransient
-    private ArrayList<Integer> attachID;
+    private ArrayList<Integer> attachID = new ArrayList<>();
     @XmlTransient
     public HashMap<String, BlobField> blobFieldsMap = new HashMap<String, BlobField>();
 

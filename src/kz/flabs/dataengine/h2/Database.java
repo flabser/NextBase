@@ -376,6 +376,13 @@ public class Database extends DatabaseCore implements IDatabase, Const {
                                     coord.setCurrent(coordsResultSet.getInt("ISCURRENT") == 1);
                                     coord.setCoorDate(coordsResultSet.getTimestamp("COORDATE"));
                                     fillBlobs(conn, coord.blobFieldsMap, "coordinators", coordsResultSet.getInt("ID"));
+
+                                    for (BlobField field : coord.blobFieldsMap.values()) {
+                                        for (BlobFile file : field.getFiles()) {
+                                            coord.addAttachID(Integer.parseInt(file.id));
+                                        }
+                                    }
+
                                     block.addCoordinator(coord);
                                 }
                                 coordsResultSet.close();
@@ -1056,16 +1063,18 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
     protected int recoverCommAttachRelations(Connection conn, int coordinatorID, ArrayList<Integer> ids) {
         try {// id not in (" + StringUtils.join(ids, ",")
-            PreparedStatement pst = conn.prepareStatement("update custom_blobs_coordinators set docid = ? where id in (" + StringUtils.join(ids, ",") + ")");
-            pst.setInt(1, coordinatorID);
-            int res = pst.executeUpdate();
-            conn.commit();
-            pst.close();
-            return res;
+            if (ids != null && ids.size() != 0) {
+                PreparedStatement pst = conn.prepareStatement("update custom_blobs_coordinators set docid = ? where id in (" + StringUtils.join(ids, ",") + ")");
+                pst.setInt(1, coordinatorID);
+                int res = pst.executeUpdate();
+                conn.commit();
+                pst.close();
+                return res;
+            }
         } catch (SQLException e) {
             DatabaseUtil.errorPrint(dbID, e);
-            return -1;
         }
+        return -1;
     }
 
     protected int recoverCommAttachRelations(Connection conn, int coordinatorID, int attachID) {
