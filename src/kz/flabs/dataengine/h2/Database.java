@@ -376,6 +376,13 @@ public class Database extends DatabaseCore implements IDatabase, Const {
                                     coord.setCurrent(coordsResultSet.getInt("ISCURRENT") == 1);
                                     coord.setCoorDate(coordsResultSet.getTimestamp("COORDATE"));
                                     fillBlobs(conn, coord.blobFieldsMap, "coordinators", coordsResultSet.getInt("ID"));
+
+                                    for (BlobField field : coord.blobFieldsMap.values()) {
+                                        for (BlobFile file : field.getFiles()) {
+                                            coord.addAttachID(Integer.parseInt(file.id));
+                                        }
+                                    }
+
                                     block.addCoordinator(coord);
                                 }
                                 coordsResultSet.close();
