@@ -19,6 +19,7 @@ class Trigger extends _DoScheduledHandler {
             if (control) {
                 int diffdays = control.getDiffBetweenDays();
                 control.addMarkOfExpiration(diffdays);
+                doc.addField("control", control)
                 doc.setValueNumber("duedatedif", diffdays)
                 doc.replaceViewText(diffdays as String, 2)
                 doc.setViewDate(control.getCtrlDate())
