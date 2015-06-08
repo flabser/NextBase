@@ -299,7 +299,7 @@
 			</span>
 		</xsl:if>
 		<a  href="{@url}" title="{viewcontent/viewtext}" class="doclink" style="font-style:Verdana,​Arial,​Helvetica,​sans-serif; width:100%; font-size:97%; margin-left:2px">
-			<xsl:attribute name="onclick">javascript:beforeOpenDocument()</xsl:attribute>
+			<!--<xsl:attribute name="onclick">javascript:beforeOpenDocument()</xsl:attribute>-->
 			<xsl:if test="@isread = 0">
 				<xsl:attribute name="style">font-weight:bold</xsl:attribute>
 			</xsl:if> 
