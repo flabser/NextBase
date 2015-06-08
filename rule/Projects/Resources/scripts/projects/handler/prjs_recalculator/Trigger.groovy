@@ -11,7 +11,7 @@ class Trigger extends _DoScheduledHandler {
 	public int doHandler(_Session session) {
 
 		def db = session.getCurrentDatabase()
-		def col = db.getCollectionOfDocuments("form='demand' and viewtext4='1'", true).getEntries()
+		def col = db.getCollectionOfDocuments("form='demand' and (viewtext4 = '1' or viewtext4 = '2')", true).getEntries()
 		col.each { _ViewEntry entry ->
 			def doc = entry.getDocument()
             def control = (_Control) doc.getValueObject("control")
