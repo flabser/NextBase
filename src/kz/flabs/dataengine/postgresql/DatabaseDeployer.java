@@ -129,6 +129,11 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
             checkAndCreateTriggerFTS("PROJECTS");
             checkAndCreateTable(DDEScripts.getFilterDDE(), "FILTER");
             checkAndCreateTable(DDEScripts.getConditionDDE(), "CONDITION");
+
+            checkAndCreateView(DDEScripts.getForAcquaintViewDDE(), "FORACQUAINT");
+            checkAndCreateFunction(DDEScripts.getForAcquaintFunctionDDE());
+            checkAndCreateNamedTrigger(DDEScripts.getForAcquaintTriggerDDE(), "UPDATE_VIEW_FOR_ACQUAINT", "USERS_ACTIVITY");
+
             CheckDataBase checker = new CheckDataBase(env);
 
             if(checker.check()){
@@ -190,6 +195,24 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
             Statement s = conn.createStatement();
             s.addBatch("DROP TRIGGER IF EXISTS set_remove_att_flag_" + mainTableName + " ON CUSTOM_BLOBS_" + mainTableName);
             s.addBatch(DDEScripts.getAttachmentTriggerDDE(mainTableName));
+            s.executeBatch();
+            s.close();
+            conn.commit();
+            return true;
+        } catch (Throwable e) {
+            DatabaseUtil.debugErrorPrint(e);
+        } finally {
+            dbPool.returnConnection(conn);
+        }
+        return false;
+    }
+
+    public boolean checkAndCreateNamedTrigger(String scriptCreateTrigger, String triggerName, String mainTableName) {
+        Connection conn = dbPool.getConnection();
+        try {
+            Statement s = conn.createStatement();
+            s.addBatch("DROP TRIGGER IF EXISTS " +triggerName + " ON " + mainTableName);
+            s.addBatch(scriptCreateTrigger);
             s.executeBatch();
             s.close();
             conn.commit();

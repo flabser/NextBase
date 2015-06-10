@@ -308,10 +308,10 @@ public class SelectFormula implements ISelectFormula {
             sql = " case " +
                     " when exists( " +
                     "      select 1 " +
-                    "      from users_activity " +
-                    "      where type = " + UsersActivityType.MARKED_AS_READ.getCode() + " and " +
+                    "      from foracquaint " +
+                    "      where  " +
                     "          userid = '" + userid + "'" + " and " +
-                    "          users_activity.docid = mdocs.docid " +
+                    "          foracquaint.docid = mdocs.docid " +
                     "  ) then 1  else 0 " +
                     " end as isread,";
         }
@@ -519,19 +519,19 @@ public class SelectFormula implements ISelectFormula {
         String sql;
         switch (type) {
             case ONLY_READ:
-                sql = "and (select ru @> gu from (select array_agg(userid)::text[] as ru , gu from users_activity ua \n" +
+                sql = "and (select ru @> gu from (select array_agg(userid)::text[] as ru , gu from foracquaint ua \n" +
                         "inner join \n" +
                         "(select string_to_array(value, '#') as gu, docid from custom_fields where name = '" + custFieldName + "') as cf\n" +
                         "on ua.docid = cf.docid\n" +
-                        "where ua.docid = mdocs.docid and ua.type = 1001 \n" +
+                        "where ua.docid = mdocs.docid \n" +
                         "group by gu) as foo) = true";
                 break;
             case ONLY_UNREAD:
-                sql = "and (select ru @> gu from (select array_agg(userid)::text[] as ru , gu from users_activity ua \n" +
+                sql = "and (select ru @> gu from (select array_agg(userid)::text[] as ru , gu from foracquaint ua \n" +
                         "inner join \n" +
                         "(select string_to_array(value, '#') as gu, docid from custom_fields where name = '" + custFieldName + "') as cf\n" +
                         "on ua.docid = cf.docid\n" +
-                        "where ua.docid = mdocs.docid and ua.type = 1001 \n" +
+                        "where ua.docid = mdocs.docid \n" +
                         "group by gu) as foo) = false";
                 break;
             case ALL:
@@ -550,19 +550,19 @@ public class SelectFormula implements ISelectFormula {
             case ONLY_READ:
                 sql = "and exists( " +
                         "      select 1 " +
-                        "      from users_activity " +
-                        "      where type = " + UsersActivityType.MARKED_AS_READ.getCode() + " and " +
+                        "      from foracquaint " +
+                        "      where " +
                         "          userid in ('" + userid + "')" + " and " +
-                        "          users_activity.docid = mdocs.docid " +
+                        "          foracquaint.docid = mdocs.docid " +
                         "  ) ";
                 break;
             case ONLY_UNREAD:
-                sql = "and  not exists( " +
+                sql = "and not exists( " +
                         "      select 1 " +
-                        "      from users_activity " +
-                        "      where type = " + UsersActivityType.MARKED_AS_READ.getCode() + " and " +
+                        "      from foracquaint " +
+                        "      where " +
                         "          userid in ('" + userid + "')" + " and " +
-                        "          users_activity.docid = mdocs.docid " +
+                        "          foracquaint.docid = mdocs.docid " +
                         "  ) ";
                 break;
             case ALL:

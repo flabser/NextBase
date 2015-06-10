@@ -31,6 +31,22 @@ public class DDEScripts {
         return createString;
     }
 
+    public static String getForAcquaintViewDDE() {
+        return "CREATE MATERIALIZED VIEW foracquaint\n" +
+                "WITH (\n" +
+                "  autovacuum_enabled=true\n" +
+                ") AS \n" +
+                " SELECT users_activity.docid,\n" +
+                "    users_activity.userid\n" +
+                "   FROM users_activity\n" +
+                "  WHERE users_activity.type = 1001\n" +
+                "WITH DATA;" +
+                "CREATE INDEX userid_docid_type_acquaint_view_index\n" +
+                "  ON foracquaint\n" +
+                "  USING btree\n" +
+                "  (docid, userid COLLATE pg_catalog.\"default\");";
+    }
+
     public static String getStructureView() {
         String createString = "create view structure as " +
                 "select o.ddbid, o.viewtext from organizations o " +
@@ -659,6 +675,26 @@ public class DDEScripts {
         return "CREATE TRIGGER set_remove_resp_flag_" + mainTableName +
                 " AFTER INSERT OR DELETE OR UPDATE ON " + mainTableName +
                 " FOR EACH ROW EXECUTE PROCEDURE set_response_flag()";
+    }
+
+    public static String getForAcquaintTriggerDDE() {
+        return "CREATE TRIGGER update_view_for_acquaint\n" +
+                "  AFTER INSERT\n" +
+                "  ON users_activity\n" +
+                "  FOR EACH ROW\n" +
+                "  EXECUTE PROCEDURE update_view_for_acquaint();";
+    }
+
+    public static String getForAcquaintFunctionDDE() {
+        return "CREATE OR REPLACE FUNCTION update_view_for_acquaint()\n" +
+                "  RETURNS trigger AS\n" +
+                "$BODY$ DECLARE action_type integer; sourceRow record;\n" +
+                "  BEGIN IF TG_OP = 'INSERT' THEN sourceRow := NEW; ELSE sourceRow := OLD; END IF;\n" +
+                "  IF sourceRow.TYPE = 1001 THEN EXECUTE('REFRESH MATERIALIZED VIEW foracquaint'); END IF;\n" +
+                "  RETURN NULL;\n" +
+                "  END;\n" +
+                "  $BODY$\n" +
+                "  LANGUAGE plpgsql VOLATILE";
     }
 
     public static String getAttachmentTriggerDDE(String mainTableName) {
