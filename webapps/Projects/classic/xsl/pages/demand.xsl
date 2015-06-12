@@ -76,6 +76,7 @@
 										<div id="prjlist" class="glosslisttable" style="position:absolute; top:90px; z-index:999; border:1px solid #79B7E7;  width:300px; background:#fff; display:none; max-height:400px; overflow:auto">
 											<table style="width:100%">
 								           		<xsl:for-each select="//filter_elements/response/content/projects/entry">
+													<xsl:sort select="."/>
 													<tr style="font-family:Verdana,Arial,Helvetica,sans-serif; font-size:13px; min-width:120px; cursor:pointer">
 														<td class="categorylist_td">
 															<xsl:attribute name="onclick">javascript:chooseFilter("<xsl:value-of select='.'/>",'viewtext1')</xsl:attribute>
@@ -112,6 +113,7 @@
 									<div id="catlist" class="glosslisttable" style="position:absolute; top:90px; z-index:999; border:1px solid #79B7E7;  width:300px; background:#fff; display:none; max-height:400px; overflow:auto">
 										<table style="width:100%">
 							           		<xsl:for-each select="//filter_elements/response/content/authors/entry">
+												<xsl:sort select="."/>
 												<tr style="font-family:Verdana,Arial,Helvetica,sans-serif; font-size:13px; min-width:120px; cursor:pointer">
 													<td class="categorylist_td">
 														<xsl:attribute name="onclick">javascript:chooseFilter("<xsl:value-of select='@id'/>",'viewtext7')</xsl:attribute>
@@ -147,6 +149,7 @@
 									<div id="statuslist" class="glosslisttable" style="position:absolute; top:90px; z-index:999; border:1px solid #79B7E7;  width:300px; background:#fff; display:none; max-height:400px; overflow:auto">
 										<table style="width:100%">
 							           		<xsl:for-each select="//filter_elements/response/content/executers/entry">
+												<xsl:sort select="."/>
 												<tr style="font-family:Verdana,Arial,Helvetica,sans-serif; font-size:13px; min-width:120px; cursor:pointer">
 													<td class="categorylist_td">
 														<xsl:attribute name="onclick">javascript:chooseFilter("<xsl:value-of select='@id'/>",'viewtext5')</xsl:attribute>
