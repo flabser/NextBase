@@ -293,6 +293,13 @@ public class Control extends AbstractComplexObject implements Serializable {
 		return  addExtraDays(cd, days, sixWorkdays, new HolidayCollection(primaryCtrlDate.get(Calendar.YEAR)));
 	}
 
+    public void resetTime(Calendar cal) {
+        cal.set(Calendar.HOUR_OF_DAY, cal.getActualMinimum(Calendar.HOUR_OF_DAY));
+        cal.set(Calendar.MINUTE, cal.getActualMinimum(Calendar.MINUTE));
+        cal.set(Calendar.SECOND, cal.getActualMinimum(Calendar.SECOND));
+        cal.set(Calendar.MILLISECOND, cal.getActualMinimum(Calendar.MILLISECOND));
+    }
+
 	public int getDiffBetweenDays(Calendar currentDate) {
 		Calendar cd = getCtrlDate();
 		
@@ -306,7 +313,10 @@ public class Control extends AbstractComplexObject implements Serializable {
             currDate = (Calendar) currentDate.clone();
             ctrlDate = (Calendar) cd.clone();
         }
-		
+
+        resetTime(currDate);
+        resetTime(ctrlDate);
+
 		int dayOfWeek, workDayCount, allDayCount, weekCount;
 		allDayCount = (int)((ctrlDate.getTimeInMillis() - currDate
 				.getTimeInMillis()) / (v * 24));
