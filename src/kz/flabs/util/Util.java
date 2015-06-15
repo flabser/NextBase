@@ -1,20 +1,19 @@
 package kz.flabs.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.exception.ConversionError;
 import kz.flabs.exception.DataConversionException;
+
+import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Util {
@@ -309,7 +308,7 @@ public class Util {
                 } else if (m.group().equals("&amp;")) {
                     text = text.replaceAll(m.group(), "&");
                 } else if (m.group().equals("&nbsp;")) {
-                    text = text.replaceAll(m.group(), "\n");
+                    text = text.replaceAll(m.group(), " ");
                 } else if (m.group().equals("&laquo;")) {
                     text = text.replaceAll(m.group(), "«");
                 } else if (m.group().equals("&raquo;")) {
