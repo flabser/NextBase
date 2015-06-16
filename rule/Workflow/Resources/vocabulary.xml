@@ -3157,72 +3157,162 @@
 		<entry lang="ENG">Answer comment</entry>
 		<entry lang="CHN">評論回复</entry>
 	</sentence>
-		<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+		<sentence mode="on" keyword="Договоры">
+		<entry lang="KAZ">Шарттар</entry>
+		<entry lang="ENG">Contracts</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-		<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+		<sentence mode="on" keyword="Договор">
+		<entry lang="KAZ">Шарт</entry>
+		<entry lang="ENG">Contract</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-			<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+	<sentence mode="on" keyword="Адресат">
+		<entry lang="KAZ">Адресаттың</entry>
+		<entry lang="ENG">Addressee</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-		<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+		<sentence mode="on" keyword="Тип договора">
+		<entry lang="KAZ">Келісім-шарт түрі</entry>
+		<entry lang="ENG">Contract type</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-		<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+		<sentence mode="on" keyword="Новый договор">
+		<entry lang="KAZ">Жаңа шарт</entry>
+		<entry lang="ENG">New contract</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-			<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+			<sentence mode="on" keyword="Новый договор от">
+		<entry lang="KAZ">Жаңа шарт бастап</entry>
+		<entry lang="ENG">New contract from</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-		<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+		<sentence mode="on" keyword="Сторона">
+		<entry lang="KAZ">Тарап</entry>
+		<entry lang="ENG">Agreement party</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-		<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+		<sentence mode="on" keyword="Куратор договора">
+		<entry lang="KAZ">Келісім-шарт кураторы</entry>
+		<entry lang="ENG">Curator of contract</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-			<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+	<sentence mode="on" keyword="Каз. содержание">
+		<entry lang="KAZ">Қазақстандық қамтуды</entry>
+		<entry lang="ENG">Kaz. contents</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-		<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+		<sentence mode="on" keyword="Заказчик">
+		<entry lang="KAZ">Сатып алушы</entry>
+		<entry lang="ENG">Customer</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-		<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+		<sentence mode="on" keyword="Да">
+		<entry lang="KAZ">Иә</entry>
+		<entry lang="ENG">Yes</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-			<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+	<sentence mode="on" keyword="Нет">
+		<entry lang="KAZ">Жоқ</entry>
+		<entry lang="ENG">No</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-		<sentence mode="on" keyword="">
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
+		<sentence mode="on" keyword="№ договора у контрагента">
+		<entry lang="KAZ">Келісім-шарт № контрагенттің</entry>
+		<entry lang="ENG">Contract № at contractor</entry>
 		<entry lang="CHN"></entry>
 	</sentence>
-		<sentence mode="on" keyword="">
+	<sentence mode="on" keyword="Дата регистрации у контрагента">
+		<entry lang="KAZ">Контрагентке Тіркелген</entry>
+		<entry lang="ENG">Date of registration at contractor</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Предмет договора">
+		<entry lang="KAZ">Шарттың тақырыбы</entry>
+		<entry lang="ENG">Subject of contract</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Договор заключен с">
+		<entry lang="KAZ">Келісім жасалған</entry>
+		<entry lang="ENG">Contract is signed with</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Валюта договора">
+		<entry lang="KAZ">Келісім-шарт валютасы</entry>
+		<entry lang="ENG">Contract currency</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Инициирующее подразделение">
+		<entry lang="KAZ">Бастамашылық бөлімі</entry>
+		<entry lang="ENG">Initiating division</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Инициирующий сотрудник">
+		<entry lang="KAZ">Бастамашылық қызметкері</entry>
+		<entry lang="ENG">Initiating employee</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Комментарии">
+		<entry lang="KAZ">Түсініктемелер</entry>
+		<entry lang="ENG">Comments</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Общая сумма договора">
+		<entry lang="KAZ">Шарттың жалпы сомасы</entry>
+		<entry lang="ENG">Total amount of contract</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Срок действия договора">
+		<entry lang="KAZ">Келісім-шарт уақыты</entry>
+		<entry lang="ENG">Duration of the agreement</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Срок исполнения договора">
+		<entry lang="KAZ">Келісім-шарт мерзімі</entry>
+		<entry lang="ENG">Term of a contract</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Акт">
+		<entry lang="KAZ">Акт</entry>
+		<entry lang="ENG">Act</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Период оказания услуг">
+		<entry lang="KAZ">Қызмет көрсету кезеңі</entry>
+		<entry lang="ENG">Period of rendering services</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="С">
+		<entry lang="KAZ">Күннен бастап</entry>
+		<entry lang="ENG">From</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Договор №">
+		<entry lang="KAZ">Келісім №</entry>
+		<entry lang="ENG">Contract №</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="№ счет-фактуры">
+		<entry lang="KAZ">Шот-фактура №</entry>
+		<entry lang="ENG">Invoice №</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Сумма">
+		<entry lang="KAZ">Сома</entry>
+		<entry lang="ENG">Amount</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Отметка">
+		<entry lang="KAZ">Белгі</entry>
+		<entry lang="ENG">Mark</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Новая">
+		<entry lang="KAZ">Жаңа</entry>
+		<entry lang="ENG">New</entry>
+		<entry lang="CHN"></entry>
+	</sentence>
+	<sentence mode="on" keyword="">
 		<entry lang="KAZ"></entry>
 		<entry lang="ENG"></entry>
 		<entry lang="CHN"></entry>
