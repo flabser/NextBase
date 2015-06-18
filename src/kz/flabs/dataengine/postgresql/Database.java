@@ -1195,6 +1195,9 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
             case DOCTYPE_GLOSSARY:
                 tableName = "CUSTOM_BLOBS_GLOSSARY";
                 break;
+            case DOCTYPE_COORD_COMMENT:
+                tableName = "CUSTOM_BLOBS_COORDINATORS";
+                break;
             default:
                 tableName = "CUSTOM_BLOBS_MAINDOCS";
                 break;

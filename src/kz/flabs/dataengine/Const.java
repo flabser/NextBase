@@ -71,6 +71,7 @@ public interface Const {
     int DOCTYPE_RECYCLE_BIN_ENTRY = 903;
     int DOCTYPE_TOPIC = 904;
     int DOCTYPE_POST = 905;
+    int DOCTYPE_COORD_COMMENT = 906;
 
     int DATABASE_EMBEDED = 1300;
 
