@@ -1,13 +1,11 @@
 package kz.nextbase.script.project;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.IStructure;
 import kz.flabs.exception.DocumentException;
 import kz.flabs.runtimeobj.document.coordination.ICoordConst;
-import kz.flabs.runtimeobj.document.project.*;
+import kz.flabs.runtimeobj.document.project.Block;
+import kz.flabs.runtimeobj.document.project.Coordinator;
 import kz.flabs.runtimeobj.document.structure.Employer;
 import kz.flabs.util.Util;
 import kz.nextbase.script._Exception;
@@ -16,7 +14,10 @@ import kz.nextbase.script._IXMLContent;
 import kz.nextbase.script.constants._BlockStatusType;
 import kz.nextbase.script.constants._BlockType;
 
+import java.util.ArrayList;
+import java.util.Date;
 
+@Deprecated
 public class _Block implements ICoordConst,_IXMLContent {
 	private Block block; 
 	int blockType = 0;

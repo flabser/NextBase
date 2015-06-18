@@ -2,13 +2,15 @@ package kz.nextbase.script.coordination;
 
 import kz.flabs.dataengine.IDatabase;
 import kz.flabs.runtimeobj.document.BlobField;
-import kz.flabs.runtimeobj.document.Document;
 import kz.flabs.runtimeobj.document.coordination.Coordinator;
 import kz.flabs.runtimeobj.document.coordination.Decision;
 import kz.flabs.runtimeobj.document.coordination.ICoordConst;
 import kz.flabs.runtimeobj.document.structure.Employer;
 import kz.flabs.util.Util;
-import kz.nextbase.script.*;
+import kz.nextbase.script._BlobField;
+import kz.nextbase.script._Exception;
+import kz.nextbase.script._IXMLContent;
+import kz.nextbase.script._Session;
 import kz.nextbase.script.constants._DecisionType;
 import kz.nextbase.script.struct._Employer;
 
@@ -141,6 +143,7 @@ public class _Coordinator implements _IXMLContent, ICoordConst {
         this.setDecision(_DecisionType.UNDEFINED, "");
         this.co.setDecisionDate(null);
         this.setCoorDate(null);
+        this.setAttachID(new ArrayList<Integer>());
     }
 
 	public Coordinator getBaseObject() {

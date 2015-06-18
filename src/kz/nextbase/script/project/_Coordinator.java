@@ -1,18 +1,18 @@
 package kz.nextbase.script.project;
 
-import java.util.Date;
-
 import kz.flabs.dataengine.DatabaseFactory;
 import kz.flabs.dataengine.ISystemDatabase;
 import kz.flabs.exception.DocumentException;
 import kz.flabs.runtimeobj.document.coordination.Decision;
 import kz.flabs.runtimeobj.document.coordination.ICoordConst;
-import kz.flabs.runtimeobj.document.project.*;
+import kz.flabs.runtimeobj.document.project.Coordinator;
 import kz.flabs.runtimeobj.document.structure.Employer;
 import kz.flabs.users.User;
 import kz.flabs.util.Util;
 import kz.nextbase.script.constants._DecisionType;
 
+import java.util.Date;
+@Deprecated
 public class _Coordinator implements ICoordConst {
 	public Coordinator coordinator;
 		
