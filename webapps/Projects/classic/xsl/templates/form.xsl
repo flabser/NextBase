@@ -566,23 +566,22 @@
 	<xsl:template name="docdiscussion">
 		<br/>
 		<xsl:if test="document/@status !='new'">
-			<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="btnnewcomment" style="margin-left:10px;" title="{//captions/adddiscussion/@caption}">
-				<xsl:if test="document/@topicid != '0' and document/@topicid != 'null'">
+			<!--<xsl:if test="document/@topicid != '0' and document/@topicid != 'null'">
+				<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="btnnewcomment" style="margin-left:10px;" title="{//captions/adddiscussion/@caption}">
                     <xsl:attribute name="title" select="//captions/write_discussion/@caption"/>
 					<xsl:attribute name="onclick">javascript:addCommentToForum(this,<xsl:value-of select='document/@topicid'/>,904)</xsl:attribute>
-				</xsl:if>
-				<xsl:if test="document/@topicid = '0' or document/@topicid = 'null'">
-				 	<xsl:attribute name="onclick">javascript:addTopicToForum(this,<xsl:value-of select='document/@docid'/>,<xsl:value-of select='document/@doctype'/>)</xsl:attribute>
-                    <xsl:attribute name="title" select="//captions/adddiscussion/@caption"/>
-                </xsl:if>
+					<img src="/SharedResources/img/classic/icons/comment.png" class="button_img"/>
+					<font style="font-size:12px; vertical-align:top">
+						<xsl:value-of select="//captions/write_discussion/@caption"/>
+					</font>
+				</button>
+			</xsl:if>-->
+			<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="btnnewcomment" style="margin-left:10px;" title="{//captions/adddiscussion/@caption}">
+				<xsl:attribute name="onclick">javascript:addTopicToForum(this,<xsl:value-of select='document/@docid'/>,<xsl:value-of select='document/@doctype'/>)</xsl:attribute>
+                <xsl:attribute name="title" select="//captions/adddiscussion/@caption"/>
 				<img src="/SharedResources/img/classic/icons/comment.png" class="button_img"/>
 				<font style="font-size:12px; vertical-align:top">
-					<xsl:if test="document/@topicid != '0'">
-                        <xsl:value-of select="//captions/write_discussion/@caption"/>
-                    </xsl:if>
-					<xsl:if test="document/@topicid = 'null' or document/@topicid = '0'">
-                        <xsl:value-of select="//captions/adddiscussion/@caption"/>
-                    </xsl:if>
+                    <xsl:value-of select="//captions/adddiscussion/@caption"/>
 				</font>
 			</button>
 			<br/>

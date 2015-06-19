@@ -315,8 +315,8 @@ function sendtopic(){
 				$("#topicform").slideUp("fast")
 				$("<table style='width:100%'><tr><td><div display='block' style='display:block; width:90%' id='topic'><div id='headerTheme' style='width:100%; padding-left:10px'>"+$("#topicvalue").val()+"</div><div id='infoTheme' style='width:100%; padding-left:10px; padding-top:3px'>Автор: "+$("#username").val()+","+ $("#topicdate").val()+"</div><br/><div id='CountMsgTheme' style='color:#555555; padding:12px; background:#E6E6E6; border:1px solid #D3D3D3; margin-left:10px; border-radius: 5px 5px 0px 0px; height:20px; font-size: 13px; font-weight: 300; overflow: hidden;'></div><div id='msgWrapper' style='border:1px solid #DDE5ED; min-height:150px; margin-left:10px'></div><table id='topicTbl' style=' width:100%'/><br/></div></td></tr></table>").insertAfter($("#bordercomment"));
 				$("#CountMsgTheme").append(comment_on_discussion + ": 0")
-				$("#btnnewcomment span").html("<img class='button_img' src='/SharedResources/img/classic/icons/comment.png'><font style='font-size:12px; vertical-align:top'>"+write_discussion+"</font>")
-				$("#btnnewcomment").attr("onclick","javascript:addCommentToForum(this,"+$(xml).find("message[id=2]").text()+",904)")
+				//$("#btnnewcomment span").html("<img class='button_img' src='/SharedResources/img/classic/icons/comment.png'><font style='font-size:12px; vertical-align:top'>"+write_discussion+"</font>")
+				//$("#btnnewcomment").attr("onclick","javascript:addCommentToForum(this,"+$(xml).find("message[id=2]").text()+",904)")
 			},
 			error:function (xhr, ajaxOptions, thrownError){
 				if (xhr.status == 400){
