@@ -19,7 +19,6 @@
 				<xsl:call-template name="cssandjs"/>
 				<xsl:call-template name="markisread"/>
 				<xsl:call-template name="htmlareaeditor"/>
-				<xsl:call-template name="keypressactions"/>
 			</head>
 			<body>
 				<div id="docwrapper">
@@ -85,10 +84,9 @@
 												</font>
 												<!-- Должно редактироваться поле или нет хз... ну пока выключим -->
 												<xsl:if test="$editmode = 'edit3'">
-													<a>
-														<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','false','taskauthor','frm','taskauthortbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('bossandemppicklist','false','taskauthor','frm','taskauthortbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td style="padding-top:3px">

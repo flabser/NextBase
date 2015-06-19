@@ -134,7 +134,7 @@
 										</li>
 										<li class="ui-state-default ui-corner-top">
 											<a href="#tabs-3"><xsl:value-of select="document/captions/attachments/@caption"/></a>
-											<img id="loading_attach_img" style="vertical-align:-8px; margin-left:-10px; padding-right:3px; visibility:hidden" src="/SharedResources/img/classic/ajax-loader-small.gif"></img>
+											<img id="loading_attach_img" style="vertical-align:-8px; margin-left:-10px; padding-right:3px; visibility:hidden" src="/SharedResources/img/classic/ajax-loader-small.gif"/>
 										</li>
 										<li class="ui-state-default ui-corner-top">
 											<a href="#tabs-4"><xsl:value-of select="document/captions/additional/@caption"/></a>
@@ -200,10 +200,9 @@
 															<xsl:value-of select="document/captions/recipient/@caption"/> : 
 														</font>
 														<xsl:if test="$editmode = 'edit'">
-															<a href="">
-																<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','false','recipient','frm','recipienttbl');</xsl:attribute>								
-																<img src="/SharedResources/img/iconset/report_magnify.png"/>		
-															</a>
+															<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+																<xsl:attribute name="onclick">javascript:dialogBoxStructure('bossandemppicklist','false','recipient','frm','recipienttbl');</xsl:attribute>
+															</img>
 														</xsl:if>
 													</td>
 													<td>
@@ -322,7 +321,7 @@
 														<xsl:variable name="har" select="document/fields/har/@attrval"/>
 														<select name="har" class="select_editable" style="width:611px;">
 															<xsl:if test="$editmode != 'edit'">
-																<xsl:attribute name="disabled"></xsl:attribute>
+																<xsl:attribute name="disabled">disabled</xsl:attribute>
 																<xsl:attribute name="class">select_noteditable</xsl:attribute>
 																<option value="">
 																	<xsl:attribute name="selected">selected</xsl:attribute>
@@ -381,8 +380,9 @@
 														<xsl:value-of select="document/captions/ctrldate/@caption"/> :
 													</td>
 													<td>
-													<xsl:if test="document/@editmode = 'edit'">
+														<xsl:if test="document/@editmode = 'edit'">
 															<script type="text/javascript">
+																var _calendarLang = "<xsl:value-of select="/request/@lang"/>";
 																$(function() {
 																	$('#ctrldate').datepicker({
 																		showOn: 'button',
@@ -390,50 +390,19 @@
 																		buttonImageOnly: true,
 																		regional:['ru'],
 																		showAnim: '',
-																		<xsl:if test="/request/@lang = 'KAZ'">
-																			monthNames: ['Қаңтар','Ақпан','Наурыз','Сәуір','Мамыр','Маусым',
-																			'Шілде','Тамыз','Қыркүйек','Қазан','Қараша','Желтоқсан'],
-																			monthNamesShort: ['Қаңтар','Ақпан','Наурыз','Сәуір','Мамыр','Маусым',
-																			'Шілде','Тамыз','Қыркүйек','Қазан','Қараша','Желтоқсан'],
-																			dayNames: ['жексебі','дүйсенбі','сейсенбі','сәрсенбі','бейсенбі','жұма','сенбі'],
-																			dayNamesShort: ['жек','дүй','сей','сәр','бей','жұм','сен'],
-																			dayNamesMin: ['Жс','Дс','Сс','Ср','Бс','Жм','Сн']
-																		</xsl:if>
-																		<xsl:if test="/request/@lang = 'ENG'">
-																				monthNames: ['January','February','March','April','May','June',
-																				'July','August','September','October','November','December'],
-																				monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-																				'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-																				dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-																				dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-																				dayNamesMin: ['Su','Mo','Tu','We','Th','Fr','Sa'],
-																				weekHeader: 'Wk',
-																				firstDay: 1,
-																				isRTL: false,
-																		</xsl:if>
-																		<xsl:if test="/request/@lang = 'CHN'">
-																				closeText: '关闭',
-																				prevText: '&#x3c;上月',
-																				nextText: '下月&#x3e;',
-																				currentText: '今天',
-																				monthNames: ['一月','二月','三月','四月','五月','六月',
-																				'七月','八月','九月','十月','十一月','十二月'],
-																				monthNamesShort: ['一','二','三','四','五','六',
-																				'七','八','九','十','十一','十二'],
-																				dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
-																				dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
-																				dayNamesMin: ['日','一','二','三','四','五','六'],
-																				weekHeader: '周',
-																				firstDay: 1,
-																				isRTL: false,
-																				showMonthAfterYear: true,
-																				yearSuffix: '年',
-																		</xsl:if>
+																		monthNames: calendarStrings[_calendarLang].monthNames,
+																		monthNamesShort: calendarStrings[_calendarLang].monthNamesShort,
+																		dayNames: calendarStrings[_calendarLang].dayNames,
+																		dayNamesShort: calendarStrings[_calendarLang].dayNamesShort,
+																		dayNamesMin: calendarStrings[_calendarLang].dayNamesMin,
+																		weekHeader: calendarStrings[_calendarLang].weekHeader,
+																		yearSuffix: calendarStrings[_calendarLang].yearSuffix,
+																		changeYear : true,
+																		changeMonth : true,
+																		});
 																	});
-																});
-																</script>
+															</script>
 														</xsl:if>
-														
 														<input type="text" name="ctrldate" value="{substring(document/fields/ctrldate,1,10)}" maxlength="10" class="td_editable" style="width:80px; vertical-align:top">
 															<xsl:if test="$editmode = 'edit'">
 																<xsl:attribute name="id">ctrldate</xsl:attribute>

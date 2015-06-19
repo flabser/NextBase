@@ -77,7 +77,7 @@
 								<xsl:call-template name="showxml"/>
 								<xsl:call-template name="save"/>
 								<xsl:if test="document/actionbar/action[@id='add_addressee']/@mode = 'ON'">
-									<button title ="{document/actionbar/action[@id='add_addressee']//@hint}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="btnnewkr" style="margin-right:5px" autocomplete="off">
+									<button title="{document/actionbar/action[@id='add_addressee']//@hint}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="btnnewkr" style="margin-right:5px" autocomplete="off">
 										<xsl:attribute name="onclick">javascript:window.location.href="Provider?type=edit&amp;element=glossary&amp;id=addressee&amp;key=&amp;parentdocid=<xsl:value-of select="document/@docid"/>&amp;parentdoctype=<xsl:value-of select="document/@doctype"/>"</xsl:attribute>
 										<span>
 											<img src="/SharedResources/img/classic/icons/page_white_add.png" class="button_img"/>
@@ -178,69 +178,69 @@
 										<input type="hidden" name="key" value="{document/@docid}"/>
 								</div>
 								<div id="tabs-2">
-										<div display="block" id="property">
-											<br/>
-											<table width="80%" border="0">
-												<tr>
-													<td width="30%" class="fc"><xsl:value-of select="document/captions/typeofintegration/@caption"/> :</td>
-													<td>
-														<table>
-												<tr>
-													<td>
-														<input type="radio" name="typeofintegration" value="0" autocomplete="off">
-															<xsl:if test="$editmode !='edit'">
-																<xsl:attribute name="disabled">disabled</xsl:attribute>
-															</xsl:if>
-															<xsl:if test="document/fields/typeofintegration = '0'">
-																<xsl:attribute name="checked">checked</xsl:attribute>
-															</xsl:if>
-															<xsl:if test="$status  = 'new'">
-																<xsl:attribute name="checked">checked</xsl:attribute>
-															</xsl:if>
-															<xsl:value-of select="document/captions/notused/@caption"/>
-														</input>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<input type="radio" name="typeofintegration" value="1" autocomplete="off">
-															<xsl:if test="$editmode !='edit'">
-																<xsl:attribute name="disabled">disabled</xsl:attribute>
-															</xsl:if>
-															<xsl:if test="document/fields/typeofintegration = '1'">
-																<xsl:attribute name="checked">checked</xsl:attribute>
-															</xsl:if>
-															XML &amp; SMTP
-														</input>
-													</td>
-												</tr>
-											</table>
-													</td>
-												</tr>
-												<tr>
-													<td width="30%" class="fc"><xsl:value-of select="document/captions/corrid/@caption"/> :</td>
-													<td>
-														<input type="text" name="corrid" value="{document/fields/corrid}" size="50" class="td_editable" style="width:300px">
-															<xsl:if test="$editmode != 'edit'">
-																<xsl:attribute name="readonly">readonly</xsl:attribute>
-																<xsl:attribute name="class">td_noteditable</xsl:attribute>
-															</xsl:if>
-														</input>
-													</td>
-												</tr>
-												<tr>
-													<td class="fc">e-mail :</td>
-													<td>
-														<input type="text" name="email" id="email" value="{document/fields/email}" size="10" class="td_editable" style="width:300px">
-															<xsl:if test="$editmode != 'edit'">
-																<xsl:attribute name="readonly">readonly</xsl:attribute>
-																<xsl:attribute name="class">td_noteditable</xsl:attribute>
-															</xsl:if>
-														</input>
-													</td>
-												</tr>
-											</table>
-										</div>
+									<div display="block" id="property">
+										<br/>
+										<table width="80%" border="0">
+											<tr>
+												<td width="30%" class="fc"><xsl:value-of select="document/captions/typeofintegration/@caption"/> :</td>
+												<td>
+													<table>
+														<tr>
+															<td>
+																<input type="radio" name="typeofintegration" value="0" autocomplete="off">
+																	<xsl:if test="$editmode !='edit'">
+																		<xsl:attribute name="disabled">disabled</xsl:attribute>
+																	</xsl:if>
+																	<xsl:if test="document/fields/typeofintegration = '0'">
+																		<xsl:attribute name="checked">checked</xsl:attribute>
+																	</xsl:if>
+																	<xsl:if test="$status  = 'new'">
+																		<xsl:attribute name="checked">checked</xsl:attribute>
+																	</xsl:if>
+																	<xsl:value-of select="document/captions/notused/@caption"/>
+																</input>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<input type="radio" name="typeofintegration" value="1" autocomplete="off">
+																	<xsl:if test="$editmode !='edit'">
+																		<xsl:attribute name="disabled">disabled</xsl:attribute>
+																	</xsl:if>
+																	<xsl:if test="document/fields/typeofintegration = '1'">
+																		<xsl:attribute name="checked">checked</xsl:attribute>
+																	</xsl:if>
+																	XML &amp; SMTP
+																</input>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td width="30%" class="fc"><xsl:value-of select="document/captions/corrid/@caption"/> :</td>
+												<td>
+													<input type="text" name="corrid" value="{document/fields/corrid}" size="50" class="td_editable" style="width:300px">
+														<xsl:if test="$editmode != 'edit'">
+															<xsl:attribute name="readonly">readonly</xsl:attribute>
+															<xsl:attribute name="class">td_noteditable</xsl:attribute>
+														</xsl:if>
+													</input>
+												</td>
+											</tr>
+											<tr>
+												<td class="fc">e-mail :</td>
+												<td>
+													<input type="text" name="email" id="email" value="{document/fields/email}" size="10" class="td_editable" style="width:300px">
+														<xsl:if test="$editmode != 'edit'">
+															<xsl:attribute name="readonly">readonly</xsl:attribute>
+															<xsl:attribute name="class">td_noteditable</xsl:attribute>
+														</xsl:if>
+													</input>
+												</td>
+											</tr>
+										</table>
+									</div>
 								</div>
 							</form>
 						</div>

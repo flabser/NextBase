@@ -240,7 +240,7 @@
                         <applet id="SignApplet" code="kz.softkey.iola.applet.MainApplet" width="10" height="10" archive="softkey_jce_applet-1.2.jar, softkey_jce_iola-2.2.jar,  xmlsec-1.4.4.jar, commons-logging-1.1.1.jar" codebase=".">
                             <param name="fileExtension" value="P12"></param>
                         </applet>
-                </xsl:if>
+                	</xsl:if>
                     <xsl:call-template name="documentheader"/>
 					<div class="formwrapper">
 						<div class="formtitle">
@@ -304,7 +304,7 @@
 								</xsl:if>
 	                  			<li class="ui-state-default ui-corner-top">
 	                  				<a href="#tabs-5"><xsl:value-of select="document/captions/attachments/@caption"/></a>
-	                  				<img id="loading_attach_img" style="vertical-align:-8px; margin-left:-10px; padding-right:3px; visibility:hidden" src="/SharedResources/img/classic/ajax-loader-small.gif"></img>
+	                  				<img id="loading_attach_img" style="vertical-align:-8px; margin-left:-10px; padding-right:3px; visibility:hidden" src="/SharedResources/img/classic/ajax-loader-small.gif"/>
 	                  			</li>
 	                  			<xsl:if test="document/@parentdocid !='0'">
 		                  			<li class="ui-state-default ui-corner-top">
@@ -425,14 +425,13 @@
 													<xsl:value-of select="document/captions/executors/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','true','executor','frm', 'intexectbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('bossandemppicklist','true','executor','frm', 'intexectbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
-<!-- 												<input id="executor" style="width:600px"></input> -->
+												<!-- <input id="executor" style="width:600px"></input> -->
 												<table id="intexectbl">
 													<xsl:if test="document/fields/executors/entry/user =''">
 														<tr>
@@ -481,10 +480,9 @@
 													<xsl:value-of select="document/captions/extexecutors/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('corrcat','true','extexecutor','frm', 'extexectbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('corrcat','true','extexecutor','frm', 'extexectbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
@@ -651,13 +649,12 @@
 												</td> 
 												<td style="padding-top:5px">
 													<div>
-														<textarea name="briefcontent" rows="3"  tabindex="3" style="width:750px" autocomplete="off">
+														<textarea name="briefcontent" rows="3"  tabindex="3" style="width:750px" autocomplete="off" class="textarea_editable">
 															<xsl:if test="$editmode !='edit'">
 																<xsl:attribute name="readonly">readonly</xsl:attribute>
 																<xsl:attribute name="class">textarea_noteditable</xsl:attribute>
 															</xsl:if>
 															<xsl:if test="$editmode = 'edit'">
-																<xsl:attribute name="class">textarea_editable</xsl:attribute>
 																<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
 																<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
 															</xsl:if>
@@ -678,13 +675,12 @@
 											</td>
 											<td style="padding-top:5px">
 												<div>
-													<textarea name="comment" rows="5" tabindex="3" style="width:750px" autocomplete="off">
+													<textarea name="comment" rows="5" tabindex="3" style="width:750px" autocomplete="off" class="textarea_editable">
 														<xsl:if test="$editmode !='edit'">
 															<xsl:attribute name="readonly"/>
 															<xsl:attribute name="class">textarea_noteditable</xsl:attribute>
 														</xsl:if>
 														<xsl:if test="$editmode = 'edit'">
-															<xsl:attribute name="class">textarea_editable</xsl:attribute>
 															<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
 															<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
 														</xsl:if>
@@ -1122,7 +1118,7 @@
 	<xsl:apply-templates mode="line"/>
 </xsl:template>
 	
-<xsl:template match="viewtext" mode="line"></xsl:template>
+<xsl:template match="viewtext" mode="line"/>
 	
 <xsl:template match="entry" mode="item">
 	<a href="{@url}" title="{viewtext}" class="doclink" style="font-style:Verdana,​Arial,​Helvetica,​sans-serif; width:100%; font-size:97%; margin-left:2px">
@@ -1152,10 +1148,7 @@
 			<img style="vertical-align:top;" src="/SharedResources/img/classic/tree_bar.gif"/>
 		</xsl:when>
 		<xsl:otherwise>
-			<xsl:if test="parent::responses">
-				<img style="vertical-align:top;" src="/SharedResources/img/classic/tree_spacer.gif"/>
-			</xsl:if>
-			<xsl:if test="parent::entry">
+			<xsl:if test="parent::responses or parent::entry">
 				<img style="vertical-align:top;" src="/SharedResources/img/classic/tree_spacer.gif"/>
 			</xsl:if>
 		</xsl:otherwise>

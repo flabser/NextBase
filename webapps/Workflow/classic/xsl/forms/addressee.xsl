@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	<xsl:import href="../templates/form.xsl" />
-	<xsl:import href="../templates/sharedactions.xsl" />
+	<xsl:import href="../templates/form.xsl"/>
+	<xsl:import href="../templates/sharedactions.xsl"/>
 	<xsl:variable name="doctype" select="request/document/captions/addressee/@caption"/>
 	<xsl:variable name="threaddocid" select="document/@docid"/>
 	<xsl:variable name="editmode" select="/request/document/@editmode"/>

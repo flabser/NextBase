@@ -180,7 +180,7 @@
 								<li class="ui-state-default ui-corner-top">
 									<a href="#tabs-4" style="padding-right:5px">
 										<xsl:value-of select="$captions/attachments/@caption"/>
-										<img id="loading_attach_img" style="vertical-align: -3px; margin-left: 3px; visibility: hidden;" src="/SharedResources/img/classic/ajax-loader-small.gif"></img>
+										<img id="loading_attach_img" style="vertical-align: -3px; margin-left: 3px; visibility: hidden;" src="/SharedResources/img/classic/ajax-loader-small.gif"/>
 									</a>
 								</li>
 								<li class="ui-state-default ui-corner-top">
@@ -297,10 +297,9 @@
 													<xsl:value-of select="$captions/signer/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
-													<a>
-														<xsl:attribute name="href">javascript:dialogBoxStructure('workdocsigners','false','signer','frm', 'signertbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('workdocsigners','false','signer','frm', 'signertbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
@@ -349,10 +348,9 @@
 													<xsl:value-of select="$captions/recipients/@caption"/>:
 												</font>
 												<xsl:if test="$editmode = 'edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','true','recipient','frm', 'recipienttbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('bossandemppicklist','true','recipient','frm', 'recipienttbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
@@ -567,12 +565,12 @@
 										<tr>
 											<td style="padding-left:30px">
 												<xsl:if test="$editmode = 'edit'">
-														<script type="text/javascript">  
-															$(document).ready(function($) {
-												       			 CKEDITOR.config.width = "815px"
-												       			 CKEDITOR.config.height = "450px"
-												    		});
-														</script>
+													<script type="text/javascript">
+														$(document).ready(function($) {
+												    		 CKEDITOR.config.width = "815px"
+												    		 CKEDITOR.config.height = "450px"
+												    	});
+													</script>
 													<textarea id="MyTextarea" name="contentsource">
 														<xsl:if test="@useragent = 'ANDROID'">
 															<xsl:attribute name="style">width:500px; height:300px</xsl:attribute>
@@ -602,8 +600,7 @@
 													<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" type="button">
 														<xsl:attribute name="onclick">javascript:addCoord()</xsl:attribute>
 														<span>
-															<img src="/SharedResources/img/classic/icons/layout_add.png"
-																style="border:none; width:15px; height:15px; margin-right:3px; vertical-align:top"/>
+															<img src="/SharedResources/img/classic/icons/layout_add.png" style="border:none; width:15px; height:15px; margin-right:3px; vertical-align:top"/>
 															<font style="font-size:12px; vertical-align:top">
 																<xsl:value-of select="$captions/addblock/@caption"/>
 															</font>
@@ -765,7 +762,7 @@
 														<input type="hidden" name="coordblock">
 															<xsl:attribute name="value"><xsl:value-of select="id"/>`<xsl:choose><xsl:when test="type='PARALLEL_COORDINATION'">par</xsl:when><xsl:when
 																test="type='SERIAL_COORDINATION'">ser</xsl:when></xsl:choose>`<xsl:value-of
-																select="delaytime" />`<xsl:for-each select="coordinators/entry"><xsl:value-of
+																select="delaytime"/>`<xsl:for-each select="coordinators/entry"><xsl:value-of
 																select="employer/userid"/><xsl:if test="following-sibling::*">^</xsl:if></xsl:for-each>`<xsl:value-of
 																select="status"/></xsl:attribute>
 														</input>

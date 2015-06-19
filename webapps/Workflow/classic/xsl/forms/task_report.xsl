@@ -201,10 +201,9 @@
 										<tr>
 											<td class="fc" style = "padding:7px;">
 												<font style="vertical-align:top"><xsl:value-of select="document/captions/taskauthor/@caption"/> :</font>
-												<a>
-													<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','false','taskauthor','frm', 'taskauthortbl');</xsl:attribute>
-													<img src="/SharedResources/img/iconset/report_magnify.png"/>
-												</a>
+												<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+													<xsl:attribute name="onclick">javascript:dialogBoxStructure('bossandemppicklist','false','taskauthor','frm', 'taskauthortbl');</xsl:attribute>
+												</img>
 											</td>
 											<td>
 												<table id="taskauthortbl">
@@ -249,7 +248,7 @@
 												<select size="1" name="controltype" style="margin-top:10px;margin-bottom:5px;background:#fff; padding:3px 3px 3px 5px; width:288px; border:1px solid #ccc">
 													<xsl:if test="$editmode != 'edit'">
 														<xsl:attribute name="style">background:none; padding:3px 3px 3px 5px; width:288px; border:1px solid #ccc</xsl:attribute>
-														<xsl:attribute name="disabled"></xsl:attribute>
+														<xsl:attribute name="disabled"/>
 													</xsl:if>
 													<xsl:if test="document/fields/allcontrol = '0'">
 														<xsl:attribute name="disabled"/>
@@ -295,10 +294,7 @@
 																<xsl:if test="$editmode !='edit'">
 																	<xsl:attribute name="disabled">disabled</xsl:attribute>
 																</xsl:if>
-																<xsl:if test="document/fields/typefilereport  = '1'">
-																	<xsl:attribute name="checked">checked</xsl:attribute>
-																</xsl:if>
-																<xsl:if test="$status  = 'new'">
+																<xsl:if test="document/fields/typefilereport  = '1' or $status  = 'new'">
 																	<xsl:attribute name="checked">checked</xsl:attribute>
 																</xsl:if>
 																PDF
@@ -342,10 +338,7 @@
 																<xsl:if test="$editmode='noaccess'">
 																	<xsl:attribute name="disabled">disabled</xsl:attribute>
 																</xsl:if>
-																<xsl:if test="document/fields/disposition  = 'attachment'">
-																	<xsl:attribute name="checked">checked</xsl:attribute>
-																</xsl:if>
-																<xsl:if test="$status  = 'new'">
+																<xsl:if test="document/fields/disposition  = 'attachment' or $status  = 'new'">
 																	<xsl:attribute name="checked">checked</xsl:attribute>
 																</xsl:if>
 																<xsl:value-of select="document/captions/bydefaultinprogram/@caption"/>
@@ -376,10 +369,7 @@
 								<input type="hidden" name="allcontrol" value="{document/fields/allcontrol}"/>
 								<input type="hidden" name="tasktype">
 									<xsl:choose>
-										<xsl:when test="document/fields/tasktype = 'RESOLUTION'">
-											<xsl:attribute name="value">RESOLUTION</xsl:attribute>
-										</xsl:when>
-										<xsl:when test="document/fields/parenttasktype=''">
+										<xsl:when test="document/fields/tasktype = 'RESOLUTION' or document/fields/parenttasktype=''">
 											<xsl:attribute name="value">RESOLUTION</xsl:attribute>
 										</xsl:when>
 										<xsl:otherwise>

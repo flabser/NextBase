@@ -277,9 +277,6 @@
 											</input>
 											<span style="vertical-align:middle;">
 												<xsl:choose>
-													<xsl:when test="document/fields/instmsgstatus = 'false'">
-														<img src="/SharedResources/img/iconset/bullet_red.png" title="Instant Messenger off"/>
-													</xsl:when>
 													<xsl:when test="document/fields/instmsgstatus = 'true'">
 														<img src="/SharedResources/img/iconset/bullet_gren.png" title="Instant Messenger on"/>
 													</xsl:when>

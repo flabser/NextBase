@@ -5,16 +5,7 @@
 	<xsl:variable name="doctype"><xsl:value-of select="request/document/captions/doctypemultilang/@caption"/></xsl:variable>
 	<xsl:variable name="threaddocid" select="document/@granddocid"/>
 	<xsl:variable name="path" select="/request/@skin"/>
-	<xsl:variable name="editmode">
-		<xsl:choose>
-			<xsl:when test="/request/document/fields/parentdoccontrol = 'false'">
-				noaccess
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:value-of select="/request/document/@editmode"/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:variable>
+	<xsl:variable name="editmode" select="/request/document/@editmode"/>
 	<xsl:variable name="status" select="/request/document/@status"/>
 	<xsl:output method="html" encoding="utf-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" indent="yes"/>
 	<xsl:variable name="skin" select="request/@skin"/>
@@ -145,7 +136,7 @@
 								</li>
 								<li class="ui-state-default ui-corner-top">
 									<a href="#tabs-2"><xsl:value-of select="document/captions/attachments/@caption"/></a>
-									<img id="loading_attach_img" style="vertical-align:-8px; margin-left:-10px; padding-right:3px; visibility:hidden" src="/SharedResources/img/classic/ajax-loader-small.gif"></img>
+									<img id="loading_attach_img" style="vertical-align:-8px; margin-left:-10px; padding-right:3px; visibility:hidden" src="/SharedResources/img/classic/ajax-loader-small.gif"/>
 								</li>
 								<li class="ui-state-default ui-corner-top">
 									<a href="#tabs-3"><xsl:value-of select="document/captions/additional/@caption"/></a>
@@ -171,10 +162,9 @@
 													<xsl:value-of select="document/captions/executor/@caption"/> : 
 												</font>
 												<xsl:if test="$editmode ='edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','true','executor','frm', 'intexecutbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('bossandemppicklist','true','executor','frm', 'intexecutbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
@@ -199,9 +189,7 @@
 												<td>
 													<a href="" class="doclink">
 														<xsl:attribute name="href">Provider?type=document&amp;id=<xsl:value-of select="document/fields/grandparform"/>&amp;key=<xsl:value-of select="document/fields/grandpardocid"/></xsl:attribute>
-														<font>
-															<xsl:value-of select="document/captions/pdocviewtext/@caption"/>
-														</font>
+														<xsl:value-of select="document/captions/pdocviewtext/@caption"/>
 													</a>
 													<xsl:if test="$filename!=''">
 														<a href="">
@@ -221,40 +209,39 @@
 										</tr>
 										<!-- Содержание отчета -->
 										<tr>
-												<td class="fc">
-													<xsl:value-of select="document/captions/report/@caption"/> :
-												</td>							
-												<td>
-													<div>
-														<textarea name="report" id="report" style="width:760px; margin-top:8px; margin-bottom:15px" rows="15" onfocus="fieldOnFocus(this)" onblur="fieldOnBlur(this)" tabindex="1" class="textarea_editable">
-															<xsl:if test="document/@editmode != 'edit'">
-																<xsl:attribute name="onfocus">javascript:$(this).blur()</xsl:attribute>
-																<xsl:attribute name="class">textarea_noteditable</xsl:attribute>
-															</xsl:if>	
-															<xsl:if test="document/@editmode = 'edit'">
-																<xsl:attribute name="onfocus">javascript:fieldOnFocus(this)</xsl:attribute>
-																<xsl:attribute name="onblur">javascript:fieldOnBlur(this)</xsl:attribute>
-																<xsl:attribute name="onkeydown">javascript:resetquickanswerbutton()</xsl:attribute>
-															</xsl:if>	
-															<xsl:value-of select="document/fields/report"/>
-														</textarea>	
-														<xsl:if test="document/@editmode = 'edit'">	
-															<br/>
-															<a href="javascript:$.noop()" class="button-auto-value">
-																<xsl:attribute name ="title"><xsl:value-of select ="document/captions/executed/@caption"/></xsl:attribute>
-																<xsl:attribute name="onclick">javascript:addquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
-																<xsl:attribute name="onmouseover">javascript:previewquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
-																<xsl:attribute name="onmouseout">javascript:endpreviewquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
-																<xsl:value-of select ="document/captions/executed/@caption"/>
-															</a>
-															
-															<a href="javascript:$.noop()" class="button-auto-value" style="margin-left:10px">
-																<xsl:attribute name ="title"><xsl:value-of select ="document/captions/noted/@caption"/></xsl:attribute>
-																<xsl:attribute name="onclick">javascript:addquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
-																<xsl:attribute name="onmouseover">javascript:previewquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
-																<xsl:attribute name="onmouseout">javascript:endpreviewquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
-																<xsl:value-of select ="document/captions/noted/@caption"/>
-															</a>					
+											<td class="fc">
+												<xsl:value-of select="document/captions/report/@caption"/> :
+											</td>
+											<td>
+												<div>
+													<textarea name="report" id="report" style="width:760px; margin-top:8px; margin-bottom:15px" rows="15" onfocus="fieldOnFocus(this)" onblur="fieldOnBlur(this)" tabindex="1" class="textarea_editable">
+														<xsl:if test="document/@editmode != 'edit'">
+															<xsl:attribute name="onfocus">javascript:$(this).blur()</xsl:attribute>
+															<xsl:attribute name="class">textarea_noteditable</xsl:attribute>
+														</xsl:if>
+														<xsl:if test="document/@editmode = 'edit'">
+															<xsl:attribute name="onfocus">javascript:fieldOnFocus(this)</xsl:attribute>
+															<xsl:attribute name="onblur">javascript:fieldOnBlur(this)</xsl:attribute>
+															<xsl:attribute name="onkeydown">javascript:resetquickanswerbutton()</xsl:attribute>
+														</xsl:if>
+														<xsl:value-of select="document/fields/report"/>
+													</textarea>
+													<xsl:if test="document/@editmode = 'edit'">
+														<br/>
+														<a href="javascript:$.noop()" class="button-auto-value">
+															<xsl:attribute name="title" select="document/captions/executed/@caption"/>
+															<xsl:attribute name="onclick">javascript:addquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
+															<xsl:attribute name="onmouseover">javascript:previewquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
+															<xsl:attribute name="onmouseout">javascript:endpreviewquickanswer('report','<xsl:value-of select ="document/captions/executed/@caption"/>',this)</xsl:attribute>
+															<xsl:value-of select="document/captions/executed/@caption"/>
+														</a>
+														<a href="javascript:$.noop()" class="button-auto-value" style="margin-left:10px">
+															<xsl:attribute name="title" select="document/captions/noted/@caption"/>
+															<xsl:attribute name="onclick">javascript:addquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
+															<xsl:attribute name="onmouseover">javascript:previewquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
+															<xsl:attribute name="onmouseout">javascript:endpreviewquickanswer('report','<xsl:value-of select ="document/captions/noted/@caption"/>',this)</xsl:attribute>
+															<xsl:value-of select="document/captions/noted/@caption"/>
+														</a>
 														</xsl:if>							
 													</div>
 												</td>

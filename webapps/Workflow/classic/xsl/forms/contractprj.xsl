@@ -324,10 +324,9 @@
 													<xsl:value-of select="$captions/signer/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
-													<a>
-														<xsl:attribute name="href">javascript:dialogBoxStructure('workdocsigners','false','signer','frm', 'signertbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('workdocsigners','false','signer','frm', 'signertbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
@@ -521,15 +520,13 @@
 													<xsl:value-of select="document/captions/curator/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','false','curator','frm', 'curatortbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('bossandemppicklist','false','curator','frm', 'curatortbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
 												<table id="curatortbl">
-
 													<tr>
 														<!--<input id="tags"/>-->
 														<td style="width:600px;" class="td_editable">
@@ -645,12 +642,8 @@
 												</select>
 											</td>
 										</tr>
-
-
-
-
 									</table>
-									<br />
+									<br/>
 								</div>
 								<div id="tabs-2">
 									<br />
@@ -660,12 +653,12 @@
 											<td class="fc"><xsl:value-of select="document/captions/content/@caption"/> :</td>
 											<td>
 												<xsl:if test="$editmode = 'edit'">
-														<script type="text/javascript">  
-															$(document).ready(function($) {
-												       			 CKEDITOR.config.width = "815px"
-												       			 CKEDITOR.config.height = "450px"
-												    		});
-														</script>
+													<script type="text/javascript">
+														$(document).ready(function($) {
+												    		 CKEDITOR.config.width = "815px"
+												    		 CKEDITOR.config.height = "450px"
+												    	});
+													</script>
 													<textarea id="MyTextarea" name="contentsource">
 														<xsl:if test="@useragent = 'ANDROID'">
 															<xsl:attribute name="style">width:500px; height:300px</xsl:attribute>
@@ -698,11 +691,12 @@
 								<div id="tabs-3">
 									<br/>
 									<xsl:if test="$editmode != 'edit'">
-									<div id='printCoordTitle' style="display:none; width:100%">Ход согласования документа: <br/><br/>
-										 <b style='margin-left:50px;'><xsl:value-of select="document/fields/title"/></b><br/>
-										 <font style='margin-left:50px'>Краткое содержание: </font><b><xsl:value-of select="document/fields/briefcontent"/></b>
-										 </div>
-
+										<div id='printCoordTitle' style="display:none; width:100%">
+											Ход согласования документа: <br/><br/>
+											<b style='margin-left:50px;'><xsl:value-of select="document/fields/title"/></b>
+											<br/>
+											<font style='margin-left:50px'>Краткое содержание: </font><b><xsl:value-of select="document/fields/briefcontent"/></b>
+										</div>
 										<br/><br/>
 									</xsl:if>
 									<xsl:if test="$editmode = 'edit' and $fields/coordination/status = 'DRAFT' or $fields/coordination/status = 'NEWVERSION'">

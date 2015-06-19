@@ -200,21 +200,15 @@
 												<font style="font-style:arial; margin-left:7px; font-weight:bold">
 													<xsl:choose>
 														<xsl:when test="document/fields/coordination/status = 'DRAFT'">
-															<xsl:attribute name="title">
-																<xsl:value-of select="document/captions/draft/@caption"/>
-															</xsl:attribute>
+															<xsl:attribute name="title" select="document/captions/draft/@caption"/>
 															<xsl:value-of select="document/captions/draft/@caption"/>
 														</xsl:when>
 														<xsl:when test="document/fields/coordination/status = 'COORDINATING'">
-															<xsl:attribute name="title">
-																<xsl:value-of select="document/captions/projectactivecoord/@caption"/>
-															</xsl:attribute>
+															<xsl:attribute name="title" select="document/captions/projectactivecoord/@caption"/>
 															<xsl:value-of select="document/captions/nasoglasovanii/@caption"/>
 														</xsl:when>
 														<xsl:when test="document/fields/coordination/status = 'COORDINATED'">
-															<xsl:attribute name="title">
-																<xsl:value-of select="document/captions/alllevelcoordcomplete/@caption"/>
-															</xsl:attribute>
+															<xsl:attribute name="title" select="document/captions/alllevelcoordcomplete/@caption"/>
 															<xsl:value-of select="document/captions/soglasovanl/@caption"/>
 														</xsl:when>
 														<xsl:when test="document/fields/coordination/status = 'REJECTED'">
@@ -231,16 +225,11 @@
 															<xsl:value-of select="document/captions/rejected/@caption"/>
 														</xsl:when>
 														<xsl:when test="document/fields/coordination/status = 'NEWVERSION'">
-															<xsl:attribute name="title">
-																<xsl:value-of select="document/captions/projectnewversion/@caption"/>
-															</xsl:attribute>
+															<xsl:attribute name="title" select="document/captions/projectnewversion/@caption"/>
 															<xsl:value-of select="document/captions/newversion/@caption"/>
 														</xsl:when>
 														<xsl:when test="document/fields/coordination/status = 'SIGNING'">
-															<xsl:attribute name="title">
-																<xsl:value-of select="document/captions/projectwaitingsign/@caption"/>&#xA0;
-																<xsl:value-of select="signerdisplay"/>
-															</xsl:attribute>
+															<xsl:attribute name="title" select="concat(document/captions/projectwaitingsign/@caption,'&#xA0;',signerdisplay)"/>
 															<xsl:value-of select="document/captions/waitingsign/@caption"/>
 														</xsl:when>
 														<xsl:when test="document/fields/coordination/status = 'SIGNED'">
@@ -250,16 +239,11 @@
 															<xsl:value-of select="document/captions/signed/@caption"/>
 														</xsl:when>
 														<xsl:when test="document/fields/coordination/status = 'NOCOORDINATION'">
-															<xsl:attribute name="title">
-																<xsl:value-of select="document/captions/projectnotcoordinating/@caption"/>
-															</xsl:attribute>
-															<xsl:value-of
-																select="document/captions/notcoordinatingproject/@caption"/>
+															<xsl:attribute name="title" select="document/captions/projectnotcoordinating/@caption"/>
+															<xsl:value-of select="document/captions/notcoordinatingproject/@caption"/>
 														</xsl:when>
 														<xsl:when test="document/fields/coordination/status = 'EXPIRED'">
-															<xsl:attribute name="title">
-																<xsl:value-of select="document/captions/projectwasdelayed/@caption"/>
-															</xsl:attribute>
+															<xsl:attribute name="title" select="document/captions/projectwasdelayed/@caption"/>
 															<xsl:value-of select="document/captions/prosrochen/@caption"/>
 														</xsl:when>
 													</xsl:choose>
@@ -326,10 +310,9 @@
 													<xsl:value-of select="document/captions/signer/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
-													<a>
-														<xsl:attribute name="href">javascript:dialogBoxStructure('signers','false','signer','frm', 'signertbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('signers','false','signer','frm', 'signertbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
@@ -359,8 +342,7 @@
 												</xsl:if>
 												<xsl:for-each select="document/fields/coordination/blocks/entry">
 													<xsl:if test="type='TO_SIGN'">
-														<input type="hidden" id='coordBlockSign' name="coordblock"
-															value="{id}`tosign`0`{coordinators/entry/employer/userid}`{status}" />
+														<input type="hidden" id='coordBlockSign' name="coordblock" value="{id}`tosign`0`{coordinators/entry/employer/userid}`{status}"/>
 													</xsl:if>
 												</xsl:for-each>
 												<input type="hidden" id="signercaption" value="{document/captions/signer/@caption}"/>
@@ -378,10 +360,9 @@
 													<xsl:value-of select="document/captions/corr/@caption"/>:
 												</font>
 												<xsl:if test="$editmode = 'edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('corrcat','false','corr','frm', 'corrtbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('corrcat','false','corr','frm', 'corrtbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
@@ -395,7 +376,7 @@
 														</td>
 													</tr>
 												</table>
-												<input type="hidden" id="corr" name="corr" value="{document/fields/corr/@attrval}" />
+												<input type="hidden" id="corr" name="corr" value="{document/fields/corr/@attrval}"/>
 												<input type="hidden" id="corrcaption" value="{document/captions/corr/@caption}"/>
 											</td>
 										</tr>
@@ -406,10 +387,9 @@
 													<xsl:value-of select="document/captions/nomentype/@caption"/> : 
 												</font>
 												<xsl:if test="$editmode ='edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('n','false','nomentype','frm', 'nomentypetbl');</xsl:attribute>								
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>			
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('n','false','nomentype','frm', 'nomentypetbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
@@ -473,7 +453,7 @@
 															<xsl:attribute name="class">select_noteditable</xsl:attribute>
 															<option value="">
 																<xsl:attribute name="selected">selected</xsl:attribute>
-																<xsl:value-of select="document/fields/project" />
+																<xsl:value-of select="document/fields/project"/>
 															</option>
 														</xsl:if>
 														<xsl:if test="$editmode = 'edit'">
@@ -488,7 +468,7 @@
 																<xsl:if test="$project = @docid">
 																	<xsl:attribute name="selected">selected</xsl:attribute>
 																</xsl:if>
-																<xsl:value-of select="viewcontent/viewtext1" />
+																<xsl:value-of select="viewcontent/viewtext1"/>
 															</option>
 														</xsl:for-each>
 													</select>
@@ -628,8 +608,7 @@
 													<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" type="button">
 														<xsl:attribute name="onclick">javascript:addCoord()</xsl:attribute>
 														<span>
-															<img src="/SharedResources/img/classic/icons/layout_add.png"
-																style="border:none; width:15px; height:15px; margin-right:3px; vertical-align:top"/>
+															<img src="/SharedResources/img/classic/icons/layout_add.png" style="border:none; width:15px; height:15px; margin-right:3px; vertical-align:top"/>
 															<font style="font-size:12px; vertical-align:top">
 																<xsl:value-of select="document/captions/addblock/@caption"/>
 															</font>

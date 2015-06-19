@@ -163,7 +163,7 @@
 												<xsl:value-of select="document/captions/storagelife/@caption"/>&#160; :
 											</td>
 											<td style="padding-top:5px">
-												<input type="text" value="{document/fields/storagelife}"  name="storagelife" style="width:300px; vertical-align:top" class="td_editable">
+												<input type="text" value="{document/fields/storagelife}" name="storagelife" style="width:300px; vertical-align:top" class="td_editable">
 													<xsl:if test="$editmode != 'edit'">
 														<xsl:attribute name="class">td_noteditable</xsl:attribute>
 													</xsl:if>

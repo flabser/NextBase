@@ -65,7 +65,6 @@
 			<body>
 				<div id="docwrapper">
 					<xsl:call-template name="documentheader"/>	
-					
 					<div class="formwrapper">
 					<div class="formtitle">
 					    <div class="title">

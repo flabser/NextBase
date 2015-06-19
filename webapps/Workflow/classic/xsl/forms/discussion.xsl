@@ -19,7 +19,6 @@
 				<xsl:call-template name="cssandjs"/>
 				<xsl:call-template name="markisread"/>
 				<xsl:call-template name="htmlareaeditor"/>
-				<xsl:call-template name="keypressactions"/>
 			</head>
 			<body>
 				<div id="docwrapper">

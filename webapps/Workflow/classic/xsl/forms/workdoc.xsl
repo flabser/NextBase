@@ -137,7 +137,7 @@
 								</li>
 								<li class="ui-state-default ui-corner-top">
 									<a href="#tabs-4"><xsl:value-of select="document/captions/attachments/@caption"/></a>
-									<img id="loading_attach_img" style="vertical-align:-8px; margin-left:-10px; padding-right:3px; visibility:hidden" src="/SharedResources/img/classic/ajax-loader-small.gif"></img>
+									<img id="loading_attach_img" style="vertical-align:-8px; margin-left:-10px; padding-right:3px; visibility:hidden" src="/SharedResources/img/classic/ajax-loader-small.gif"/>
 								</li>
 								<li class="ui-state-default ui-corner-top">
 									<a href="#tabs-5"><xsl:value-of select="document/captions/additional/@caption"/></a>

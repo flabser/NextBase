@@ -106,7 +106,7 @@
 							<div style="float:left" class="title">
 				  				<xsl:call-template name="doctitle"/><span id="whichreadblock">Прочтен</span>										
 				   		 	</div>
-				    		<div style="float:right; padding-right:5px"></div>
+				    		<div style="float:right; padding-right:5px"/>
 						</div>		
 						<div class="button_panel">
 							<span style="vertical-align:12px; float:left">
@@ -132,7 +132,7 @@
 								</li>
 								<li class="ui-state-default ui-corner-top">
 									<a href="#tabs-3"><xsl:value-of select="document/captions/attachments/@caption"/></a>
-									<img id="loading_attach_img" style="vertical-align:-8px; margin-left:-10px; padding-right:3px; visibility:hidden" src="/SharedResources/img/classic/ajax-loader-small.gif"></img>
+									<img id="loading_attach_img" style="vertical-align:-8px; margin-left:-10px; padding-right:3px; visibility:hidden" src="/SharedResources/img/classic/ajax-loader-small.gif"/>
 								</li>
 								<li class="ui-state-default ui-corner-top">
 									<a href="#tabs-4"><xsl:value-of select="document/captions/additional/@caption"/></a>
@@ -159,11 +159,7 @@
 												<xsl:value-of select="document/captions/vn/@caption"/> № :
 											</td>
 									    	<td>
-						                    	<input type="text" name="vn" value="" size="10" class="td_noteditable" onfocus="javascript:$(this).blur()" readonly="readonly" style="width:80px;">
-					                    			<xsl:attribute name="value">
-						                    			<xsl:value-of select="document/fields/vn"/>
-						                    		</xsl:attribute>
-						                    	</input>
+						                    	<input type="text" name="vn" value="{document/fields/vn}" size="10" class="td_noteditable" onfocus="javascript:$(this).blur()" readonly="readonly" style="width:80px;"/>
 						                        &#xA0;
 						                        <xsl:value-of select="document/fields/dvn/@caption"/>&#xA0;
 						                       	<input type="text" class="td_noteditable" value="{document/fields/dvn}" readonly="readonly" onfocus="javascript: $(this).blur()" style="width:80px;"/>
@@ -176,10 +172,9 @@
 													<xsl:value-of select="document/captions/corr/@caption"/> : 
 												</font>
 												<xsl:if test="$editmode = 'edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('corrcat','false','corr','frm', 'corrtbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('corrcat','false','corr','frm', 'corrtbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
@@ -217,10 +212,9 @@
 													<xsl:value-of select="document/captions/signedby/@caption"/> : 
 												</font>
 												<xsl:if test="$editmode ='edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('signers','false','signedby','frm', 'signedbytbl');</xsl:attribute>								
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>			
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('signers','false','signedby','frm', 'signedbytbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
@@ -234,10 +228,8 @@
 														</td>
 													</tr>
 												</table>
-												<input type="hidden" id="signedby" name="signedby">
-													<xsl:attribute name="value" select="document/fields/signedby/@attrval"/>
-												</input>
-												<input type="hidden" id="signedbycaption"  value="{document/captions/signedby/@caption}"/>	
+												<input type="hidden" id="signedby" name="signedby" value="{document/fields/signedby/@attrval}"/>
+												<input type="hidden" id="signedbycaption"  value="{document/captions/signedby/@caption}"/>
 											</td>
 										</tr>
 										<!-- Поле "Внутренние исполнители" 

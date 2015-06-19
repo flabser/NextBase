@@ -204,7 +204,7 @@
 													<xsl:attribute name="class">td_noteditable</xsl:attribute>
 													<xsl:attribute name="onfocus">javascript:$(this).blur()</xsl:attribute>
 												</input>
-													<font style="vertical-align:bottom">&#xA0;&#xA0;<xsl:value-of select="document/captions/dvn/@caption"/>&#xA0;&#xA0;</font>
+												<font style="vertical-align:bottom">&#xA0;&#xA0;<xsl:value-of select="document/captions/dvn/@caption"/>&#xA0;&#xA0;</font>
 												<input type="text" value="{substring(document/fields/dvn,1,10)}" id="dvn" name="dvn" readonly="readonly" onfocus="javascript:$(this).blur()" style="width:80px; vertical-align:top" class="td_noteditable"/>
 											</td>
 										</tr>
@@ -214,14 +214,13 @@
 												<xsl:value-of select="document/captions/numinvoice/@caption"/> :
 											</td>
 											<td style="padding-top:5px">
-												<input type="text" value="{document/fields/numinvoice}" name="numinvoice"  style="width:120px; vertical-align:top">
+												<input type="text" value="{document/fields/numinvoice}" name="numinvoice"  style="width:120px; vertical-align:top" class="td_editable">
 													<xsl:if test="$editmode != 'edit'">
 														<xsl:attribute name="readonly">readonly</xsl:attribute>
 														<xsl:attribute name="class">td_noteditable</xsl:attribute>
 														<xsl:attribute name="onfocus">javascript:$(this).blur()</xsl:attribute>
 													</xsl:if>
 													<xsl:if test="$editmode = 'edit'">
-														<xsl:attribute name="class">td_editable</xsl:attribute>
 														<xsl:attribute name="onfocus">fieldOnFocus(this)</xsl:attribute>
 														<xsl:attribute name="onblur">fieldOnBlur(this)</xsl:attribute>
 													</xsl:if>
@@ -297,24 +296,22 @@
 													<xsl:value-of select="document/captions/responsible/@caption"/> :
 												</font>
 												<xsl:if test="$editmode = 'edit'">
-													<a href="">
-														<xsl:attribute name="href">javascript:dialogBoxStructure('bossandemppicklist','false','responsible','frm', 'responsibletbl');</xsl:attribute>
-														<img src="/SharedResources/img/iconset/report_magnify.png"/>
-													</a>
+													<img src="/SharedResources/img/iconset/report_magnify.png" style="cursor:pointer">
+														<xsl:attribute name="onclick">javascript:dialogBoxStructure('bossandemppicklist','false','responsible','frm', 'responsibletbl');</xsl:attribute>
+													</img>
 												</xsl:if>
 											</td>
 											<td>
 												<table id="responsibletbl">
-
-														<tr>
-															<!--<input id="tags"/>-->
-															<td style="width:600px;" class="td_editable">
-																<xsl:if test="$editmode != 'edit'">
-																	<xsl:attribute name="class">td_noteditable</xsl:attribute>
-																</xsl:if>
-																<xsl:value-of select="document/fields/responsible"/>&#xA0;
-															</td>
-														</tr>
+													<tr>
+														<!--<input id="tags"/>-->
+														<td style="width:600px;" class="td_editable">
+															<xsl:if test="$editmode != 'edit'">
+																<xsl:attribute name="class">td_noteditable</xsl:attribute>
+															</xsl:if>
+															<xsl:value-of select="document/fields/responsible"/>&#xA0;
+														</td>
+													</tr>
 												</table>
 												<input type="hidden" id="responsiblecaption" value="{document/captions/responsible/@caption}"/>
 												<input type="hidden" id="responsible" name="responsible" value="{document/fields/responsible/@attrval}"/>
@@ -339,29 +336,29 @@
 											</td>
 										</tr>
 										<!-- поле "Период оказания услуг" -->
-									<tr>
-										<td class="fc" style="padding-top:5px;position:relative;top:0px;">
-											<xsl:value-of select="document/captions/execperiod/@caption"/> :
-										</td>
-										<td style="padding-top:3px">
-											<font style="vertical-align:5px">&#xA0;<xsl:value-of select="document/captions/from/@caption"/>&#xA0;&#xA0;</font>
-											<input type="text" name="startexecperiod" maxlength="10" class="td_editable" style="width:80px; vertical-align:top" readonly="readonly" onfocus="javascript:$(this).blur()" value="{substring(document/fields/startexecperiod,1,10)}">
-												<xsl:if test="$editmode = 'edit'">
-													<xsl:attribute name="id">startexecperiod</xsl:attribute>
-												</xsl:if>
-												<xsl:if test="$editmode != 'edit'">
-													<xsl:attribute name="class">td_noteditable</xsl:attribute>
-												</xsl:if>
-											</input>
-											<font style="vertical-align:3px">&#xA0;&#xA0;<xsl:value-of select="document/captions/to/@caption"/>&#xA0;&#xA0;</font>
-											<input type="text" name="endexecperiod" maxlength="10" class="td_editable" style="width:80px; vertical-align:top" readonly="readonly" onfocus="javascript:$(this).blur()" value="{substring(document/fields/endexecperiod,1,10)}">
-												<xsl:if test="$editmode = 'edit'">
-													<xsl:attribute name="id">endexecperiod</xsl:attribute>
-												</xsl:if>
-												<xsl:if test="$editmode != 'edit'">
-													<xsl:attribute name="class">td_noteditable</xsl:attribute>
-												</xsl:if>
-											</input>
+										<tr>
+											<td class="fc" style="padding-top:5px;position:relative;top:0px;">
+												<xsl:value-of select="document/captions/execperiod/@caption"/> :
+											</td>
+											<td style="padding-top:3px">
+												<font style="vertical-align:5px">&#xA0;<xsl:value-of select="document/captions/from/@caption"/>&#xA0;&#xA0;</font>
+												<input type="text" name="startexecperiod" maxlength="10" class="td_editable" style="width:80px; vertical-align:top" readonly="readonly" onfocus="javascript:$(this).blur()" value="{substring(document/fields/startexecperiod,1,10)}">
+													<xsl:if test="$editmode = 'edit'">
+														<xsl:attribute name="id">startexecperiod</xsl:attribute>
+													</xsl:if>
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+													</xsl:if>
+												</input>
+												<font style="vertical-align:3px">&#xA0;&#xA0;<xsl:value-of select="document/captions/to/@caption"/>&#xA0;&#xA0;</font>
+												<input type="text" name="endexecperiod" maxlength="10" class="td_editable" style="width:80px; vertical-align:top" readonly="readonly" onfocus="javascript:$(this).blur()" value="{substring(document/fields/endexecperiod,1,10)}">
+													<xsl:if test="$editmode = 'edit'">
+														<xsl:attribute name="id">endexecperiod</xsl:attribute>
+													</xsl:if>
+													<xsl:if test="$editmode != 'edit'">
+														<xsl:attribute name="class">td_noteditable</xsl:attribute>
+													</xsl:if>
+												</input>
 											</td>
 										</tr>
 										<!-- поле "Комментарии"
