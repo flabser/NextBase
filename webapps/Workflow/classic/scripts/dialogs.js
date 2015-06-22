@@ -31,14 +31,14 @@ function toggleDepTreeStructure(countEl, action, dociddoctype){
 		for (var i = 0; i < countEl ; i++){
 			el = $(el).next("div['display' = 'block']").css("display","none")
 		}
-		$("#treedep"+dociddoctype).attr("href","javascript:toggleDepTreeStructure("+countEl+",'open',"+ dociddoctype +")")
+		$("#treedep"+dociddoctype).attr("href","javascript:toggleDepTreeStructure("+countEl+",'open',"+ dociddoctype +")");
 		$("#treedepimg"+dociddoctype).attr("src","/SharedResources/img/classic/1/plus.png")
 	}else{
 		el = $("#"+dociddoctype)
 		for (var i = 0; i < countEl ; i++ ){
 			el = $(el).next("div['display' = 'none']").css("display","block")
 		}
-		$("#treedep"+dociddoctype).attr("href","javascript:toggleDepTreeStructure("+countEl+",'close',"+ dociddoctype +")")
+		$("#treedep"+dociddoctype).attr("href","javascript:toggleDepTreeStructure("+countEl+",'close',"+ dociddoctype +")");
 		$("#treedepimg"+dociddoctype).attr("src","/SharedResources/img/classic/1/minus.png")
 	}
 }
@@ -53,7 +53,7 @@ function checkallOrg(el, tableid){
 }
 
 function checkDepInp(el, countEl){
-	elem = $(el).parent("div").next("div")
+	elem = $(el).parent("div").next("div");
 	for (var i = 0; i < countEl ; i++ ){
 		$(el).prop("checked") ? $(elem).children("input[type=checkbox]").prop("checked",true) : $(elem).children("input[type=checkbox]").prop("checked",false);
 		if(queryOpt.fieldname == "executor"){
@@ -93,7 +93,7 @@ function pickListSingleOk(docid){
 	}else{
 		if(queryOpt.fieldname == 'extexecutor'){
 			$("#intexectable tr.EXTERNAL").remove();
-			ddbid=$("#"+docid).attr("ddbid")
+			ddbid=$("#"+docid).attr("ddbid");
 			extexecval='2`'+ddbid+'`1``'
 			$('#intexectable').append("<tr class='EXTERNAL'>" +
 				"<td>"+text+"<input  type='hidden' id='idContrExec' value='"+docid+"'/><input type='hidden' class='controlres' name='extexecutor' value='"+ extexecval +"'/><input type='hidden' class='responsible' value='1'/></td>" +
@@ -116,7 +116,7 @@ function pickListSingleOk(docid){
 	 }else{
 		 newTable="<table id="+ queryOpt.tablename +"><tr><td style='width:600px;' class='td_editable'>"+ text +"</td></tr></table>"
 	 }
-	$("#"+ queryOpt.tablename).replaceWith(newTable)
+	$("#"+ queryOpt.tablename).replaceWith(newTable);
 	pickListClose(); 
 }
 
@@ -180,7 +180,7 @@ function pickListBtnOk(){
 							$("#"+ queryOpt.tablename).append("<tr><td style='width:600px;' class='td_editable'>"+$(this).val()+"</td></tr>");
 							if (queryOpt.fieldname == "signer"){
 								$("#coordBlockSign").remove();
-								$("#frm").append("<input type='hidden' name='coordblock'  id='coordBlockSign' value='new`tosign`0`"+$(this).attr("id")+"'>")
+								$("#frm").append("<input type='hidden' name='coordblock'  id='coordBlockSign' value='new`tosign`0`"+$(this).attr("id")+"'>");
 								$("#frm").append("<input type='hidden' name='signer' id='coordBlockSign' value='"+$(this).attr("id")+"'>")
 							}else{
 								$("#"+ queryOpt.formname).append("<input type='hidden' name='"+queryOpt.fieldname+"' id='"+queryOpt.fieldname+"' value='"+$(this).attr("id")+"'>")
@@ -219,8 +219,8 @@ function pickListClose(){
 function pickListSingleCoordOk(docid){ 
 	text=$("#"+docid).attr("value");
 	$("input[name=coorder]").remove();
-	$("#frm").append("<input type='hidden' name='coorder' id='coorder' value='"+docid+"'>")
-	newTable="<table id='coordertbl' width='100%'><tr><td>"+ text +"</td></tr></table>"
+	$("#frm").append("<input type='hidden' name='coorder' id='coorder' value='"+docid+"'>");
+	newTable="<table id='coordertbl' width='100%'><tr><td>"+ text +"</td></tr></table>";
 	$("#coordertbl").replaceWith(newTable);
 	closePicklistCoord();  
 }
@@ -239,9 +239,9 @@ function centring(id,wh,ww){
 		winW=$('#'+id).width(),
 		scrollA=$("body").scrollTop(), 
 		scrollB=$("body").scrollLeft();
-	htop=scrollA+((h/2)-(winH/2))
-	hleft=scrollB+((w/2)-(winW/2))
-	$('#'+id).css({"top":htop, "left":hleft}) ;
+	htop=scrollA+((h/2)-(winH/2));
+	hleft=scrollB+((w/2)-(winW/2));
+	$('#'+id).css({"top":htop, "left":hleft});
 }
 
 /*функция для обеспечения rollover*/
@@ -275,9 +275,9 @@ var elementCoord;
 function addCoordinator(docid,el){
 	//docid - userID  выбранного корреспондента
 	// el - строка таблицы с выбранным корреспондентом
-	cwb=$(".coordinatorsWithBlock")
+	cwb=$(".coordinatorsWithBlock");
 	signer=$("#signer").val(); 
-	recipient=$("#recipient").val()
+	recipient=$("#recipient").val();
 	if(signer == docid){
 		text=issignerofsz;
 		infoDialog(text);
@@ -308,7 +308,7 @@ function removeCoordinator(docid,el){
 }
 
 /*выделение и снятие выделения корреспондента в таблице одинарным щелчком мыши */
-var prevSelectItem=null
+var prevSelectItem=null;
 
 function selectItem (el){
 	elementCoord=el;
@@ -326,12 +326,12 @@ function plusCoordinator(){
 		infoDialog("Вы не выбрали участника согласования для добавления");
 	}
 	if($("."+userID).val() != null){
-		infoDialog(alreadychosen)
+		infoDialog(alreadychosen);
 		isWithBlock="true"
 	}
 	if (isWithBlock=="false"){
 		signer=$("#signer").val(); 
-		recipient=$("#recipient").val()
+		recipient=$("#recipient").val();
 		if (userID == signer){
 			infoDialog(issignerofsz);
 		}else{
@@ -379,17 +379,17 @@ function disableblockform(){
 }
 
 function dialogBoxStructure(query,isMultiValue, field, form, table) {
-	enableblockform()
+	enableblockform();
 	queryOpt.fieldname = field;
 	queryOpt.formname = form;
 	queryOpt.isMultiValue = isMultiValue;
 	queryOpt.queryname = query;
 	queryOpt.tablename = table;
-	el='picklist'
+	el='picklist';
 	divhtml ="<div class='picklist' id='picklist' onkeyUp='keyDown(el, event);'>";
 	divhtml +="<div class='header'><font id='headertext' class='headertext'/>";
 	divhtml +="<div class='closeButton'><img style='width:15px; height:15px; margin-left:3px; margin-top:1px' src='/SharedResources/img/classic/icons/cross.png' onclick='pickListClose();'/>";
-	divhtml +="</div></div><div id='divChangeView' style='margin-top:-10px'><div id='divSearch' class='divSearch' style='display:inline-block; float:left; width:360px'></div>" 
+	divhtml +="</div></div><div id='divChangeView' style='margin-top:-10px'><div id='divSearch' class='divSearch' style='display:inline-block; float:left; width:360px'></div>" ;
 	divhtml +="<div  style='display:inline-block; float:right; width:100px; margin-top:20px'><a class='actionlink' id='btnChangeView' href='javascript:changeViewStructure(1)' style='margin-top:50px'><font style='font-size:11px'>"+changeviewcaption+"</font></a></div></div>";
 	divhtml +="<div id='contentpane' class='contentpane'>Загрузка данных...</div>";  
 	divhtml += "<div id='btnpane' class='button_panel' style='margin-top:8%; margin:15px 15px 0; padding-bottom:15px;text-align:right;'>";
@@ -397,12 +397,12 @@ function dialogBoxStructure(query,isMultiValue, field, form, table) {
 	divhtml += "<button onclick='pickListClose()'><font class='button_text'>"+cancelcaption+"</font></button>";    
 	divhtml += "</div><div id='executorsColl' display='none'/></div>";
 	$("body").append(divhtml);
-	$("#picklist #btnpane").children("button").button()
+	$("#picklist #btnpane").children("button").button();
 	$("#picklist").draggable({handle:"div.header"});
 	centring('picklist',500,500);
 	$("#picklist").focus().css('display', "none");
 	$("#headertext").text($("#"+field+"caption").val());
-	$("body").css("cursor","wait")
+	$("body").css("cursor","wait");
 	reqType='view';
 	if(query=='corrcat'){
 		reqType='page';
@@ -423,7 +423,7 @@ function dialogBoxStructure(query,isMultiValue, field, form, table) {
 						}
 					}else{
 						elem=$(data);
-						$(elem).find("input[type=checkbox]").prop("type","radio")
+						$(elem).find("input[type=checkbox]").prop("type","radio");
 						data = elem;
 					}
 				}
@@ -455,7 +455,7 @@ function dialogBoxStructure(query,isMultiValue, field, form, table) {
 				if($("#coordTableView tr").length > 1 &&  field == 'signer'){
 					dialogConfirm(replaceCoordBlocksConfirm, "picklist","trblockCoord")
 				}else{
-					$('#blockWindow').css("display","block")
+					$('#blockWindow').css("display","block");
 					$('#picklist').css("display","inline-block");
 				}
 				$('#picklist').focus()
@@ -463,8 +463,8 @@ function dialogBoxStructure(query,isMultiValue, field, form, table) {
 		},
 		error:function (xhr, ajaxOptions, thrownError){
             if (xhr.status == 400){
-         	  $("body").children().wrapAll("<div id='doerrorcontent' style='display:none'/>")
-         	  $("body").append("<div id='errordata'>"+xhr.responseText+"</div>")
+         	  $("body").children().wrapAll("<div id='doerrorcontent' style='display:none'/>");
+         	  $("body").append("<div id='errordata'>"+xhr.responseText+"</div>");
          	  $("li[type='square'] > a").attr("href","javascript:backtocontent()")
             }
          }  
@@ -502,7 +502,7 @@ jQuery.fn.extend({
 /* функция поиска корреспондентов в форме 'Новое согласование'*/
 function findCorCoord(){
 	var value=$('#searchCor').val(),
-		len=value.length
+		len=value.length;
 	if (len > 0){
 		$("#picklistCoorder div[name=itemStruct]").css("display","none");
 		$("#contentdiv").find("div[name=itemStruct]").each(function(){
@@ -518,7 +518,7 @@ function findCorCoord(){
 /* функция поиска в структуре*/
 function findCorStructure(){
 	var value=$('#searchCor').val(),
-		len=value.length
+		len=value.length;
 	if (len > 0){
 		$("div[name=itemStruct]").css("display","none");
 		$("#contentpane").find("div[name=itemStruct]").each(function(){
@@ -620,8 +620,8 @@ function changeViewStructure (viewType){
 		},
 		error:function (xhr, ajaxOptions, thrownError){
 			if (xhr.status == 400){
-				$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'/>")
-				$("body").append("<div id='errordata'>"+xhr.responseText+"</div>")
+				$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'/>");
+				$("body").append("<div id='errordata'>"+xhr.responseText+"</div>");
 				$("li[type='square'] > a").attr("href","javascript:backtocontent()")
 			}
 		}  
@@ -645,8 +645,8 @@ function ajaxFind(){
 		},
 		error:function (xhr, ajaxOptions, thrownError){
             if (xhr.status == 400){
-         	  $("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>")
-         	  $("body").append("<div id='errordata'>"+xhr.responseText+"</div>")
+         	  $("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>");
+         	  $("body").append("<div id='errordata'>"+xhr.responseText+"</div>");
          	  $("li[type='square'] > a").attr("href","javascript:backtocontent()")
             }
          }    
@@ -695,7 +695,7 @@ function expandChapterCorr(docid,num,url,doctype, page) {
 		url:url+"&page="+queryOpt.pagenum,
 		dataType:'html',
 		success: function(data) {
-			$("#contentpane").html(data)
+			$("#contentpane").html(data);
 			$("#img"+complexid).attr("src","/SharedResources/img/classic/1/minus.png");
 			$("#a"+complexid).attr("href","javascript:collapsChapterCorr('"+docid+"','"+num+"','"+ url+"','"+doctype+"','"+page+"')");
 		}
@@ -710,7 +710,7 @@ function collapsChapterCorr(docid,num,url,doctype, page) {
 		url:"Provider?type=view&id=corrcat&command=collaps`"+docid+"&page="+ queryOpt.pagenum ,
 		dataType:'html',
 		success: function(data){
-			$("#contentpane").html(data)
+			$("#contentpane").html(data);
 			$("#img"+complexid).attr("src","/SharedResources/img/classic/1/plus.png");
 			$("#a"+complexid).attr("href","javascript:expandChapterCorr('"+docid+"','"+num+"','"+ url+"','"+doctype+"','"+page+"')");
 		}
@@ -726,7 +726,7 @@ function openListRespDoc(docid,doctype,num,page) {
 		success: function(xml){
 			level=parseInt($(".tblCorr"+complexid).attr('level'));
 			newlevel=level+1;
-			$("<table style='border-collapse:collapse; width:100%' id='respList"+complexid+"'/>").insertAfter(".tblCorr"+complexid)
+			$("<table style='border-collapse:collapse; width:100%' id='respList"+complexid+"'/>").insertAfter(".tblCorr"+complexid);
 			table=$("#respList"+complexid);
 			i=1;
 			$(xml).find("entry[docid][doctype]").each(function(indx, element){
@@ -734,13 +734,13 @@ function openListRespDoc(docid,doctype,num,page) {
 					__doctype=$(this).attr("doctype"),
 					__complexid=__docid+__doctype,
 					__ddbid=$(this).attr("id"),
-					iconresponse='<img src="/SharedResources/img/classic/tree_spacer.gif"/>'
+					iconresponse='<img src="/SharedResources/img/classic/tree_spacer.gif"/>';
 				if($(this).attr("hasresponse") != '0'){
 					iconresponse="<a style='margin-right:3px' id='a"+__complexid+"' href='javascript:openListRespDoc("+$(this).attr("docid")+","+$(this).attr("doctype")+", i, 1)'><img border='0' src='/SharedResources/img/classic/1/plus.png' id='img"+__complexid+"'/></a>"
 				}
 				corrname = $(this).find("viewtext1").text() || $(this).find("viewtext6").text();
 				viewtext1 = JSON.stringify(corrname);
-				var checkBoxType ="radio"
+				var checkBoxType ="radio";
 				if(queryOpt.isMultiValue == "true"){
 					checkBoxType ="checkbox";
 				}
@@ -748,7 +748,7 @@ function openListRespDoc(docid,doctype,num,page) {
 					"<tr onmouseover='javascript:entryOver(this)' onmouseout='javascript:entryOut(this)'>" +
 					"<td ondblclick='javascript:pickListSingleOk("+__docid+")'>"+iconresponse+"<input type='"+checkBoxType+"' name='chbox' ddbid='"+__ddbid+"' value="+viewtext1+" id='"+$(this).attr("docid")+"'/>"+ corrname +"</td></tr></table></td></tr>"
 				$(table).append(newcontent)
-				$(".tblCorr"+__complexid).css("margin-left",level*20+"px")
+				$(".tblCorr"+__complexid).css("margin-left",level*20+"px");
 				i++;
 			})
 		}
