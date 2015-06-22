@@ -152,7 +152,7 @@ public class DocumentForm extends Form {
 		return "<document isvalid=\"true\"  " +
 		"parentdocid=\"" + parentDocID +"\" parentdoctype=\"" + parentDocType +"\" id=\"" + doc.getDdbID() + "\" " +
 		"docid=\"" + doc.getDocID() + "\" doctype=\"" + rule.docType + "\" " +
-        "topicid=\"" + doc.getTopicID() + "\" " +
+        "hastopic=\"" + (doc.hasDiscussion ? 1 : 0) + "\" " +
 		"openfrompage=\"" + page + "\" status=\"existing\" isread=\"" + doc.isRead() + "\" " + 
 		mode[0] + ">" + outlineContent + "<actions>" + actions + "</actions>" + elementsContent + "<fields>" + fieldsContent + "</fields>" + mode[1] + captions + "</document>";	
 	}

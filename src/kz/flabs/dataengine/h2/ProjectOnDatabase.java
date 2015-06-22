@@ -564,7 +564,7 @@ public class ProjectOnDatabase  extends DatabaseCore implements IProjects, Const
 			}
 			fillViewTextData(rs, prj);
 			fillSysData(rs, prj);
-			prj.setTopicID(rs.getInt("TOPICID"));
+			prj.hasDiscussion = rs.getBoolean("HAS_TOPIC");
 			prj.isValid = true;
 		} catch (SQLException e) {
 			DatabaseUtil.errorPrint(db.getDbID(), e);

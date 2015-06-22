@@ -2,7 +2,6 @@ package kz.nextbase.script;
 
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.*;
-import kz.flabs.dataengine.h2.forum.ForumQueryFormula;
 import kz.flabs.dataengine.h2.queryformula.GlossarySelectFormula;
 import kz.flabs.dataengine.h2.queryformula.SelectFormula;
 import kz.flabs.exception.*;
@@ -288,9 +287,9 @@ public class _Database implements Const {
 
 	public _ViewEntryCollection getCollectionOfTopics(String queryCondition, int pageNum, int pageSize) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
-		ISelectFormula sf = new ForumQueryFormula(queryFormulaBlocks);
+		ISelectFormula sf = this.dataBase.getForumSelectFormula(queryFormulaBlocks);
 		RunTimeParameters parameters = new RunTimeParameters();
-		return dataBase.getForum().getForumTopics(sf, user, pageNum, pageSize, session.getExpandedThread(), parameters);
+		return dataBase.getForum().getTopicsCollection(sf, user, pageNum, pageSize, parameters, Boolean.FALSE);
 	}
 
 	public _ViewEntryCollection search(String keyWord, int pageNum, String[] filter)

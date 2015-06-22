@@ -67,7 +67,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
     public transient IStructure struct;
     public ArrayList<BigDecimal> viewNumberList = new ArrayList<BigDecimal>();
     public ArrayList<Date> viewDateList = new ArrayList<Date>();
-
+    public boolean hasDiscussion = false;
 
     protected int docID;
     protected String ddbID = "";
@@ -79,10 +79,9 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
     protected String currentUserID;
     protected String sign;
     protected String signedFields;
-    protected ArrayList<String> viewTextList = new ArrayList<String>();
 
+    protected ArrayList<String> viewTextList = new ArrayList<String>();
     private String parentDocumentID = "";
-    private int topicID;
     private boolean isNewDoc;
     private Date regDate;
 
@@ -1257,7 +1256,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
         setViewNumber(BigDecimal.valueOf(Double.valueOf(XMLUtil.getTextContent(xmlDoc, "document/@viewnumber"))));
         setViewDate(Util.convertStringToDateTimeSilently(XMLUtil.getTextContent(xmlDoc, "document/@viewdate")));
         setSign(XMLUtil.getTextContent(xmlDoc, "document/@sign"));
-        topicID = Integer.parseInt(XMLUtil.getTextContent(xmlDoc, "document/@topicid"));
+        //hasDiscussion = Boolean.parseBoolean(XMLUtil.getTextContent(xmlDoc, "document/@topicid"));
         setSignedFields(XMLUtil.getTextContent(xmlDoc, "document/@signfields"));
         setForm(XMLUtil.getTextContent(xmlDoc, "document/@form"));
         setViewText(XMLUtil.getTextContent(xmlDoc, "document/@viewtext"));
@@ -1399,7 +1398,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
                     "lastupdate=\"" + Util.convertDataTimeToString(lastUpdate) + "\" " + viewTexts +
                     "defaultreuleid= \"" + defaultRuleID + "\" viewnumber= \"" + getViewNumber() + "\" " +
                     "viewdate= \"" + Util.convertDataTimeToString(getViewDate()) + "\" sign= \"" + getSign() + "\" " +
-                    "topicid= \"" + topicID + "\" signfields= \"" + getSignedFields() + "\">" + xmlFragment;
+                    "hastopic= \"" + (hasDiscussion ? 1 : 0)+ "\" signfields= \"" + getSignedFields() + "\">" + xmlFragment;
         } else {
             String hasDescendant = this.hasResponse(Const.sysGroupAsSet, Const.sysUser);
             xml += " hasDescendant=\"" + hasDescendant + "\" id=\"" + ddbID + "\" lastupdate=\"" + Util.convertDataTimeToString(lastUpdate)
@@ -1449,13 +1448,13 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
         this.defaultRuleID = rule;
     }
 
-    public int getTopicID() {
+/*    public int getTopicID() {
         return topicID;
     }
 
     public void setTopicID(int topicID) {
         this.topicID = topicID;
-    }
+    }*/
 
     public void setEditMode(Set<String> groups) {
         for (String group : groups) {

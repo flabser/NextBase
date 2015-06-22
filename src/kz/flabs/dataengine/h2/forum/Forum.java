@@ -30,8 +30,8 @@ import java.util.Date;
 import java.util.Map.Entry;
 
 public class Forum extends DatabaseCore implements IForum, Const {
-	private IDatabase db;
-	private IDBConnectionPool dbPool;
+	protected IDatabase db;
+	protected IDBConnectionPool dbPool;
 
 	private static String baseTable = "TOPICS"; 
 	
@@ -1130,6 +1130,10 @@ public class Forum extends DatabaseCore implements IForum, Const {
 		
 	}
 
+    @Override
+    public _ViewEntryCollection getTopicsCollection(ISelectFormula condition, User user, int pageNum, int pageSize, RunTimeParameters parameters, boolean checkResponse) {
+        return null;
+    }
 
 
 }

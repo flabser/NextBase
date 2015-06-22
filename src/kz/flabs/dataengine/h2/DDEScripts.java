@@ -16,6 +16,7 @@ public class DDEScripts {
                 " FORM varchar(32), " +
                 " HAS_ATTACHMENT int, " +
                 " HAS_RESPONSE int default 0, " +
+                " HAS_TOPIC boolean default false, " +
                 " DEFAULTRULEID varchar(32), " +
                 " DEL int," +
                 getViewTextFragment() +
@@ -24,8 +25,7 @@ public class DDEScripts {
                 " DDBID varchar(16)," +
                 " PARENTDOCDDBID varchar(16)," +
                 " APPID varchar(16), " +
-                " SIGNEDFIELDS varchar(1200)," +
-                " FOREIGN KEY(TOPICID) REFERENCES TOPICS(DOCID) ON UPDATE CASCADE ON DELETE CASCADE)";
+                " SIGNEDFIELDS varchar(1200))";
         return createString;
     }
 

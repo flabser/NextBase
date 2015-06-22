@@ -17,6 +17,7 @@ public class DDEScripts {
                 " SYNCSTATUS int, " +
                 " HAS_ATTACHMENT int, " +
                 " HAS_RESPONSE int DEFAULT 0, " +
+                " HAS_TOPIC boolean DEFAULT false, " +
                 " DEFAULTRULEID varchar(32), " +
                 " DEL int, " +
                 getViewTextFragment() +
@@ -26,8 +27,7 @@ public class DDEScripts {
                 " PARENTDOCDDBID varchar(16)," +
                 " APPID varchar(16), " +
                 " SIGNEDFIELDS varchar(1200), " +
-                " FTS TSVECTOR, " +
-                " FOREIGN KEY(TOPICID) REFERENCES TOPICS(DOCID) ON UPDATE CASCADE ON DELETE CASCADE)";
+                " FTS TSVECTOR)";
         return createString;
     }
 
@@ -791,5 +791,39 @@ public class DDEScripts {
                 " $BODY$ LANGUAGE plpgsql VOLATILE COST 100;\n" +
                 " ALTER FUNCTION update_fts_tsvector() OWNER TO postgres;";
         return dde;
+    }
+
+    public static String getDiscussionFlagFunction() {
+        return "CREATE OR REPLACE FUNCTION set_discussion_flag()\n" +
+                "  RETURNS trigger AS\n" +
+                "$BODY$ DECLARE \n" +
+                "  docID INTEGER;\n" +
+                "  idColName            VARCHAR;\n" +
+                "  mainTableName        VARCHAR;\n" +
+                "  mainColName          VARCHAR;\n" +
+                "  sourceRow            record;\n" +
+                "  query                VARCHAR;\n" +
+                "BEGIN IF TG_OP = 'INSERT'\n" +
+                "  THEN sourceRow := NEW;\n" +
+                "  ELSE sourceRow := OLD;\n" +
+                " END IF;\n" +
+                "  mainTableName := 'MAINDOCS';\n" +
+                "  idColName := 'PARENTDOCID';\n" +
+                "  mainColName := 'DOCID';\n" +
+                "  docID := sourceRow.PARENTDOCID;\n" +
+                "  query := 'UPDATE ' || mainTableName || ' SET HAS_TOPIC = CASE (SELECT COUNT(DOCID) FROM ' || TG_TABLE_NAME || ' WHERE ' || TG_TABLE_NAME || '.' || idColName || ' = ' || docID || ') WHEN 0 THEN FALSE ELSE TRUE END WHERE ' || mainTableName || '.' || mainColName || ' = ' || docID;\n" +
+                "  --raise exception 'Sql query: %', query; \n" +
+                "  EXECUTE(query);\n" +
+                "  RETURN NULL;\n" +
+                "END; $BODY$\n" +
+                "  LANGUAGE plpgsql VOLATILE";
+    }
+
+    public static String getDiscussionFlagTrigger() {
+        return "CREATE TRIGGER set_remove_discussion_flag_maindocs\n" +
+                "  AFTER INSERT OR UPDATE OR DELETE\n" +
+                "  ON topics\n" +
+                "  FOR EACH ROW\n" +
+                "  EXECUTE PROCEDURE set_discussion_flag();";
     }
 }

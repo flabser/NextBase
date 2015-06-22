@@ -533,6 +533,11 @@ public class Database implements IDatabase, Const{
         return null;
     }
 
+    @Override
+    public ISelectFormula getForumSelectFormula(FormulaBlocks queryFormulaBlocks) {
+        return null;
+    }
+
 
     @Override
 	public void fillBlobs(Connection conn, BaseDocument doc, String tableSuffix)

@@ -1,6 +1,7 @@
 package kz.flabs.dataengine.postgresql;
 
 
+import jxl.read.biff.Formula;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.*;
 import kz.flabs.dataengine.h2.glossary.GlossaryQueryFormula;
@@ -8,6 +9,8 @@ import kz.flabs.dataengine.h2.queryformula.GroupQueryFormula;
 import kz.flabs.dataengine.h2.queryformula.ProjectQueryFormula;
 import kz.flabs.dataengine.h2.structure.StructQueryFormula;
 import kz.flabs.dataengine.postgresql.filters.Filters;
+import kz.flabs.dataengine.postgresql.forum.Forum;
+import kz.flabs.dataengine.postgresql.forum.ForumSelectFormula;
 import kz.flabs.dataengine.postgresql.glossary.Glossaries;
 import kz.flabs.dataengine.postgresql.queryformula.GlossarySelectFormula;
 import kz.flabs.dataengine.postgresql.queryformula.QueryFormula;
@@ -416,6 +419,16 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
     @Override
     public IFilters getFilters() {
         return new Filters(this);
+    }
+
+    public IForum getForum() {
+        return new Forum(this, this.dbPool);
+    }
+
+
+    @Override
+    public ISelectFormula getForumSelectFormula(FormulaBlocks preparedBlocks) {
+        return new ForumSelectFormula(preparedBlocks);
     }
 
     public void removeUnrelatedAttachments() {

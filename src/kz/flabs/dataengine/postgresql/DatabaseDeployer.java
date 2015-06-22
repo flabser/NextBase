@@ -35,7 +35,7 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
 
     }
 
-    public boolean deploy(){
+    public boolean deploy() {
         try {
 
             checkAndCreateTable(DDEScripts.getDBVersionTableDDE(), "DBVERSION");
@@ -59,7 +59,7 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
             checkAndCreateTable(DDEScripts.getCustomBlobsDDE("MAINDOCS"), "CUSTOM_BLOBS_MAINDOCS");
             checkAndCreateAuthorsReadersTbl("AUTHORS_MAINDOCS", "MAINDOCS", "DOCID");
             checkAndCreateAuthorsReadersTbl("READERS_MAINDOCS", "MAINDOCS", "DOCID");
-            if (checkAndCreateTable(DDEScripts.getCustomFieldsDDE(), "CUSTOM_FIELDS")){
+            if (checkAndCreateTable(DDEScripts.getCustomFieldsDDE(), "CUSTOM_FIELDS")) {
                 String indexDDE1 = DDEScripts.getIndexDDE("CUSTOM_FIELDS", "NAME");
                 String indexDDE2 = DDEScripts.getIndexDDE("CUSTOM_FIELDS", "VALUE");
                 createIndex(indexDDE1);
@@ -132,14 +132,16 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
 
             checkAndCreateView(DDEScripts.getForAcquaintViewDDE(), "FORACQUAINT");
             checkAndCreateFunction(DDEScripts.getForAcquaintFunctionDDE());
+            checkAndCreateFunction(DDEScripts.getDiscussionFlagFunction());
             checkAndCreateNamedTrigger(DDEScripts.getForAcquaintTriggerDDE(), "UPDATE_VIEW_FOR_ACQUAINT", "USERS_ACTIVITY");
+            checkAndCreateNamedTrigger(DDEScripts.getDiscussionFlagTrigger(), "SET_REMOVE_DISCUSSION_FLAG_MAINDOCS", "TOPICS");
 
             CheckDataBase checker = new CheckDataBase(env);
 
-            if(checker.check()){
+            if (checker.check()) {
                 deployed = true;
             }
-        }catch (Throwable e)  {
+        } catch (Throwable e) {
             DatabaseUtil.debugErrorPrint(e);
         }
         return deployed;
@@ -159,7 +161,7 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
             }
             conn.commit();
             s.close();
-        }catch(Throwable e){
+        } catch (Throwable e) {
             DatabaseUtil.debugErrorPrint(e);
         } finally {
             dbPool.returnConnection(conn);
@@ -167,21 +169,21 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
         return false;
     }
 
-    public boolean checkAndCreateTable(String scriptCreateTable, String tableName){
+    public boolean checkAndCreateTable(String scriptCreateTable, String tableName) {
         Connection conn = dbPool.getConnection();
-        try{
+        try {
             Statement s = conn.createStatement();
-            if(!DatabaseUtil.hasTable(tableName, conn)){
-                if(!s.execute(scriptCreateTable)){
+            if (!DatabaseUtil.hasTable(tableName, conn)) {
+                if (!s.execute(scriptCreateTable)) {
                     conn.commit();
                     s.close();
                     return true;
-                }else{
+                } else {
                     AppEnv.logger.errorLogEntry("error 72169");
                 }
             }
             s.close();
-        }catch(Throwable e){
+        } catch (Throwable e) {
             DatabaseUtil.debugErrorPrint(e);
         } finally {
             dbPool.returnConnection(conn);
@@ -211,7 +213,7 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
         Connection conn = dbPool.getConnection();
         try {
             Statement s = conn.createStatement();
-            s.addBatch("DROP TRIGGER IF EXISTS " +triggerName + " ON " + mainTableName);
+            s.addBatch("DROP TRIGGER IF EXISTS " + triggerName + " ON " + mainTableName);
             s.addBatch(scriptCreateTrigger);
             s.executeBatch();
             s.close();
@@ -242,6 +244,7 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
         }
         return false;
     }
+
     // fts BEFORE INSERT OR UPDATE trigger
     public boolean checkAndCreateTriggerFTS(String mainTableName) {
         Connection conn = dbPool.getConnection();
@@ -295,32 +298,32 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
         return false;
     }
 
-    public boolean createIndex(String indexDDE){
+    public boolean createIndex(String indexDDE) {
         Connection conn = dbPool.getConnection();
-        try{
+        try {
             Statement s = conn.createStatement();
             s.execute(indexDDE);
             s.close();
             conn.commit();
             return true;
-        }catch(Throwable e){
+        } catch (Throwable e) {
             DatabaseUtil.debugErrorPrint(e);
-        }finally{
+        } finally {
             dbPool.returnConnection(conn);
         }
         return false;
     }
 
-    public void checkAndCreateProsedure(String scriptCreateTable, String procedurName){
+    public void checkAndCreateProsedure(String scriptCreateTable, String procedurName) {
         Connection conn = dbPool.getConnection();
-        try{
-            if(!DatabaseUtil.hasProcedureAndTriger(procedurName, conn)){
+        try {
+            if (!DatabaseUtil.hasProcedureAndTriger(procedurName, conn)) {
                 PreparedStatement pst = conn.prepareStatement(scriptCreateTable);
                 pst.execute();
                 pst.close();
             }
             conn.commit();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             DatabaseUtil.debugErrorPrint(e);
         } finally {
             dbPool.returnConnection(conn);
@@ -328,23 +331,23 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
     }
 
 
-    public void checkAndCreateAuthorsReadersTbl(String tableName, String mainTable, String docID) throws SQLException{
+    public void checkAndCreateAuthorsReadersTbl(String tableName, String mainTable, String docID) throws SQLException {
         Connection conn = dbPool.getConnection();
-        try{
-            if(!DatabaseUtil.hasTable(tableName, conn)){
+        try {
+            if (!DatabaseUtil.hasTable(tableName, conn)) {
                 Statement s = conn.createStatement();
-                if (!s.execute(DDEScripts.getAuthorReadersDDE(tableName, mainTable, docID))){
+                if (!s.execute(DDEScripts.getAuthorReadersDDE(tableName, mainTable, docID))) {
                     String indexDDE = DDEScripts.getIndexDDE(tableName, "USERNAME");
                     Statement si = conn.createStatement();
                     si.execute(indexDDE);
                     si.close();
-                }else{
+                } else {
                     AppEnv.logger.errorLogEntry("error 7876");
                 }
                 s.close();
             }
             conn.commit();
-        }catch(Throwable e){
+        } catch (Throwable e) {
             DatabaseUtil.debugErrorPrint(e);
         } finally {
             dbPool.returnConnection(conn);
@@ -354,7 +357,7 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
 
 
 	/*public boolean getDBVersion(){
-		try{
+        try{
 			DatabaseUtil.getDBVersion(connectionURL, sysDbVersion, appDbVersion);
 		}
 
@@ -384,21 +387,22 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
         }
     }
 
-    public static void main(String[]args) throws SQLException{
+    public static void main(String[] args) throws SQLException {
         //DatabaseDeployer dd=new DatabaseDeployer("test");
         //dd.deploy();
         //dd.testInsert();
     }
-    public boolean hasTable(String tableName) throws SQLException{
+
+    public boolean hasTable(String tableName) throws SQLException {
         Connection conn = dbPool.getConnection();
-        try{
+        try {
             Statement s = conn.createStatement();
             String query = "select * from " + tableName;
             s.executeQuery(query);
             s.close();
-        }catch(Throwable e){
+        } catch (Throwable e) {
             return false;
-        }finally{
+        } finally {
             dbPool.returnConnection(conn);
         }
         return true;
@@ -438,11 +442,11 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
                     ResultSet rs = stat.executeQuery(query);
                     if (!rs.next()) {
                         Connection scriptConn = dbPool.getConnection();
-                        try{
+                        try {
                             script = handler.getScript();
                             ScriptProcessor sp = new ScriptProcessor();
                             IScriptSource myObject = sp.setScriptLauncher(script, false);
-                            _Session session = new _Session(env, new User(Const.sysUser),this);
+                            _Session session = new _Session(env, new User(Const.sysUser), this);
                             myObject.setSession(session);
                             myObject.setConnection(scriptConn);
                             String resObj = myObject.patchHandlerProcess();
@@ -474,23 +478,24 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
     }
 
 
-    public boolean checkAndCreateView(String scriptCreateView, String viewName){
+    public boolean checkAndCreateView(String scriptCreateView, String viewName) {
         Connection conn = dbPool.getConnection();
-        try{
+        try {
             conn.setAutoCommit(false);
             Statement s = conn.createStatement();
-            if(!DatabaseUtil.hasView(viewName, conn)){
-                if(!s.execute(scriptCreateView)){
+            if (!DatabaseUtil.hasView(viewName, conn)) {
+                try {
+                    s.execute(scriptCreateView);
                     conn.commit();
                     s.close();
                     return true;
-                }else{
-                    AppEnv.logger.errorLogEntry("View" + viewName + " has not created");
+                } catch (SQLException sqle) {
+                    AppEnv.logger.errorLogEntry("View " + viewName + " has not created");
                 }
             }
             conn.commit();
             s.close();
-        }catch(Throwable e){
+        } catch (Throwable e) {
             DatabaseUtil.debugErrorPrint(e);
         } finally {
             dbPool.returnConnection(conn);
@@ -499,7 +504,7 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
     }
 
     @Override
-	public String getOwnerID() {
-		return this.getClass().getSimpleName();
-	}
+    public String getOwnerID() {
+        return this.getClass().getSimpleName();
+    }
 }

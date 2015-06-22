@@ -588,7 +588,7 @@ public class Provider extends HttpServlet implements Const{
 			}else if (element.equalsIgnoreCase("execution")) {	
 				doc = db.getExecutions().getExecutionByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());	
 			}else if (element.equalsIgnoreCase("discussion")) {						
-				doc = db.getForum().getTopicByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());	
+				doc = db.getForum().getTopicByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());
 			}else if (element.equalsIgnoreCase("post")) {	
 				doc = db.getForum().getPostByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());	
 			}else if (element.equalsIgnoreCase("glossary")) {	

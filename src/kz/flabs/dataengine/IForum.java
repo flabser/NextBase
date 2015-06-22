@@ -39,6 +39,7 @@ public interface IForum {
 			String userID, QueryFieldRule[] fields, int pageNum, int pageSize, Set<DocID> toExpandResp);
 	
 	_ViewEntryCollection getForumTopics(ISelectFormula condition, User user, int pageNum, int pageSize, Set<String> toExpandResp, RunTimeParameters parameters);
-	
 
+
+    _ViewEntryCollection getTopicsCollection(ISelectFormula condition, User user, int pageNum, int pageSize, RunTimeParameters parameters, boolean checkResponse);
 }
