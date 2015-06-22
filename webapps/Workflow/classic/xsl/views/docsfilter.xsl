@@ -9,9 +9,6 @@
 			<xsl:when test="not (request/document/fields/tasktype)  and  request/document/@parentdocid != '' and request/document/@parentdoctype != 897 and  request/document/@parentdocid != 0">
 				<xsl:value-of select="request/document/captions/kr/@caption"/>
 			</xsl:when>
-			<xsl:when test="request/document/fields/tasktype ='CONSIGN'">
-				<xsl:value-of select="request/document/captions/kp/@caption"/>
-			</xsl:when>
 			<xsl:when test="request/document/@parentdocid = 0">
 				<xsl:value-of select="request/document/captions/task/@caption"/>
 			</xsl:when>
@@ -23,6 +20,7 @@
 	<xsl:variable name="path" select="/request/@skin"/>
 	<xsl:variable name="editmode" select="/request/document/@editmode"/>
 	<xsl:variable name="status" select="/request/document/@status"/>
+
 	<xsl:template match="/request">
 		<html>
 			<head>

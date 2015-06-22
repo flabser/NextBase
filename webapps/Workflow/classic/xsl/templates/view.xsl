@@ -216,7 +216,7 @@
 		<button id="btnsearch" title="Поиск">
 			<xsl:attribute name="onclick">javascript:search()</xsl:attribute>
 			<div style="text-align:center">
-				<img src="/SharedResources/img/iconset/magnifier.png" style="border:none; position:absolute; left:8px; top:5px; width:16px; height:16px "></img>
+				<img src="/SharedResources/img/iconset/magnifier.png" style="border:none; position:absolute; left:8px; top:5px; width:16px; height:16px"/>
 			</div>
 		</button>
 	</xsl:template>

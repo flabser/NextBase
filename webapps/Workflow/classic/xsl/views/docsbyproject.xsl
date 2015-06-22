@@ -278,10 +278,7 @@
 				<img style="vertical-align:top;" src="/SharedResources/img/classic/tree_bar.gif"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:if test="parent::responses">
-					<img style="vertical-align:top;" src="/SharedResources/img/classic/tree_spacer.gif"/>
-				</xsl:if>
-				<xsl:if test="parent::entry">
+				<xsl:if test="parent::responses or parent::entry">
 					<img style="vertical-align:top;" src="/SharedResources/img/classic/tree_spacer.gif"/>
 				</xsl:if>
 			</xsl:otherwise>

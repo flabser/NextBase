@@ -2,20 +2,19 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:template name="doctitleGlossary">
 		<font>
-			<xsl:value-of select="$doctype"/> - <xsl:value-of select="document/fields/name"/>
+			<xsl:value-of select="concat($doctype,' - ', document/fields/name)"/>
 		</font>	
 	</xsl:template>
 	<!-- Тип документа -->
 	<xsl:template name="doctitle">
 		<font>
-			<xsl:value-of select="$doctype"/>&#xA0;<xsl:value-of select="document/fields/vn"/>&#xA0;<xsl:value-of select="document/fields/dvn/@caption"/>&#xA0;<xsl:value-of select="document/fields/dvn"/>
+			<xsl:value-of select="concat($doctype,' ', document/fields/vn,' ', document/fields/dvn/@caption,' ',document/fields/dvn)"/>
 		</font>
 	</xsl:template>
 	
 	<xsl:template name="doctitleprj">
 		<font>
-			<xsl:value-of select="$doctype"/>&#xA0;<xsl:value-of select="document/fields/vn"/>
-			&#xA0;<xsl:value-of select="document/fields/projectdate/@caption"/>&#xA0;<xsl:value-of select="document/fields/projectdate"/>
+			<xsl:value-of select="concat($doctype,' ',document/fields/vn,' ',document/fields/projectdate/@caption , ' ', document/fields/projectdate)"/>
 		</font>
 	</xsl:template>
 	
@@ -302,8 +301,8 @@
 			<param name="ARCHIVE" value="/eds.jar, /commons-codec-1.3.jar" />
 		</APPLET> -->
 		<xsl:if test="document/@canbesign='1111'">
-			<script type="text/javascript" src="/edsApplet/js/jquery.blockUI.js" charset="utf-8"></script>
-        	<script type="text/javascript" src="/edsApplet/js/crypto_object.js" charset="utf-8"></script>
+			<script type="text/javascript" src="/edsApplet/js/jquery.blockUI.js" charset="utf-8"/>
+        	<script type="text/javascript" src="/edsApplet/js/crypto_object.js" charset="utf-8"/>
         	<script type="text/javascript">
 				edsApp.init();
 			</script>
@@ -353,20 +352,11 @@
 				<td>
 					<font>
 						<xsl:choose>
-							 <xsl:when test="/request/document/fields/control/allcontrol = '0'"> 
-								<xsl:value-of select="document/captions/readonly/@caption"/>
-							</xsl:when>
-							<xsl:when test="document/@editmode = 'view'">
-								<xsl:value-of select="document/captions/readonly/@caption"/>
-							</xsl:when>
-							<xsl:when test="document/@editmode = 'readonly'">
+							<xsl:when test="document/@editmode = 'readonly' or document/@editmode = 'view' or /request/document/fields/control/allcontrol = '0' or document/@editmode = 'noaccess'">
 								<xsl:value-of select="document/captions/readonly/@caption"/>
 							</xsl:when>
 							<xsl:when test="document/@editmode = 'edit'">
 								<xsl:value-of select="document/captions/editing/@caption"/>
-							</xsl:when>
-							<xsl:when test="document/@editmode = 'noaccess'">
-								<xsl:value-of select="document/captions/readonly/@caption"/>
 							</xsl:when>
 							<xsl:otherwise>
 								<xsl:value-of select="document/captions/modenotdefined/@caption"/>
@@ -470,10 +460,10 @@
 							</input>&#xA0;
 							<br/>
 							<style>.ui-progressbar .ui-progressbar-value { background-image: url(/SharedResources/jquery/css/base/images/pbar-ani.gif); }</style>
-							<div id="progressbar" style="width:370px; margin-top:5px; height:12px"></div>
+							<div id="progressbar" style="width:370px; margin-top:5px; height:12px"/>
 							<div id="progressstate" style="width:370px; display:none">
-								<font style="visibility:hidden; color:#999; font-size:11px; width:70%" id="readybytes"></font>
-								<font style="visibility:hidden; color:#999; font-size:11px; float:right;" id="percentready"></font>
+								<font style="visibility:hidden; color:#999; font-size:11px; width:70%" id="readybytes"/>
+								<font style="visibility:hidden; color:#999; font-size:11px; float:right;" id="percentready"/>
 								<font style="visibility:hidden; text-align:center; color:#999; font-size:11px; width:30%; text-align:center" id="initializing">Подготовка к загрузке</font>
 							</div>
 						</td>
@@ -491,7 +481,7 @@
 						<xsl:variable name="extension" select="tokenize(lower-case($filename), '\.')[last()]"/>
 						<xsl:variable name="resolution"/>
 						<xsl:attribute name='id' select="$id"/>
-						<td class="fc"></td>
+						<td class="fc"/>
 						<td colspan="2">
 							<div class="test" style="width:90%; overflow:hidden; display:inline-block">
 								<xsl:choose>
@@ -576,7 +566,7 @@
 							</input>&#xA0;
 							<br/>
 							<style>.ui-progressbar .ui-progressbar-value { background-image: url(/SharedResources/jquery/css/base/images/pbar-ani.gif); }</style>
-							<div id="progressbar" style="width:370px; margin-top:5px; height:12px"></div>
+							<div id="progressbar" style="width:370px; margin-top:5px; height:12px"/>
 							<div id="progressstate" style="width:370px; display:none">
 								<font style="visibility:hidden; color:#999; font-size:11px; width:70%" id="readybytes"/>
 								<font style="visibility:hidden; color:#999; font-size:11px; float:right;" id="percentready"/>
@@ -617,14 +607,14 @@
 							</a> -->
 							<br/>
 							<style>.ui-progressbar .ui-progressbar-value { background-image: url(/SharedResources/jquery/css/base/images/pbar-ani.gif); }</style>
-							<div id="progressbar" style="width:370px; margin-top:5px; height:12px"></div>
+							<div id="progressbar" style="width:370px; margin-top:5px; height:12px"/>
 							<div id="progressstate" style="width:370px; display:none">
 								<font style="visibility:hidden; color:#999; font-size:11px; width:70%" id="readybytes"/>
 								<font style="visibility:hidden; color:#999; font-size:11px; float:right;" id="percentready"/>
 								<font style="visibility:hidden; text-align:center; color:#999; font-size:11px; width:30%; text-align:center" id="initializing">Подготовка к загрузке</font>
 							</div>
 						</td>
-						<td></td>
+						<td/>
 					</tr>
 				</xsl:if>
 				<xsl:variable name='docid' select="document/@docid"/>
@@ -638,7 +628,7 @@
 						<xsl:variable name="extension" select="tokenize(lower-case($filename), '\.')[last()]"/>
 						<xsl:variable name="resolution"/>
 						<xsl:attribute name='id' select="$id"/>
-						<td class="fc"></td>
+						<td class="fc"/>
 						<td colspan="2">
 							<div class="test" style="width:90%; overflow:hidden; display:inline-block">
 								<xsl:choose>
