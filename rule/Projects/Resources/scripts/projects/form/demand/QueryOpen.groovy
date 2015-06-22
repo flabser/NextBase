@@ -169,6 +169,10 @@ class QueryOpen extends _FormQueryOpen {
 
 		publishParentDocs(doc, session, "existing");
 		publishElement(getGlossariesList(session, "demand_type"));
+
+
+		def topcoll = session.getCurrentDatabase().getCollectionOfTopics("parentdocid = $doc.docID", 0, 0)
+		publishValue("topics", topcoll);
 		try {
 			publishGlossaryValue("demand_type", doc.getValueString("demand_type"))
 		} catch (_Exception e) {
