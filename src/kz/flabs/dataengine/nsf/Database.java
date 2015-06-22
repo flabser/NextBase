@@ -689,6 +689,11 @@ public class Database extends AbstractDatabase {
     }
 
     @Override
+    public ISelectFormula getForumSelectFormula(FormulaBlocks queryFormulaBlocks) {
+        return null;
+    }
+
+    @Override
 	public int isFavourites(Connection conn, int docID, int docType,
 			Employer user) {
 		// TODO Auto-generated method stub

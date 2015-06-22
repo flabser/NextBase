@@ -184,4 +184,5 @@ public interface IDatabase {
 
     ISelectFormula getSelectFormula(FormulaBlocks fb);
 
+    ISelectFormula getForumSelectFormula(FormulaBlocks queryFormulaBlocks);
 }

@@ -1480,6 +1480,14 @@ public class Updates extends kz.flabs.dataengine.h2.alter.Updates {
         return dropForeignKey(connection, "CUSTOM_BLOBS_EMPLOYERS", "DOCID");
     }
 
+    public boolean updateToVersion103(Connection connection) throws Exception {
+        return addColumn(connection, "MAINDOCS", "HAS_TOPIC", "BOOLEAN DEFAULT FALSE");
+    }
+
+    public boolean updateToVersion104(Connection connection) throws Exception {
+        return dropForeignKey(connection, "MAINDOCS", "TOPICID");
+    }
+
     public static boolean alterColumnAlterType(Connection conn, String tableName, String columnName, String typeNameAndSize) throws Exception {
         Statement statement = conn.createStatement();
         statement.addBatch("alter table " + tableName + " alter " + columnName + " type " + typeNameAndSize);

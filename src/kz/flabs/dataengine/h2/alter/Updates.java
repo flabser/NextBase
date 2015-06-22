@@ -1551,6 +1551,14 @@ public class Updates {
         return dropColumnConstraint(connection, "CUSTOM_BLOBS_EMPLOYERS", "DOCID");
     }
 
+    public boolean updateToVersion103(Connection connection) throws Exception {
+        return addNewColumn(connection, "MAINDOCS", "HAS_TOPIC", "BOOLEAN DEFAULT FALSE");
+    }
+
+    public boolean updateToVersion104(Connection connection) throws Exception {
+        return dropColumnConstraint(connection, "MAINDOCS", "TOPICID");
+    }
+
     public static boolean addNewColumn(Connection conn, String tableName, String columnName, String typeNameAndSize) throws SQLException {
         Statement statement = conn.createStatement();
         statement.addBatch("alter table " + tableName + " add IF NOT EXISTS " + columnName + " " + typeNameAndSize);

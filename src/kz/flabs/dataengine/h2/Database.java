@@ -4,6 +4,7 @@ import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.*;
 import kz.flabs.dataengine.h2.filters.Filters;
 import kz.flabs.dataengine.h2.forum.Forum;
+import kz.flabs.dataengine.h2.forum.ForumSelectFormula;
 import kz.flabs.dataengine.h2.ftengine.FTIndexEngine;
 import kz.flabs.dataengine.h2.glossary.Glossaries;
 import kz.flabs.dataengine.h2.glossary.GlossaryQueryFormula;
@@ -266,7 +267,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
                 doc.editMode = EDITMODE_READONLY;
                 fillViewTextData(rs, doc);
                 fillSysData(rs, doc);
-                doc.setTopicID(rs.getInt("TOPICID"));
+                doc.hasDiscussion = rs.getBoolean("HAS_TOPIC");// .setTopicID(rs.getInt("TOPICID"));
                 while (isNextMain || rs.next()) {
                     switch (rs.getInt("TYPE")) {
                         case TEXT:
@@ -4065,6 +4066,11 @@ public class Database extends DatabaseCore implements IDatabase, Const {
                 SelectFormula sf = new SelectFormula(blocks);
                 return sf;
         }
+    }
+
+    @Override
+    public ISelectFormula getForumSelectFormula(FormulaBlocks queryFormulaBlocks) {
+        return new ForumSelectFormula(queryFormulaBlocks);
     }
 
     @Override

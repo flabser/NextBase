@@ -19,7 +19,7 @@ import java.util.Timer;
 public class Server{
 	public static kz.pchelka.log.ILogger logger;
 	public static final String serverVersion = "2.7.7";
-	public static final int necessaryDbVersion = 102;
+	public static final int necessaryDbVersion = 104;
 	public static String compilationTime = "";
 	public static final String serverTitle = "NextBase " + serverVersion + "-" + Integer.toString(necessaryDbVersion);
 	public static Date startTime = new Date();

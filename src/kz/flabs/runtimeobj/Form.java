@@ -160,7 +160,7 @@ public class Form extends Content implements Const{
         String mode[] = getEditModeAttr(doc, lang);
 
         return "<document isvalid=\"" + doc.isValid + "\" isread=\"" + doc.isRead() + "\" id=\"" + doc.getDdbID() + "\" " +
-                "docid=\"" + doc.getDocID() + "\" doctype=\"" + doc.docType + "\" topicid=\"" + doc.getTopicID() + "\" "  +
+                "docid=\"" + doc.getDocID() + "\" doctype=\"" + doc.docType + "\" hastopic=\"" + (doc.hasDiscussion ? 1 : 0) + "\" "  +
                 "parentdocid=\"" + doc.parentDocID +"\" parentdoctype=\"" + doc.parentDocType +"\" " +
                 "openfrompage=\"" + page + "\" status=\"existing\" viewtext=\"" + XMLUtil.getAsTagValue(viewText) + "\"" +
                 mode[0] + ">" + outlineContent + "<actions>" + actions + "</actions>" + fieldsXML + mode[1] + captions + "</document>";
@@ -183,7 +183,7 @@ public class Form extends Content implements Const{
         }
 
         return "<document isvalid=\"" + doc.isValid + "\" id=\"" + doc.getDdbID() + "\" " +
-                "topicid=\"" + doc.getTopicID() + "\" "  +
+                "hastopic=\"" + (doc.hasDiscussion ? 1 : 0) + "\" "  +
                 "viewtext=\"" + XMLUtil.getAsTagValue(viewText) + "\" >" + xmlText + "</document>";
     }
 

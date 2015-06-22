@@ -19,6 +19,7 @@ public class DDEScripts {
 				" SYNCSTATUS int, " +
 				" HAS_ATTACHMENT int, " +
 				" HAS_RESPONSE int DEFAULT 0, " +
+                " HAS_TOPIC boolean DEFAULT false, " +
 				" DEFAULTRULEID nvarchar(32), " +
 				" DEL int, " +
 				" VIEWTEXT1 nvarchar(256)," +
@@ -35,8 +36,7 @@ public class DDEScripts {
 				" DDBID nvarchar(16)," +
                 " PARENTDOCDDBID nvarchar(16)," +
                 " APPID nvarchar(16), " +
-				" SIGNEDFIELDS nvarchar(1200), " +
-				" FOREIGN KEY(TOPICID) REFERENCES TOPICS(DOCID) ON UPDATE CASCADE ON DELETE CASCADE)";
+				" SIGNEDFIELDS nvarchar(1200))";
 		return createString;
 	}
 
