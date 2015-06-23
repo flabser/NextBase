@@ -31,6 +31,13 @@ public class DDEScripts {
         return createString;
     }
 
+    public static String getForAcquaintViewIndexDDE() {
+        return  "CREATE INDEX userid_docid_type_acquaint_view_index\n" +
+                "  ON foracquaint\n" +
+                "  USING btree\n" +
+                "  (docid, userid COLLATE pg_catalog.\"default\");";
+    }
+
     public static String getForAcquaintMaterializedViewDDE() {
         return "CREATE MATERIALIZED VIEW foracquaint\n" +
                 "WITH (\n" +
@@ -40,24 +47,24 @@ public class DDEScripts {
                 "    users_activity.userid\n" +
                 "   FROM users_activity\n" +
                 "  WHERE users_activity.type = 1001\n" +
-                "WITH DATA;" +
+                "WITH DATA;"; /*+
                 "CREATE INDEX userid_docid_type_acquaint_view_index\n" +
                 "  ON foracquaint\n" +
                 "  USING btree\n" +
-                "  (docid, userid COLLATE pg_catalog.\"default\");";
+                "  (docid, userid COLLATE pg_catalog.\"default\");";*/
     }
 
     public static String getForAcquaintViewDDE() {
-        return "CREATE VIEW foracquainttest\n" +
+        return "CREATE VIEW foracquaint\n" +
                 "AS \n" +
                 " SELECT users_activity.docid,\n" +
                 "    users_activity.userid\n" +
                 "   FROM users_activity\n" +
-                "  WHERE users_activity.type = 1001;\n" +
-                "CREATE INDEX userid_docid_type_acquaint_view_indextest\n" +
+                "  WHERE users_activity.type = 1001;\n"; /*+
+                "CREATE INDEX userid_docid_type_acquaint_view_index\n" +
                 "  ON foracquaint\n" +
                 "  USING btree\n" +
-                "  (docid, userid COLLATE pg_catalog.\"default\");";
+                "  (docid, userid COLLATE pg_catalog.\"default\");";*/
     }
 
     public static String getStructureView() {

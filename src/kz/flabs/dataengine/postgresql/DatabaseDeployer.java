@@ -138,6 +138,9 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
             } else {
                 checkAndCreateView(DDEScripts.getForAcquaintViewDDE(), "FORACQUAINT");
             }
+            if (dbVersion.compareTo("9.1") > 0) {
+                checkAndCreateView(DDEScripts.getForAcquaintViewIndexDDE(), "FORACQUAINT");
+            }
             checkAndCreateView(DDEScripts.getForAcquaintViewDDE(), "FORACQUAINT");
             checkAndCreateFunction(DDEScripts.getForAcquaintFunctionDDE());
             checkAndCreateFunction(DDEScripts.getDiscussionFlagFunction());
