@@ -1,10 +1,10 @@
 var idtr="";
-var	type='Тип'
-var	waittime='Время ожидания'
-var	hours ='Часов'
-var	yescaption ='да'
-var	nocaption ='нет'
-var	answercommentcaption ='Оставить комментарий ответа?'
+var	type='Тип';
+var	waittime='Время ожидания';
+var	hours ='Часов';
+var	yescaption ='да';
+var	nocaption ='нет';
+var	answercommentcaption ='Оставить комментарий ответа?';
 var	warning ='Предупреждение';
 var button_cancel="Отмена";
 
@@ -71,7 +71,7 @@ function commentOk(action){
 
 /* кнопка "Остановить документ" */
 function stopDocument(key){
-	form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'/>"
+	form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'/>";
 	$("body").append(form);
 	new FormData('type', 'handler'); 
     new FormData('id', 'stopcoord'); 
@@ -81,7 +81,7 @@ function stopDocument(key){
 
 /* обработка действий пользователя при согласовании и подписании. Кнопки "Согласен" и "Не согласен" */
 function decision(yesno, key, action){
-	enableblockform()
+	enableblockform();
 	$("body").append("<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'/>");
 	var time=new Date();
 	month=time.getMonth()+1;
@@ -117,7 +117,7 @@ function submitFormDecision (useraction){
 			if(useraction == "acquaint"){
 				infoDialog("Документ отправлен на ознакомление")
 			}
-			$("body").css("cursor","default")
+			$("body").css("cursor","default");
 			redir = $(xml).find('history').find("entry[type=view]:last").text() || redirectAfterSave;
 			if(useraction == "sign_yes"){
 				setTimeout(function() {
@@ -155,12 +155,12 @@ function submitFormDecision (useraction){
 				window.location = redir;
 			}
 			if(useraction == "remind"){	
-				$(document).unbind("keydown")
+				$(document).unbind("keydown");
 				divhtml ="<div id='dialog-message' title='Предупреждение'>";
 				divhtml+="<div style='height:40px; width:100%; text-align:center; padding-top:25px'>"+
 					"<font style='font-size:13px;'>Напоминание отправлено</font></div>";
 				divhtml += "</div>";
-				$("body").append(divhtml)
+				$("body").append(divhtml);
 				$("#dialog-message").dialog("destroy");
 				$("#dialog-message").dialog({
 					modal: true,

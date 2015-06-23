@@ -1,4 +1,3 @@
-
 var tableField;
 var hiddenField;
 var formName;
@@ -13,32 +12,32 @@ var queryOpt = {
 	pagenum:'1',
 	keyword:'',
 	dialogview:'1'
-}
+};
 
 function toggleOrgTreeStructure(elid){
 	if ($(".treetablestructure"+elid).css("display") != "none"){
-		$(".treetablestructure"+elid).css("display", "none")
+		$(".treetablestructure"+elid).css("display", "none");
 		$("#treeorgimg"+elid).attr("src","/SharedResources/img/classic/plus.gif")
 	}else{
-		$(".treetablestructure"+elid).css("display", "block")
+		$(".treetablestructure"+elid).css("display", "block");
 		$("#treeorgimg"+elid).attr("src","/SharedResources/img/classic/minus.gif")
 	}
 }
 
 function toggleDepTreeStructure(countEl, action, dociddoctype){
 	if (action == 'close'){
-		el = $("#"+dociddoctype)
+		el = $("#"+dociddoctype);
 		for (var i = 0; i < countEl ; i++ ){
 			el = $(el).next("div['display' = 'block']").css("display","none")
 		}
-		$("#treedep"+dociddoctype).attr("href","javascript:toggleDepTreeStructure("+countEl+",'open',"+ dociddoctype +")")
+		$("#treedep"+dociddoctype).attr("href","javascript:toggleDepTreeStructure("+countEl+",'open',"+ dociddoctype +")");
 		$("#treedepimg"+dociddoctype).attr("src","/SharedResources/img/classic/plus.gif")
 	}else{
-		el = $("#"+dociddoctype)
+		el = $("#"+dociddoctype);
 		for (var i = 0; i < countEl ; i++ ){
 			el = $(el).next("div['display' = 'none']").css("display","block")
 		}
-		$("#treedep"+dociddoctype).attr("href","javascript:toggleDepTreeStructure("+countEl+",'close',"+ dociddoctype +")")
+		$("#treedep"+dociddoctype).attr("href","javascript:toggleDepTreeStructure("+countEl+",'close',"+ dociddoctype +")");
 		$("#treedepimg"+dociddoctype).attr("src","/SharedResources/img/classic/minus.gif")
 	}
 }
@@ -53,7 +52,7 @@ function checkallOrg(el, tableid){
 }
 
 function checkDepInp(el, countEl){
-	elem = $(el).parent("div").next("div")
+	elem = $(el).parent("div").next("div");
 	for (var i = 0; i < countEl ; i++ ){
 		el.checked ? $(elem).children("input[type=checkbox]").attr("checked","true") : $(elem).children("input[type=checkbox]").removeAttr("checked");
 		if(queryOpt.fieldname == "executor"){
@@ -79,7 +78,7 @@ function keyDown(el){
 
 /* выбор одного корреспондента из структуры */
 function pickListSingleOk(docid){
-	$("#"+docid).attr("value")
+	$("#"+docid).attr("value");
 	text=$("#"+docid).attr("value");
 	$("input[name="+ queryOpt.fieldname +"]").remove();
 	/* создаем скрытое поле для проектов блок *подписывающий* */
@@ -112,7 +111,7 @@ function pickListSingleOk(docid){
 	 }else{
 		 newTable="<table id="+ queryOpt.tablename +"><tr><td style='width:600px;' class='td_editable'>"+ text +"</td></tr></table>"
 	 }
-	$("#"+ queryOpt.tablename).replaceWith(newTable)
+	$("#"+ queryOpt.tablename).replaceWith(newTable);
 	pickListClose(); 
 }
 
@@ -125,8 +124,8 @@ function pickListBtnOk(){
 		for( var i = 0; i < $("#executorsColl").children("input[type=hidden]").length; i ++ ){
 			if (k==0){
 				$("#intexectable tr:gt(0)").remove();
-				newTable="<table id='"+ queryOpt.tablename +"'></table>"
-				$("#"+ queryOpt.tablename).replaceWith(newTable)
+				newTable="<table id='"+ queryOpt.tablename +"'></table>";
+				$("#"+ queryOpt.tablename).replaceWith(newTable);
 				$("input[name="+queryOpt.fieldname +"]").remove();
 			}
 			k=k+1;
@@ -149,8 +148,8 @@ function pickListBtnOk(){
 			for( var i = 0; i < chBoxes.length; i ++ ){
 				if (chBoxes[i].checked){ 
 					if (k==0){
-						newTable="<table id="+ queryOpt.tablename +"></table>"
-						$("#"+ queryOpt.tablename).replaceWith(newTable)
+						newTable="<table id="+ queryOpt.tablename +"></table>";
+						$("#"+ queryOpt.tablename).replaceWith(newTable);
 						$("input[name="+queryOpt.fieldname+"]").remove();
 					}
 					k=k+1;
@@ -168,8 +167,8 @@ function pickListBtnOk(){
 				for( var i = 0; i < chBoxes.length; i ++ ){
 					if (chBoxes[i].checked){ 
 						if (k==0){
-							newTable="<table id="+ queryOpt.tablename +"></table>"
-							$("#"+ queryOpt.tablename).replaceWith(newTable)
+							newTable="<table id="+ queryOpt.tablename +"></table>";
+							$("#"+ queryOpt.tablename).replaceWith(newTable);
 							$("input[name=parentsubkey]").remove();
 						}
 						elcl=$("#"+chBoxes[i].id).attr("class");
@@ -182,8 +181,8 @@ function pickListBtnOk(){
 				for( var i = 0; i < chBoxes.length; i ++ ){
 					if (chBoxes[i].checked && $(chBoxes[i]).attr("id") != ''){ 
 						if (k==0){
-							newTable="<table id="+ queryOpt.tablename +"></table>"
-							$("#"+ queryOpt.tablename).replaceWith(newTable)
+							newTable="<table id="+ queryOpt.tablename +"></table>";
+							$("#"+ queryOpt.tablename).replaceWith(newTable);
 							$("input[name="+queryOpt.fieldname+"]").remove();
 						}
 						k=k+1;
@@ -220,8 +219,8 @@ function pickListClose(){
 function pickListSingleCoordOk(docid){ 
 	text=$("#"+docid).attr("value");
 	$("input[name=coorder]").remove();
-	$("#frm").append("<input type='hidden' name='coorder'  id='coorder' value='"+docid+"'>")
-	newTable="<table id='coordertbl' width='100%'><tr><td>"+ text +"</td></tr></table>"
+	$("#frm").append("<input type='hidden' name='coorder'  id='coorder' value='"+docid+"'>");
+	newTable="<table id='coordertbl' width='100%'><tr><td>"+ text +"</td></tr></table>";
 	$("#coordertbl").replaceWith(newTable);
 	closePicklistCoord();  
 }
@@ -240,8 +239,8 @@ function centring(id,wh,ww){
 		winW=$('#'+id).width(),
 		scrollA=$("body").scrollTop(), 
 		scrollB=$("body").scrollLeft();
-	htop=scrollA+((h/2)-(winH/2))
-	hleft=scrollB+((w/2)-(winW/2))
+	htop=scrollA+((h/2)-(winH/2));
+	hleft=scrollB+((w/2)-(winW/2));
 	$('#'+id).css('top',htop).css('left',hleft);
 }
 
@@ -278,9 +277,9 @@ function addCoordinator(docid,el){
 	 * docid - userID  выбранного корреспондента
 	 * el - строка таблицы с выбранным корреспондентом
 	*/
-	cwb=$(".coordinatorsWithBlock")
+	cwb=$(".coordinatorsWithBlock");
 	signer=$("#signer").val(); 
-	recipient=$("#recipient").val()
+	recipient=$("#recipient").val();
 	if (signer == docid){
 		text="Выбранный вами сотрудник является подписывающим служебной записки";
 		infoDialog(text)
@@ -324,7 +323,7 @@ function disableblockform(){
 }
 
 function dialogBoxStructure(query,isMultiValue, field, form, table) {
-	enableblockform()
+	enableblockform();
 	queryOpt.fieldname = field;
 	queryOpt.formname = form;
 	queryOpt.isMultiValue = isMultiValue;
@@ -345,16 +344,16 @@ function dialogBoxStructure(query,isMultiValue, field, form, table) {
 	$("#picklist #btnpane").children("button").button();
 	$("#picklist").draggable({handle:"div.header"});
 	centring('picklist',500,500);
-	$("#picklist").focus()
+	$("#picklist").focus();
 	$('#picklist').css('display', "none");
 	$("#headertext").text($("#"+field+"caption").val());
-	$("body").css("cursor","wait")
+	$("body").css("cursor","wait");
 	$.ajax({
 		type: "get",
 		url: 'Provider?type=view&id='+query+'&keyword='+queryOpt.keyword+'&page='+queryOpt.pagenum,
 		success:function (data){
 			if (data.match("login") && data.match("password")){
-				text=" Cессия пользователя была закрыта, для продолжения работы необходима повторная авторизация"
+				text=" Cессия пользователя была закрыта, для продолжения работы необходима повторная авторизация";
 				func = function(){window.location.reload()};
 				dialogAndFunction (text,func)
 			}else{
@@ -365,7 +364,7 @@ function dialogBoxStructure(query,isMultiValue, field, form, table) {
 						}
 					}else{
 						elem=$(data);
-						$(elem).find("input[type=checkbox]").prop("type","radio")
+						$(elem).find("input[type=checkbox]").prop("type","radio");
 						data= elem;
 					}
 				}
@@ -399,10 +398,10 @@ function dialogBoxStructure(query,isMultiValue, field, form, table) {
 					$('#picklist').disableSelection();
 				});
 				if ($("#coordTableView tr").length > 1 &&  field == 'signer'){
-					textConfirm="При изменении поля 'Кем будет подписан' существующие блоки согласования будут удалены"
+					textConfirm="При изменении поля 'Кем будет подписан' существующие блоки согласования будут удалены";
 						dialogConfirm (textConfirm, "picklist","trblockCoord")
 				}else{
-					$('#blockWindow').css('display',"block")
+					$('#blockWindow').css('display',"block");
 					$('#picklist').css('display', "inline-block");
 				}
 				$('#picklist').focus()
@@ -410,8 +409,8 @@ function dialogBoxStructure(query,isMultiValue, field, form, table) {
 		},
 		error:function (xhr, ajaxOptions, thrownError){
             if (xhr.status == 400){
-         	  $("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>")
-         	  $("body").append("<div id='errordata'>"+xhr.responseText+"</div>")
+         	  $("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>");
+         	  $("body").append("<div id='errordata'>"+xhr.responseText+"</div>");
          	  $("li[type='square'] > a").attr("href","javascript:backtocontent()")
             }
          }  
@@ -425,7 +424,7 @@ function addToCollectExecutor(el){
 	}else{
 		$("#executorsColl").children("#"+$(el).attr("id")).remove();
 	}
-	$("#executorsColl input[type=hidden]:first").attr("class","otv")
+	$("#executorsColl input[type=hidden]:first").attr("class","otv");
 	//$("#frm").append("<input type='hidden' name='responsible' id='responsible' value='"+ $("#executorsColl input[type=hidden]:first").val() +"'/>")
 }
 
@@ -548,8 +547,8 @@ function changeViewStructure (viewType){
 		},
 		error:function (xhr, ajaxOptions, thrownError){
 			if (xhr.status == 400){
-				$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>")
-				$("body").append("<div id='errordata'>"+xhr.responseText+"</div>")
+				$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>");
+				$("body").append("<div id='errordata'>"+xhr.responseText+"</div>");
 				$("li[type='square'] > a").attr("href","javascript:backtocontent()")
 			}
 		}  
@@ -573,8 +572,8 @@ function ajaxFind(){
 		},
 		error:function (xhr, ajaxOptions, thrownError){
             if (xhr.status == 400){
-         	  $("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>")
-         	  $("body").append("<div id='errordata'>"+xhr.responseText+"</div>")
+         	  $("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>");
+         	  $("body").append("<div id='errordata'>"+xhr.responseText+"</div>");
          	  $("li[type='square'] > a").attr("href","javascript:backtocontent()")
             }
          }    
@@ -620,7 +619,7 @@ function expandChapterCorr(docid,num,url,doctype, page) {
 		url:url+"&page="+queryOpt.pagenum,
 		dataType:'html',
 		success: function(data) {
-			$("#contentpane").html(data)
+			$("#contentpane").html(data);
 			$("#img"+docid+doctype).attr("src","/SharedResources/img/classic/minus.gif");
 			$("#a"+docid+doctype).attr("href","javascript:collapsChapterCorr('"+docid+"','"+num+"','"+ url+"','"+doctype+"','"+page+"')");
 		}
@@ -634,7 +633,7 @@ function collapsChapterCorr(docid,num,url,doctype, page) {
 		url:"Provider?type=view&id=corrcat&command=collaps`"+docid+"&page="+ queryOpt.pagenum ,
 		dataType:'html',
 		success: function(data) {
-			$("#contentpane").html(data)
+			$("#contentpane").html(data);
 			$("#img"+docid+doctype).attr("src","/SharedResources/img/classic/plus.gif");
 			$("#a"+docid+doctype).attr("href","javascript:expandChapterCorr('"+docid+"','"+num+"','"+ url+"','"+doctype+"','"+page+"')");
 		}

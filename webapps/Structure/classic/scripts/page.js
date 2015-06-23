@@ -15,14 +15,14 @@ function sorting(pageid,column, direction){
 function delDocument(dbID,typedel){
 	var checkboxes = $("input[name^='chbox']:checked");
 	if(checkboxes.length != 0){
-		loadingOutline()
+		loadingOutline();
 		var paramfields="";
 		checkboxes.each(function(index, element){
 			var ck={
 				doctype : $(element).val(),
 				docid : $(element).attr("id")
 			};
-			paramfields += $.param(ck)
+			paramfields += $.param(ck);
 			if (index+1 != checkboxes.length){
 				paramfields +="&";
 			}
@@ -33,10 +33,10 @@ function delDocument(dbID,typedel){
 			url: "Provider?type=page&id=delete_document&nocache="+Math.random() * 300,
 			data: paramfields,
 			success: function (msg){
-				endLoadingOutline()
+				endLoadingOutline();
 				deleted = $(msg).find("deleted").attr("count");
 				undeleted = $(msg).find("undeleted").attr("count");
-				divhtml ="<div id='dialog-message'"
+				divhtml ="<div id='dialog-message'";
 				if($.cookie("lang")=="RUS" || !$.cookie("lang"))
 					 divhtml +="title='Удаление'>";	
 				else if($.cookie("lang")=="KAZ")
@@ -77,7 +77,7 @@ function delDocument(dbID,typedel){
 				divhtml +=undeleted + "</div>";
 				$(msg).find("undeleted").find("entry").not(":contains('undefined')").each(function(){
 					divhtml += "<div style='width:360px; margin-left:20px; font-size:12px; overflow:hidden'>"+$(this).text()+"</div>";
-				})
+				});
 				divhtml += "<div style='width:100%; font-size:13px'>";
 				if($.cookie("lang")=="RUS" || !$.cookie("lang"))
 					divhtml += "Удалено : ";
@@ -89,7 +89,7 @@ function delDocument(dbID,typedel){
 				divhtml += deleted +"</div>";
 				$(msg).find("deleted").find("entry").not(":contains('undefined')").each(function(){
 					divhtml += "<div style='width:360px; margin-left:20px; font-size:12px; overflow:hidden'>"+$(this).text()+"</div>";
-				})
+				});
 				divhtml += "</div>";
 				$("body").append(divhtml);
 				$("#dialog-message").dialog("destroy");
@@ -108,18 +108,18 @@ function delDocument(dbID,typedel){
 			},
 			error: function(data,status,xhr){
 				if($.cookie("lang")=="RUS" || !$.cookie("lang"))
-					infoDialog("Ошибка удаления")
+					infoDialog("Ошибка удаления");
 				else if($.cookie("lang")=="KAZ")
-					infoDialog("Жою қателігі")
+					infoDialog("Жою қателігі");
 				else if($.cookie("lang")=="ENG")
 					infoDialog("Error deleting")
 				}
 			})
 	}else{
 		if($.cookie("lang")=="RUS" || !$.cookie("lang"))
-			infoDialog("Не выбран документ для удаления")
+			infoDialog("Не выбран документ для удаления");
 		else if($.cookie("lang")=="KAZ")
-			infoDialog("Жойылатын құжат таңдалмады")
+			infoDialog("Жойылатын құжат таңдалмады");
 		else if($.cookie("lang")=="ENG")
 			infoDialog("Document is not selected")
 	}
@@ -131,13 +131,13 @@ function removeFromFavs(){
 				$(this).closest("tr").children("td :last").children("img").click();
 				$(this).closest("tr").remove();
 			}
-		)
+		);
 		$("#allchbox").removeAttr("checked");
 	}else{
 		if($.cookie("lang")=="RUS" || !$.cookie("lang"))
-			infoDialog("Выберите документ для удаления")
+			infoDialog("Выберите документ для удаления");
 		else if( $.cookie("lang")=="KAZ")
-			infoDialog("Жоятын құжатты таңдаңыз")
+			infoDialog("Жоятын құжатты таңдаңыз");
 		else if( $.cookie("lang")=="ENG")
 			infoDialog("Please select the document to delete")
 	}
