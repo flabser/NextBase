@@ -31,7 +31,7 @@ public class DDEScripts {
         return createString;
     }
 
-    public static String getForAcquaintViewDDE() {
+    public static String getForAcquaintMaterializedViewDDE() {
         return "CREATE MATERIALIZED VIEW foracquaint\n" +
                 "WITH (\n" +
                 "  autovacuum_enabled=true\n" +
@@ -42,6 +42,19 @@ public class DDEScripts {
                 "  WHERE users_activity.type = 1001\n" +
                 "WITH DATA;" +
                 "CREATE INDEX userid_docid_type_acquaint_view_index\n" +
+                "  ON foracquaint\n" +
+                "  USING btree\n" +
+                "  (docid, userid COLLATE pg_catalog.\"default\");";
+    }
+
+    public static String getForAcquaintViewDDE() {
+        return "CREATE VIEW foracquainttest\n" +
+                "AS \n" +
+                " SELECT users_activity.docid,\n" +
+                "    users_activity.userid\n" +
+                "   FROM users_activity\n" +
+                "  WHERE users_activity.type = 1001;\n" +
+                "CREATE INDEX userid_docid_type_acquaint_view_indextest\n" +
                 "  ON foracquaint\n" +
                 "  USING btree\n" +
                 "  (docid, userid COLLATE pg_catalog.\"default\");";

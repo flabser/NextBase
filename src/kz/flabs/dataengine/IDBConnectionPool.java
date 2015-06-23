@@ -9,6 +9,9 @@ public interface IDBConnectionPool {
 	void returnConnection(Connection con);
 	int getNumActive();
 	public String toXML();
+
+	String getDatabaseVersion();
+
 	void closeAll();
 	void close(Connection conn);
 	DatabaseType getDatabaseType();

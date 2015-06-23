@@ -1,9 +1,5 @@
 package kz.flabs.dataengine.h2;
 
-import java.sql.*;
-import java.util.NoSuchElementException;
-import java.util.Properties;
-
 import kz.flabs.dataengine.*;
 import org.apache.commons.dbcp.ConnectionFactory;
 import org.apache.commons.dbcp.DriverManagerConnectionFactory;
@@ -11,12 +7,20 @@ import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.impl.GenericObjectPool;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.NoSuchElementException;
+import java.util.Properties;
+
 public class DBConnectionPool  implements IDBConnectionPool {
     protected GenericObjectPool connectionPool;
     protected static int timeBetweenEvictionRunsMillis = 1000 * 60 * 15;
 
     private boolean isValid;
     private DatabaseType dt = DatabaseType.DEFAULT;
+    private String DBMSVersion = "";
     public void initConnectionPool(String driver, String dbURL, String userName, String password) throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         Properties props = null;
         Class.forName(driver).newInstance();
@@ -107,6 +111,11 @@ public class DBConnectionPool  implements IDBConnectionPool {
         return dt;
     }
 
+    @Override
+    public String getDatabaseVersion() {
+        return DBMSVersion;
+    }
+
     public void closeAll() {
         connectionPool.clear();
         try {
@@ -132,6 +141,32 @@ public class DBConnectionPool  implements IDBConnectionPool {
         try{
             con = (Connection) connectionPool.borrowObject();
             con.setAutoCommit(false);
+            Statement st = con.createStatement();
+            String checkVersionQuery = "";
+            switch (dt) {
+                case H2:
+                    checkVersionQuery = "SELECT value\n" +
+                            "FROM information_schema.settings\n" +
+                            "WHERE name = 'info.VERSION'";
+                    break;
+                case POSTGRESQL:
+                case POSTGRESQL_CT:
+                    checkVersionQuery = "SELECT VERSION()";
+                    break;
+                case MSSQL:
+                    checkVersionQuery = "select @@VERSION";
+                    break;
+                default:
+                    checkVersionQuery = "SELECT VERSION()";
+                    break;
+            }
+            ResultSet rs = st.executeQuery(checkVersionQuery);
+            if (rs.next()) {
+                DBMSVersion = rs.getString(1);
+            }
+            con.commit();
+            rs.close();
+            st.close();
         } catch (SQLException e) {
             DatabaseUtil.errorPrint(e);
             if (e.getMessage().contains("Connection refused")){
@@ -147,5 +182,5 @@ public class DBConnectionPool  implements IDBConnectionPool {
             returnConnection(con);
         }
     }
-
+//@TODO  removeAbandoned=«true» removeAbandonedTimeout=«30» logAbandoned=«true»
 }

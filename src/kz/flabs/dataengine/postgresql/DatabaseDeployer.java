@@ -130,6 +130,14 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
             checkAndCreateTable(DDEScripts.getFilterDDE(), "FILTER");
             checkAndCreateTable(DDEScripts.getConditionDDE(), "CONDITION");
 
+            String dbVersion = dbPool.getDatabaseVersion();
+            dbVersion = dbVersion.substring(dbVersion.indexOf(" ") + 1, dbVersion.indexOf(","));
+            System.out.println(dbVersion);
+            if (dbVersion.compareTo("9.3") >= 0) {
+                checkAndCreateView(DDEScripts.getForAcquaintMaterializedViewDDE(), "FORACQUAINT");
+            } else {
+                checkAndCreateView(DDEScripts.getForAcquaintViewDDE(), "FORACQUAINT");
+            }
             checkAndCreateView(DDEScripts.getForAcquaintViewDDE(), "FORACQUAINT");
             checkAndCreateFunction(DDEScripts.getForAcquaintFunctionDDE());
             checkAndCreateFunction(DDEScripts.getDiscussionFlagFunction());
