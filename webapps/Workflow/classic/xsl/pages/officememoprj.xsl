@@ -207,7 +207,7 @@
 	</xsl:template>
 
 	<xsl:template match="entry" mode="item">
-		<a  href="{@url}" title="{@viewtext}" class="doclink" style="font-style:arial; width:100%; font-size:99%">
+		<a href="{@url}" title="{@viewtext}" class="doclink" style="font-style:arial; width:100%; font-size:99%">
 			<xsl:attribute name="onclick">javascript:beforeOpenDocument()</xsl:attribute>
 			<xsl:if test="@isread = '0'">
 				<xsl:attribute name="style">font-weight:bold</xsl:attribute>

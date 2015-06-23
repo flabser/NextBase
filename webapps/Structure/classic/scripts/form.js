@@ -60,13 +60,13 @@ function setValHiddenFields(el){
 
 function validationfield(element){
 	var reg = $(element).attr("pattern");
-	reg=new RegExp(reg)
+	reg=new RegExp(reg);
 	if (reg.test($(element).val()) || $(element).val().length == '0'){
-		$("#btnsavedoc").removeAttr("disabled").removeClass("ui-state-disabled")
-		$(element).removeClass("invalid")
+		$("#btnsavedoc").removeAttr("disabled").removeClass("ui-state-disabled");
+		$(element).removeClass("invalid");
 		$(element).siblings("#validation-info").remove()
 	}else{
-		$(element).blur().focus().addClass("invalid")
+		$(element).blur().focus().addClass("invalid");
 		if($(element).siblings("#validation-info").length == 0){
 			$('<span id="validation-info" style="margin-left:10px">'+$(element).attr("title")+'</span>').insertAfter(element)
 		}
@@ -80,14 +80,14 @@ var quickanswer = null,
 
 function addquickanswer(targetid , val, button){
 	if (!$(button).hasClass("inited")){
-		$(".inited").removeClass("inited")
-		$(button).addClass("inited")
+		$(".inited").removeClass("inited");
+		$(button).addClass("inited");
 		if (preview == false){
 			$("#"+targetid).val($("#"+targetid).val() +" " + val);
 		}
 		preview = false
 	}else{
-		$("#"+targetid).val(prevvalanswer)
+		$("#"+targetid).val(prevvalanswer);
 		$(".inited").removeClass("inited")
 	}
 }
@@ -129,7 +129,7 @@ $.fn.extend({
     	  	loadanimation:true
     	};
     	var opts = $.extend(defaults, options);
-    	$(this).append("<div id='notifydiv'><font>"+opts.text+"</font></div>")
+    	$(this).append("<div id='notifydiv'><font>"+opts.text+"</font></div>");
     	if (opts.loadanimation){
     		$("#notifydiv").append("<img src='classic/img/26.png' style='position:absolute; top:3px; right:10px'/>")
     	}
@@ -218,7 +218,7 @@ function numericfield(el) {
 					$("#tiptip_holder").css("display","block")
 				}
 			}else{
-				$("#tiptip_holder").css("display","block")
+				$("#tiptip_holder").css("display","block");
 				return false
 			}
 		}else{
@@ -229,20 +229,20 @@ function numericfield(el) {
 
 /* функция снятия с контроля документ*/
 function resetcontrol(){
-	var count_executors = $("input[type=hidden][name=executor]").length
-	$("#tabs .ui-state-default:nth-child(3) a").click()
+	var count_executors = $("input[type=hidden][name=executor]").length;
+	$("#tabs .ui-state-default:nth-child(3) a").click();
 	$("input[type=hidden][name=executor]").each(function(index){
-		n = index+1
-		time = n*50
+		n = index+1;
+		time = n*50;
 		setTimeout(function() {controlOff(index+1)},time);
 	})
 	setTimeout(function() {
-		$(document).unbind("keydown")
+		$(document).unbind("keydown");
 		divhtml ="<div id='dialog-message' title='Предупреждение'>";
 		divhtml+="<div style='height:40px; width:100%; text-align:center; padding-top:25px'>"+
 		"<font style='font-size:13px;'>Документ снят с контроля</font></div>";
 		divhtml += "</div>";
-		$("body").append(divhtml)
+		$("body").append(divhtml);
 		$("#dialog-message").dialog("destroy");
 		$("#dialog-message").dialog({
 			modal: true,
@@ -294,11 +294,11 @@ function addExecutorField(pos,execid){
 }
 
 function infoDialog(text){
-	$(document).unbind("keydown")
+	$(document).unbind("keydown");
 	divhtml ="<div id='dialog-message' title='"+warning+"'>";
 	divhtml+="<span style='height:40px; width:100%; text-align:center;'>"+
 	"<font style='font-size:13px;'>"+text+"</font></span></div>";
-	$("body").append(divhtml)
+	$("body").append(divhtml);
 	$("#dialog").dialog("destroy");
 	$("#dialog-message").dialog({
 		modal: true,
@@ -340,7 +340,7 @@ function dialogConfirmComment (text,action){
 	divhtml ="<div id='dialog-message' title='"+warning+"'>";
 	divhtml+="<span style='height:50px; margin-top:4%; width:100%; text-align:center'>"+
 	"<font style='font-size:13px; '>"+text+"</font></span></div>";
-	$("body").append(divhtml)
+	$("body").append(divhtml);
 	$("#dialog-message").dialog("destroy");
 	$("#dialog-message").dialog({
 		height:140,
@@ -393,7 +393,7 @@ function dialogConfirm (text,el,actionEl){
 	divhtml ="<div id='dialog-message' title='"+warning+"'>";
 	divhtml+="<span style='height:50px; margin-top:4%; width:100%; text-align:center'>"+
 		"<font style='font-size:13px; '>"+text+"</font></span></div>";
-	$("body").append(divhtml)
+	$("body").append(divhtml);
 	$("#dialog-message").dialog("destroy");
 	$("#dialog-message").dialog({
 		   height:140,
@@ -421,8 +421,8 @@ function dialogConfirm (text,el,actionEl){
 
 /* сохранение формы */
 function SaveFormJquery(redirecturl){
-	enableblockform()
-	$("body").notify({"text":pleasewaitdocsave,"onopen":function(){}})
+	enableblockform();
+	$("body").notify({"text":pleasewaitdocsave,"onopen":function(){}});
 	divhtml ="<div id='dialog-message' title="+saving+">";
 	divhtml+="<div style='margin-top:8px'><font style='font-size:13px; font-family:Verdana,Arial,Helvetica,sans-serif; padding-left:10px'>Пожалуйста ждите...</font></div>";
 	divhtml+="<div style='margin-top:5px'><font style='font-size:13px; font-family:Verdana,Arial,Helvetica,sans-serif; padding-left:10px'>идет сохранение документа</font></div>";
@@ -436,7 +436,7 @@ function SaveFormJquery(redirecturl){
 		url: 'Provider',
 		data: $("form").serialize(),
 		success:function (xml){ 
-			$(document).unbind("keydown")
+			$(document).unbind("keydown");
 			redir = $(xml).find("redirect").text() || redirecturl;
 			$(xml).find('response').each(function(){
 				var st=$(this).attr('status'),
@@ -445,9 +445,9 @@ function SaveFormJquery(redirecturl){
 					msgtext+=$(xml).find('message[id=1]').text()+"<br/>";
 				}
 				if (st =="error" || st =="undefined"){
-					msgtext = msgtext || "Ошибка сохранения"
-					$("#notifydiv").html("<font>"+msgtext+"</font>")
-					$("body").hidenotify({"delay":800,"onclose":function(){$("#notifydiv").remove()}})
+					msgtext = msgtext || "Ошибка сохранения";
+					$("#notifydiv").html("<font>"+msgtext+"</font>");
+					$("body").hidenotify({"delay":800,"onclose":function(){$("#notifydiv").remove()}});
 					$("#dialog-message").dialog({ 
 						buttons: { 
 							Ok: function() {
@@ -466,12 +466,12 @@ function SaveFormJquery(redirecturl){
 				}
 				if (st == "ok"){
 					if (msgtext.length==0){
-						$("#notifydiv").html("<font>"+documentsavedcaption+"</font>")
+						$("#notifydiv").html("<font>"+documentsavedcaption+"</font>");
 						setTimeout(function() {
 							$("body").hidenotify({"delay":200,"onclose":function(){if (redir == ''){window.history.back()}else{window.location = redir;}}})
 						},250);
 					}else{
-						$("#notifydiv").html("<font>"+msgtext+"</font>")
+						$("#notifydiv").html("<font>"+msgtext+"</font>");
 						setTimeout(function() {
 							$("body").hidenotify({"delay":300,"onclose":function(){}})
 						},800);
@@ -498,8 +498,8 @@ function SaveFormJquery(redirecturl){
 		},
 		error:function (xhr, ajaxOptions, thrownError){
 			if (xhr.status == 400){
-				$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>")
-				$("body").append("<div id='errordata'>"+xhr.responseText+"</div>")
+				$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>");
+				$("body").append("<div id='errordata'>"+xhr.responseText+"</div>");
 				$("li[type='square'] > a").attr("href","javascript:backtocontent()")
 			}
 		}    
@@ -521,7 +521,7 @@ function submitFile(form, tableID, fieldName) {
 		infoDialog('Укажите имя файла для вложения');
 	}else{
 		$("#progressbar").progressbar({value:0});
-		$("#progressstate").css("display","block")
+		$("#progressstate").css("display","block");
 		form = $('#'+form);
 		var frame = createIFrame();
 		frame.onSendComplete = function() {
@@ -562,8 +562,8 @@ var cancel_button_action;
 function processStateChange(){
 	if (req.readyState == 4){
 		if (req.status == 200){ 
-			$("#loading_attach_img").css("visibility","visible")
-			$(".button_panel").find("button:not(#canceldoc)").attr("disabled","disabled").addClass("ui-state-disabled")
+			$("#loading_attach_img").css("visibility","visible");
+			$(".button_panel").find("button:not(#canceldoc)").attr("disabled","disabled").addClass("ui-state-disabled");
 			if($("#canceldoc").attr("onclick") != "javascript:confirmCancelAttach()"){
 				cancel_button_action= $("#canceldoc").attr("onclick");
 				$("#canceldoc").attr("onclick","javascript:confirmCancelAttach()")
@@ -574,7 +574,7 @@ function processStateChange(){
 				myContentLength = $(xml).find("content_length")[0],
 				myPercent = $(xml).find("percent_complete")[0];
 			if((isNotFinished == null) && (myPercent == null)){
-				$("#initializing").css("visibility","visible")
+				$("#initializing").css("visibility","visible");
 				window.setTimeout("ajaxFunction();", 200);
 			}else{
 				$("#readybytes").css("visibility","visible");
@@ -592,7 +592,7 @@ function processStateChange(){
 					$("#percentready").html(myPercent + "%");
 					window.setTimeout("ajaxFunction();", 100);
 				}else{
-					$(".button_panel").find("button:not(#canceldoc)").removeAttr("disabled").removeClass("ui-state-disabled")
+					$(".button_panel").find("button:not(#canceldoc)").removeAttr("disabled").removeClass("ui-state-disabled");
 					$("#dialog-message-cancel-attach").dialog('close').remove();
 					$("#initializing").css("visibility","hidden");
 					$("#readybytes").html(Math.round(mbContentLength * 10 ) / 10   + " из " + Math.round(mbContentLength * 10 ) / 10   + " мбайт загружено");
@@ -619,14 +619,14 @@ function confirmCancelAttach(){
 		width:460,
 		buttons: {
 			"Да": function() {
-				$("#canceldoc").attr("onclick",cancel_button_action)
+				$("#canceldoc").attr("onclick",cancel_button_action);
 				$("#canceldoc").click();
 				$(this).dialog('close').remove();
 			},
 			"Нет": function() {
 				$(this).dialog('close').remove();
 				
-			},
+			}
 		}
 	});
 }
@@ -636,7 +636,7 @@ function createIFrame() {
 		divHTML = '<div><iframe style="display:none" src="about:blank" id="' + id
 			+ '" name="' + id + '" onload="sendComplete(\'' + id
 			+ '\')"></iframe></div>';
-	$("body").append(divHTML)
+	$("body").append(divHTML);
 	return document.getElementById(id);
 }
 
@@ -734,7 +734,7 @@ function ConfirmCommentToAttach (text,csf){
 	divhtml ="<div id='dialog-message' title='"+warning+"'>";
 	divhtml +="<span style='height:50px; margin-top:4%; width:100%; text-align:center'>"+
 	"<font style='font-size:13px;'>"+text+"</font></span></div>";
-	$("body").append(divhtml)
+	$("body").append(divhtml);
 	$("#dialog-message").dialog("destroy");
 	$("#dialog-message").dialog({
 		height:140,
@@ -791,17 +791,17 @@ function commentToAttachOk(){
 	if ($("#commentText").val().length ==0){
 		infoDialog("Введите комментарий");
 	}else{
-		$("#frm").append("<input type='hidden' name='comment"+control_sum_file+"' value='"+ $("#commentText").val() +"'>")
-		$("<tr><td></td><td style='color:#777; font-size:12px'>комментарий : "+$("#commentText").val()+"</td><td></td></tr>").insertAfter("#"+control_sum_file)
-		$("#commentaddimg"+control_sum_file).remove()
+		$("#frm").append("<input type='hidden' name='comment"+control_sum_file+"' value='"+ $("#commentText").val() +"'>");
+		$("<tr><td></td><td style='color:#777; font-size:12px'>комментарий : "+$("#commentText").val()+"</td><td></td></tr>").insertAfter("#"+control_sum_file);
+		$("#commentaddimg"+control_sum_file).remove();
 		$("#commentBox").remove()
 	}
 }
 
 /* создание  cookie для сохранения настроек пользователя и сохранение профиля пользователя*/
 function saveUserProfile(redirecturl){
-	enableblockform()
-	$(document).unbind("keydown")
+	enableblockform();
+	$(document).unbind("keydown");
 	if ($("#newpwd").val() != $("#newpwd2").val()){
 		 infoDialog("Введеные пароли не совпадают")
 	}else{
@@ -821,8 +821,8 @@ function saveUserProfile(redirecturl){
 	        	  if( xhr.responseText.indexOf("Old password has not match")!=-1){
 	        		  infoDialog("Некорректно заполнено поле 'пароль по умолчанию'")
 	        	  }else{
-	        		  $("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>")
-	        		  $("body").append("<div id='errordata'>"+xhr.responseText+"</div>")
+	        		  $("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>");
+	        		  $("body").append("<div id='errordata'>"+xhr.responseText+"</div>");
 	        		  $("li[type='square'] > a").attr("href","javascript:backtocontent()")
 	        	  }
 	           }
@@ -850,8 +850,8 @@ function markRead(doctype, docid){
 function deleterow(sesid,filename, fieldid){
 	$("#progressbar").progressbar("destroy");
 	$("#progressstate").hide();
-	$("#"+fieldid).next("tr").remove()
-	$("#"+fieldid).remove()
+	$("#"+fieldid).next("tr").remove();
+	$("#"+fieldid).remove();
 	$("#frm").append("<input type='hidden' name='deletertfcontentsesid' value='"+ sesid +"'/><input type='hidden' name='deletertfcontentname' value='"+ filename +"'/><input type='hidden' name='deletertfcontentfield' value='rtfcontent'/>")
 }
 
@@ -905,14 +905,14 @@ var UrlDecoder = {
 						i += 3;
 					}
 				}
-				string=string.substring(0, string.length )
+				string=string.substring(0, string.length );
 				return string;
 			}
-}
+};
 
 /* функция напомнить*/
 function remind(key,doctype){
-	el='picklist'
+	el='picklist';
 	divhtml ="<div class='picklist' id='picklist' onkeyUp='keyDown(el);'>";
 	divhtml +="<div class='header'><font id='headertext' class='headertext'/>";
 	divhtml +="<div class='closeButton'><img style='width:15px; height:15px; margin-left:3px; margin-top:1px' src='/SharedResources/img/iconset/cross.png' onclick='pickListClose();'/>";
@@ -923,15 +923,15 @@ function remind(key,doctype){
 	"<br/><br/><a id='quickbutton' href='javascript:$.noop()' title='Исполнено' class='button-auto-value'>Напоминаю вам о задании...</a>"+
 	"</td></tr></table></div>";
 	divhtml += "<div id='btnpane' class='button_panel' style='margin:2%; text-align:right;'>";
-	divhtml += "<button onclick='javascript:remindOk("+key+","+doctype+")' style='margin-right:5px'><font class='button_text'>ОК</font></button>" 
+	divhtml += "<button onclick='javascript:remindOk("+key+","+doctype+")' style='margin-right:5px'><font class='button_text'>ОК</font></button>";
 	divhtml += "<button onclick='pickListClose()'><font class='button_text'>"+cancelcaption+"</font></button>";    
 	divhtml += "</div></div>";
 	$("body").append(divhtml);
 	$("#picklist #btnpane").children("button").button();
-	$("#quickbutton").attr("onclick","javasript:addquickanswer('comment','Напоминаю вам о задании...',this)")
-	$("#quickbutton").attr("onmouseover","javasript:previewquickanswer('comment','Напоминаю вам о задании...',this)")
-	$("#quickbutton").attr("onmouseout","javasript:endpreviewquickanswer('comment','Напоминаю вам о задании...',this)")
-	$("#comment").attr("onkeydown","javasript:resetquickanswerbutton()")
+	$("#quickbutton").attr("onclick","javasript:addquickanswer('comment','Напоминаю вам о задании...',this)");
+	$("#quickbutton").attr("onmouseover","javasript:previewquickanswer('comment','Напоминаю вам о задании...',this)");
+	$("#quickbutton").attr("onmouseout","javasript:endpreviewquickanswer('comment','Напоминаю вам о задании...',this)");
+	$("#comment").attr("onkeydown","javasript:resetquickanswerbutton()");
 	$("#picklist").draggable({handle:"div.header"});
 	centring('picklist',500,500);
 	blockWindow = "<div class='ui-widget-overlay blockWindow' id='blockWindow'/>"; 
@@ -954,7 +954,7 @@ function remindOk(key,doctype){
 		for( var i = 0; i < chBoxes.length; i ++ ){
 			if (chBoxes[i].checked){ 
 				if (k==0){
-					form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'></form>"
+					form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'></form>";
 						$("body").append(form);
 				}
 				new FormData('notifyrecipients', chBoxes[i].id); 
@@ -967,7 +967,7 @@ function remindOk(key,doctype){
 			new FormData('key', key);
 			new FormData('doctype', doctype);
 			new FormData('comment', $("#comment").val());
-			submitFormDecision ("remind")
+			submitFormDecision ("remind");
 			pickListClose(); 
 		}else{
 			infoDialog(choosevalue);
@@ -977,7 +977,7 @@ function remindOk(key,doctype){
 
 /* функция ознакомить*/
 function acquaint(key,doctype){
-	el='picklist'
+	el='picklist';
 	divhtml ="<div class='picklist' id='picklist' onkeyUp='keyDown(el);'>";
 	divhtml +="<div  class='header'><font id='headertext' class='headertext'></font>";
 	divhtml +="<div class='closeButton'><img style='width:15px; height:15px; margin-left:3px; margin-top:1px' src='/SharedResources/img/iconset/cross.png' onclick='pickListClose();'/>";
@@ -989,7 +989,7 @@ function acquaint(key,doctype){
 	divhtml +="<div id='divComment' style='text-align:left; font-size:13px; width:97.5%; margin:10px'>" ;
 	divhtml +="<table width='98%'><tr><td style='font-size:13px'>"+commentcaption+": </td></tr><tr><td><textarea id='comment' rows='6' style='width:100%; border:1px solid #d3d3d3; margin-top:8px'></textarea></td></tr></table></div>"
 	divhtml += "<div id='btnpane' class='button_panel' style='margin-top:2%; text-align:right; margin:2%'>";
-	divhtml += "<button onclick='javascript:acquaintOk("+key+","+doctype+")' style='margin-right:5px'><font class='button_text'>ОК</font></button>" 
+	divhtml += "<button onclick='javascript:acquaintOk("+key+","+doctype+")' style='margin-right:5px'><font class='button_text'>ОК</font></button>";
 	divhtml += "<button onclick='pickListClose()'><font class='button_text'>"+cancelcaption+"</font></button>";    
 	divhtml += "</div></div>";
 	$("body").append(divhtml);
@@ -998,7 +998,7 @@ function acquaint(key,doctype){
 	centring('picklist',500,500);
 	blockWindow = "<div  class = 'ui-widget-overlay blockWindow' id = 'blockWindow'></div>"; 
 	$("body").append(blockWindow);
-	$("body").css("cursor","wait")
+	$("body").css("cursor","wait");
 	$('#blockWindow').css('width',$(document).width()).css('height',$(document).height()).css('display',"block"); 
 	$('#picklist').css('display', "none");
 	$("#headertext").text(acquaintcaption);
@@ -1009,11 +1009,11 @@ function acquaint(key,doctype){
 			$("#contentpane").html(data);
 			searchTbl =
 				"<font style='vertical-align:3px; float:left; margin-left:4%'><b>"+searchcaption+":</b></font><input type='text' id='searchCor' style='float:left; margin-left:3px;' size='34' onKeyUp='findCorStructure()'/>" 
-				$("#contentpane div").removeAttr("ondblclick").removeAttr("onmouseover").removeAttr("onmouseout")		
+				$("#contentpane div").removeAttr("ondblclick").removeAttr("onmouseover").removeAttr("onmouseout");
 				$("#divSearch").append(searchTbl);
 			$('#btnChangeView').attr("href","javascript:changeViewAcquaint(2,"+key+","+doctype+")");
 			$('#picklist').css('display', "inline-block");
-			$("body").css("cursor","default")
+			$("body").css("cursor","default");
 			$('#contentpane').disableSelection();		
 			$('#searchCor').focus()
 		}
@@ -1042,7 +1042,7 @@ function acquaintOk(key,doctype){
 			new FormData('key', key);
 			new FormData('doctype', doctype);
 			new FormData('comment', $("#comment").val());
-			submitFormDecision ("acquaint")
+			submitFormDecision ("acquaint");
 			pickListClose(); 
 		}else{
 			infoDialog(choosevalue);
@@ -1065,9 +1065,9 @@ function changeViewAcquaint(viewType,key,doctype){
 				$(document).ready(function(){
 					$('#picklist').disableSelection();
 				});
-				$('#blockWindow').css('display',"block")
+				$('#blockWindow').css('display',"block");
 				$('#picklist').css('display', "inline-block");
-				$('#searchCor').focus()
+				$('#searchCor').focus();
 				$("#contentpane").ajaxSuccess(function(evt, request, settings){
 					$("#contentpane div").removeAttr("ondblclick").removeAttr("onmouseover").removeAttr("onmouseout");
 				});
@@ -1088,7 +1088,7 @@ function changeViewAcquaint(viewType,key,doctype){
 				$(document).ready(function(){
 					$('#picklist').disableSelection();
 				});
-				$('#blockWindow').css('display',"block")
+				$('#blockWindow').css('display',"block");
 				$('#picklist').css('display', "inline-block");
 				$("#contentpane").ajaxSuccess(function(evt, request, settings){
 					$("#contentpane td").removeAttr("ondblclick").removeAttr("onmouseover").removeAttr("onmouseout");
@@ -1118,7 +1118,7 @@ function usersWhichRead(el,doctype, id){
 					$("#userWhichRead").append("&#xA0;"+$(this).attr('username')+ "&#xA0;&#xA0; "+$(this).attr('eventtime')+ "&#xA0;</br>");
 					notEmpty = true; 
 				}
-			})
+			});
 			if (notEmpty == true){
 				$("#userWhichRead").css("right","20px").css("top",bottom_offset_position).css("display","inline-block");
 			}else{
@@ -1145,7 +1145,7 @@ function usersWhichReadInTable(el,doctype, id){
 
 function checkImage(el){
 	if ($(el).width() > $("#property").width() - $(".fc").first().width()-50 ){
-		$(el).css("width",$("#property").width() - $(".fc").first().width()-50 + "px")
+		$(el).css("width",$("#property").width() - $(".fc").first().width()-50 + "px");
 		$(el).parent("div").css("width",$("#property").width() - $(".fc").first().width()-10 + "px")
 	}
 }
@@ -1170,7 +1170,7 @@ function selectLoginMode(element,app){
 		$("[name=question_"+app+"]").attr("readonly","readonly").val("").attr("class","readonly");
 		$("[name=answer_"+app+"]").attr("readonly","readonly").val("").attr("class","readonly");
 	}else{
-		$("[name=question_"+app+"]").removeAttr("readonly").removeAttr("class")
+		$("[name=question_"+app+"]").removeAttr("readonly").removeAttr("class");
 		$("[name=answer_"+app+"]").removeAttr("readonly").removeAttr("class")
 	}
 }

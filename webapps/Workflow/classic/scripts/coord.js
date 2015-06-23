@@ -258,7 +258,7 @@ function commentOk(action){
 
 /* кнопка "Остановить документ" */
 function stopdocument(docid){
-	$(document).unbind("keydown")
+	$(document).unbind("keydown");
 	if ($.cookie("lang")=="RUS" || !$.cookie("lang")){
 		title ="Остановить документ";
 		text ="Выберите действие";
@@ -289,7 +289,7 @@ function stopdocument(docid){
 			text: create_new_version,
 			click: function(){ 
 				$(this).dialog("close").remove();
-				form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'/>"
+				form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'/>";
 				$("body").append(form);
 				actionTime= moment().format('DD.MM.YYYY HH:mm:ss');
 				new FormData('actionDate',actionTime);
@@ -306,7 +306,7 @@ function stopdocument(docid){
 				$(this).dialog("close").remove();
 				hotkeysnav() 
 				$("#dialog-message").dialog("close").remove();
-				form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'/>"
+				form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'/>";
 				$("body").append(form);
 				actionTime= moment().format('DD.MM.YYYY HH:mm:ss');
 				new FormData('actionDate',actionTime);
@@ -330,7 +330,7 @@ function stopdocument(docid){
 
 /* обработка действий пользователя при согласовании и подписании. Кнопки "Согласен" и "Не согласен" */
 function decision(yesno, key, action){
-	form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'/>"
+	form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'/>";
 	$("body").append(form);
 	actionTime= moment().format('DD.MM.YYYY HH:mm:ss');
 	new FormData('actionDate',actionTime);
@@ -379,13 +379,13 @@ function submitFormDecision (useraction){
 					   notify_text=dociscoordyou;
 					   break;
 				   case "coord_no":
-					   notify_text=docisrejectedyou
+					   notify_text=docisrejectedyou;
 					   break;
 				   case "stopcoord":
-					   notify_text="Согласование остановлено"
+					   notify_text="Согласование остановлено";
 					   break;
 				   case "newversion":
-					   notify_text="Создана новая версия документа"
+					   notify_text="Создана новая версия документа";
 						   break;
 				}
 				setTimeout(function() {
@@ -399,7 +399,7 @@ function submitFormDecision (useraction){
 				}
 				if (useraction == "remind"){
 					disableblockform();
-					$(document).unbind("keydown")
+					$(document).unbind("keydown");
 					divhtml ="<div id='dialog-message' title='Предупреждение'>";
 					divhtml+="<div style='height:40px; width:100%; text-align:center; padding-top:25px; font-size:13px'>"+
 					"Напоминание отправлено</div></div>";
