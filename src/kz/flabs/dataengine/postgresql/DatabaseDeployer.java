@@ -135,6 +135,7 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
             System.out.println(dbVersion);
             if (dbVersion.compareTo("9.3") >= 0) {
                 checkAndCreateView(DDEScripts.getForAcquaintMaterializedViewDDE(), "FORACQUAINT");
+                checkAndCreateFunction(DDEScripts.getForAcquaintFunctionDDE());
             } else {
                 checkAndCreateView(DDEScripts.getForAcquaintViewDDE(), "FORACQUAINT");
             }
@@ -142,7 +143,7 @@ public class DatabaseDeployer implements IDatabaseDeployer, IProcessInitiator {
                 checkAndCreateView(DDEScripts.getForAcquaintViewIndexDDE(), "FORACQUAINT");
             }
             checkAndCreateView(DDEScripts.getForAcquaintViewDDE(), "FORACQUAINT");
-            checkAndCreateFunction(DDEScripts.getForAcquaintFunctionDDE());
+
             checkAndCreateFunction(DDEScripts.getDiscussionFlagFunction());
             checkAndCreateNamedTrigger(DDEScripts.getForAcquaintTriggerDDE(), "UPDATE_VIEW_FOR_ACQUAINT", "USERS_ACTIVITY");
             checkAndCreateNamedTrigger(DDEScripts.getDiscussionFlagTrigger(), "SET_REMOVE_DISCUSSION_FLAG_MAINDOCS", "TOPICS");
