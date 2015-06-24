@@ -586,11 +586,29 @@
 			</button>
 			<br/>
 			<br/>
-			<span id="bordercomment"/>
-			<xsl:if test="document/@topicid != '0' and document/@topicid != 'null'">
-				<tr>
-					<td>
-						<div display="block" style="display:block; width:90%" id="topic">
+			<!--<ul style="width:900px; margin:10px 0 0 200px">
+				<xsl:for-each select="document/fields/topics/query/entry">
+					<li style="border-image:none; border-style:solid; border-width: 1px 1px 0; border-color:#ebebeb; list-style: outside none none; padding:10px;">
+						<div style="font-weight:bold; margin:10px 0 10px 50px;">
+							<xsl:value-of select="viewcontent/viewtext"/>
+						</div>
+						<div style="margin: 0 0 0 50px; font-size:13px; color:#444">
+							Дата создания: <xsl:value-of select="viewcontent/viewdate"/>
+						</div>
+						<div style="margin: 10px 10px 0px 50px; font-size:12px; text-align:right">
+							<img src="/SharedResources/img/iconset/comment.png" style="float:left; height:20px; cursor:pointer" title="Добавить комментарий"/><a class="doclink" href="javascript:openForumTopic()">Показать комментарии</a>
+						</div>
+					</li>
+				</xsl:for-each>
+			</ul>-->
+			<ul style="margin:10px 0 0 0" id="topics_list">
+				<xsl:for-each select="document/fields/topics/query/entry">
+					<li style="list-style: none; padding:10px;">
+						<a class="doclink-dotted topiclink_{@docid}" href="" style="border-bottom:1px dotted !important">
+							<xsl:attribute name="href">javascript:openForumTopic(<xsl:value-of select="@docid"/>)</xsl:attribute>
+							Тема: <xsl:value-of select="viewcontent/viewtext"/> от <xsl:value-of select="viewcontent/viewdate"/>
+						</a>
+						<div style="display:none; width:90%; margin-top:15px; border-style:solid; border-color:#ccc; border-width: 1px 0 1px; padding:10px 0" id="topic_{@docid}">
 							<div id="headerTheme" style="width:100%; padding-left:10px"/>
 							<div id="infoTheme" style="width:100%; padding-left:10px; padding-top:3px"/>
 							<br/>
@@ -599,9 +617,9 @@
 							<table id="topicTbl" style=" width:100%"/>
 							<br/>
 						</div>
-					</td>
-				</tr>
-			</xsl:if>
+					</li>
+				</xsl:for-each>
+			</ul>
 		</xsl:if>
 	</xsl:template>
     <xsl:template name="datepicker">

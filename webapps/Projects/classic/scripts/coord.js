@@ -34,7 +34,7 @@ function addComment(){
 	"<button onclick='javascript:commentCancel()'><font class='button_text'>"+cancelcaption+"</font></button>" +
 	"</div></div>";
 	$("body").append(divhtml);
-	$("#commentBox .button_panel").children("button").button()
+	$("#commentBox .button_panel").children("button").button();
 	$("#commentBox").draggable({handle:"div.headerComment"});
 	centring('commentBox',470,250);
 	$("#commentBox textarea").focus()
@@ -58,8 +58,8 @@ function commentOk(){
 
 /* обработка действий пользователя при согласовании и подписании. Кнопки "Согласен" и "Не согласен" */
 function decision(yesno, key, action){
-	enableblockform()
-	form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'/>"
+	enableblockform();
+	form="<form action='Provider' name='dynamicform' method='post' id='dynamicform' enctype='application/x-www-form-urlencoded'/>";
 	$("body").append(form);
 	actionTime= moment().format('DD.MM.YYYY HH:mm:ss');
 	new FormData ('actionDate',actionTime);
@@ -88,7 +88,7 @@ function submitFormDecision (useraction){
 			if(useraction == "remind"){
 				infoDialog("Напоминание отправлено")
 			}
-			$("body").css("cursor","default")
+			$("body").css("cursor","default");
 			if(useraction != "remind" && useraction != "acquaint" ){
 				redir = $(xml).find('history').find("entry[type=page]:last").text() || redirectAfterSave;
 				window.location = redir;

@@ -26,46 +26,46 @@
                 <script type="text/javascript">
    					$(document).ready(function(){
 
-						<xsl:if test="document/@topicid != 0 and document/@topicid != 'null'">
-							topicid=<xsl:value-of select='document/@topicid'/>
-							$.ajax({
-								url: 'Provider?type=edit&amp;element=discussion&amp;id=topic&amp;key=<xsl:value-of select='document/@topicid'/>&amp;onlyxml',
-								datatype:'xml',
-								async:'true',
-								success: function(data) {
-									$("#headerTheme").append('<font>'+ $(data).find("document").find("theme").text()+"</font>")
-									$("#infoTheme").append('<font>Автор: '+ $(data).find("document").find("author").text()+', '+  $(data).find("document").find("topicdate").text()+"</font>")
-								}
-							});
-							$.ajax({
-								url: 'Provider?type=view&amp;id=forum_thread&amp;parentdocid=<xsl:value-of select='document/@topicid'/>&amp;parentdoctype=904&amp;command=expand`<xsl:value-of select='document/@topicid'/>`904&amp;onlyxml',
-								datatype:'xml',
-								async:'true',
-								success: function(data){
-									$("#CountMsgTheme").append(comment_on_discussion+": " + $(data).find("query").attr("count"))
-									$(data).find("query").find("entry").each(function(index, element){
-										comid =$(this).attr("docid");
-										k= index
-										level = parseInt($(this).attr("level"))-1
-										if (level == 0 &amp;&amp; index != 0){
-											$("#msgWrapper").append('<div class="msgEntry" style="margin-top:10px" level="'+ level + '" id="msgEntry'+ index +'"/>')
-										}else{
-											$("#msgWrapper").append('<div class="msgEntry" level="'+ level + '" id="msgEntry'+ index +'"/>')
-										}
-										$("#msgEntry"+index).append('<div class="headermsg" id="headermsg'+ index +'"/>')
-										 
-										level = level *4;
-										level =level + "em"
-										$("#msgEntry"+index).css("margin-left", level);
-										$("#headermsg"+index).append('<div class="authormsg">'+$(this).children("author").text()+'</div>')
-										$("#headermsg"+index).append('<div class="msgdate">'+sent+':'+$(this).children("viewcontent").children("viewdate").text()+'</div>')
-										$("#msgEntry"+index).append('<div class="bodymsg" id="bodymsg'+ index +'">'+$(this).children("viewcontent").children("viewtext").text()+'</div>')
-										$("#msgEntry"+index).append('<div class="buttonpanemsg" id="buttonpanemsg'+ index +'"><button type="button" onclick="javascript:addCommentToForum(this,'+ $(this).attr('docid')+',905,true)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only commenttocomment" style="float:right; margin-top:3px"><font style="font-size:12px; vertical-align:top" >'+makecomment+'</font></button></div>')
-									});
-									$(".commenttocomment").button()
-								}
-							});
-						</xsl:if>
+					<!--<xsl:if test="document/@topicid != 0 and document/@topicid != 'null'">
+                        topicid=<xsl:value-of select='document/@topicid'/>
+                        $.ajax({
+                            url: 'Provider?type=edit&amp;element=discussion&amp;id=topic&amp;key=<xsl:value-of select='document/@topicid'/>&amp;onlyxml',
+                            datatype:'xml',
+                            async:'true',
+                            success: function(data) {
+                                $("#headerTheme").append('<font>'+ $(data).find("document").find("theme").text()+"</font>")
+                                $("#infoTheme").append('<font>Автор: '+ $(data).find("document").find("author").text()+', '+  $(data).find("document").find("topicdate").text()+"</font>")
+                            }
+                        });
+                        $.ajax({
+                            url: 'Provider?type=view&amp;id=forum_thread&amp;parentdocid=<xsl:value-of select='document/@topicid'/>&amp;parentdoctype=904&amp;command=expand`<xsl:value-of select='document/@topicid'/>`904&amp;onlyxml',
+                            datatype:'xml',
+                            async:'true',
+                            success: function(data){
+                                $("#CountMsgTheme").append(comment_on_discussion+": " + $(data).find("query").attr("count"))
+                                $(data).find("query").find("entry").each(function(index, element){
+                                    comid =$(this).attr("docid");
+                                    k= index
+                                    level = parseInt($(this).attr("level"))-1
+                                    if (level == 0 &amp;&amp; index != 0){
+                                        $("#msgWrapper").append('<div class="msgEntry" style="margin-top:10px" level="'+ level + '" id="msgEntry'+ index +'"/>')
+                                    }else{
+                                        $("#msgWrapper").append('<div class="msgEntry" level="'+ level + '" id="msgEntry'+ index +'"/>')
+                                    }
+                                    $("#msgEntry"+index).append('<div class="headermsg" id="headermsg'+ index +'"/>')
+
+                                    level = level *4;
+                                    level =level + "em"
+                                    $("#msgEntry"+index).css("margin-left", level);
+                                    $("#headermsg"+index).append('<div class="authormsg">'+$(this).children("author").text()+'</div>')
+                                    $("#headermsg"+index).append('<div class="msgdate">'+sent+':'+$(this).children("viewcontent").children("viewdate").text()+'</div>')
+                                    $("#msgEntry"+index).append('<div class="bodymsg" id="bodymsg'+ index +'">'+$(this).children("viewcontent").children("viewtext").text()+'</div>')
+                                    $("#msgEntry"+index).append('<div class="buttonpanemsg" id="buttonpanemsg'+ index +'"><button type="button" onclick="javascript:addCommentToForum(this,'+ $(this).attr('docid')+',905,true)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only commenttocomment" style="float:right; margin-top:3px"><font style="font-size:12px; vertical-align:top" >'+makecomment+'</font></button></div>')
+                                });
+                                $(".commenttocomment").button()
+                            }
+                        });
+                    </xsl:if>-->
    					})
 					var editmode = '<xsl:value-of select="$editmode"/>'
 					function callChangeCtrlDate(){

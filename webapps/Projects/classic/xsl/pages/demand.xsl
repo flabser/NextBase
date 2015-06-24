@@ -89,7 +89,7 @@
 												<tr style="font-family:Verdana,Arial,Helvetica,sans-serif; font-size:13px; min-width:120px;">
 													<td class="categorylist_td" style=" cursor:pointer; border-top: 1px solid #dddddd;">
 														<xsl:attribute name="onclick">javascript:resetCurrentFilter('viewtext1')</xsl:attribute>
-														<font style=" width:100%; font-color:#555">
+														<font style="width:100%; font-color:#555">
 															<xsl:value-of select="$captions/all/@caption"/>
 														</font>
 													</td>
@@ -117,7 +117,7 @@
 												<tr style="font-family:Verdana,Arial,Helvetica,sans-serif; font-size:13px; min-width:120px; cursor:pointer">
 													<td class="categorylist_td">
 														<xsl:attribute name="onclick">javascript:chooseFilter("<xsl:value-of select='@id'/>",'viewtext7')</xsl:attribute>
-														<font style=" width:100%;">
+														<font style="width:100%;">
 															<xsl:value-of select="."/>
 														</font>
 													</td>
@@ -126,7 +126,7 @@
 											<tr style="font-family:Verdana,Arial,Helvetica,sans-serif; font-size:13px; min-width:120px;">
 												<td class="categorylist_td" style=" cursor:pointer; border-top: 1px solid #dddddd;">
 													<xsl:attribute name="onclick">javascript:resetCurrentFilter('viewtext7')</xsl:attribute>
-													<font style=" width:100%; font-color:#555">
+													<font style="width:100%; font-color:#555">
 														<xsl:value-of select="$captions/all/@caption"/>
 													</font>
 												</td>
