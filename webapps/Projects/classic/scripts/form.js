@@ -330,6 +330,7 @@ function sendtopic(){
 					'</div>'+
 					'</li>';
 				$("#topics_list").append(topic);
+				$("#topicform").remove();
 				//$("#btnnewcomment span").html("<img class='button_img' src='/SharedResources/img/classic/icons/comment.png'><font style='font-size:12px; vertical-align:top'>"+write_discussion+"</font>")
 				//$("#btnnewcomment").attr("onclick","javascript:addCommentToForum(this,"+$(xml).find("message[id=2]").text()+",904)")
 			},
@@ -379,6 +380,7 @@ function closecommentform(){
 
 function closetopicform(){
 	$("#topicform").slideUp();
+	$("#topicform").remove();
 }
 
 function sendcomment(parentdocid,resp){
