@@ -321,7 +321,7 @@ function sendtopic(){
 					'</a>'+
 					'<div style="display:block; width:90%; margin-top:15px; border-style:solid; border-color:#ccc; border-width: 1px 0 1px; padding:10px 0" id="topic_'+topic_id+'">'+
 					'<div id="headerTheme" style="width:100%; padding-left:10px">'+$("#topicvalue").val()+'</div>'+
-					'<div id="infoTheme" style="width:100%; padding-left:10px; padding-top:3px">Автор: '+$("#username").val()+','+ $("#topicdate").val()+'</div>'+
+					'<div id="infoTheme" style="width:100%; padding-left:10px; padding-top:3px">Автор: '+$("#username").val()+','+ $("#topicdate").val()+'<button style="float:right; margin-top:3px" class="ui-button ui-widget ui-state-default ui-corner-all commenttocomment ui-button-text-only" onclick="javascript:addCommentToForum(this,'+topic_id+',905)" type="button" role="button" aria-disabled="false"><span class="ui-button-text"><font style="font-size:12px; vertical-align:top">Комментировать</font></span></button></div>'+
 					'<br/>'+
 					'<div id="CountMsgTheme" style="color:#555555; padding:12px; background:#E6E6E6; border:1px solid #D3D3D3; margin-left:10px; border-radius: 5px 5px 0 0; height:20px; font-size: 13px; font-weight: 300; overflow: hidden;">'+comment_on_discussion + ' : 0</div>'+
 					'<div id="msgWrapper" style="min-height:150px; margin-left:10px"/>'+
@@ -359,7 +359,7 @@ function addCommentToForum (el, parentdocid, parentdoctype,isresp){
 				$("#commentform").css("float","right");
 			}
 		}else{
-			$("<div id='commentform' style='width:90%; height:160px; background:#E6E6E6; border:1px solid #ccc; margin-top:5px; display:none; margin-left:10px'><form id='commentfrm' action='Provider' name='frmcomment' method='post'  enctype='application/x-www-form-urlencoded'><textarea name='contentsource' id='commentvalue' style='margin:10px ; width:97.5%; height:90px'></textarea><br/><button type='button' id='butformadd' onclick='sendcomment()' style='margin-left:10px' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>"+add+"</button><button id='butformcancel'  style='margin-left:10px' type='button' onclick='javascript:closecommentform()' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>"+cancel+"</button></form></div>").insertAfter($(el)).slideDown("fast");
+			$("<div id='commentform' style='width:100%; height:160px; background:#E6E6E6; border:1px solid #ccc; margin-top:5px; display:none;'><form id='commentfrm' action='Provider' name='frmcomment' method='post'  enctype='application/x-www-form-urlencoded'><textarea name='contentsource' id='commentvalue' style='margin:10px ; width:97.5%; height:90px'></textarea><br/><button type='button' id='butformadd' onclick='sendcomment()' style='margin-left:10px' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>"+add+"</button><button id='butformcancel'  style='margin-left:10px' type='button' onclick='javascript:closecommentform()' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>"+cancel+"</button></form></div>").prependTo($("#topic_"+parentdocid +" #msgWrapper")).slideDown("fast");
 		}
 		$("#commentfrm").append("<input type='hidden' name='type' value='save'/>");
 		$("#commentfrm").append("<input type='hidden' name='id' value='comment'/>");
@@ -392,7 +392,7 @@ function sendcomment(resp){
 				count = $(".msgEntry").length;
 				if(resp){
 					$('<div class="msgEntry" id="msgEntry'+ count  +'"/><div style="clear:both"/>').insertAfter($("#commentform"));
-					$("#msgEntry"+count).width($("#msgEntry"+count).prev("div").prev("div").width() - 50).css("float","right");
+					$("#msgEntry"+count).width($("#msgEntry"+count).prev("div").prev("div").width() - 56).css("float","right");
 				}else{
 					$("#msgWrapper").append('<div class="msgEntry" id="msgEntry'+ count  +'"/>')
 				}
@@ -2450,7 +2450,7 @@ function openForumTopic(topic_id){
 		async:'true',
 		success: function(data) {
 			$("#topic_"+topic_id+" #headerTheme").html('<font>'+ $(data).find("document").find("theme").text()+"</font>");
-			$("#topic_"+topic_id+" #infoTheme").html('<font>Автор: '+ $(data).find("document").find("author").text()+', '+  $(data).find("document").find("topicdate").text()+"</font>")
+			$("#topic_"+topic_id+" #infoTheme").html('<font>Автор: '+ $(data).find("document").find("author").text()+', '+  $(data).find("document").find("topicdate").text()+"</font><button style='float:right; margin:3px 10px 0 0' class='ui-button ui-widget ui-state-default ui-corner-all commenttocomment ui-button-text-only' onclick='javascript:addCommentToForum(this,"+topic_id+",905)' type='button'' role='button' aria-disabled='false'><font style='font-size:12px; vertical-align:top'>Добавить комментарий</font></button>")
 		}
 	});
 
