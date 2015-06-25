@@ -361,12 +361,20 @@ public class ViewEntry implements IViewEntry, Const{
 			try {
 				conn = db.getConnectionPool().getConnection();
 				IUsersActivity ua = db.getUserActivity();
-
+				String element = "";
+				switch (docType) {
+					case DOCTYPE_TOPIC:
+						element = "discussion";
+						break;
+					default:
+						element = "document";
+						break;
+				}
 				StringBuffer value = new StringBuffer("<entry isread=\"" + (isread != -1 ? isread : ua.isRead(conn, docID, docType, user.getUserID())) + "\" " +
 						"hasattach=\"" + Integer.toString(hasAttachment) + "\" hasresponse=\"" + hasResp + "\" id=\"" + ddbID + "\"  doctype=\"" + docType + "\"  " +
 						"docid=\"" + docID + "\" favourites=\"" + db.isFavourites(conn, docID, docType, user) + "\" " +
 						"topicid=\"" + topicid + "\" "  +
-						"url=\"Provider?type=edit&amp;element=document&amp;id=" + form + "&amp;docid=" + ddbID + "\"><viewcontent>");
+						"url=\"Provider?type=edit&amp;element=" + element + "&amp;id=" + form + "&amp;docid=" + ddbID + "\"><viewcontent>");
 
 				for (ViewText vt : viewTexts) {
 					value.append(vt.toXML());
