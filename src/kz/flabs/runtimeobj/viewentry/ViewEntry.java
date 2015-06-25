@@ -354,28 +354,31 @@ public class ViewEntry implements IViewEntry, Const{
 		this.hasResp = 1;
 	}
 
-	public StringBuffer toXML(Employer user) {
+	public StringBuilder toXML(Employer user) {
 
 		if (type == ViewEntryType.DOCUMENT) {
 			Connection conn = null;
 			try {
 				conn = db.getConnectionPool().getConnection();
 				IUsersActivity ua = db.getUserActivity();
-				String element = "";
-				switch (docType) {
-					case DOCTYPE_TOPIC:
-						element = "discussion";
-						break;
-					default:
-						element = "document";
-						break;
-				}
-				StringBuffer value = new StringBuffer("<entry isread=\"" + (isread != -1 ? isread : ua.isRead(conn, docID, docType, user.getUserID())) + "\" " +
-						"hasattach=\"" + Integer.toString(hasAttachment) + "\" hasresponse=\"" + hasResp + "\" id=\"" + ddbID + "\"  doctype=\"" + docType + "\"  " +
-						"docid=\"" + docID + "\" favourites=\"" + db.isFavourites(conn, docID, docType, user) + "\" " +
-						"topicid=\"" + topicid + "\" "  +
-						"url=\"Provider?type=edit&amp;element=" + element + "&amp;id=" + form + "&amp;docid=" + ddbID + "\"><viewcontent>");
-
+                StringBuilder value = new StringBuilder(1000);
+                switch (docType) {
+                    case DOCTYPE_MAIN:
+                        value = new StringBuilder("<entry isread=\"" + (isread != -1 ? isread : ua.isRead(conn, docID, docType, user.getUserID())) + "\" " +
+                                "hasattach=\"" + Integer.toString(hasAttachment) + "\" hasresponse=\"" + hasResp + "\" id=\"" + ddbID + "\"  doctype=\"" + docType + "\"  " +
+                                "docid=\"" + docID + "\" favourites=\"" + db.isFavourites(conn, docID, docType, user) + "\" " +
+                                "topicid=\"" + topicid + "\" "  +
+                                "url=\"Provider?type=edit&amp;element=document&amp;id=" + form + "&amp;docid=" + ddbID + "\"><viewcontent>");
+                        break;
+                    case DOCTYPE_TOPIC:
+                        value = new StringBuilder("<entry isread=\"1\" " +
+                                " hasattach=\"" + Integer.toString(hasAttachment) + "\" hasresponse=\"0\" id=\"" + ddbID + "\"  doctype=\"" + docType + "\"  " +
+                                " docid=\"" + docID + "\" favourites=\"0\" " +
+                                " topicid=\"0\" "  +
+                                " comments=\"" + db.getForum().getPostsCountByTopicID(docID, user.getAllUserGroups(), user.getUserID()) + "\"" +
+                                " url=\"Provider?type=edit&amp;element=discussion&amp;id=" + form + "&amp;docid=" + ddbID + "\"><viewcontent>");
+                        break;
+                }
 				for (ViewText vt : viewTexts) {
 					value.append(vt.toXML());
 				}
@@ -391,7 +394,7 @@ public class ViewEntry implements IViewEntry, Const{
 				db.getConnectionPool().returnConnection(conn);
 			}
 		} else {
-			StringBuffer value = new StringBuffer("<entry><viewcontent>");
+			StringBuilder value = new StringBuilder("<entry><viewcontent>");
 
 			for (ViewText vt : viewTexts) {
 				value.append(vt.toXML());
