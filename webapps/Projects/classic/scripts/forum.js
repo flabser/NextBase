@@ -1,16 +1,13 @@
 function addTopicToForum (el, parentdocid, parentdoctype){
 	actionTime= moment().format('DD.MM.YYYY HH:mm:ss');
 	if($("#topicform").length == 0){
-		$("<div id='topicform'><form id='topicfrm' action='Provider' name='topiccomment' method='post' enctype='application/x-www-form-urlencoded'><input type='text' name='theme' id='topicvalue'/><br/><button type='button' id='butformadd' onclick='sendtopic()' style='margin-left:10px' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>"+add+"</button><button id='butformcancel'  style='margin-left:10px' type='button' onclick='javascript:closetopicform()' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>"+cancel+"</button></form></div>").insertAfter($(el)).slideDown("fast");
-		$("#topicfrm").append("<input type='hidden' name='type' value='save'/>");
-		$("#topicfrm").append("<input type='hidden' name='id' value='topic'/>");
-		$("#topicfrm").append("<input type='hidden' name='key' value=''/>");
-		$("#topicfrm").append("<input type='hidden' name='formsesid' value='1340212408'/>");
-		$("#topicfrm").append("<input type='hidden' name='parentdocid' value='"+ parentdocid +"'/>");
-		$("#topicfrm").append("<input type='hidden' name='parentdoctype' value='" + parentdoctype +"'/>");
-		$("#topicfrm").append("<input type='hidden' id='topicdate' name='topicdate' value='"+actionTime+"'/>");
-		$("#butformadd").button();
-		$("#butformcancel").button()
+		$("<div id='topicform'><form id='topicfrm' action='Provider' name='topiccomment' method='post' enctype='application/x-www-form-urlencoded'><input type='text' name='theme' id='topicvalue'/><br/><button type='button' id='butformadd' onclick='sendtopic()' style='margin-left:10px' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>"+add+"</button><button id='butformcancel'  style='margin-left:10px' type='button' onclick='closetopicform()' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>"+cancel+"</button></form></div>").insertAfter($(el)).slideDown("fast");
+		var topicfrm = $("#topicfrm");
+		$(topicfrm).append("<input type='hidden' name='type' value='save'/><input type='hidden' name='id' value='topic'/>");
+		$(topicfrm).append("<input type='hidden' name='key' value=''/><input type='hidden' name='formsesid' value='1340212408'/>");
+		$(topicfrm).append("<input type='hidden' name='parentdocid' value='"+ parentdocid +"'/><input type='hidden' name='parentdoctype' value='" + parentdoctype +"'/>");
+		$(topicfrm).append("<input type='hidden' id='topicdate' name='topicdate' value='"+actionTime+"'/>");
+		$("#butformadd, #butformcancel").button();
 	}
 }
 
@@ -20,16 +17,19 @@ function sendtopic(){
 		$.ajax({
 			type: "POST",
 			url: 'Provider',
-			data: $("#topicfrm").serialize(),
+			data: formData,
 			success:function (xml){
-				topic_id= $(xml).find("message[id=2]").text();
-				$("#topicform").slideUp("fast");
+				var topic_id= $(xml).find("message[id=2]").text();
+				var topicform = $("#topicform");
+				var topicvalue = $("#topicvalue").val();
+				var topicdate = $("#topicdate").val();
+				$(topicform).slideUp("fast");
 				topic = '<li><a class="doclink-dotted topiclink_'+topic_id+'" href="javascript:closeForumTopic('+topic_id+')"> '+
-					'Тема: '+$("#topicvalue").val()+' от ' + $("#topicdate").val() +
+					'Тема: '+topicvalue+' от ' + topicdate +
 					'</a>'+
 					'<div class="topic" style="display:block;" id="topic_'+topic_id+'">'+
-					'<div id="headerTheme">'+$("#topicvalue").val()+'</div>'+
-					'<div id="infoTheme">Автор: '+$("#username").val()+','+ $("#topicdate").val()+'<button style="float:right; margin:3px 10px 0 0" class="ui-button ui-widget ui-state-default ui-corner-all commenttocomment ui-button-text-only" onclick="javascript:addCommentToForum(this,'+topic_id+',904, false)" type="button" role="button" aria-disabled="false"><font style="font-size:12px; vertical-align:top">Комментировать</font></button></div>'+
+					'<div id="headerTheme">'+topicvalue+'</div>'+
+					'<div id="infoTheme">Автор: '+$("#username").val()+','+ topicdate +'<button style="float:right; margin:3px 10px 0 0" class="ui-button ui-widget ui-state-default ui-corner-all commenttocomment ui-button-text-only" onclick="javascript:addCommentToForum(this,'+topic_id+',904, false)" type="button" role="button" aria-disabled="false"><font style="font-size:12px; vertical-align:top">Комментировать</font></button></div>'+
 					'<br/>'+
 					'<div id="CountMsgTheme">'+comment_on_discussion + ' : 0</div>'+
 					'<div id="msgWrapper"/>'+
@@ -38,13 +38,12 @@ function sendtopic(){
 					'</div>'+
 					'</li>';
 				$("#topics_list").append(topic);
-				$("#topicform").remove();
+				$(topicform).remove();
 				$("#topic_"+topic_id+" .commenttocomment").button();
 			},
 			error:function (xhr, ajaxOptions, thrownError){
 				if (xhr.status == 400){
-					$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>");
-					$("body").append("<div id='errordata'>"+xhr.responseText+"</div>");
+					$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>").append("<div id='errordata'>"+xhr.responseText+"</div>");
 					$("li[type='square'] > a").attr("href","javascript:backtocontent()")
 				}
 			}
@@ -63,14 +62,14 @@ function addCommentToForum (el, parentdocid, parentdoctype,isresp){
 	var commentform = $("#commentform");
 	if(commentform.length == 0){
 		var div_commentform = "<div id='commentform'>" +
-			"<form id='commentfrm' action='Provider' name='frmcomment' method='post'  enctype='application/x-www-form-urlencoded'>" +
+			"<form id='commentfrm' action='Provider' name='frmcomment' method='post' enctype='application/x-www-form-urlencoded'>" +
 			"<textarea name='contentsource' id='commentvalue' style='margin:10px ; width:97.5%; height:90px'/>"+
 			"<br/><button type='button' id='butformadd' onclick='sendcomment("+parentdocid+","+isresp+")' style='margin-left:10px' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>"+add+"</button>" +
 			"<button id='butformcancel'  style='margin-left:10px' type='button' onclick='closecommentform()' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>"+cancel+"</button></form></div>";
 		if (isresp){
 			$(div_commentform).insertAfter($(el).parent().parent()).slideDown("fast");
 			if($(el).parent().parent().css("float") == "right"){
-				$("#commentform").css("float","right");
+				$(commentform).css("float","right");
 			}
 		}else{
 			$(div_commentform).prependTo($("#topic_"+parentdocid +" #msgWrapper")).slideDown("fast");
@@ -110,33 +109,24 @@ function sendcomment(parentdocid,resp){
 					topic_container = $("#topic_"+parentdocid);
 					$("#topic_"+parentdocid+" #msgWrapper").append('<div class="msgEntry" id="msgEntry'+ comment_id  +'"/>')
 				}
-				$("#msgEntry"+comment_id).append('<div class="headermsg" id="headermsg"/>');
+				var msgEntry = $("#msgEntry"+comment_id);
+				$(msgEntry).append('<div class="headermsg" id="headermsg"/>');
 				$("#msgEntry"+comment_id +" #headermsg").append('<div class="authormsg">'+$("#username").val()+'</div><div class="msgdate">'+sent+':'+$("#postdate").val()+'</div>');
-				$("#msgEntry"+comment_id).append('<div class="bodymsg" id="bodymsg">'+$("#commentvalue").val()+'</div>');
-				$("#msgEntry"+comment_id).append('<div class="buttonpanemsg" id="buttonpanemsg"><button type="button" onclick="javascript:addCommentToForum(this,'+ comment_id+',905,true)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only commenttocomment " style="float:right; margin-top:3px"><font style="font-size:12px; vertical-align:top" >'+makecomment+'</font></button></div>')
+				$(msgEntry).append('<div class="bodymsg" id="bodymsg">'+$("#commentvalue").val()+'</div>');
+				$(msgEntry).append('<div class="buttonpanemsg" id="buttonpanemsg"><button type="button" onclick="addCommentToForum(this,'+ comment_id+',905,true)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only commenttocomment " style="float:right; margin-top:3px"><font style="font-size:12px; vertical-align:top" >'+makecomment+'</font></button></div>');
 				$("#msgEntry"+comment_id +" #buttonpanemsg button").button();
-				if(resp){
-					$("#commentform").slideUp("fast", function() {
-						i = count+1;
-						$("#msgEntry"+comment_id +" #CountMsgTheme").html(comment_on_discussion + ":" + i);
-						$("#commentform").remove();
-						//infoDialog("Комментарий успешно добавлен")
-					});
-				}else{
-					$("#commentform").slideUp("fast", function() {
-						i = count+1;
-						$("#msgEntry"+comment_id +" #CountMsgTheme").html(comment_on_discussion + ":" + i);
-						$("#commentform").remove();
-						$("#docwrapper").animate({ scrollTop: $("#topic_"+parentdocid+" .msgEntry:last").position().top}, "slow",function() {
-							//infoDialog("Комментарий успешно добавлен")
-						});
-					});
-				}
+				$("#commentform").slideUp("fast", function() {
+					i = count+1;
+					$("#msgEntry"+comment_id +" #CountMsgTheme").html(comment_on_discussion + ":" + i);
+					$("#commentform").remove();
+					if(!resp) {
+						$("#docwrapper").animate({scrollTop: $("#topic_" + parentdocid + " .msgEntry:last").position().top}, "slow");
+					}
+				});
 			},
 			error:function (xhr, ajaxOptions, thrownError){
 				if (xhr.status == 400){
-					$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>");
-					$("body").append("<div id='errordata'>"+xhr.responseText+"</div>");
+					$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'></div>").append("<div id='errordata'>"+xhr.responseText+"</div>");
 					$("li[type='square'] > a").attr("href","javascript:backtocontent()")
 				}
 			}
@@ -159,19 +149,15 @@ function openForumTopic(topic_id){
 			$("#topic_"+topic_id+" #msgWrapper").empty();
 			$("#topic_"+topic_id+" #CountMsgTheme").html(comment_on_discussion+": " + $(data).find("query").attr("count"));
 			$(data).find("query").find("entry").each(function(index, element){
-				comment_id =$(this).attr("docid");
-				k= index;
-				level = parseInt($(this).attr("level"))-1;
-				level = level *4;
-				//level =level + "em";
+				var comment_id =$(this).attr("docid");
+				var level = parseInt($(this).attr("level"))-1;
+				level = level * 4;
 				$("#topic_"+topic_id+" #msgWrapper").append('<div class="msgEntry" level="'+ level + '"  style="margin-left:'+level+'em" id="msgEntry'+comment_id+'"/>');
-				$("#msgEntry"+comment_id).append('<div class="headermsg" id="headermsg"/>');
-
-				//$("#topic_"+topic_id+" #msgEntry"+index).css("margin-left", level);
-				$("#msgEntry"+comment_id+" #headermsg").html('<div class="authormsg">'+$(this).children("author").text()+'</div>');
-				$("#msgEntry"+comment_id+" #headermsg").append('<div class="msgdate">'+sent+':'+$(this).children("viewcontent").children("viewdate").text()+'</div>');
-				$("#msgEntry"+comment_id).append('<div class="bodymsg" id="bodymsg">'+$(this).children("viewcontent").children("viewtext").text()+'</div>');
-				$("#msgEntry"+comment_id).append('<div class="buttonpanemsg" id="buttonpanemsg"><button type="button" onclick="javascript:addCommentToForum(this,'+ comment_id+',905,true)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only commenttocomment" style="float:right; margin-top:3px"><font style="font-size:12px; vertical-align:top" >'+makecomment+'</font></button></div>')
+				var msgEntry = $("#msgEntry"+comment_id);
+				$(msgEntry).append('<div class="headermsg" id="headermsg"/>');
+				$("#msgEntry"+comment_id+" #headermsg").append('<div class="authormsg">'+$(this).children("author").text()+'</div><div class="msgdate">'+sent+':'+$(this).children("viewcontent").children("viewdate").text()+'</div>');
+				$(msgEntry).append('<div class="bodymsg" id="bodymsg">'+$(this).children("viewcontent").children("viewtext").text()+'</div>');
+				$(msgEntry).append('<div class="buttonpanemsg" id="buttonpanemsg"><button type="button" onclick="addCommentToForum(this,'+ comment_id+',905,true)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only commenttocomment" style="float:right; margin-top:3px"><font style="font-size:12px; vertical-align:top" >'+makecomment+'</font></button></div>')
 			});
 			$(".commenttocomment").button()
 		}
