@@ -1,0 +1,74 @@
+#topicform{
+    width:90%;
+    height:90px;
+    background:#E6E6E6;
+    border:1px solid #ccc;
+    margin-top:5px;
+    display:none;
+    margin-left:10px;
+}
+
+.topic{
+    width:90%;
+    margin-top:15px;
+    border-style:solid;
+    border-color:#ccc;
+    border-width: 1px 0 1px;
+    padding:10px 0;
+}
+
+#topicvalue{
+    margin:10px;
+    width:600px;
+}
+
+#topics_list{
+    margin:10px 0 0 0;
+}
+
+#topics_list li{
+    list-style: none;
+    padding:10px;
+}
+
+#headerTheme{
+    width:100%;
+    padding-left:10px
+}
+
+#infoTheme{
+    width:100%;
+    padding-left:10px;
+    padding-top:3px
+}
+
+#CountMsgTheme{
+    color:#555555;
+    padding:12px;
+    background:#E6E6E6;
+    border:1px solid #D3D3D3;
+    margin-left:10px;
+    border-radius: 5px 5px 0 0;
+    height:20px;
+    font-size: 13px;
+    font-weight: 300;
+    overflow: hidden;
+}
+
+#msgWrapper{
+    min-height:150px;
+    margin-left:10px
+}
+
+#topicTbl{
+    width:100%;
+}
+
+#commentform{
+    width:100%;
+    height:160px;
+    background:#E6E6E6;
+    border:1px solid #ccc;
+    margin-top:5px;
+    display:none;
+}

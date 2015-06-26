@@ -53,8 +53,8 @@ function getCookie(name) {
         end = dc.length;
     }
     text=unescape(dc.substring(begin + prefix.length, end));
-    $("input[name=login]")val(text.split("$")[0]);
-    $("input[name=pwd]")val(text.split("$")[1]);
+    $("input[name=login]").val(text.split("$")[0]);
+    $("input[name=pwd]").val(text.split("$")[1]);
 }
 
 function ourSubmit(type){
