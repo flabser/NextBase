@@ -44,11 +44,13 @@ class QuerySave extends _FormQuerySave{
 		doc.addDateField("topicdate", new Date());
 
 		doc.addStringField("author", author)
+		def authorShortName = ses.getStructure().getEmployer(author).getShortName()
 
 		//def pdoc = doc;
 	
 		doc.setViewText(webFormData.getValueSilently("theme"))//0
 		doc.addViewText(webFormData.getValueSilently("topicdate"))//1
+		doc.addViewText(authorShortName)//2
 		doc.setViewNumber(1)
 		doc.setViewDate(new Date())
 	

@@ -46,9 +46,10 @@ class QuerySave extends _FormQuerySave{
 		//doc.addReader(webFormData.getValueSilently("executer"))
 		
 		//def pdoc = doc;
-	
+		def authorShortName = ses.getStructure().getEmployer(author).getShortName()
 		doc.setViewText(webFormData.getValueSilently("contentsource"))//0
 		doc.addViewText(webFormData.getValueSilently("postdate"))//1
+		doc.addViewText(authorShortName)//2
 		doc.setViewNumber(1)
 		doc.setViewDate(new Date())
 
