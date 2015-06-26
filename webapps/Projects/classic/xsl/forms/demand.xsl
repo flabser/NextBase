@@ -20,6 +20,7 @@
 				</title>
 
                 <xsl:call-template name="cssandjs"/>
+				<script type="text/javascript" src="classic/scripts/forum.js?ver=3"/>
                 <script type="text/javascript" src="/SharedResources/jquery/js/jquery-bar-rating-master/jquery.barrating.js" />
                 <link type="text/css" rel="stylesheet" href="/SharedResources/jquery/js/jquery-bar-rating-master/examples/css/small.css" />
 

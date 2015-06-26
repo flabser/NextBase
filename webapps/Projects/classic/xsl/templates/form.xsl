@@ -606,11 +606,18 @@
 					<li style="list-style: none; padding:10px;">
 						<a class="doclink-dotted topiclink_{@docid}" href="" style="border-bottom:1px dotted !important">
 							<xsl:attribute name="href">javascript:openForumTopic(<xsl:value-of select="@docid"/>)</xsl:attribute>
-							Тема: <xsl:value-of select="viewcontent/viewtext"/> от <xsl:value-of select="viewcontent/viewdate"/>
+							Тема: <xsl:value-of select="viewcontent/viewtext"/> Автор: <xsl:value-of select="viewcontent/viewtext2"/> Дата: <xsl:value-of select="viewcontent/viewdate"/>
+							Комментариев : <xsl:value-of select="@comments"/>
 						</a>
 						<div style="display:none; width:90%; margin-top:15px; border-style:solid; border-color:#ccc; border-width: 1px 0 1px; padding:10px 0" id="topic_{@docid}">
-							<div id="headerTheme" style="width:100%; padding-left:10px"/>
-							<div id="infoTheme" style="width:100%; padding-left:10px; padding-top:3px"/>
+							<div id="headerTheme" style="width:100%; padding-left:10px">
+								<xsl:value-of select="viewcontent/viewtext"/>
+							</div>
+							<div id="infoTheme" style="width:100%; padding-left:10px; padding-top:3px">Автор: <xsl:value-of select="viewcontent/viewtext2"/>, <xsl:value-of select="viewcontent/viewdate"/>
+								<button style='float:right; margin:3px 10px 0 0' class='ui-button ui-widget ui-state-default ui-corner-all commenttocomment ui-button-text-only' onclick='javascript:addCommentToForum(this,{@docid},904,false)' type='button' role='button' aria-disabled='false'>
+									<font style='font-size:12px; vertical-align:top'>Добавить комментарий</font>
+								</button>
+							</div>
 							<br/>
 							<div id="CountMsgTheme" style="color:#555555; padding:12px; background:#E6E6E6; border:1px solid #D3D3D3; margin-left:10px; border-radius: 5px 5px 0px 0px; height:20px; font-size: 13px; font-weight: 300; overflow: hidden;"/>
 							<div id="msgWrapper" style="min-height:150px; margin-left:10px"/>
