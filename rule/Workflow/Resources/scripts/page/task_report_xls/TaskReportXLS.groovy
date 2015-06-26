@@ -10,6 +10,13 @@ import kz.nextbase.script.constants._AllControlType
 import kz.nextbase.script.events._DoScript
 import kz.nextbase.script.task._Control
 import kz.nextbase.script.task._ExecsBlocks
+import net.sf.jasperreports.engine.*
+import net.sf.jasperreports.engine.data.ExcelDataSource
+import net.sf.jasperreports.engine.design.JRDesignStyle
+import net.sf.jasperreports.engine.export.JExcelApiExporter
+import net.sf.jasperreports.engine.export.JRHtmlExporter
+import net.sf.jasperreports.engine.export.JRHtmlExporterParameter
+import net.sf.jasperreports.engine.fill.JRFileVirtualizer
 import org.apache.commons.lang3.StringUtils
 
 import java.text.SimpleDateFormat
@@ -25,14 +32,18 @@ class TaskReportXLS extends _DoScript {
 
 
 
-
+        String pathToReportDir = new File("").absolutePath + "\\webapps\\Workflow\\reports";
         def db = session.getCurrentDatabase()
-        File task_report = new File(_Helper.randomValue + ".xls");
+        String reportName = _Helper.randomValue
+        File task_report = new File(pathToReportDir + "\\" + reportName + ".xls");
         //File task_report = new File("Report" + ".xls");
         WritableWorkbook workbook = Workbook.createWorkbook(task_report);
         WritableSheet sheet = workbook.createSheet("Sheet 1", 0);
 
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy")
+        String typeReportFile = "";
+        String openReportWith = "";
+        typeReportFile = formData.get("typefilereport")[0];
         def glos_cont_type = null
         int c = 1;
 
@@ -136,7 +147,74 @@ class TaskReportXLS extends _DoScript {
         }
 
         workbook.write();
-        workbook.close()
+        workbook.close();
+
+        System.out.println("Filling report...");
+
+       //def columnNames = ["Author","Creation Date", "Executors", "Responsible executor", "Briefcontent", "Type of control", "Control date", "Date diff"];
+       //def columnIndexes = [0,1,2,3,4,5,6,7];
+        def ds = new ExcelDataSource(task_report);
+        ds.useFirstRowAsHeader = Boolean.TRUE;
+        //ds.setColumnNames(columnNames as String[], columnIndexes as int[]);
+
+        JRFileVirtualizer virtualizer = new JRFileVirtualizer(10, pathToReportDir);
+        Map parameters = new HashMap();
+        parameters.put(JRParameter.REPORT_VIRTUALIZER, virtualizer);
+
+        String compileReport = pathToReportDir + "\\templates\\tasks.jasper"
+        //JasperCompileManager.compileReportToFile(pathToReportDir  + "\\templates\\tasks_new.jrxml");
+        ds.columnNames.each {
+            println it
+        }
+
+        println '***'
+
+        JasperPrint print = JasperFillManager.fillReport(compileReport, parameters, ds);
+
+        JRStyle style = new JRDesignStyle();
+        style.setPdfFontName(pathToReportDir + "\\templates\\fonts\\tahoma.ttf");
+        style.setPdfEncoding("Cp1251");
+        style.setPdfEmbedded(true);
+        print.setDefaultStyle(style);
+        System.out.println("Done!");
+
+        String repformat = "";
+        String app = "";
+
+        switch (typeReportFile) {
+            case "1":
+                JasperExportManager.exportReportToPdfFile(print, pathToReportDir + "\\" + reportName + ".pdf");
+                repformat = "pdf";
+                app = "AcroRd32.exe";
+                break;
+            case "2":
+                JasperReportsContext context = new SimpleJasperReportsContext();
+                JExcelApiExporter xlsExporter = new JExcelApiExporter();
+                xlsExporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+                xlsExporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, pathToReportDir + "\\" + reportName + ".xls");
+                xlsExporter.exportReport();
+                repformat = "xls";
+                app = "excel.exe";
+                break;
+            case "3":
+                JRHtmlExporter exporter = new JRHtmlExporter();
+                exporter.setParameter(JRHtmlExporterParameter.IMAGES_URI, pathToReportDir + "\\" + reportName + ".html_files\\");
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+                exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, pathToReportDir + "\\" + reportName + ".html");
+                //JasperExportManager.exportReportToHtmlFile(print, new File("").getAbsolutePath() + "\\webapps\\Workflow\\reports\\"+ reportName +".html");
+                exporter.exportReport();
+                repformat = "html";
+                app = "iexplore.exe";
+                break;
+            default:
+                JasperExportManager.exportReportToPdfFile(print, pathToReportDir + "\\" + reportName + ".pdf");
+                repformat = "pdf";
+                app = "AcroRd32.exe";
+                break;
+        }
+        virtualizer.cleanup();
+        task_report.delete();
+        //return "${new File("").absolutePath}\\webapps\\Workflow\\reports\\$reportName.$format";
 
     }
 }
