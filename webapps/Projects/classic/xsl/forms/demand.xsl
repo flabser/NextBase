@@ -707,40 +707,50 @@
 												<font style="vertical-align:top"><xsl:value-of select="$captions/complication/@caption"/> : </font>
 											</td>
 											<td>
-												<button type="button" id="easy" style="width:80px; background:none !important; border:none; background-color: transparent; text-decoration: underline !important ; vertical-align:top; vertical-align:top" onclick ="moveDownC()">
-                                                    <xsl:if test="document/@editmode = 'readonly'">
-                                                        <xsl:attribute name="disabled">disabled</xsl:attribute>
-                                                    </xsl:if>
-													<span>
-														<font style="font-size:12px"><xsl:value-of select="document/captions/easier/@caption"/></font>
-													</span>
-												</button>
-												<div id="sliderI" class="slider" style="margin:8px 0 0 8px; width:365px;  display:inline-block"/>
-												<input type="text" readonly="true" style="width:65px; border:1px solid #555555; margin-left:14px;  text-align:center" id="imp_int" value="{$fields/control/complication}">
-                                                    <xsl:choose>
-                                                        <xsl:when test="$fields/control/complication = 1">
-                                                            <xsl:attribute name="value">простое</xsl:attribute>
-                                                        </xsl:when>
-                                                        <xsl:when test="$fields/control/complication = 2">
-                                                            <xsl:attribute name="value">обычное</xsl:attribute>
-                                                        </xsl:when>
-                                                        <xsl:when test="$fields/control/complication = 3">
-                                                            <xsl:attribute name="value">сложное</xsl:attribute>
-                                                        </xsl:when>
-                                                        <xsl:otherwise>
-
-                                                        </xsl:otherwise>
-                                                    </xsl:choose>
-												 </input> 
-												 <input type="hidden"  id="complication" name="complication" value="{$fields/control/complication}"/> 
-												<button type="button" id="difficult" style="width:90px; background:none !important; border:none; background-color: transparent; text-decoration: underline !important; vertical-align:top" onclick ="moveUpC()">
-                                                    <xsl:if test="document/@editmode = 'readonly'">
-                                                        <xsl:attribute name="disabled">disabled</xsl:attribute>
-                                                    </xsl:if>
-                                                    <span>
-														<font class="button_text"><xsl:value-of select="document/captions/complicated/@caption"/></font>
-													</span>
-												</button>
+												<ul style="list-style-type:none; padding:0; margin:2px">
+													<li>
+														<label>
+															<input type="radio" name="complication"  value="1" autocomplete="off">
+																<xsl:if test="$fields/control/complication = '1.0'">
+																	<xsl:attribute name="checked">checked</xsl:attribute>
+																</xsl:if>
+																<xsl:if test="document/@editmode = 'readonly'">
+																	<xsl:attribute name="disabled">disabled</xsl:attribute>
+																</xsl:if>
+																Простое
+															</input>
+														</label>
+													</li>
+													<li>
+														<label>
+															<input type="radio" name="complication"  value="2" autocomplete="off">
+																<xsl:if test="$fields/control/complication = '2.0'">
+																	<xsl:attribute name="checked">checked</xsl:attribute>
+																</xsl:if>
+																<xsl:if test="document/@editmode = 'readonly'">
+																	<xsl:attribute name="disabled">disabled</xsl:attribute>
+																</xsl:if>
+																Обычное
+															</input>
+														</label>
+													</li>
+													<li>
+														<label>
+															<input type="radio" name="complication" autocomplete="off">
+																<xsl:if test="$fields/control/complication = '3.0'">
+																	<xsl:attribute name="checked">checked</xsl:attribute>
+																</xsl:if>
+																<xsl:if test="document/@editmode = 'readonly'">
+																	<xsl:attribute name="disabled">disabled</xsl:attribute>
+																</xsl:if>
+																Сложное
+															</input>
+														</label>
+													</li>
+												</ul>
+												<xsl:if test="document/@editmode = 'readonly'">
+													<input type="hidden"  name="complication" value="{document/fields/control/complication}"/>
+												</xsl:if>
 											</td>
 										</tr> 
 										<!-- Является ошибкой -->										 
