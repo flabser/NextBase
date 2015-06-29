@@ -711,7 +711,7 @@
 													<li>
 														<label>
 															<input type="radio" name="complication"  value="1" autocomplete="off">
-																<xsl:if test="$fields/control/complication = '1.0'">
+																<xsl:if test="$fields/control/complication = '1.0' and $status !='new'">
 																	<xsl:attribute name="checked">checked</xsl:attribute>
 																</xsl:if>
 																<xsl:if test="document/@editmode = 'readonly'">
@@ -724,7 +724,7 @@
 													<li>
 														<label>
 															<input type="radio" name="complication"  value="2" autocomplete="off">
-																<xsl:if test="$fields/control/complication = '2.0'">
+																<xsl:if test="$fields/control/complication = '2.0' and $status !='new'">
 																	<xsl:attribute name="checked">checked</xsl:attribute>
 																</xsl:if>
 																<xsl:if test="document/@editmode = 'readonly'">
@@ -737,7 +737,7 @@
 													<li>
 														<label>
 															<input type="radio" name="complication" autocomplete="off">
-																<xsl:if test="$fields/control/complication = '3.0'">
+																<xsl:if test="$fields/control/complication = '3.0' and $status !='new'">
 																	<xsl:attribute name="checked">checked</xsl:attribute>
 																</xsl:if>
 																<xsl:if test="document/@editmode = 'readonly'">
