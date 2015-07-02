@@ -736,7 +736,7 @@
 													</li>
 													<li>
 														<label>
-															<input type="radio" name="complication" autocomplete="off">
+															<input type="radio" name="complication" value="3" autocomplete="off">
 																<xsl:if test="$fields/control/complication = '3.0' and $status !='new'">
 																	<xsl:attribute name="checked">checked</xsl:attribute>
 																</xsl:if>
