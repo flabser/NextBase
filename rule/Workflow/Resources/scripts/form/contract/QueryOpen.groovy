@@ -84,7 +84,6 @@ class QueryOpen extends _FormQueryOpen {
 			publishGlossaryValue("contractor_two",doc.getValueNumber("contractor_two"))
 		}
 		publishValue("briefcontent",doc.getValueString("briefcontent"))
-		publishGlossaryValue("contracttype",doc.getValueNumber("contracttype"))
 		try{
 			publishAttachment("rtfcontent","rtfcontent")
 		}catch(_Exception e){
