@@ -378,6 +378,13 @@ public class ViewEntry implements IViewEntry, Const{
                                 " comments=\"" + db.getForum().getPostsCountByTopicID(docID, user.getAllUserGroups(), user.getUserID()) + "\"" +
                                 " url=\"Provider?type=edit&amp;element=discussion&amp;id=" + form + "&amp;docid=" + ddbID + "\"><viewcontent>");
                         break;
+					default:
+						value = new StringBuilder("<entry isread=\"" + (isread != -1 ? isread : ua.isRead(conn, docID, docType, user.getUserID())) + "\" " +
+								"hasattach=\"" + Integer.toString(hasAttachment) + "\" hasresponse=\"" + hasResp + "\" id=\"" + ddbID + "\"  doctype=\"" + docType + "\"  " +
+								"docid=\"" + docID + "\" favourites=\"" + db.isFavourites(conn, docID, docType, user) + "\" " +
+								"topicid=\"" + topicid + "\" "  +
+								"url=\"Provider?type=edit&amp;element=document&amp;id=" + form + "&amp;docid=" + ddbID + "\"><viewcontent>");
+						break;
                 }
 				for (ViewText vt : viewTexts) {
 					value.append(vt.toXML());
