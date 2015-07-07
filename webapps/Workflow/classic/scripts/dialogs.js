@@ -17,24 +17,24 @@ var queryOpt = {
 
 function toggleOrgTreeStructure(elid){
 	if ($(".treetablestructure"+elid).css("display") != "none"){
-		$(".treetablestructure"+elid).css("display", "none")
+		$(".treetablestructure"+elid).css("display", "none");
 		$("#treeorgimg"+elid).attr("src","/SharedResources/img/classic/1/plus.png")
 	}else{
-		$(".treetablestructure"+elid).css("display", "block")
+		$(".treetablestructure"+elid).css("display", "block");
 		$("#treeorgimg"+elid).attr("src","/SharedResources/img/classic/1/minus.png")
 	}
 }
 
 function toggleDepTreeStructure(countEl, action, dociddoctype){
 	if (action == 'close'){
-		el = $("#"+dociddoctype)
+		el = $("#"+dociddoctype);
 		for (var i = 0; i < countEl ; i++){
 			el = $(el).next("div['display' = 'block']").css("display","none")
 		}
 		$("#treedep"+dociddoctype).attr("href","javascript:toggleDepTreeStructure("+countEl+",'open',"+ dociddoctype +")");
 		$("#treedepimg"+dociddoctype).attr("src","/SharedResources/img/classic/1/plus.png")
 	}else{
-		el = $("#"+dociddoctype)
+		el = $("#"+dociddoctype);
 		for (var i = 0; i < countEl ; i++ ){
 			el = $(el).next("div['display' = 'none']").css("display","block")
 		}
@@ -94,7 +94,7 @@ function pickListSingleOk(docid){
 		if(queryOpt.fieldname == 'extexecutor'){
 			$("#intexectable tr.EXTERNAL").remove();
 			ddbid=$("#"+docid).attr("ddbid");
-			extexecval='2`'+ddbid+'`1``'
+			extexecval='2`'+ddbid+'`1``';
 			$('#intexectable').append("<tr class='EXTERNAL'>" +
 				"<td>"+text+"<input  type='hidden' id='idContrExec' value='"+docid+"'/><input type='hidden' class='controlres' name='extexecutor' value='"+ extexecval +"'/><input type='hidden' class='responsible' value='1'/></td>" +
 				"<td class='controlOffDate'/>" +
@@ -141,7 +141,7 @@ function pickListBtnOk(){
 					"<td class='idCorrControlOff'></td>" +
 					"<td class='switchControl' style='text-align:center'><img style='cursor:pointer' onclick='controlOff(this)' title='Снять с контроля' src='/SharedResources/img/classic/icons/eye.png'/></td>" +
 				"</tr>");
-			})
+			});
 			if($('input[name=chbox]:checked').length > 1 ){
 				$(table).find("tr:first td:last").append("<img src='/SharedResources/img/classic/icons/bullet_yellow.png' style='height:16px; margin-left:5px' title='ответственный исполнитель'/>")
 			}
@@ -747,7 +747,7 @@ function openListRespDoc(docid,doctype,num,page) {
 				newcontent="<tr><td><table style='border-collapse:collapse; width:100%; text-align:left; cursor:pointer' level='"+newlevel+"' class='tblCorr"+__complexid+"'>" +
 					"<tr onmouseover='javascript:entryOver(this)' onmouseout='javascript:entryOut(this)'>" +
 					"<td ondblclick='javascript:pickListSingleOk("+__docid+")'>"+iconresponse+"<input type='"+checkBoxType+"' name='chbox' ddbid='"+__ddbid+"' value="+viewtext1+" id='"+$(this).attr("docid")+"'/>"+ corrname +"</td></tr></table></td></tr>"
-				$(table).append(newcontent)
+				$(table).append(newcontent);
 				$(".tblCorr"+__complexid).css("margin-left",level*20+"px");
 				i++;
 			})

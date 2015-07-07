@@ -29,8 +29,8 @@ var choosevalue ="Выберите значение";
 var alreadychosen ="Данный корреспондент уже выбран для согласования";
 var isrecieverofsz="Выбранный вами сотрудник является получателем служебной записки";
 var issignerofsz="Выбранный вами сотрудник является подписывающим служебной записки";
-var saving ="Сохранение"
-var showfilename ="Укажите имя файла для вложения"
+var saving ="Сохранение";
+var showfilename ="Укажите имя файла для вложения";
 var addcommentforattachment ="Добавить комментарий к вложению?";
 var removedfromcontrol = "Документ снят с контроля";
 var warning ="Предупреждение";
@@ -208,11 +208,11 @@ function setValHiddenFields(el){
 
 function addquickanswer(targetid , val, button){
 	if ($(button).hasClass("inited")){
-		$(button).removeClass("inited")
-		$("#"+targetid).val(prevvalanswer)
+		$(button).removeClass("inited");
+		$("#"+targetid).val(prevvalanswer);
 		$(".inited").removeClass("inited")
 	}else{
-		$(".inited").removeClass("inited")
+		$(".inited").removeClass("inited");
 		$(button).addClass("inited");
 		$("#"+targetid).val(prevvalanswer +" "+ val);
 	}
@@ -246,7 +246,7 @@ $.fn.extend({
     	  	loadanimation:true
     	};
     	var opts = $.extend(defaults, options);
-    	$(this).append("<div id='notifydiv'><font>"+opts.text+"</font></div>")
+    	$(this).append("<div id='notifydiv'><font>"+opts.text+"</font></div>");
     	if (opts.loadanimation){
     		$("#notifydiv").append("<img src='classic/img/26.png' style='position:absolute; top:3px; right:10px'/>")
     	}
@@ -289,7 +289,7 @@ function maxCountSymbols (el, count, e, warn){
 /*проверка выбранного формата файла отчета*/
 function reportsTypeCheck (el){
 	if($(el).val() == 2){
-		$("input[type=radio][name=disposition][value=inline]").attr("disabled","disabled")
+		$("input[type=radio][name=disposition][value=inline]").attr("disabled","disabled");
 		$("input[type=radio][name=disposition][value=attachment]").attr("checked","checked")
 	} else{
 		$("input[type=radio][name=disposition][value=inline]").removeAttr("disabled")
@@ -333,7 +333,7 @@ function numericfield(el) {
 					$("#tiptip_holder").css("display","block")
 				}
 			}else{
-				$("#tiptip_holder").css("display","block")
+				$("#tiptip_holder").css("display","block");
 				return false
 			}
 		}else{
@@ -345,12 +345,12 @@ function numericfield(el) {
 
 /* функция снятия с контроля документ*/
 function resetcontrol(){
-	changeCustomField("allcontrol","0")
+	changeCustomField("allcontrol","0");
 	var count_executors = $("input[type=hidden][name=executor]").length + $("input[type=hidden][name=extexecutor]").length;
-	$("#tabs .ui-state-default:nth-child(3) a").click()
+	$("#tabs .ui-state-default:nth-child(3) a").click();
 	$(".switchControl img[src *='eye.png']").click();
 	setTimeout(function() {
-		$(document).unbind("keydown")
+		$(document).unbind("keydown");
 		divhtml ="<div id='dialog-message' title="+warning+">";
 		divhtml+="<div style='height:40px; width:100%; text-align:center; padding-top:25px'>"+
 		"<font style='font-size:13px;'>"+removedfromcontrol+"</font></div></div>";
@@ -386,7 +386,7 @@ function controlOff(obj){
 	type=$(parent_tr).attr("class");
 	$(parent_tr).children(".idCorrControlOff").html($("#localusername").val());
 	actionTime= moment().format('DD.MM.YYYY HH:mm:ss');
-	responsible = $(parent_tr).find(".responsible").val()
+	responsible = $(parent_tr).find(".responsible").val();
 	$(parent_tr).children(".controlOffDate").text(actionTime);
 	$(parent_tr).children(".switchControl").html("<img style='cursor:pointer' title='Поставить на контроль' onclick='javascript:controlOn(this,\""+type+"\")' src='/SharedResources/img/classic/icons/accept.png'/>");
 	type=='INTERNAL' ? type='1' : type='2';
@@ -407,7 +407,7 @@ function controlOn(obj){
 }
 
 function infoDialog(text, type){
-	$(document).unbind("keydown")
+	$(document).unbind("keydown");
 	if(!type){
 		title = warning;
 	}else{
@@ -430,7 +430,7 @@ function infoDialog(text, type){
 					$("body .ui-dialog :first").parent().css("z-index","1002");
 				}
 				$(this).dialog("close").remove();
-				$(".hotnav-accesskey").remove()
+				$(".hotnav-accesskey").remove();
 				hotkeysnav() 
 			}
 		},
@@ -471,7 +471,7 @@ function dialogAndFunction(text,func, name, par){
 }
  
 function dialogConfirmComment(text,action){
-	enableblockform()
+	enableblockform();
 	$("body").css("cursor","wait");
 	divhtml ="<div id='dialog-message' title='"+warning+"'>";
 	divhtml+="<span style='height:50px; margin-top:4%; width:100%; text-align:center'>"+
@@ -553,15 +553,15 @@ function eds_attach_dialog(){
 		"<input type='hidden' name='formsesid' value='"+$("input[name=formsesid]").val()+"'/>"+
 		//"<input type='file' size='60' border='#CCC' style='margin-top:5px' name='fname_eds' onchange='submitFile(\"upload_eds\", \"upltable_eds\", \"fname_eds\");'></input>&#xA0;"+
 		"<input id='selectP12Files' type='button' onclick=\"javascript: selectP12File();\" style='width:95px; padding: 0.25em 1em; !important' value='Обзор' title='Выбрать хранилище закрытого ключа' name='selectP12Files'/>"+
-		"<input id='p12Path' type='text' readonly='readonly' style='margin-left:5px; width: 250px; padding: 0.3em 0em;' autocomplete='off' name='p12Path'/>"+
-		"<div style='margin-top:5px'><div style='width:97px; display:inline-block; text-align:right; padding-right:0px; color: #444444; font-size: 98%;'>Пароль :</div> <input type='password' id='eds_pass_temp' value='' style='width: 250px; padding: 0.3em 0em;'/></div>"+
+		"<input id='p12Path' type='text' readonly='readonly' style='margin-left:5px; width: 250px; padding: 0.3em 0;' autocomplete='off' name='p12Path'/>"+
+		"<div style='margin-top:5px'><div style='width:97px; display:inline-block; text-align:right; padding-right:0; color: #444444; font-size: 98%;'>Пароль :</div> <input type='password' id='eds_pass_temp' value='' style='width: 250px; padding: 0.3em 0em;'/></div>"+
 		"<style>.ui-progressbar .ui-progressbar-value { background-image: url(/SharedResources/jquery/css/base/images/pbar-ani.gif); }</style>"+
 		"<table id='upltable_eds' style='margin-top:5px'></table>"+
 		"</div></form>"
 	+"</span>";
 	divhtml += "</div>";
 	$("body").append(divhtml);
-	$("#selectP12Files").button()
+	$("#selectP12Files").button();
 	$("#dialog-message-attach").dialog({
 		width:385,
 		height:210,
@@ -574,14 +574,14 @@ function eds_attach_dialog(){
                     	setPassword($("#eds_pass_temp").val());
                     	if(checkPassword(storeType, fileOrDevice)){
                     		alias = getAlias(storeType);
-                        	cert = document.getElementById('SignApplet').getCertificateFromKeyStore(storeType, fileOrDevice, alias)
+                        	cert = document.getElementById('SignApplet').getCertificateFromKeyStore(storeType, fileOrDevice, alias);
                         	$.ajax({
                     			type: "POST",
                     			url: 'SignProvider?type=service&operation=check_cert&id=check_cert&cert='+cert,
                     			success:function(xml){
                     				state=$(xml).find("eds_stat").attr("stat");
                     				if(state == "ok"){
-    	                				$("body").append("<input type='hidden' id='eds_pass' value='"+$("#eds_pass_temp").val()+"'/>")
+    	                				$("body").append("<input type='hidden' id='eds_pass' value='"+$("#eds_pass_temp").val()+"'/>");
     	                                signPlainData();
     	                                $(this).dialog("close").remove();
     	                                $("#btnsavedoc").click()
@@ -619,11 +619,11 @@ function eds_attach_dialog(){
 
 /* сохранение формы */
 function SaveFormJquery() {
-	enableblockform()
+	enableblockform();
 	if($("#MyTextarea").length != 0){
 		$("#MyTextarea").val(document.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("body")[0].innerHTML)
 	}
-	$("body").notify({"text":pleasewaitdocsave,"onopen":function(){}})
+	$("body").notify({"text":pleasewaitdocsave,"onopen":function(){}});
 	divhtml ="<div id='dialog-message' title="+saving+">";
 	divhtml+="<div style='margin-top:8px'><font style='font-size:13px; font-family:Verdana,Arial,Helvetica,sans-serif; padding-left:10px'>Пожалуйста ждите...</font></div>";
 	divhtml+="<div style='margin-top:5px'><font style='font-size:13px; font-family:Verdana,Arial,Helvetica,sans-serif; padding-left:10px'>идет сохранение документа</font></div>";
@@ -636,11 +636,11 @@ function SaveFormJquery() {
 		sign="";
 		$("#frm input[name][name!=signedfields]").each(function(){
 			sign+=$(this).val()
-		})
-		$("#frm").append("<input type='hidden' name='applettype' value='sign'/>")
+		});
+		$("#frm").append("<input type='hidden' name='applettype' value='sign'/>");
 		//$("#frm").append("<input type='hidden' name='srctext' value=''/><input type='hidden' name='applettype' value='sign'/>")
         //$("input[name=srctext]").val(sign)
-		taskauthor=$("input[name=taskauthor]").val()
+		taskauthor=$("input[name=taskauthor]").val();
 		app=document.getElementById('SignApplet');
 		fullpath = $("#fullpath").val();
 		pass=$("#eds_pass").val();
@@ -659,7 +659,7 @@ function SaveFormJquery() {
 		url: 'Provider',
 		data: $("form").serialize(),
 		success:function (xml){ 
-			$(document).unbind("keydown")
+			$(document).unbind("keydown");
 			redir = $(xml).find('redirect').text();
 			$(xml).find('response').each(function(){
 				var st=$(this).attr('status');
@@ -668,8 +668,8 @@ function SaveFormJquery() {
 					if (msgtext.length==0){
 						msgtext = "Ошибка сохранения"
 					}
-					$("#notifydiv").html("<font>"+msgtext+"</font>")
-					$("body").hidenotify({"delay":800,"onclose":function(){$("#notifydiv").remove()}})
+					$("#notifydiv").html("<font>"+msgtext+"</font>");
+					$("body").hidenotify({"delay":800,"onclose":function(){$("#notifydiv").remove()}});
 					$("#dialog-message").dialog({ 
 						buttons: { 
 							Ok: function() {
@@ -688,12 +688,12 @@ function SaveFormJquery() {
 				}
 				if (st == "ok"){
 					if (msgtext.length==0){
-						$("#notifydiv").html("<font>"+documentsavedcaption+"</font>")
+						$("#notifydiv").html("<font>"+documentsavedcaption+"</font>");
 						setTimeout(function() {
 							$("body").hidenotify({"delay":200,"onclose":function(){ redir == '' ? window.history.back() : window.location = redir; }})
 						},250);
 					}else{
-						$("#notifydiv").html("<font>"+msgtext+"</font>")
+						$("#notifydiv").html("<font>"+msgtext+"</font>");
 						setTimeout(function() {
 							$("body").hidenotify({"delay":300,"onclose":function(){}})
 						},800);
@@ -720,8 +720,8 @@ function SaveFormJquery() {
 		},
 		error:function (xhr, ajaxOptions, thrownError){
 			if (xhr.status == 400){
-				$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'/>")
-				$("body").append("<div id='errordata'>"+xhr.responseText+"</div>")
+				$("body").children().wrapAll("<div id='doerrorcontent' style='display:none'/>");
+				$("body").append("<div id='errordata'>"+xhr.responseText+"</div>");
 				$("li[type='square'] > a").attr("href","javascript:backtocontent()")
 			}
 		}    
@@ -743,7 +743,7 @@ function submitFile(formid, tableID, fieldName) {
 	}else{
 		form = $('#'+formid);
 		$(form).find("#progressbar").progressbar({value:0});
-		$(form).find("#progressstate").css("display","block")
+		$(form).find("#progressstate").css("display","block");
 		var frame = createIFrame();
 		frame.onSendComplete = function() {
 			uploadComplete(tableID, getIFrameXML(frame));
@@ -764,8 +764,8 @@ var cancel_button_action;
 function processStateChange(){
 	if (req.readyState == 4){
 		if (req.status == 200){ 
-			$("#loading_attach_img").css("visibility","visible")
-			$(".button_panel").find("button:not(#canceldoc)").attr("disabled","disabled").addClass("ui-state-disabled")
+			$("#loading_attach_img").css("visibility","visible");
+			$(".button_panel").find("button:not(#canceldoc)").attr("disabled","disabled").addClass("ui-state-disabled");
 			if($("#canceldoc").attr("onclick") != "javascript:confirmCancelAttach()"){
 				cancel_button_action= $("#canceldoc").attr("onclick");
 				$("#canceldoc").attr("onclick","javascript:confirmCancelAttach()")
@@ -776,27 +776,27 @@ function processStateChange(){
 				myContentLength = $(xml).find("content_length")[0],
 				myPercent = $(xml).find("percent_complete")[0];
 			if ((isNotFinished == null) && (myPercent == null)){
-				$("#initializing").css("visibility","visible")
+				$("#initializing").css("visibility","visible");
 				window.setTimeout("ajaxFunction();", 150);
 			}else{
-				$("#readybytes, #percentready").css("visibility","visible")
+				$("#readybytes, #percentready").css("visibility","visible");
 				$("#initializing").css("visibility","hidden");
 				kbContentLength = parseInt($(myContentLength).text())/1024;
 				mbContentLength = parseInt(kbContentLength)/1024;
 				if (myPercent != null){
 					$("#progressbar").progressbar( "option", "value",parseInt($(myPercent).text()));
 					kbread = parseInt($(myBytesRead).text())/1024;
-					mbread = parseInt(kbread)/1024
-					$("#readybytes").html(Math.round(mbread * 10 ) / 10  + " из " + Math.round(mbContentLength * 10) / 10   + " мбайт загружено")
-					$("#percentready").html($(myPercent).text() + "%")
+					mbread = parseInt(kbread)/1024;
+					$("#readybytes").html(Math.round(mbread * 10 ) / 10  + " из " + Math.round(mbContentLength * 10) / 10   + " мбайт загружено");
+					$("#percentready").html($(myPercent).text() + "%");
 					window.setTimeout("ajaxFunction();", 100);
 				}else{
-					$(".button_panel").find("button:not(#canceldoc)").removeAttr("disabled").removeClass("ui-state-disabled")
+					$(".button_panel").find("button:not(#canceldoc)").removeAttr("disabled").removeClass("ui-state-disabled");
 					$("#dialog-message-cancel-attach").dialog('close').remove();
-					$("#readybytes").html(Math.round(mbContentLength * 10)/10   + " из " + Math.round(mbContentLength * 10) / 10   + " мбайт загружено")
-					$("#percentready").html("готово")
-					$("#loading_attach_img").css("visibility","hidden")
-					$("#canceldoc").attr("onclick",cancel_button_action)
+					$("#readybytes").html(Math.round(mbContentLength * 10)/10   + " из " + Math.round(mbContentLength * 10) / 10   + " мбайт загружено");
+					$("#percentready").html("готово");
+					$("#loading_attach_img").css("visibility","hidden");
+					$("#canceldoc").attr("onclick",cancel_button_action);
 					$("#progressbar").progressbar("option", "value", 100);
 				}
 			}
@@ -832,7 +832,7 @@ function createIFrame() {
 		divHTML = '<iframe style="display:none" src="about:blank" id="' + id
 			+ '" name="' + id + '" onload="sendComplete(\'' + id
 			+ '\')"></iframe>';
-	$("body").append("<div>"+divHTML +"</div>")
+	$("body").append("<div>"+divHTML +"</div>");
 	return document.getElementById(id);
 }
 
@@ -1049,7 +1049,7 @@ function addCommentToAttach(csf){
 	"</div>" +
 	"</div>";
 	$("body").append(divhtml);
-	$("#commentBox #button_panel").children("button").button()
+	$("#commentBox #button_panel").children("button").button();
 	$("#commentBox").draggable({handle:"div.headerComment"});
 	centring('commentBox',470,250);
 	$("#commentBox textarea").focus()
@@ -1064,7 +1064,7 @@ function commentToAttachOk(){
 		else if ($.cookie("lang")=="KAZ")
 			infoDialog("Түсініктеме жазыңыз");
 	}else{
-		$("#frm").append("<input type='hidden' name='comment"+control_sum_file+"' value='"+ $("#commentText").val() +"'>")
+		$("#frm").append("<input type='hidden' name='comment"+control_sum_file+"' value='"+ $("#commentText").val() +"'>");
 		if ($.cookie("lang")=="RUS" || !$.cookie("lang"))
 			$("<tr><td></td><td style='color:#777; font-size:12px'>комментарий : "+$("#commentText").val()+"</td><td></td></tr>").insertAfter("#"+control_sum_file)
 		else if ($.cookie("lang")=="ENG")

@@ -8,7 +8,7 @@ function message(text,elID){
 	 divhtml+="<span style='height:50px; margin-top:4%; width:100%; text-align:center'>"+
 	 "<font style='font-size:13px;'>"+ text +"</font>"+"</span>";
 	 divhtml += "</div>";
-	 $("body").append(divhtml)
+	 $("body").append(divhtml);
 	 $("#dialog").dialog("destroy");
 	 $("#dialog-message").dialog({
 		height:140,

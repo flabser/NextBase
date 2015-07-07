@@ -25,8 +25,8 @@ var outline = {
 	filterplace:'',
 	filterstatus:'',
 	filterresp:'',
-	filterauthor:'',
-}
+	filterauthor:''
+};
 
 var Url = {
 	encode : function (string) {
@@ -75,7 +75,7 @@ var Url = {
 		}
 		return string;
 	}
-}
+};
 
 function openregioncity(docid, group){
 	$('#img'+docid).attr("src","/SharedResources/img/classic/1/minus.png");
@@ -125,18 +125,18 @@ function openformpanel(){
 
 function ToggleCategory(el){
 	if ($(el).parent().next().next().is(":visible")){
-		$(el).children().attr("src","/SharedResources/img/classic/1/plus.png")
-		$(el).children().next("img").attr("src","/SharedResources/img/classic/1/folder_close_view.png")
-		$(el).parent().next().next().slideUp("fast")
+		$(el).children().attr("src","/SharedResources/img/classic/1/plus.png");
+		$(el).children().next("img").attr("src","/SharedResources/img/classic/1/folder_close_view.png");
+		$(el).parent().next().next().slideUp("fast");
 		if ($(el).parent().next().next().children(".entry").children(".viewlink_current").length != 0 ){
 			$(el).parent().children("font").attr("font-weight","bold")
 		}
 		SavePropVisCategory($(el).parent().next().next().attr("id"),"none")
 	}else{
-		$(el).children().attr("src","/SharedResources/img/classic/1/minus.png")
-		$(el).children().next("img").attr("src","/SharedResources/img/classic/1/folder_open_view.png")
+		$(el).children().attr("src","/SharedResources/img/classic/1/minus.png");
+		$(el).children().next("img").attr("src","/SharedResources/img/classic/1/folder_open_view.png");
 		$(el).parent().next().next().css("visibility","visible");
-		$(el).parent().next().next().slideDown("fast")
+		$(el).parent().next().next().slideDown("fast");
 		SavePropVisCategory($(el).parent().next().next().attr("id"),"block")
 	}
 }
@@ -153,8 +153,8 @@ function addDocToFav(el,docid,doctype){
 		data: "type=service&operation=add_to_favourites&id=add_to_favourites&key="+docid+"&doctype="+doctype+"&dbid=Avanti",
 		cache:false,
 		success: function (msg){
-			$(el).attr("src","/SharedResources/img/iconset/star_full.png")
-			$(el).attr("onclick","removeDocFromFav(this,"+docid+","+doctype+")")
+			$(el).attr("src","/SharedResources/img/iconset/star_full.png");
+			$(el).attr("onclick","removeDocFromFav(this,"+docid+","+doctype+")");
 			$.ajax({
 				url: "Provider?type=view&id=mydocs_count&onlyxml",
 				dataType:'xml',
@@ -178,7 +178,7 @@ function removeDocFromFav(el,docid,doctype){
 		data: "type=service&operation=remove_from_favourites&id=remove_from_favourites&key="+docid+"&doctype="+doctype+"&dbid=Avanti",
 		cache:false,
 		success: function (msg){
-			$(el).attr("src","/SharedResources/img/iconset/star_empty.png").attr("onclick","addDocToFav(this,"+docid+","+doctype+")")
+			$(el).attr("src","/SharedResources/img/iconset/star_empty.png").attr("onclick","addDocToFav(this,"+docid+","+doctype+")");
 			$.ajax({
 				url: "Provider?type=view&id=mydocs_count&onlyxml",
 				dataType:'xml',
@@ -289,7 +289,7 @@ function openCategoryView(id,cdoctype,pos,s) {
 }
 
 function closeCategoryView(id,cdoctype,pos,s){
-	$.get('Provider?type=view&id=docsbyproject&command=collaps`'+id, {})
+	$.get('Provider?type=view&id=docsbyproject&command=collaps`'+id, {});
 	$("#category"+id).next(".viewtable").remove();
 	$("#a"+id).attr("href","javascript:openCategoryView('"+id+"','"+ cdoctype+"','"+pos+"',"+s+")");
 	$("#img"+id).attr("src","/SharedResources/img/classic/1/plus.png");
@@ -300,7 +300,7 @@ function openParentDocView(element) {
 	var elem = null,
 		tr = $(element).closest("tr"),
 		docid = $(element).attr("docid"),
-		doctype = $(element).attr("doctype")
+		doctype = $(element).attr("doctype");
 	$("<tr id='loadingparentdoc"+ docid +"' style='background: #fff'><td colspan='"+ $(element).children("td").length +"' style='text-align:center'><img src='classic/img/image_311968.gif'/></td></tr>").insertAfter(tr);
 	$.ajax({
 		  url: 'Provider?type=view&id=docthread&parentdocid='+docid+'&parentdoctype='+doctype+'&command=expand`'+docid+'`'+doctype,
@@ -309,11 +309,11 @@ function openParentDocView(element) {
 			 elem = $(data);
 			 $(element).closest("td").prevAll("td").each(function(){
 				 $("<td></td>").insertBefore($(elem).children("#parentdoccell"))
-			 })
+			 });
 			 $(elem).find("#parentdoccell").attr("colspan", $(element).closest("td").nextAll("td").length +1);
-			 $("#loadingparentdoc"+docid).remove()
+			 $("#loadingparentdoc"+docid).remove();
 			 $(elem).insertAfter(tr);	
-			 $(tr).next("tr").css("background","#fff").addClass("response"+docid+doctype)
+			 $(tr).next("tr").css("background","#fff").addClass("response"+docid+doctype);
 			 $(tr).next("tr").find('font').each(function(){
 				 $(this).html($(this).html().replace("--&gt;", "<img src='/SharedResources/img/classic/arrow_blue.gif'/>"));
 			 });
@@ -326,7 +326,7 @@ function openParentDocView(element) {
 function closeResponses(element){
 	var docid = $(element).attr("docid"),
 		doctype = $(element).attr("doctype");
-	$.get('Provider?type=view&id=docthread&command=collaps`'+docid+'`'+doctype, {})
+	$.get('Provider?type=view&id=docthread&command=collaps`'+docid+'`'+doctype, {});
 	var tr = $(element).closest("tr").next("tr.response"+docid+doctype);
 	$(tr).remove();
 	$(element).attr("onclick","javascript:openParentDocView(this)").attr("src","/SharedResources/img/classic/1/plus1.png");
@@ -340,7 +340,7 @@ function refresher() {
 	if (timeout != null || timeout != undefined){
 		clearTimeout(timeout)
 	}
-	sumReloadView = 0
+	sumReloadView = 0;
 	$.cookie("refresh") !=null ? timeval= $.cookie("refresh") * 60000 : timeval=360000;
 	timeout = setTimeout("refreshAction()", timeval);
 }
@@ -352,7 +352,7 @@ function refreshAction() {
 
 function doSearch(keyWord ,num){
 	outline.curPage = num || outline.curPage;
-	keyWord = Url.encode(keyWord)
+	keyWord = Url.encode(keyWord);
 	$.ajax({
 		url: 'Provider?type=search&keyword=' + keyWord + '&page=' + outline.curPage,
 		datatype:"html",
@@ -413,22 +413,22 @@ function chooseCategoryView(category){
 }
 
 function chooseProjectView(project){
-	outline.filterproj = project
+	outline.filterproj = project;
 	updateView(outline.type, outline.viewid, outline.page, outline.command,  outline.sortField, outline.sortOrder)
 }
 
 function chooseStatusView(status){
-	outline.filterstatus = status
+	outline.filterstatus = status;
 	updateView(outline.type, outline.viewid, outline.page, outline.command,  outline.sortField, outline.sortOrder)
 }
 
 function chooseAuthorView(author){
-	outline.filterauthor = author
+	outline.filterauthor = author;
 	updateView(outline.type, outline.viewid, outline.page, outline.command,  outline.sortField, outline.sortOrder)
 }
 
 function chooseRespView(resp){
-	outline.filterresp = resp
+	outline.filterresp = resp;
 	updateView(outline.type, outline.viewid, outline.page, outline.command,  outline.sortField, outline.sortOrder)
 }
 
@@ -467,7 +467,7 @@ function openCategoryList(el, listid){
 }
 
 function hideQFilterPanel(){
-	$('#btnQFilter').removeAttr('onclick')
+	$('#btnQFilter').removeAttr('onclick');
 	$("#QFilter").slideUp("fast");
 	$("#tablecontent").animate({top:'-=29px'},'fast', function() {
 		$('#btnQFilter').attr('onclick',"openQFilterPanel();")
@@ -480,9 +480,9 @@ function hideQFilterPanel(){
 }
 
 function openQFilterPanel(){
-	$('#btnQFilter').removeAttr('onclick')
+	$('#btnQFilter').removeAttr('onclick');
 	if($("#QFilter").css("display") == 'none'){
-		$("#QFilter").slideDown("fast")
+		$("#QFilter").slideDown("fast");
 		$("#tablecontent").animate({top:'+=29px'},'fast', function() {
 			$('#btnQFilter').attr('onclick',"hideQFilterPanel();")
 		}); 
@@ -495,7 +495,7 @@ function closeCategoryList(el,listid){
 }
 
 function updateView(type, viewid, page, command,  sortField, sortOrder){
-	loadingOutline()
+	loadingOutline();
 	category = outline.category || '';
 	project = outline.project || '';
 	outline.type = type || outline.type;
@@ -563,7 +563,7 @@ function updateView(type, viewid, page, command,  sortField, sortOrder){
 						
 					}
 				});
-				$("#searchInput").css("padding","2px")
+				$("#searchInput").css("padding","2px");
 				endLoadingOutline();
 			}
 		},
@@ -597,7 +597,7 @@ function loadingOutline(){
 
 function endLoadingOutline(){
 	$('#loadingpage ,#blockWindow').css("display","none");
-	$("body").css("cursor","default")
+	$("body").css("cursor","default");
 	refresher()
 }
 

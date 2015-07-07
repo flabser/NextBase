@@ -29,9 +29,9 @@ function dragAndDropAttach(){
 					xhr.setRequestHeader('Content-Type','multipart/form-data; boundary=' + boundary);
 					xhr.onreadystatechange = function() {
 					if (this.readyState != 1) return;
-						filename=file.name
+						filename=file.name;
 						req = $.get("Uploader",processStateChange);
-					}
+					};
 					xhr.sendAsBinary(body);
 				};
 			})(files[index]);
