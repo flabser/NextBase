@@ -476,6 +476,12 @@
 														</xsl:if>
 														Единоразово
 													</option>
+													<option value="withoutkazcontent">
+														<xsl:if test="document/fields/kazcontent = 'withoutkazcontent'">
+															<xsl:attribute name="selected">selected</xsl:attribute>
+														</xsl:if>
+														Без казсодержания
+													</option>
 												</select>
 											</td>
 										</tr>
