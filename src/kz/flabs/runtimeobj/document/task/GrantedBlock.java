@@ -16,6 +16,9 @@ import java.util.Calendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GrantedBlock extends AbstractComplexObject implements Serializable {
 
+    @XmlTransient
+    private static final long serialVersionUID = 1L;
+
     @XmlElement(name = "grantdate")
     @XmlJavaTypeAdapter(CalendarAdapter.class)
     public Calendar grantdate;

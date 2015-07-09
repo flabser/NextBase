@@ -30,7 +30,7 @@ public class ExecsBlock extends AbstractComplexObject implements Serializable {
 	private ArrayList<Executor> executors = new ArrayList<Executor>();
 
     @XmlTransient
-	private static final long serialVersionUID = 3517870784033469576L;
+	private static final long serialVersionUID = 1L;
 
     @XmlAttribute
     private String className = ExecsBlock.class.getName();

@@ -6,12 +6,16 @@ import kz.flabs.exception.ComplexObjectException;
 import kz.flabs.runtimeobj.document.AbstractComplexObject;
 
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 @XmlRootElement(name = "class")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GrantedBlockCollection extends AbstractComplexObject {
+public class GrantedBlockCollection extends AbstractComplexObject implements Serializable {
+
+    @XmlTransient
+    private static final long serialVersionUID = 1L;
 
     @XmlElement(name = "grantblock")
     public ArrayList<GrantedBlock> blocks = new ArrayList<>();
