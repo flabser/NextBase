@@ -213,7 +213,9 @@ public class _Database implements Const {
 		}
 		if (parameters == null) {
 			parameters = new RunTimeParameters(simpleDateFormat);
-		}
+		} else {
+            parameters.setSimpleDateFormat(simpleDateFormat);
+        }
 		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
 				parameters, checkResponse);
 	}

@@ -17,12 +17,17 @@ public class RunTimeParameters {
 
     public HashSet<Sorting> sorting = new HashSet<Sorting>();
     public HashSet<Filter> filters = new HashSet<Filter>();
+
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
 
     public RunTimeParameters() {
     }
 
     public RunTimeParameters(SimpleDateFormat simpleDateFormat) {
+        this.simpleDateFormat = simpleDateFormat;
+    }
+
+    public void setSimpleDateFormat(SimpleDateFormat simpleDateFormat) {
         this.simpleDateFormat = simpleDateFormat;
     }
 
