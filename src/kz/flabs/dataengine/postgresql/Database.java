@@ -18,12 +18,14 @@ import kz.flabs.dataengine.postgresql.queryformula.SelectFormula;
 import kz.flabs.dataengine.postgresql.queryformula.TaskQueryFormula;
 import kz.flabs.exception.*;
 import kz.flabs.parser.FormulaBlocks;
+import kz.flabs.parser.ParserUtil;
 import kz.flabs.parser.SortByBlock;
 import kz.flabs.runtimeobj.DocumentCollection;
 import kz.flabs.runtimeobj.document.*;
 import kz.flabs.runtimeobj.document.coordination.Block;
 import kz.flabs.runtimeobj.document.coordination.BlockCollection;
 import kz.flabs.runtimeobj.document.coordination.Coordinator;
+import kz.flabs.runtimeobj.viewentry.ViewEntry;
 import kz.flabs.servlets.sitefiles.UploadedFile;
 import kz.flabs.users.User;
 import kz.flabs.util.Util;
@@ -58,6 +60,45 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
     @Override
     public IGlossaries getGlossaries() {
         return new Glossaries(env);
+    }
+
+    @Override
+    public ArrayList<ViewEntry> getGroupedEntries(String fieldName, int offset, int pageSize, User user) {
+        ArrayList<ViewEntry> vec = new ArrayList<ViewEntry>();
+        String result[] = ParserUtil.resolveFiledTypeBySuffix(fieldName);
+        Set<String> users = user.getAllUserGroups();
+
+        Connection conn = dbPool.getConnection();
+        try {
+            conn.setAutoCommit(false);
+            Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            String sql = "";
+            if (!fieldName.contains("view")) {
+                sql = "select unnest(string_to_array(cf." + result[1] + ", '#')) as val, count(cf." + result[1] + ") from custom_fields as cf where cf.name = '" + result[0] + "' and " + " cf." + result[1] + " is not null and " +
+                        " cf.docid in (select docid from readers_maindocs as rm where rm.username in (" + DatabaseUtil.prepareListToQuery(users) + ")) " +
+                        " group by val order by val limit " + pageSize + " offset " + offset;
+            } else {
+                sql = "select m." + fieldName + ", count(m." + fieldName + ") from maindocs as m where m." + fieldName + " is not null and " +
+                        "m.docid in (select docid from readers_maindocs as rm where rm.username in (" + DatabaseUtil.prepareListToQuery(users) + ")) " +
+                        " group by m." + fieldName + " order by m." + fieldName + " limit " + pageSize + " offset " + offset;
+            }
+
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                vec.add(new ViewEntry(rs.getString(1), rs.getInt(2)));
+            }
+            conn.commit();
+            s.close();
+            rs.close();
+
+        } catch (SQLException e) {
+            DatabaseUtil.errorPrint(dbID, e);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            dbPool.returnConnection(conn);
+        }
+        return vec;
     }
 
     @Override
