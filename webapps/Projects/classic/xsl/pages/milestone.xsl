@@ -126,7 +126,7 @@
 													</button>	
 												</xsl:if>
 		    								</td>	
-		    								<td style="width:50%"></td>    								
+		    								<td style="width:50%"/>
 		    							</tr>
 		    						</table>	  
 								</div>							
@@ -153,7 +153,7 @@
 													<xsl:with-param name="sortmode" select="$query/columns/viewdate/sorting/@mode"/>
 												</xsl:call-template>
 											</td>
-											<td style="width:50px;" class="thcell">										 
+											<td style="width:46px;" class="thcell">
 											</td>
 										</tr>
 									</table>

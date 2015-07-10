@@ -7,9 +7,9 @@ html {
 BODY{font-family: Verdana, Arial, Helvetica, sans-serif !important;}
 #wrapper{
 	position: absolute;
-	left:0px;
-	top:0px;
-	bottom:0px;
+	left:0;
+	top:0;
+	bottom:0;
 	width: 100%;
 	min-width: 1024px;
 }
@@ -24,8 +24,8 @@ BODY{font-family: Verdana, Arial, Helvetica, sans-serif !important;}
 	display:block; 
 	position:absolute;
 	z-index:2;	
-	top:0px;
-	left:0px;
+	top:0;
+	left:0;
 	background: url("/SharedResources/jquery/css/base/images/ui-bg_flat_0_aaaaaa_40x100.png") repeat-x scroll 50% 50% #AAAAAA;
 	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=30, Style=0);
 	-moz-opacity: 0.3; 
@@ -43,20 +43,20 @@ BODY{font-family: Verdana, Arial, Helvetica, sans-serif !important;}
 	position: absolute;
 	top: 80px;
 	bottom:1px;
-	left: 0px;
+	left: 0;
 	width: 280px;
 	overflow: auto;
 	overflow-x: hidden !important;
 	 background: #f9f9f9;
 	 border-right:1px solid #adadad;
 	 border-top:1px solid #adadad;
-	 border-botom:1px solid #adadad;
+	 border-bottom:1px solid #adadad;
 }
 .ui-widget {font-family: Verdana,Arial,Helvetica,sans-serif !important; font-size:14px !important}
 #outline .entry{ min-height:18px;}
 #outline a{text-decoration:none;}
 #outline a :hover{text-decoration:none;}
-.viewlinktitle{font-size:0.9em;vertical-align:top;margin-left:3px; font-family:arial;}
+.viewlinktitle{font-size:0.9em; vertical-align:top; margin-left:3px; font-family:arial;}
 .viewlink_current {display:inline-block; width:100%; color:#000000; font-weight:bold;}
 #outline-footer {
 	position: absolute;
@@ -74,7 +74,7 @@ BODY{font-family: Verdana, Arial, Helvetica, sans-serif !important;}
 	top: 70px;
 	bottom:1px;
 	left: 320px;
-	right:0px;
+	right:0;
 } 
 .viewtitle{	width:100%;	font-family: Verdana, Arial, Helvetica, sans-serif;	font-size: 1.3em;}
 .viewlink{ display:inline-block; vertical-align:top; width:100%;color:#000000}
@@ -82,7 +82,7 @@ BODY{font-family: Verdana, Arial, Helvetica, sans-serif !important;}
 .viewlink a :hover{text-decoration:none !important}
 .viewlink .countSpan{ font-size:0.8em; color:#A3A7B7}
 .viewlink_current a, .viewlink_current span {color:#000000; font-weight:bold;}
-.viewlink_current .countSpan{ color:#000000; font-size:0.8em; color:#444444;}
+.viewlink_current .countSpan{ font-size:0.8em; color:#444444;}
 .time{	
 	 font-family: Verdana, Arial, Helvetica, sans-serif;
 	 font-size:10px;
@@ -91,7 +91,7 @@ BODY{font-family: Verdana, Arial, Helvetica, sans-serif !important;}
 }
 
 #resizer{
-	position:absolute; top: 80px; left:300px; background:#E6E6E6; width:12px; bottom:0px; border-radius: 0 6px 6px 0; border: 1px solid #adadad;  cursor:pointer;
+	position:absolute; top: 80px; left:300px; background:#E6E6E6; width:12px; bottom:0; border-radius: 0 6px 6px 0; border: 1px solid #adadad;  cursor:pointer;
 }
 
 #resizer:hover {
@@ -102,7 +102,7 @@ BODY{font-family: Verdana, Arial, Helvetica, sans-serif !important;}
 	height: 100%;
 	position:absolute;
 	cursor: pointer;
-	top:0px;
+	top:0;
 	left:253px;
 	z-index:8
 }
@@ -129,15 +129,15 @@ div .treeentrycurrent{
 }
 #viewtablediv {
 	display: block;
-	margin: 0px auto 0px auto;
+	margin: 0 auto 0 auto;
 }
 .pagenavigator a{ color:#444444; text-decoration:none;}
 
-#tableheader { height: 34px; margin-left:2px; position: absolute; top: 68px;right:3px;	left:15px;bottom: 1px; top:83px;}
+#tableheader { height: 34px; margin-left:2px; position: absolute; right:3px; left:15px;bottom: 1px; top:83px;}
 #tablecontent {
 	position: absolute;
 	top: 118px;
-    margin-left:0px;
+    margin-left:0;
 	bottom: 1px;
 	overflow: scroll;
 	overflow-x: hidden !important;
@@ -150,7 +150,7 @@ div .treeentrycurrent{
 #tablecontent-for-structurelist {
 	position: absolute;
 	top:40px;
-    margin-left:0px;
+    margin-left:0;
 	bottom: 1px;
 	overflow: scroll;
 	overflow-x: hidden !important;
@@ -163,20 +163,21 @@ div .treeentrycurrent{
 #structurelistcontent{
 	position: absolute;
 	top: 20px;
-    margin-left:0px;
+    margin-left:0;
 	bottom: 1px;
 	overflow: scroll;
 	overflow-x: hidden !important;
-	right:0px;
+	right:0;
 	left:14px;
 	display:block;
 }
 .th .thcell{	
 	text-align:center; 
 	border:none;
-	font-color:#444444
+	color:#444444;
+	padding:2px 3px 2px 2px;
 }
-.th{ background: url("/SharedResources/jquery/css/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png") #e6e6e6; height: 30px; border:1px solid #d3d3d3; height:35px}
+.th{ background: url("/SharedResources/jquery/css/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png") #e6e6e6; border:1px solid #d3d3d3; height:35px}
 .viewtable{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -185,15 +186,14 @@ div .treeentrycurrent{
 	min-width:500px;
 	width:100%;
 	position:absolute;
-	right:0px;
-	left:0px;
+	right:0;
+	left:0;
 }
-.viewtable tr td{ height:25px}
+.viewtable tr td{ height:25px; padding:2px}
 .viewtable tr:hover { background:#eeeeee}
 #tablecontent-structure {
 	position: absolute;
 	top:25px;
-	left:0px;
     margin-left:10px;
 	bottom: 1px;
 	overflow: scroll;
@@ -215,7 +215,7 @@ div .treeentrycurrent{
     font-size:11px;
     margin-left:5px;
     -moz-user-select: none;
-	-khtml-user-select: none;
+	-html-user-select: none;
 	user-select: none; 
 }
 .listbutton font:hover{
@@ -238,7 +238,7 @@ div .treeentrycurrent{
 	font-size:15px;
 }
 
- /* уведомления событий */
+ /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 #notifydiv{
 	background:#37A0DE; 
 	width:40%; 
@@ -249,9 +249,9 @@ div .treeentrycurrent{
 	text-align:center;
 	z-index:9999; 
 	display:block; 
-	border-radius:0px 0px 8px 8px; 
+	border-radius:0 0 8px 8px;
 	opacity:0.9; 
-	margin:0px 30%
+	margin:0 30%
 }
 
 #notifydiv font{

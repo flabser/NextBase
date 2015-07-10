@@ -181,11 +181,11 @@
 							<div id="tableheader" style="top:112px">
 								<table class="viewtable" id="viewtable" width="100%">
 									<tr class="th">
-										<td style="text-align:center;height:30px; width:35px;" class="thcell">
+										<td style="text-align:center; height:30px; width:35px;" class="thcell">
 											<input type="checkbox" id="allchbox" autocomplete="off" onClick="checkAll(this)"/>					
 										</td>
-										<td style="text-align:center;height:30px;width:35px;" class="thcell"></td>
-										<td style="text-align:center;height:30px;width:45px;" class="thcell">
+										<td style="text-align:center; height:30px; width:35px;" class="thcell"/>
+										<td style="text-align:center; height:30px; width:45px;" class="thcell">
 											<xsl:call-template name="sortingcell">
 												<xsl:with-param name="namefield">VIEWNUMBER</xsl:with-param>
 												<xsl:with-param name="sortorder" select="$query/columns/viewnumber/sorting/@order"/>
@@ -199,7 +199,7 @@
 												<xsl:with-param name="sortmode" select="$query/columns/viewtext1/sorting/@mode"/>
 											</xsl:call-template>
 										</td>
-										<td style="min-width:160px; width:55%" class="thcell">
+										<td style="min-width:160px; width:65%" class="thcell">
 											<xsl:value-of select ="$captions/viewtext/@caption"/>
 										</td>
 										<td style="width:200px;" class="thcell">
@@ -209,8 +209,8 @@
 												<xsl:with-param name="sortmode" select="$query/columns/viewdate/sorting/@mode"/>
 											</xsl:call-template>
 										</td>
-										<td style="width:30px;" class="thcell"></td>
-                                        <td style="width:50px;" class="thcell"></td>
+										<td style="width:30px;" class="thcell"/>
+                                        <td style="width:46px;" class="thcell"/>
 									</tr>
 								</table>
 							</div>
@@ -244,12 +244,12 @@
 			<td style="text-align:center;border:1px solid #ccc;width:35px;">
 				<input type="checkbox" name="chbox" id="{@id}" autocomplete="off" value="{@doctype}"/>
 			</td>	
-			<td style="text-align:center; border:1px solid #ccc;width:34px;">
+			<td style="text-align:center; border:1px solid #ccc;width:35px;">
 				<xsl:if test="@hasattach != 0">
 					<img id="atach" src="/SharedResources/img/classic/icons/attach.png" title="Вложений в документе: {@hasattach}"/>
 				</xsl:if>
 			</td>
-			<td style="text-align:center ;border:1px solid #ccc; width:45px;">
+			<td style="text-align:center; border:1px solid #ccc; width:45px;">
 				<a href="{@url}" title="{viewcontent/viewtext}" class="doclink">
 					<xsl:if test="@isread = 0">
 						<xsl:attribute name="style">font-weight:bold;</xsl:attribute>
@@ -257,7 +257,7 @@
 					<xsl:value-of select="viewcontent/viewnumber"/>
 				</a>
 			</td>	
-			<td style="text-align:left; border:1px solid #ccc; width:150px; padding-left:10px; word-wrap:break-word">
+			<td style="text-align:left; border:1px solid #ccc; width:150px; word-wrap:break-word">
 				<a  href="{@url}" title="{viewcontent/viewtext}" class="doclink">
 					<xsl:if test="@isread = 0">
 						<xsl:attribute name="style">font-weight:bold;</xsl:attribute>
@@ -265,7 +265,7 @@
 					<xsl:value-of select="viewcontent/viewtext1"/>
 				</a>
 			</td>			  
-			<td style="border:1px solid #ccc; min-width:160px; word-wrap:break-word; width:55%">								
+			<td style="border:1px solid #ccc; min-width:160px; word-wrap:break-word; width:65%">
 				<xsl:if test="@hasresponse='1'">
 					<img style="vertical-align:-4px; margin-left:2px; margin-right:5px; border:0px; cursor:pointer" src="/SharedResources/img/classic/1/plus1.png" docid="{@docid}" doctype="{@doctype}">
 						<xsl:attribute name='onclick'>javascript:openParentDocView(this)</xsl:attribute>
@@ -276,7 +276,7 @@
 					</img>
 				</xsl:if>
 				<xsl:if test="@hasresponse='0'">
-					<span style="width:23px; display:inline-block"></span>
+					<span style="width:23px; display:inline-block"/>
 				</xsl:if>
 				<a href="{@url}" title="{viewcontent/viewtext}" class="doclink">
 					<xsl:if test="@isread = 0">
@@ -378,7 +378,7 @@
 		<xsl:apply-templates mode="line"/>
 	</xsl:template>
 	
-	<xsl:template match="viewcontent" mode="line"></xsl:template>
+	<xsl:template match="viewcontent" mode="line"/>
 	
 	<xsl:template match="entry" mode="item">
 		<xsl:if test="@form = 'kip'">
