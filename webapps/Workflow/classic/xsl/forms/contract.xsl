@@ -192,17 +192,6 @@
 				                           		</td>   					
 											</tr>
 										</xsl:if>	
-										<!-- поля "номер" и "дата регистрации" -->
-										<tr>
-											<td class="fc">
-												<xsl:value-of select="document/captions/vn/@caption"/>&#xA0;№ :
-											</td>
-											<td>
-												<input type="text" value="{document/fields/vn}" readonly="readonly" style="width:80px;" class="td_noteditable"/>
-													&#xA0;<xsl:value-of select="document/captions/dvn/@caption" />&#xA0;
-												<input type="text" value="{substring(document/fields/dvn,1,10)}" name="dvn" readonly="readonly" onfocus="javascript:$(this).blur()" style="width:80px;" class="td_noteditable"/>
-											</td>
-										</tr>
 										<!-- поле "Номер договора у контрагента" -->
 										<tr>
 											<td class="fc" style="padding-top:5px">
