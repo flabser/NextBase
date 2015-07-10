@@ -2,7 +2,7 @@
 <rule type="page" id="contract" mode="on" history="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>pages/page.xsl</xsltfile>
+	<xsltfile>pages/page-contract.xsl</xsltfile>
 	<element mode="ON" type="INCLUDED_PAGE">
 		<name>outline</name>
 		<value>outline</value>
@@ -26,9 +26,10 @@
 	<caption name="briefcontent" source="KEYWORD">Описание документа</caption>
 	<caption name="viewtext1" source="KEYWORD">Откуда поступил</caption>
 	<caption name="viewtext2" source="KEYWORD">Описание документа</caption>
-	<caption name="viewtext3" source="KEYWORD"></caption>
-	<caption name="viewnumber">№</caption>
-	<caption name="viewdate" source="KEYWORD">Дата</caption>
+	<caption name="viewtext3">№</caption>
+	<caption name="viewdate">Дата</caption>
+	<caption name="viewtext4" source="KEYWORD">Предмет договора</caption>
+	<caption name="viewtext5" source="KEYWORD">Заказчик</caption>
 	<caption name="page" source="KEYWORD">Страница</caption>
 	<caption name="documents" source="KEYWORD">Документов</caption>
 	<caption name="updates" source="KEYWORD">Обновлено</caption>

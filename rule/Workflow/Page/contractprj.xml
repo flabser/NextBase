@@ -2,7 +2,7 @@
 <rule type="page" id="contractprj" mode="on" history="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>pages/officememoprj.xsl</xsltfile>
+	<xsltfile>pages/page-contractprj.xsl</xsltfile>
 	<element mode="ON" type="INCLUDED_PAGE">
 		<name>outline</name>
 		<value>outline</value>
@@ -32,6 +32,8 @@
 	<caption name="viewtext1" source="KEYWORD">Получатели</caption>
 	<caption name="viewtext2" source="KEYWORD">Описание документа</caption>
 	<caption name="viewtext3">№</caption>
+	<caption name="viewtext6">Заказчик</caption>
+	<caption name="viewtext5">Предмет договора</caption>
 	<caption name="viewnumber">№</caption>
 	<caption name="viewdate" source="KEYWORD">Дата</caption>
 	<caption name="BTNDELETEDOCUMENT" source="KEYWORD">Удалить документ</caption>
