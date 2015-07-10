@@ -7,6 +7,7 @@ import kz.nextbase.script.constants._DocumentModeType
 import kz.nextbase.script.events._FormQueryOpen
 import kz.nextbase.script.task._Control
 import kz.nextbase.script.task._ExecsBlocks
+import kz.pchelka.env.Environment
 
 class QueryOpen extends _FormQueryOpen {
 
@@ -40,6 +41,7 @@ class QueryOpen extends _FormQueryOpen {
 			publishParentDocs(pDoc, session, 'new') 
 		}
 		def db = session.getCurrentDatabase();
+		publishValue('rtflimit', Environment.getRtfLimitSize())
 		try{
 			def parentDoc = db.getDocumentByComplexID(webFormData.getParentDocID())
 			if (parentDoc){
@@ -67,7 +69,7 @@ class QueryOpen extends _FormQueryOpen {
 	 
 	@Override
 	public void doQueryOpen(_Session session, _Document doc, _WebFormData webFormData, String lang) {
-
+		publishValue('rtflimit', Environment.getRtfLimitSize())
 		publishValue("title",getLocalizedWord("Задание", lang) + ": " + doc.getValueString("briefcontent"))
 		def user = session.getCurrentAppUser()
 

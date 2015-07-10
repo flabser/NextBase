@@ -29,12 +29,12 @@ class QuerySave extends _FormQuerySave {
 		doc.addStringField("kazcontent", webFormData.getValueSilently("kazcontent"))
 		doc.addStringField("contractsubject", webFormData.getValueSilently("contractsubject"))
 		doc.addStringField("comments", webFormData.getValueSilently("comments"))
-		doc.addStringField("vn", webFormData.getValueSilently("vn"))
-		String dvn = webFormData.getValueSilently("dvn")
-		if(dvn != "") doc.addDateField("dvn", _Helper.convertStringToDate(dvn))
+		/*doc.addStringField("vn", webFormData.getValueSilently("vn"))*/
+		String datecontractor = webFormData.getValueSilently("datecontractor")
+		if(datecontractor != "") doc.addDateField("datecontractor", _Helper.convertStringToDate(datecontractor))
 		doc.addNumberField("contractor_one", webFormData.getNumberValueSilently("contractor_one",0))
 		doc.addNumberField("contractor_two", webFormData.getNumberValueSilently("contractor_two",0))
-
+   		def contracttorname = session.getCurrentDatabase().getGlossaryDocument(webFormData.getNumberValueSilently("contractor_one",0)).getValueString("name")
         doc.addStringField("curator", webFormData.getValueSilently("curator"));
 		doc.addStringField("briefcontent", webFormData.getValueSilently("briefcontent"))
 		doc.addStringField("contractsignedwith", webFormData.getValueSilently("contractsignedwith"))
@@ -45,29 +45,40 @@ class QuerySave extends _FormQuerySave {
 		doc.addReader(webFormData.getListOfValuesSilently("initemp") as HashSet<String>)
 		def returnURL = session.getURLOfLastPage()
         Date tDate = new Date()
-        if (doc.isNewDoc || !doc.getValueString("vn")){
-            def db = session.getCurrentDatabase()
-            int num = db.getRegNumber('contract')
-            String vnAsText = Integer.toString(num)
-            doc.addStringField("mailnotification", "")
+        if (doc.isNewDoc){
+           def db = session.getCurrentDatabase()
+           int num = db.getRegNumber('contract')
+           String vnAsText = Integer.toString(num)
+
             doc.replaceStringField("vn", vnAsText)
             doc.replaceIntField("vnnumber",num)
-            doc.replaceDateField("dvn", new Date())
-			localizedMsgBox(getLocalizedWord("Документ зарегистрирован под № ",lang) + vnAsText)
+            //doc.replaceDateField("dvn", new Date())
+			doc.addStringField("mailnotification", "")
+			localizedMsgBox(getLocalizedWord("Документ зарегистрирован под № ",lang) +  webFormData.getValueSilently("numcontractor"))
 			returnURL.changeParameter("page", "0");
 		}
 
-        doc.setViewText(getLocalizedWord('Договор',lang) +' № '+ doc.getValueString('vnnumber') + '  ' + getLocalizedWord('от',lang) + ' ' + tDate.format("dd.MM.yyyy HH:mm:ss") + ' '+ session.getStructure().getEmployer(doc.getValueString('author')).shortName)
+        doc.setViewText(getLocalizedWord('Договор',lang) +' № '+ webFormData.getValueSilently("numcontractor") + '  ' + getLocalizedWord('от',lang) + ' ' + webFormData.getValueSilently("datecontractor") + ' '+ session.getStructure().getEmployer(doc.getValueString('author')).shortName)
         doc.addViewText(doc.getValueString('contentsource'))
         doc.addViewText("" + doc.getGlossaryValue("contractor", "docid#number=" + doc.getValueString("contractor"), "name"))
-        doc.addViewText(doc.getValueString("vn"))
+        doc.addViewText(webFormData.getValueSilently("numcontractor"))
+        doc.addViewText(webFormData.getValueSilently("contractsubject"))
+        doc.addViewText(contracttorname)
 		doc.setViewNumber(doc.getValueNumber("vnnumber"))
-		doc.setViewDate(doc.getValueDate("dvn"))
+		doc.setViewDate(doc.getValueDate("datecontractor"))
 		setRedirectURL(returnURL)
 	}
 
 	def validate(_WebFormData webFormData){
 
+		if (webFormData.getValueSilently("numcontractor") == ""){
+			localizedMsgBox("Поле \"№ договора у контрагента\" не заполнено.")
+			return false
+		}
+		if (webFormData.getValueSilently("datecontractor") == ""){
+			localizedMsgBox("Поле \"Дата регистрации у контрагента\" не заполнено.")
+			return false
+		}
 		if (webFormData.getValueSilently("contentsource") == ""){
 			localizedMsgBox("Поле \"Cодержание\" не заполнено.")
 			return false

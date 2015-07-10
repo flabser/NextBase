@@ -166,9 +166,10 @@ div .treeentrycurrent{
 .th .thcell{	
 	text-align:center; 
 	border:none;
-	font-color:#444444
+	color:#444444;
+	padding:2px 3px 2px 2px;
 }
-.th{ background: url("/SharedResources/jquery/css/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png") #e6e6e6; height: 30px; border:1px solid #d3d3d3; height:35px}
+.th{ background: url("/SharedResources/jquery/css/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png") #e6e6e6;  border:1px solid #d3d3d3; height:35px}
 .viewtable{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -177,7 +178,7 @@ div .treeentrycurrent{
 	min-width:500px;
 	width:100%;
 }
-.viewtable tr td{ height:25px}
+.viewtable tr td{ height:25px; padding:2px}
 .viewtable tr:hover { background:#eeeeee}
 #tablecontent-structure {
 	position: absolute;

@@ -41,12 +41,8 @@ class QueryOpen extends _FormQueryOpen {
 		def show_compose_actions = false
 		/*def recipients = doc.getValueList("recipients")*/
 		
-		if((doc.getEditMode() == _DocumentModeType.EDIT && user.hasRole("registrator_contract")) || doc.getAuthorID() == ses.getCurrentUserID()){
-			if(doc.getValueString("vn") != ''){
-				actionBar.addAction(new _Action(getLocalizedWord("Сохранить и закрыть",lang),getLocalizedWord("Сохранить и закрыть",lang),_ActionType.SAVE_AND_CLOSE))
-			}else{
-				actionBar.addAction(new _Action(getLocalizedWord("Зарегистрировать документ",lang),getLocalizedWord("Зарегистрировать документ",lang),_ActionType.SAVE_AND_CLOSE))
-			}
+		if(doc.getEditMode() == _DocumentModeType.EDIT && user.hasRole("registrator_contract")){
+			actionBar.addAction(new _Action(getLocalizedWord("Сохранить и закрыть",lang),getLocalizedWord("Сохранить и закрыть",lang),_ActionType.SAVE_AND_CLOSE))
 		}
 		if(user.hasRole("supervisor")){
 			actionBar.addAction(new _Action(_ActionType.GET_DOCUMENT_ACCESSLIST))

@@ -118,12 +118,22 @@ class Sign_yes extends _DoScript {
                 _doc.addStringField("briefcontent", doc.getValueString("briefcontent"))
                 _doc.addStringField("contractsubject", doc.getValueString("contractsubject"))
                 _doc.addStringField("in", doc.getValueString("vn"))
+                def contracttorname = session.getCurrentDatabase().getGlossaryDocument(doc.getValueNumber("contractor_one")).getValueString("name")
                 _doc.addDateField("dvn", new Date())
+                def  datecontractor = new Date();
+                if(doc.getValueString("datecontractor") != ""){
+                    datecontractor =  _Helper.convertStringToDate(doc.getValueString("datecontractor"));
+                }
                 int num = cdb.getRegNumber("contract");
                 _doc.addStringField("vn", num.toString());
-                _doc.setViewText("Договор №" + num.toString() + " " + _Helper.getDateAsStringShort(_doc.getValueDate("dvn")) + "  " + session.getStructure()?.getEmployer(doc.getAuthorID())?.getShortName() + " " + doc.getValueString("briefcontent"));
-                _doc.addNumberField("contracttype", doc.getValueNumber("contracttype"))
+                _doc.setViewText("Договор №" +  doc.getValueString("numcontractor") + " " + doc.getValueString("datecontractor") + "  " + session.getStructure()?.getEmployer(doc.getAuthorID())?.getShortName() + " " + doc.getValueString("briefcontent"));
                 _doc.setViewNumber(_doc.getValueString("vn").isNumber() ? _doc.getValueString("vn").toInteger() : 0)
+                _doc.setViewDate(datecontractor);
+                _doc.addViewText(doc.getValueString('contentsource'))
+                _doc.addViewText("" + doc.getGlossaryValue("contractor", "docid#number=" + doc.getValueString("contractor"), "name"))
+                _doc.addViewText(doc.getValueString("numcontractor"))
+                _doc.addViewText(doc.getValueString("contractsubject"))
+                _doc.addViewText(contracttorname)
             }
             doc.getReaders().each {
                 _doc.addReader(it.userID);
@@ -135,7 +145,9 @@ class Sign_yes extends _DoScript {
             _doc.addStringField("briefcontent", doc.getValueString("briefcontent"))
             _doc.addNumberField("projectdocid", doc.getDocID())
             _doc.setParentDoc(doc)
-            _doc.setViewDate(new Date())
+            if (doc.getDocumentForm() != "contractprj") {
+                _doc.setViewDate(new Date())
+            }
             _doc.addField("link", new _CrossLink(session, doc))
             _doc.addEditor("[registrator_outgoing]");
             _doc.addEditor(doc.authorID);
