@@ -2,7 +2,7 @@
 <rule type="page" id="favdocs" mode="on" history="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>pages/favdoc-projects.page.xsl</xsltfile>
+	<xsltfile>pages/favdoc-page.xsl</xsltfile>
 	<element mode="ON" type="INCLUDED_PAGE">
 		<name>outline</name>
 		<value>outline</value>
