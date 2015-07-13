@@ -74,7 +74,7 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
             Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             String sql = "";
             if (!fieldName.contains("view")) {
-                sql = "select unnest(string_to_array(cf." + result[1] + ", '#')) as val, count(cf." + result[1] + ") from custom_fields as cf where cf.name = '" + result[0] + "' and " + " cf." + result[1] + " is not null and " +
+                sql = "select unnest(string_to_array(cf." + result[1] + "::text, '#')) as val, count(cf." + result[1] + ") from custom_fields as cf where cf.name = '" + result[0] + "' and " + " cf." + result[1] + " is not null and " +
                         " cf.docid in (select docid from readers_maindocs as rm where rm.username in (" + DatabaseUtil.prepareListToQuery(users) + ")) " +
                         " group by val order by val limit " + pageSize + " offset " + offset;
             } else {
