@@ -1230,6 +1230,7 @@ public class Database extends kz.flabs.dataengine.h2.Database implements IDataba
             }
         } catch (Exception e) {
             DatabaseUtil.errorPrint(dbID, e);
+            AppEnv.logger.errorLogEntry(e);
         } finally {
             pool.returnConnection(conn);
         }

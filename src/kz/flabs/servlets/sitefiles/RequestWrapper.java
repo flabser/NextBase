@@ -76,10 +76,11 @@ public class RequestWrapper extends HttpServletRequestWrapper{
         try {
             IDatabase db = env.getDataBase();
             uploadedFiles = db.insertBlobTables(items);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+			if (uploadedFiles == null) {
+				AppEnv.logger.errorLogEntry("uploadedFiles is null");
+			}
+        } catch (Exception e) {
+			AppEnv.logger.errorLogEntry(e);
         }
     }
 
