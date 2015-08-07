@@ -1,5 +1,20 @@
 package kz.pchelka.env;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.Const;
 import kz.flabs.dataengine.IDatabase;
@@ -23,6 +38,7 @@ import kz.pchelka.scheduler.IDaemon;
 import kz.pchelka.scheduler.IProcessInitiator;
 import kz.pchelka.scheduler.Scheduler;
 import kz.pchelka.server.Server;
+
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.SASLAuthentication;
@@ -31,17 +47,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import javax.xml.parsers.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class Environment implements Const, ICache, IProcessInitiator {
 
@@ -56,11 +61,11 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 	public static ISystemDatabase systemBase;
 	public static String defaultSender = "";
-	public static HashMap <String, String> mimeHash = new HashMap <String, String>();
+	public static HashMap<String, String> mimeHash = new HashMap<String, String>();
 	public static boolean adminConsoleEnable;
-	public static HashMap <String, Site> webAppToStart = new HashMap <String, Site>();
+	public static HashMap<String, Site> webAppToStart = new HashMap<String, Site>();
 	public static String tmpDir;
-	public static ArrayList <String> fileToDelete = new ArrayList <String>();
+	public static ArrayList<String> fileToDelete = new ArrayList<String>();
 	public static ILogger logger;
 	public static int delaySchedulerStart;
 	public static Scheduler scheduler = new Scheduler();
@@ -99,17 +104,18 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	public static RunMode debugMode = RunMode.OFF;
 
 	private static boolean schedulerStarted;
-	private static HashMap <String, ExternalHost> externalHost = new HashMap <String, ExternalHost>();
-	private static HashMap <String, AppEnv> applications = new HashMap <String, AppEnv>();
-	private static HashMap <String, IDatabase> dataBases = new HashMap <String, IDatabase>();
+	private static HashMap<String, ExternalHost> externalHost = new HashMap<String, ExternalHost>();
+	private static HashMap<String, AppEnv> applications = new HashMap<String, AppEnv>();
+	private static HashMap<String, IDatabase> dataBases = new HashMap<String, IDatabase>();
 	private static boolean xmppEnable;
 
-	private static HashMap <String, Object> cache = new HashMap <String, Object>();
+	private static HashMap<String, Object> cache = new HashMap<String, Object>();
 	private static int countOfApp;
-	private static ArrayList <IDatabase> delayedStart = new ArrayList <IDatabase>();
-    private static Integer rtfLimitSize = 3892;
+	private static ArrayList<IDatabase> delayedStart = new ArrayList<IDatabase>();
+	private static Integer rtfLimitSize = 3892;
 
-    public static String backupDir;
+	public static String backupDir;
+
 	public static void init() {
 		logger = Server.logger;
 		initProcess();
@@ -130,8 +136,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 			serverVersion = XMLUtil.getNumberContent(xmlDocument, "/nextbase/webserver/version", 7);
 
-			webServicesEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/webserver/webservices/@mode")
-					.equalsIgnoreCase("on");
+			webServicesEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/webserver/webservices/@mode").equalsIgnoreCase("on");
 
 			hostName = XMLUtil.getTextContent(xmlDocument, "/nextbase/hostname");
 			if (hostName.isEmpty()) {
@@ -166,8 +171,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 			delaySchedulerStart = XMLUtil.getNumberContent(xmlDocument, "/nextbase/scheduler/startdelaymin", 1);
 
-			defaultRedirectURL = "/"
-					+ XMLUtil.getTextContent(xmlDocument, "/nextbase/applications/@default", false, "Workspace", true);
+			defaultRedirectURL = "/" + XMLUtil.getTextContent(xmlDocument, "/nextbase/applications/@default", false, "Workspace", true);
 
 			NodeList nodeList = XMLUtil.getNodeList(xmlDocument, "/nextbase/applications");
 			if (nodeList.getLength() > 0) {
@@ -179,8 +183,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 						String appName = XMLUtil.getTextContent(appNode, "name", false);
 						Site site = new Site();
 						site.appBase = appName;
-						site.authType = AuthTypes.valueOf(XMLUtil.getTextContent(appNode, "authtype", false,
-								"WORKSPACE", false));
+						site.authType = AuthTypes.valueOf(XMLUtil.getTextContent(appNode, "authtype", false, "WORKSPACE", false));
 						site.name = XMLUtil.getTextContent(appNode, "name/@sitename", false);
 						String globalAttrValue = XMLUtil.getTextContent(appNode, "name/@global", false);
 						if (!globalAttrValue.isEmpty()) {
@@ -199,13 +202,13 @@ public class Environment implements Const, ICache, IProcessInitiator {
 					secureHttpPort = XMLUtil.getNumberContent(xmlDocument, "/nextbase/ssl/port", 38789);
 					keyPwd = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/keypass");
 					keyStore = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/keystore");
-					isClientSSLAuthEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/clientauth/@mode")
-							.equalsIgnoreCase("on");
+					isClientSSLAuthEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/clientauth/@mode").equalsIgnoreCase("on");
 					if (isClientSSLAuthEnable) {
 						trustStore = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/clientauth/truststorefile");
 						trustStorePwd = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/clientauth/truststorepass");
 					}
-					// logger.normalLogEntry("SSL is enabled. keyPass: " + keyPwd +", keyStore:" +
+					// logger.normalLogEntry("SSL is enabled. keyPass: " +
+					// keyPwd +", keyStore:" +
 					// keyStore);
 					logger.normalLogEntry("TLS is enabled");
 					httpSchema = "https";
@@ -218,8 +221,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			}
 
 			try {
-				mailEnable = (XMLUtil.getTextContent(xmlDocument, "/nextbase/mailagent/@mode").equalsIgnoreCase("on")) ? true
-						: false;
+				mailEnable = (XMLUtil.getTextContent(xmlDocument, "/nextbase/mailagent/@mode").equalsIgnoreCase("on")) ? true : false;
 				if (mailEnable) {
 					SMTPHost = XMLUtil.getTextContent(xmlDocument, "/nextbase/mailagent/smtphost");
 					defaultSender = XMLUtil.getTextContent(xmlDocument, "/nextbase/mailagent/defaultsender");
@@ -239,15 +241,11 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 			try {
 				if (adminConsoleEnable) {
-					remoteConsole = (XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/@mode")
-							.equalsIgnoreCase("on")) ? true : false;
+					remoteConsole = (XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/@mode").equalsIgnoreCase("on")) ? true : false;
 					if (remoteConsole) {
-						remoteConsoleServer = XMLUtil.getTextContent(xmlDocument,
-								"/nextbase/adminapp/remoteconsole/server");
-						remoteConsolePort = Integer.parseInt(XMLUtil.getTextContent(xmlDocument,
-								"/nextbase/adminapp/remoteconsole/port"));
-						logger.normalLogEntry("RemoteConsole server: " + remoteConsoleServer + " port: "
-								+ remoteConsolePort);
+						remoteConsoleServer = XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/server");
+						remoteConsolePort = Integer.parseInt(XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/port"));
+						logger.normalLogEntry("RemoteConsole server: " + remoteConsoleServer + " port: " + remoteConsolePort);
 					} else {
 						logger.normalLogEntry("RemoteConsole disabled");
 					}
@@ -260,12 +258,10 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			}
 
 			try {
-				xmppEnable = (XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/@mode")
-						.equalsIgnoreCase("on")) ? true : false;
+				xmppEnable = (XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/@mode").equalsIgnoreCase("on")) ? true : false;
 				if (xmppEnable) {
 					XMPPServer = XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/xmppserver");
-					XMPPServerPort = XMLUtil.getNumberContent(xmlDocument, "/nextbase/instmsgagent/xmppserverport",
-							5222);
+					XMPPServerPort = XMLUtil.getNumberContent(xmlDocument, "/nextbase/instmsgagent/xmppserverport", 5222);
 					XMPPLogin = XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/xmpplogin");
 					XMPPPwd = XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/xmpppwd");
 					logger.normalLogEntry("InstantMessengerAgent is going to connect to server: " + XMPPServer);
@@ -292,14 +288,10 @@ public class Environment implements Const, ICache, IProcessInitiator {
 				chatmanager = connection.getChatManager();
 				chatmanager.addChatListener(listener);
 				/*
-				try{
-					RobotBorner l = new RobotBorner();
-					if (l.populate()){
-						vocabulary = l.getVocabulary();
-					}							
-				}catch(LocalizatorException le){
-					AppEnv.logger.verboseLogEntry(le.getMessage());
-				}*/
+				 * try{ RobotBorner l = new RobotBorner(); if (l.populate()){
+				 * vocabulary = l.getVocabulary(); } }catch(LocalizatorException
+				 * le){ AppEnv.logger.verboseLogEntry(le.getMessage()); }
+				 */
 
 			} catch (NumberFormatException nfe) {
 				logger.normalLogEntry("InstantMessengerAgent is not enabled");
@@ -317,14 +309,14 @@ public class Environment implements Const, ICache, IProcessInitiator {
 				verboseLogging = false;
 			}
 
-            try {
-                Integer limitSize = XMLUtil.getNumberContent(xmlDocument, "/nextbase/rtfcontent/limitsize");
-                if (limitSize > 0) {
-                    rtfLimitSize = limitSize;
-                }
-            } catch (NumberFormatException nfe) {
-                logger.normalLogEntry("Default size for rtfcontent field is " + rtfLimitSize + " mb");
-            }
+			try {
+				Integer limitSize = XMLUtil.getNumberContent(xmlDocument, "/nextbase/rtfcontent/limitsize");
+				if (limitSize > 0) {
+					rtfLimitSize = limitSize;
+				}
+			} catch (NumberFormatException nfe) {
+				logger.normalLogEntry("Default size for rtfcontent field is " + rtfLimitSize + " mb");
+			}
 
 			File tmp = new File("tmp");
 			if (!tmp.exists()) {
@@ -415,9 +407,9 @@ public class Environment implements Const, ICache, IProcessInitiator {
 		countOfApp--;
 	}
 
-    public static Integer getRtfLimitSize() {
-        return rtfLimitSize;
-    }
+	public static Integer getRtfLimitSize() {
+		return rtfLimitSize;
+	}
 
 	public static void addApplication(AppEnv env) {
 		applications.put(env.appType, env);
@@ -428,8 +420,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 		if (applications.size() >= countOfApp) {
 			if (delayedStart.size() > 0) {
 				for (IDatabase db : delayedStart) {
-					logger.normalLogEntry("Connecting to external module "
-							+ db.initExternalPool(ExternalModuleType.STRUCTURE));
+					logger.normalLogEntry("Connecting to external module " + db.initExternalPool(ExternalModuleType.STRUCTURE));
 					if (!schedulerStarted) {
 						Thread schedulerThread = new Thread(scheduler);
 						schedulerThread.start();
@@ -441,7 +432,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 				schedulerThread.start();
 				schedulerStarted = true;
 			}
-			delayedStart = new ArrayList <>();
+			delayedStart = new ArrayList<>();
 		}
 	}
 
@@ -461,11 +452,11 @@ public class Environment implements Const, ICache, IProcessInitiator {
 		return dataBases.get(dbID);
 	}
 
-	public static HashMap <String, IDatabase> getDatabases() {
+	public static HashMap<String, IDatabase> getDatabases() {
 		return dataBases;
 	}
 
-	public static Collection <AppEnv> getApplications() {
+	public static Collection<AppEnv> getApplications() {
 		return applications.values();
 	}
 
@@ -536,8 +527,8 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	}
 
 	@Override
-	public StringBuffer getPage(Page page, Map <String, String[]> formData) throws ClassNotFoundException,
-			RuleException, QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
+	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, QueryFormulaParserException,
+			DocumentException, DocumentAccessException, QueryException {
 		Object obj = cache.get(page.getID());
 		String cacheParam = formData.get("cache")[0];
 		if (obj == null || cacheParam.equalsIgnoreCase("reload")) {
@@ -556,7 +547,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	}
 
 	public static void shutdown() {
-		if (XMPPServerEnable) Environment.connection.disconnect();
+		// if (XMPPServerEnable) Environment.connection.disconnect();
 	}
 
 	@Override
