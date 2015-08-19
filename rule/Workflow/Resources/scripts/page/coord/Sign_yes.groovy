@@ -119,6 +119,7 @@ class Sign_yes extends _DoScript {
                 _doc.addStringField("contractsubject", doc.getValueString("contractsubject"))
                 _doc.addStringField("in", doc.getValueString("vn"))
                 def contracttorname = session.getCurrentDatabase().getGlossaryDocument(doc.getValueNumber("contractor_one")).getValueString("name")
+                def contracttortwoname = session.getCurrentDatabase().getGlossaryDocument(doc.getValueNumber("contractor_two")).getValueString("name")
                 _doc.addDateField("dvn", new Date())
                 def  datecontractor = new Date();
                 if(doc.getValueString("datecontractor") != ""){
@@ -134,6 +135,7 @@ class Sign_yes extends _DoScript {
                 _doc.addViewText(doc.getValueString("numcontractor"))
                 _doc.addViewText(doc.getValueString("contractsubject"))
                 _doc.addViewText(contracttorname)
+                _doc.addViewText(contracttortwoname)
             }
             doc.getReaders().each {
                 _doc.addReader(it.userID);

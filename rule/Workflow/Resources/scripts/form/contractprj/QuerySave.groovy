@@ -54,6 +54,7 @@ class QuerySave extends _FormQuerySave {
 		doc.addNumberField("contractor_one", webFormData.getNumberValueSilently("contractor_one",0))
 		doc.addNumberField("contractor_two", webFormData.getNumberValueSilently("contractor_two",0))
 		def contracttorname = session.getCurrentDatabase().getGlossaryDocument(webFormData.getNumberValueSilently("contractor_one",0)).getValueString("name")
+		def contracttortwoname = session.getCurrentDatabase().getGlossaryDocument(webFormData.getNumberValueSilently("contractor_two",0)).getValueString("name")
 		doc.addStringField("curator", webFormData.getValueSilently("curator"));
 		doc.addStringField("contractsignedwith", webFormData.getValueSilently("contractsignedwith"));
 		/*def recipient = session.createEmployerCollection(webFormData.getListOfValuesSilently("recipient"))
@@ -215,6 +216,7 @@ class QuerySave extends _FormQuerySave {
 		doc.addViewText(blocksCollection.getSignBlock().getFirstCoordinator().getUserID())
 		doc.addViewText(doc.getValueString('contractsubject'))
 		doc.addViewText(contracttorname)
+		doc.addViewText(contracttortwoname)
 		def cBlock = blocksCollection.getCurrentBlock()
 		if (cBlock)	{
             doc.addViewText(cBlock.getCurrentCoordinatorsAsText())
