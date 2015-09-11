@@ -2935,7 +2935,9 @@ public class Database extends DatabaseCore implements IDatabase, Const {
                 "union " +
                 "select g.docid, g.doctype from glossary as g where ddbid='" + ddbID + "' " +
                 "union " +
-                "select gr.groupid, " + Const.DOCTYPE_GROUP + " from groups as gr where cast(groupid as varchar) = '" + ddbID + "'";
+                "select gr.groupid, " + Const.DOCTYPE_GROUP + " from groups as gr where cast(groupid as varchar) = '" + ddbID + "'" +
+                "union " +
+                "select e.empid as docid, e.doctype from employers as e where e.ddbid = '" + ddbID + "' ";
         try {
             conn.setAutoCommit(false);
             statement = conn.createStatement();
