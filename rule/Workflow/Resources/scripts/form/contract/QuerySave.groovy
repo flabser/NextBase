@@ -35,6 +35,7 @@ class QuerySave extends _FormQuerySave {
 		doc.addNumberField("contractor_one", webFormData.getNumberValueSilently("contractor_one",0))
 		doc.addNumberField("contractor_two", webFormData.getNumberValueSilently("contractor_two",0))
    		def contracttorname = session.getCurrentDatabase().getGlossaryDocument(webFormData.getNumberValueSilently("contractor_one",0)).getValueString("name")
+   		def contracttortwoname = session.getCurrentDatabase().getGlossaryDocument(webFormData.getNumberValueSilently("contractor_two",0)).getValueString("name")
         doc.addStringField("curator", webFormData.getValueSilently("curator"));
 		doc.addStringField("briefcontent", webFormData.getValueSilently("briefcontent"))
 		doc.addStringField("contractsignedwith", webFormData.getValueSilently("contractsignedwith"))
@@ -64,6 +65,7 @@ class QuerySave extends _FormQuerySave {
         doc.addViewText(webFormData.getValueSilently("numcontractor"))
         doc.addViewText(webFormData.getValueSilently("contractsubject"))
         doc.addViewText(contracttorname)
+        doc.addViewText(contracttortwoname)
 		doc.setViewNumber(doc.getValueNumber("vnnumber"))
 		doc.setViewDate(doc.getValueDate("datecontractor"))
 		setRedirectURL(returnURL)

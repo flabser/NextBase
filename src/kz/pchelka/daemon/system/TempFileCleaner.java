@@ -1,19 +1,19 @@
 package kz.pchelka.daemon.system;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import kz.flabs.webrule.scheduler.DaysOfWeek;
 import kz.pchelka.env.Environment;
 import kz.pchelka.scheduler.AbstractDaemon;
 import kz.pchelka.scheduler.IProcessInitiator;
 import kz.pchelka.scheduler.Scheduler;
 
-import java.io.File;
-import java.util.ArrayList;
-
-public class TempFileCleaner extends AbstractDaemon {		
-	private int ac;	
+public class TempFileCleaner extends AbstractDaemon {
+	private int ac;
 
 	@Override
-	public int process(IProcessInitiator processOwner) {		
+	public int process(IProcessInitiator processOwner) {
 		ac = 0;
 		if (isFirstStart){
 			File folder = new File(Environment.tmpDir);
@@ -29,29 +29,36 @@ public class TempFileCleaner extends AbstractDaemon {
 			for(String filePath: Environment.fileToDelete){
 				File file = new File(filePath);
 				while(file.getParentFile() != null && !file.getParentFile().getName().equals("tmp")){
-                    System.out.println(file.getParentFile().getName());
-                    file = file.getParentFile();
-                }
-                if(file.getParentFile() == null)
-                    file = null;
-                delete(file); 				
+					System.out.println(file.getParentFile().getName());
+					file = file.getParentFile();
+				}
+				if(file.getParentFile() == null) {
+					file = null;
+				}
+				delete(file);
 			}
 		}
 		if (ac > 0){
-			Scheduler.logger.verboseLogEntry(getID() + ac + " temporary files deleted");
+			Scheduler.logger.verboseLogEntry(getID() + ac + " temporary files were deleted");
 		}
 		return 0;
 	}
 
 	public void delete(File file) {
-		if(file == null || !file.exists())
+		if(file == null || !file.exists()) {
 			return;
+		}
 		if(file.isDirectory()){
-			for(File f : file.listFiles())
+			for(File f : file.listFiles()) {
 				delete(f);
-			if (file.delete()) ac ++ ;
+			}
+			if (file.delete()) {
+				ac ++ ;
+			}
 		}else{
-			if (file.delete()) ac ++ ;
+			if (file.delete()) {
+				ac ++ ;
+			}
 		}
 	}
 
@@ -62,5 +69,5 @@ public class TempFileCleaner extends AbstractDaemon {
 		daysOfWeek.add(DaysOfWeek.ALL_WEEK);
 		return daysOfWeek;
 	}
-	
+
 }

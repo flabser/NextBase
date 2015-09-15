@@ -100,7 +100,7 @@
 						<xsl:if test="@isread = '0'">
 							<xsl:attribute name="style">font-weight:bold; margin-left:5px</xsl:attribute>
 						</xsl:if>
-						<xsl:value-of select="viewcontent/viewtext4"/>
+						<xsl:value-of select="viewcontent/viewtext6"/>
 					</a>
 				</div>
 			</td>
@@ -362,7 +362,7 @@
 							 					</td>
 												<td style="width:200px;" class="thcell">
 													<xsl:call-template name="sortingcellpage">
-														<xsl:with-param name="namefield" select="'VIEWTEXT4'"/>
+														<xsl:with-param name="namefield" select="'VIEWTEXT6'"/>
 														<xsl:with-param name="sortorder" select="//query/columns/viewtext4/sorting/@order"/>
 														<xsl:with-param name="sortmode" select="//query/columns/viewtext4/sorting/@mode"/>
 													</xsl:call-template>
