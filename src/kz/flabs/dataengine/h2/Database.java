@@ -2274,11 +2274,12 @@ public class Database extends DatabaseCore implements IDatabase, Const {
     }
 
     public void deleteDocument(String docID, boolean completely, User user) throws DocumentException, DocumentAccessException, SQLException, DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
-        Connection conn = dbPool.getConnection();
-        BaseDocument doc = getDocumentByDdbID(docID, user.getAllUserGroups(), user.getUserID());
+
+        BaseDocument doc = getDocumentByDOCID(docID, user.getAllUserGroups(), user.getUserID());
         if (doc == null) {
             throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED, user.getUserID());
         }
+        Connection conn = dbPool.getConnection();
         try {
             String sql;
             Statement statement = conn.createStatement();
@@ -2918,6 +2919,30 @@ public class Database extends DatabaseCore implements IDatabase, Const {
             default:
                 throw new DocumentException(DocumentExceptionType.UNKNOW_DOCUMENT_TYPE);
         }
+    }
+
+    public BaseDocument getDocumentByDOCID(String docID, Set<String> complexUserID, String absoluteUserID) throws DocumentException, DocumentAccessException, ComplexObjectException {
+        Statement statement;
+        BaseDocument doc = null;
+        Connection conn = dbPool.getConnection();
+        String sql = "select m.docid, m.doctype from maindocs as m, readers_maindocs as rm where m.docid = rm.docid and rm.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + ") and m.docID='" + docID + "' limit 1 ";
+        try {
+            conn.setAutoCommit(false);
+            statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs.next()) {
+                doc = getDocumentByComplexID(rs.getInt("doctype"), rs.getInt("docid"), complexUserID, absoluteUserID);
+                statement.close();
+                conn.commit();
+            } else {
+                throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED, Const.sysUser);
+            }
+        } catch (SQLException e) {
+            DatabaseUtil.errorPrint(dbID, e);
+        } finally {
+            dbPool.returnConnection(conn);
+        }
+        return doc;
     }
 
     @Override
