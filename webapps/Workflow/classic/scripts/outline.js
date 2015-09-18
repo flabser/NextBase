@@ -216,7 +216,6 @@ function undelGlossary(dbID){
 				if(notrestoredcount !=''){ divhtml+="<font>Документов не восстановлено:"+notrestoredcount+"</font>";}
 				divhtml += "</div>";
 				$("body").append(divhtml);
-				$("#dialog-message").dialog("destroy");
 				$("#dialog-message").dialog({
 					modal: true,
 					buttons: {
