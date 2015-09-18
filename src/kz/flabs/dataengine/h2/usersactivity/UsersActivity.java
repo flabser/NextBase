@@ -5,6 +5,7 @@ import kz.flabs.dataengine.*;
 import kz.flabs.dataengine.h2.Database;
 import kz.flabs.runtimeobj.document.BaseDocument;
 import kz.flabs.runtimeobj.document.Document;
+import kz.flabs.runtimeobj.document.structure.Employer;
 import kz.flabs.runtimeobj.viewentry.IViewEntry;
 import kz.flabs.runtimeobj.viewentry.ViewEntry;
 import kz.flabs.runtimeobj.viewentry.ViewEntryCollection;
@@ -731,13 +732,15 @@ public class UsersActivity implements IUsersActivity {
     }
 
     private String getDocumentAttrSet(ResultSet rs) throws SQLException {
+        Employer initiator = db.getStructure().getAppUser(rs.getString("userid"));
         return " dbid=\"" + rs.getString("DBID") + "\" ddbid=\"" + rs.getString("DDBID") + "\"" +
                 " doctype=\"" + rs.getString("DOCTYPE") + "\" docid=\"" + rs.getString("DOCID") + "\"" +
                 " eventtime=\"" + Database.dateTimeFormat.format(rs.getTimestamp("EVENTTIME")) + "\" " +
                 " id =\"" + rs.getInt("ID") + "\"" +
                 " ip =\"" + rs.getString("CLIENTIP") + "\"" +
                 XMLUtil.getAsAttribute("viewtext", rs.getString("VIEWTEXT") != null ? rs.getString("VIEWTEXT") : "") +
-                " userid=\"" + rs.getString("USERID") + "\"";
+                " userid=\"" + rs.getString("USERID") + "\"" +
+                (initiator != null ? " initfio =\"" + initiator.getFullName() + "\"" : "");
     }
 
     @Override
