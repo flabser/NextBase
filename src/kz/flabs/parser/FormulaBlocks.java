@@ -30,7 +30,7 @@ public final class FormulaBlocks implements Const{
 	private SortByBlock sortByBlock;
 	private Filter quickFilter;
 
-	private static final Pattern blocksPattern = Pattern.compile("\\S+?\\s*(!=|=|<>|<|>|~\\*|~|\\s+not in\\s+|\\s+in\\s+|\\s+is\\s+){1}\\s*[^\f\n\r\t]+?(\\s*&|\\s*and\\s{1}|\\s*or\\s{1}|\\Z|\\s*\\Z)");
+	private static final Pattern blocksPattern = Pattern.compile("\\S+?\\s*(!=|=|<>|<|>|~\\*|~|\\s+match\\s+|\\s+not in\\s+|\\s+in\\s+|\\s+is\\s+){1}\\s*[^\f\n\r\t]+?(\\s*&|\\s*and\\s{1}|\\s*or\\s{1}|\\Z|\\s*\\Z)");
 	private static final Pattern sysFieldsPattern = Pattern.compile("^\\(?(form|author|docid|viewtext|viewnumber|regdate|lastupdate|ddbid|parentdocid|parentdoctype|has_response)");
 	private static final Pattern projectFieldsPattern = Pattern.compile("^\\(?(form|author|docid|viewtext|coordstatus|vnnumber|docversion|isrejected|regdocid)");
 	private static final Pattern structureFieldsPattern = Pattern.compile("^\\(?(form|author|docid|viewtext|empid|depid|orgid|bossid|ismain|fullname|shortname|userid|post|isboss|type)");

@@ -15,12 +15,13 @@ public class FieldExpression {
     //public String condition = "";
     public boolean valueIsQuoted;
     public boolean isSuggestionRequest;
+    public boolean isRegexRequest;
     public boolean paramatrized;
     public String parameterName;
     public FieldType fieldType = FieldType.TEXT;
 
     private static final Pattern splitConditionOperands =
-            Pattern.compile("(\\(*)(\\S*)\\s*(<=|>=|<>|!=|=|<|>|~\\*|~|\\s+in\\s+|\\s+not in\\s+|\\s+is\\s+){1}\\s*([^\f\n\r\t]+?)(\\s+&|\\s+and|\\s+or|\\s*\\)$|\\s*\\Z|\\Z)");
+            Pattern.compile("(\\(*)(\\S*)\\s*(<=|>=|<>|!=|=|<|>|~\\*|~|\\s+match\\s+|\\s+in\\s+|\\s+not in\\s+|\\s+is\\s+){1}\\s*([^\f\n\r\t]+?)(\\s+&|\\s+and|\\s+or|\\s*\\)$|\\s*\\Z|\\Z)");
     private static final Pattern quotedPattern = Pattern.compile("^('|\"){1}(.*?)('|\"){1}\\s*(\\s*&|\\s*and|\\s*or|\\Z|\\s*\\)|\\s*\\Z)$");
     private static final Pattern unQuotedPattern = Pattern.compile("^\\s*(\\d+)\\s*(\\s*&|\\s*and|\\s*or|\\Z|\\s*\\Z)$");
     private static final Pattern fieldTypePattern = Pattern.compile("^\\s*(\\S*)#(\\S*)\\s*$");
@@ -32,11 +33,13 @@ public class FieldExpression {
         if (matcher.find()) {
             openingElement = matcher.group(1);
             fieldName = matcher.group(2);
-            operand = matcher.group(3);
+            operand = matcher.group(3).trim();
             if (operand.equalsIgnoreCase("~")) {
                 isSuggestionRequest = true;
             }
-
+            if (operand.equalsIgnoreCase("match")) {
+                isRegexRequest = true;
+            }
             String fullFieldValue = matcher.group(4);
             closingElement = matcher.group(5).trim().replace("&", "AND") + " ";
 
@@ -93,14 +96,13 @@ public class FieldExpression {
         String formula = openingElement;
         if (valueIsQuoted) {
             if (isSuggestionRequest) {
-
                 if (fieldType != FieldType.DATETIME && !fieldName.contains("date")) {
                     formula += fieldName + " LIKE '%" + fieldValue + "%' ";
                 } else {
                     formula += "cast (" + fieldName + " as text) LIKE '%" + fieldValue + "%' ";
                 }
-
-
+            } else if (isRegexRequest) {
+                formula += fieldName + " ~ '" + fieldValue + "' ";
             } else {
                 formula += fieldName + operand + " '" + fieldValue + "' ";
             }
