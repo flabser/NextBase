@@ -36,7 +36,7 @@ class DoScript extends _DoScript {
 		outline.addEntry(e4)
 		
 		def e5 = new _OutlineEntry(getLocalizedWord("На согласование",lang), getLocalizedWord("На согласование",lang), "waitforcoord", "Provider?type=page&id=waitforcoord&page=0")
-		def col5 = db.getCollectionOfDocuments("(form='officememoprj' or form='outgoingprj') and viewtext5 ~ '" + session.getCurrentUserID() + "' and viewtext3 = 'COORDINATING'", false)
+		def col5 = db.getCollectionOfDocuments("(form='officememoprj' or form='outgoingprj') and viewtext5 match '\\y" + session.getCurrentUserID() + "\\y' and viewtext3 = 'COORDINATING'", false)
 		e5.setValue(col5.getCount())
 		outline.addEntry(e5)
 		
