@@ -17,7 +17,7 @@ class DoScript extends _DoScript {
 			page = Integer.parseInt(formData.getValue("page"))
 		}
 		
-		def formula = "(form='officememoprj' or form='outgoingprj') and viewtext5 ~ '" + session.getCurrentUserID() + "' and viewtext3 = 'COORDINATING'";
+		def formula = "(form='officememoprj' or form='outgoingprj') and viewtext5 match '\\y" + session.getCurrentUserID() + "\\y' and viewtext3 = 'COORDINATING'";
 		def db = session.getCurrentDatabase()
 		def col = db.getCollectionOfDocuments(formula, page, true, true)
 		setContent(col)
