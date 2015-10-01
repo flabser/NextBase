@@ -2273,9 +2273,9 @@ public class Database extends DatabaseCore implements IDatabase, Const {
         }
     }
 
-    public void deleteDocument(String docID, boolean completely, User user) throws DocumentException, DocumentAccessException, SQLException, DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
+    public void deleteDocument(String ddbId, boolean completely, User user) throws DocumentException, DocumentAccessException, SQLException, DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
 
-        BaseDocument doc = getDocumentByDOCID(docID, user.getAllUserGroups(), user.getUserID());
+        BaseDocument doc = getDocumentByDdbID(ddbId, user.getAllUserGroups(), user.getUserID());
         if (doc == null) {
             throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED, user.getUserID());
         }
@@ -2362,11 +2362,12 @@ public class Database extends DatabaseCore implements IDatabase, Const {
     public void deleteDocument(int docType, int docID, User user, boolean completely) throws DocumentException, DocumentAccessException, SQLException, DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
         @Deprecated
         boolean flushCache = false;
-        Connection conn = dbPool.getConnection();
         BaseDocument doc = getDocumentByComplexID(docType, docID);
         if (doc == null) {
             throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED, user.getUserID());
         }
+
+        Connection conn = dbPool.getConnection();
         try {
             boolean checkAuthors = checkAuthors(docType);
             String tableName = DatabaseUtil.getMainTableName(docType);

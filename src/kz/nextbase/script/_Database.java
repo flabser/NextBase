@@ -237,7 +237,7 @@ public class _Database implements Const {
 		parameters.getSorting().add(s);
 		parameters.sortingMap.put(sortingColumnName, s);
 		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse);
+                parameters, checkResponse);
 	}
 
 	public _ViewEntryCollection getCollectionOfGlossaries(_ViewEntryCollectionParam param) {
@@ -253,7 +253,7 @@ public class _Database implements Const {
 		}
 
 		return dataBase.getGlossaries().getCollectionByCondition(sf, param.getPageNum(), param.getPageSize(),
-				session.getExpandedDocuments(), parameters, param.withResponse());
+                session.getExpandedDocuments(), parameters, param.withResponse());
 	}
 
 	public _ViewEntryCollection getCollectionOfGlossaries(String queryCondition, int pageNum, int pageSize) {
@@ -284,7 +284,7 @@ public class _Database implements Const {
 		}
 
 		return dataBase.getGlossaries().getCollectionByCondition(sf, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse);
+                parameters, checkResponse);
 	}
 
 	public _ViewEntryCollection getCollectionOfTopics(String queryCondition, int pageNum, int pageSize) {
@@ -308,7 +308,7 @@ public class _Database implements Const {
 		ArrayList <_ViewEntry> col = new ArrayList <_ViewEntry>();
 
 		ArrayList <ViewEntry> entryCollection = dataBase.getGroupedEntries(fieldName,
-				dataBase.calcStartEntry(pageNum, pageSize), pageSize, user);
+                dataBase.calcStartEntry(pageNum, pageSize), pageSize, user);
 		for (ViewEntry ve : entryCollection) {
 			col.add(new _ViewEntry(ve, session));
 		}
@@ -364,7 +364,7 @@ public class _Database implements Const {
 		}
 
 		ArrayList <BaseDocument> docsCollection = dataBase.getDocumentsForMonth(userGroups, userID, form, fieldName, m,
-				dataBase.calcStartEntry(pageNum, pageSize), pageSize);
+                dataBase.calcStartEntry(pageNum, pageSize), pageSize);
 		for (BaseDocument doc : docsCollection) {
 			col.add(new _Document(doc));
 		}
@@ -579,7 +579,7 @@ public class _Database implements Const {
 	public _DocumentCollection getPrjsCollection(String condition, HashSet <String> complexUserID, String absoluteUserID)
 			throws DocumentException, DocumentAccessException, QueryFormulaParserException {
 		ArrayList <BaseDocument> docs = dataBase.getProjects().getDocumentsByCondition(condition, complexUserID,
-				absoluteUserID);
+                absoluteUserID);
 		return new _DocumentCollection(docs, session);
 	}
 
@@ -715,9 +715,9 @@ public class _Database implements Const {
 		}
 	}
 
-	public boolean deleteDocument(String docID, boolean completely) throws _Exception {
+	public boolean deleteDocument(String ddbId, boolean completely) throws _Exception {
 		try {
-			dataBase.deleteDocument(docID, completely, user);
+			dataBase.deleteDocument(ddbId, completely, user);
 		} catch (DocumentAccessException e) {
 			if (e.exceptionType == ExceptionType.DOCUMENT_DELETE_RESTRICTED) {
 				throw new _Exception(_ExceptionType.DOCUMENT_DELETING_ERROR,
