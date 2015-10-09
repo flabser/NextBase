@@ -73,7 +73,7 @@ public class CrossLink extends AbstractComplexObject implements Serializable{
 	@Override
 	public String getContent() {
 		StringBuffer xmlContent = new StringBuffer(10000);
-		xmlContent.append("<viewText>" + getViewText() + "</viewText>");
+		xmlContent.append("<viewText>" + getViewText().replaceAll("&", "&amp;") + "</viewText>");
 		xmlContent.append("<url>" + getURL().replaceAll("&", "&amp;") + "</url>");
 		
 		return xmlContent.toString();
