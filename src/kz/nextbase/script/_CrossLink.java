@@ -54,7 +54,7 @@ public class _CrossLink implements _IXMLContent {
 	
 	@Override
 	public String toXML() throws _Exception {
-		return "<entry url=\"" + getURL().toString().replace("&", "&amp;") + "\">" + getViewText() + "</entry>";
+		return "<entry url=\"" + getURL().toString().replace("&", "&amp;") + "\">" + getViewText().replaceAll("&", "&amp;") + "</entry>";
 	}
 
 	public CrossLink getBaseObject() {
