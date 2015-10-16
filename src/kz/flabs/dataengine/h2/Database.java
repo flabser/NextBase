@@ -250,14 +250,16 @@ public class Database extends DatabaseCore implements IDatabase, Const {
     public Document getMainDocumentByID(int docID, Set<String> complexUserID, String absoluteUserID) throws DocumentAccessException, DocumentException, ComplexObjectException {
         Document doc = new Document(this, absoluteUserID);
         Connection conn = dbPool.getConnection();
-        String sql = "select * from MAINDOCS as m, CUSTOM_FIELDS as cf where exists "
+        String sql = "select * from MAINDOCS as m " +
+                "left join CUSTOM_FIELDS as cf on cf.docid = " + docID +
+                " where exists "
                 + "(select * from readers_maindocs as rm where rm.docid = " + docID;
 
         if (!complexUserID.contains("[supervisor]")) {
             sql += " and rm.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
         }
 
-        sql += ") and m.docid = " + docID + " and cf.docid = " + docID;
+        sql += ") and m.docid = " + docID;
         try {
             conn.setAutoCommit(false);
             Statement statement = conn.createStatement();
