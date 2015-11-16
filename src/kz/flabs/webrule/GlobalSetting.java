@@ -1,5 +1,40 @@
 package kz.flabs.webrule;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.charset.Charset;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.StringTokenizer;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import kz.flabs.appdaemon.AppDaemonRule;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.DatabaseType;
@@ -10,30 +45,8 @@ import kz.flabs.webrule.eds.EDSSetting;
 import kz.flabs.webrule.module.ExternalModule;
 import kz.flabs.webrule.scheduler.ScheduleSettings;
 import kz.flabs.webrule.synchronizer.SynchroGlobalSetting;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
-
-import javax.crypto.*;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.*;
-import java.nio.charset.Charset;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.StringTokenizer;
 
 public class GlobalSetting {
 	public String description;
@@ -53,14 +66,14 @@ public class GlobalSetting {
 	public String logo;
 	public String appName;
 	public int licCount;
-	public RunMode isOn;	
+	public RunMode isOn;
 	public boolean autoDeployEnable;
 	public boolean isValid;
 	public boolean multiLangEnable;
-	public ArrayList <Lang> langsList = new ArrayList <Lang>();
-	public Lang primaryLang;	
-	public ArrayList <Skin> skinsList = new ArrayList <Skin>();	
-	public HashMap <String, Skin> skinsMap = new HashMap <String, Skin>();
+	public ArrayList<Lang> langsList = new ArrayList<Lang>();
+	public Lang primaryLang;
+	public ArrayList<Skin> skinsList = new ArrayList<Skin>();
+	public HashMap<String, Skin> skinsMap = new HashMap<String, Skin>();
 	public Skin defaultSkin;
 	public SynchroGlobalSetting syncroGlobalSettings;
 	public EDSSetting edsSettings;
@@ -70,13 +83,12 @@ public class GlobalSetting {
 	public ScheduleSettings timeWaitingSchedSettings;
 	public ScheduleSettings recalcualtorSchedSettings;
 	public String vocabulary = "vocabulary.xml";
-    public boolean stopCoordAfterNo = Boolean.FALSE;
-    public boolean sendToSignAfterNo = Boolean.TRUE;
+	public boolean stopCoordAfterNo = Boolean.FALSE;
+	public boolean sendToSignAfterNo = Boolean.TRUE;
 
 	public UserRoleCollection roleCollection = new UserRoleCollection();
-	public HashMap <String, ExternalModule> extModuleMap = new HashMap <String, ExternalModule>();
-	
-	
+	public HashMap<String, ExternalModule> extModuleMap = new HashMap<String, ExternalModule>();
+
 	private String dbPassword;
 	private String pwdEnco = "";
 	private SecretKey key = null;
@@ -87,7 +99,7 @@ public class GlobalSetting {
 	private String userNameEnco = "";
 	private String authmethod = "";
 
-	public GlobalSetting(String path, AppEnv env){
+	public GlobalSetting(String path, AppEnv env) {
 		globalFilePath = path;
 		rulePath = "rule" + File.separator + env.appType;
 		try {
@@ -99,27 +111,24 @@ public class GlobalSetting {
 			doc = db.parse(path);
 
 			id = env.appType;
-			if (id.equalsIgnoreCase("system")){
+			if (id.equalsIgnoreCase("system")) {
 				AppEnv.logger.warningLogEntry("a name \"system\" is reserved name of application.");
 			}
 
 			AppEnv.logger.normalLogEntry("Loading: " + this.getClass().getSimpleName() + ", id=" + id);
-			if ( XMLUtil.getTextContent(doc, "/rule/@mode").equalsIgnoreCase("on") ) {
+			if (XMLUtil.getTextContent(doc, "/rule/@mode").equalsIgnoreCase("on")) {
 				isOn = RunMode.ON;
 				isValid = true;
 			}
 
-
-			if (id.equalsIgnoreCase("workspace")){
+			if (id.equalsIgnoreCase("workspace")) {
 				isWorkspace = true;
 			}
-
 
 			description = XMLUtil.getTextContent(doc, "/rule/description");
 			orgName = XMLUtil.getTextContent(doc, "/rule/orgname");
 			logo = XMLUtil.getTextContent(doc, "/rule/logo");
 			appName = XMLUtil.getTextContent(doc, "/rule/appname");
-
 
 			try {
 				String licenseCount = XMLUtil.getTextContent(doc, "/rule/liccount");
@@ -129,10 +138,10 @@ public class GlobalSetting {
 			}
 
 			try {
-				databaseName = XMLUtil.getTextContent(doc,	"/rule/database/name");
-				driver = XMLUtil.getTextContent(doc,"/rule/database/driver");
-				if ((!databaseName.trim().equals("")) && (!driver.trim().equals(""))) {
-					if ( XMLUtil.getTextContent(doc, "/rule/database/@autodeploy").equalsIgnoreCase("on") ) {
+				databaseName = XMLUtil.getTextContent(doc, "/rule/database/name");
+				driver = XMLUtil.getTextContent(doc, "/rule/database/driver");
+				if (!databaseName.trim().equals("") && !driver.trim().equals("")) {
+					if (XMLUtil.getTextContent(doc, "/rule/database/@autodeploy").equalsIgnoreCase("on")) {
 						autoDeployEnable = true;
 					}
 
@@ -144,10 +153,10 @@ public class GlobalSetting {
 					Node pss = doc.getElementsByTagName("password").item(0);
 					Node database = doc.getElementsByTagName("database").item(0);
 					Node pw = doc.getElementsByTagName("connectionid").item(0);
-					
-					if (!dbUserName.trim().equals("") || !dbPassword.trim().equals("") 
+
+					if (!dbUserName.trim().equals("") || !dbPassword.trim().equals("")
 							|| database.getLastChild().getNodeName().contains("connectionid")) {
-						
+
 						if (dbUserName.trim().equals("") && dbPassword.trim().equals("")) {
 							String temp = pw.getTextContent();
 							StringTokenizer tknz = new StringTokenizer(temp, "@@@");
@@ -162,28 +171,25 @@ public class GlobalSetting {
 						} else if (dbUserName.trim().equals("") && !dbPassword.trim().equals("")) {
 							String temp = pw.getTextContent();
 							StringTokenizer tknz = new StringTokenizer(temp, "@@@");
-							userNameEnco =tknz.nextToken();
+							userNameEnco = tknz.nextToken();
 							dbPassword = pss.getTextContent();
 						}
-						
-						if (!dbUserName.trim().equals("") && !dbPassword.trim().equals("") 
+
+						if (!dbUserName.trim().equals("") && !dbPassword.trim().equals("")
 								&& database.getLastChild().getNodeName().contains("connectionid")) {
 							database.removeChild(pw);
-						} 
+						}
 						deserializeKey();
-					} 
-					
+					}
+
 					databaseType = getDatabaseType(dbURL);
-                    if (databaseType == DatabaseType.POSTGRESQL && databaseName.equalsIgnoreCase("CashTracker")) {
-                        databaseType = DatabaseType.POSTGRESQL_CT;
-                    }
 					databaseHost = XMLUtil.getTextContent(doc, "/rule/database/host");
 					databaseEnable = true;
 					String ru = XMLUtil.getTextContent(doc, "/rule/database/responseused");
-					if(ru.equals("0") || ru.equalsIgnoreCase("false") ){
+					if (ru.equals("0") || ru.equalsIgnoreCase("false")) {
 						databaseResponseUsed = false;
 					}
-				}else{
+				} else {
 					AppEnv.logger.errorLogEntry("Unable to determine name of database");
 				}
 
@@ -192,11 +198,10 @@ public class GlobalSetting {
 				databaseName = "";
 			}
 
-		
 			NodeList modules = XMLUtil.getNodeList(doc, "/rule/externalmodule");
 			for (int i = 0; i < modules.getLength(); i++) {
 				ExternalModule module = new ExternalModule(modules.item(i));
-				if ( module.isOn == RunMode.ON ) {
+				if (module.isOn == RunMode.ON) {
 					extModuleMap.put(module.getType().toString(), module);
 
 				}
@@ -204,70 +209,72 @@ public class GlobalSetting {
 
 			entryPoint = XMLUtil.getTextContent(doc, "/rule/entrypoint");
 			defaultRedirectURL = XMLUtil.getTextContent(doc, "/rule/defaultredirecturl");
-			if(defaultRedirectURL.equalsIgnoreCase("")){
+			if (defaultRedirectURL.equalsIgnoreCase("")) {
 				defaultRedirectURL = "Error?type=default_url_not_defined";
 			}
 
-            stopCoordAfterNo = XMLUtil.getBooleanContent(doc, "/rule/coordination/parallel/stopcoordafterno");
-            sendToSignAfterNo = XMLUtil.getBooleanContent(doc, "/rule/coordination/parallel/sendtosignafterno");
+			stopCoordAfterNo = XMLUtil.getBooleanContent(doc, "/rule/coordination/parallel/stopcoordafterno");
+			sendToSignAfterNo = XMLUtil.getBooleanContent(doc, "/rule/coordination/parallel/sendtosignafterno");
 
 			NodeList rules = XMLUtil.getNodeList(doc, "/rule/rules/entry");
 			for (int i = 0; i < rules.getLength(); i++) {
 				rulePath = XMLUtil.getTextContent(rules.item(i), "@path", false);
 			}
-			
+
 			NodeList langs = XMLUtil.getNodeList(doc, "/rule/langs/entry");
 			for (int i = 0; i < langs.getLength(); i++) {
 				Lang lang = new Lang(langs.item(i));
-				if ( lang.isOn == RunMode.ON ) {
+				if (lang.isOn == RunMode.ON) {
 					langsList.add(lang);
-					if (lang.isPrimary){
+					if (lang.isPrimary) {
 						primaryLang = lang;
 					}
 				}
 			}
 
-			if (langsList.size() > 1) multiLangEnable = true;
+			if (langsList.size() > 1) {
+				multiLangEnable = true;
+			}
 
 			NodeList skins = XMLUtil.getNodeList(doc, "/rule/skins/entry");
 			for (int i = 0; i < skins.getLength(); i++) {
 				Skin skin = new Skin(skins.item(i));
-				if ( skin.isOn == RunMode.ON ) {
+				if (skin.isOn == RunMode.ON) {
 					skinsList.add(skin);
 					skinsMap.put(skin.id, skin);
-					if(skin.isDefault){
+					if (skin.isDefault) {
 						defaultSkin = skin;
 					}
 				}
 			}
 
-			if (skinsList.size() > 0 && defaultSkin == null){
+			if (skinsList.size() > 0 && defaultSkin == null) {
 				defaultSkin = skinsList.get(0);
 			}
 
-			if (defaultSkin == null){
+			if (defaultSkin == null) {
 				AppEnv.logger.warningLogEntry("A default skin has not defined. Probably it may cause an error ");
-			}else{
+			} else {
 				AppEnv.logger.normalLogEntry(defaultSkin.id + " is default skin");
 			}
-
 
 			NodeList roles = XMLUtil.getNodeList(doc, "/rule/roles/entry");
 			for (int i = 0; i < roles.getLength(); i++) {
 				Role role = new Role(roles.item(i), id);
-				
+
 				if (role.isValid && role.isOn == RunMode.ON) {
-					if (!role.name.equalsIgnoreCase("supervisor")){
+					if (!role.name.equalsIgnoreCase("supervisor")) {
 						roleCollection.put(role);
-					}else{
-						AppEnv.logger.warningLogEntry("A role name \"supervisor\" is reserved name of system roles. The role has not added to application");
+					} else {
+						AppEnv.logger.warningLogEntry(
+								"A role name \"supervisor\" is reserved name of system roles. The role has not added to application");
 					}
 				}
 			}
 
 			try {
 				String delay = XMLUtil.getTextContent(doc, "/rule/markdelaysec");
-				if ( !delay.trim().equals("") ) {
+				if (!delay.trim().equals("")) {
 					int delayInSec = Integer.parseInt(delay);
 					markAsReadMsDelay = delayInSec * 1000;
 				} else {
@@ -283,7 +290,7 @@ public class GlobalSetting {
 				Node schedNode = XMLUtil.getNode(node, "scheduler", false);
 				ScheduleSettings ss = new ScheduleSettings(path, schedNode);
 				AppDaemonRule adr = new AppDaemonRule();
-				adr.handlerClass = XMLUtil.getTextContent(node, "class",false);
+				adr.handlerClass = XMLUtil.getTextContent(node, "class", false);
 				adr.scheduleSettings = ss;
 				adr.setScheduleMode(ss.isOn);
 				adr.init(env);
@@ -291,11 +298,8 @@ public class GlobalSetting {
 				schedSettings.add(adr);
 			}
 
-
-
-
 			Node schedNode = XMLUtil.getNode(doc, "/rule/daemons/cyclecontrol/scheduler", false);
-			if ( schedNode != null ) {
+			if (schedNode != null) {
 				cycleContrSchedSetings = new ScheduleSettings(path, schedNode);
 			} else {
 				cycleContrSchedSetings = new ScheduleSettings(360);
@@ -304,7 +308,7 @@ public class GlobalSetting {
 
 			schedNode = XMLUtil.getNode(doc, "/rule/daemons/timewaiting/scheduler", false);
 			if (schedNode != null) {
-				timeWaitingSchedSettings = new ScheduleSettings(path,schedNode);
+				timeWaitingSchedSettings = new ScheduleSettings(path, schedNode);
 			} else {
 				timeWaitingSchedSettings = new ScheduleSettings(360);
 				AppEnv.logger.warningLogEntry("TimeWaiting schedule has not set, it will use default parameters");
@@ -312,21 +316,21 @@ public class GlobalSetting {
 
 			schedNode = XMLUtil.getNode(doc, "/rule/daemons/recalculator/scheduler", false);
 			if (schedNode != null) {
-				recalcualtorSchedSettings = new ScheduleSettings(path,schedNode);
+				recalcualtorSchedSettings = new ScheduleSettings(path, schedNode);
 			} else {
 				recalcualtorSchedSettings = new ScheduleSettings(360);
 				AppEnv.logger.warningLogEntry("Recalcualtor schedule has not set, it will use default parameters");
 			}
 
 			Node edsNode = XMLUtil.getNode(doc, "/rule/eds", false);
-			if ( edsNode != null ) {
+			if (edsNode != null) {
 				edsSettings = new EDSSetting(edsNode);
 			}
 
 			Node syncNode = XMLUtil.getNode(doc, "/rule/ddb", false);
-			if ( syncNode != null ) {
+			if (syncNode != null) {
 				syncroGlobalSettings = new SynchroGlobalSetting(syncNode);
-			}else{
+			} else {
 				syncroGlobalSettings = new SynchroGlobalSetting();
 			}
 		} catch (FileNotFoundException fnfe) {
@@ -339,58 +343,56 @@ public class GlobalSetting {
 	public String getDbUserName() {
 		return dbUserName;
 	}
-	
+
 	public String getDbPassword() {
 		return dbPassword;
 	}
-	
-	public boolean isValid(){
+
+	public boolean isValid() {
 		return true;
 	}
 
-/*    private static DatabaseType getDatabaseType(String driver) {
-        if ( driver.trim().equalsIgnoreCase("org.postgresql.Driver") ) {
-            return DatabaseType.POSTGRESQL;
-        } else if (driver.trim().equalsIgnoreCase("net.sourceforge.jtds.jdbc.Driver")) {
-            return DatabaseType.MSSQL;
-        } else {
-            return DatabaseType.H2;
-        }
-    }*/
+	/*
+	 * private static DatabaseType getDatabaseType(String driver) { if (
+	 * driver.trim().equalsIgnoreCase("org.postgresql.Driver") ) { return
+	 * DatabaseType.POSTGRESQL; } else if
+	 * (driver.trim().equalsIgnoreCase("net.sourceforge.jtds.jdbc.Driver")) {
+	 * return DatabaseType.MSSQL; } else { return DatabaseType.H2; } }
+	 */
 
-    private static DatabaseType getDatabaseType(String dbURL) {
-        if ( dbURL.contains("postgresql") ) {
-            return DatabaseType.POSTGRESQL;
-        } else if (dbURL.contains("sqlserver")) {
-            return DatabaseType.MSSQL;
-        }else if (dbURL.contains("nsf")) {
-            return DatabaseType.NSF;
-        } else {
-            return DatabaseType.H2;
-        }
-    }
+	private static DatabaseType getDatabaseType(String dbURL) {
+		if (dbURL.contains("postgresql")) {
+			return DatabaseType.POSTGRESQL;
+		} else if (dbURL.contains("sqlserver")) {
+			return DatabaseType.MSSQL;
+		} else if (dbURL.contains("oracle")) {
+			return DatabaseType.ORACLE;
+		} else {
+			return DatabaseType.H2;
+		}
+	}
 
-    public void deserializeKey() throws IOException, InterruptedException{
-        String tempPath = "";
-        if (!"".equalsIgnoreCase(globalFilePath)) {
-            File f = new File(globalFilePath);
-            tempPath = f.getParent();
-        }
-        keyFile = new File(tempPath + File.separator + "global.dat");
-        ObjectInputStream ois;
-        try {
-            if (keyFile.exists()) {
-                ois = new ObjectInputStream(new FileInputStream(keyFile));
-                key = (SecretKey)ois.readObject();
-                ois.close();
-                if ("".equalsIgnoreCase(dbPassword.trim()) || "".equalsIgnoreCase(dbUserName.trim())) {
-                    decode();
-                }
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+	public void deserializeKey() throws IOException, InterruptedException {
+		String tempPath = "";
+		if (!"".equalsIgnoreCase(globalFilePath)) {
+			File f = new File(globalFilePath);
+			tempPath = f.getParent();
+		}
+		keyFile = new File(tempPath + File.separator + "global.dat");
+		ObjectInputStream ois;
+		try {
+			if (keyFile.exists()) {
+				ois = new ObjectInputStream(new FileInputStream(keyFile));
+				key = (SecretKey) ois.readObject();
+				ois.close();
+				if ("".equalsIgnoreCase(dbPassword.trim()) || "".equalsIgnoreCase(dbUserName.trim())) {
+					decode();
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void serializeKey() {
 		try {
@@ -401,27 +403,27 @@ public class GlobalSetting {
 			objOut.writeObject(key);
 			objOut.flush();
 			objOut.close();
-		}catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void writeXml(String userName, String userNameEnco, String password, String passEnco) {
 		try {
-				
+
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse(globalFilePath);
 			doc.setXmlStandalone(true);
-			
+
 			Node username = doc.getElementsByTagName("username").item(0);
 			Node pss = doc.getElementsByTagName("password").item(0);
 			Node database = doc.getElementsByTagName("database").item(0);
 			username.setTextContent(userName);
 			pss.setTextContent(password);
-			
+
 			Node connId = doc.getElementsByTagName("connectionid").item(0);
 			if (database.getLastChild().getNodeName().contains("connectionid")) {
 				database.removeChild(connId);
@@ -431,13 +433,13 @@ public class GlobalSetting {
 				conn.appendChild(doc.createTextNode(userNameEnco + "@@@" + passEnco));
 				database.appendChild(conn);
 			}
-			
+
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 			StreamResult result = new StreamResult(new File(globalFilePath));
 			transformer.transform(source, result);
-			
+
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
 		} catch (TransformerException tfe) {
@@ -448,28 +450,29 @@ public class GlobalSetting {
 			sae.printStackTrace();
 		}
 	}
-	
+
 	public void initAlgorithm(int method) {
-		
+
 		try {
-			
+
 			cipherAlgo = Cipher.getInstance("Blowfish/ECB/PKCS5Padding");
-			switch (method){
-				case 1:
-					cipherAlgo.init(Cipher.ENCRYPT_MODE, key);
-					break;
-				case 2:
-					cipherAlgo.init(Cipher.DECRYPT_MODE, key);
-					break;
+			switch (method) {
+			case 1:
+				cipherAlgo.init(Cipher.ENCRYPT_MODE, key);
+				break;
+			case 2:
+				cipherAlgo.init(Cipher.DECRYPT_MODE, key);
+				break;
 			}
-		}  catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
 			e.printStackTrace();
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
+
 	@SuppressWarnings("restriction")
 	public void encode() {
 		String userNameEncode = "";
@@ -481,26 +484,27 @@ public class GlobalSetting {
 			byte[] encodeBytes2 = cipherAlgo.doFinal(dbPassword.getBytes(Charset.forName("UTF-8")));
 			userNameEncode = enc.encode(encodeBytes);
 			passwordEncode = enc.encode(encodeBytes2);
-			writeXml("", userNameEncode,"",passwordEncode);
-			
+			writeXml("", userNameEncode, "", passwordEncode);
+
 		} catch (IllegalBlockSizeException e) {
 			e.printStackTrace();
 		} catch (BadPaddingException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
+
 	@SuppressWarnings("restriction")
-	public void decode()  {
+	public void decode() {
 		try {
 			String userNameDecode = "";
 			String passwordDecode = "";
 			initAlgorithm(2);
 			BASE64Decoder decoder = new BASE64Decoder();
-			
+
 			byte[] tmp1 = decoder.decodeBuffer(userNameEnco);
 			byte[] encodeBytes = cipherAlgo.doFinal(tmp1);
 			userNameDecode = new String(encodeBytes);
-			
+
 			byte[] tmp2 = decoder.decodeBuffer(pwdEnco);
 			byte[] encodeBytes2 = cipherAlgo.doFinal(tmp2);
 			passwordDecode = new String(encodeBytes2);
@@ -508,16 +512,16 @@ public class GlobalSetting {
 			if (dbPassword.equals("")) {
 				dbPassword = passwordDecode;
 			}
-			if (dbUserName.equals("")){
+			if (dbUserName.equals("")) {
 				dbUserName = userNameDecode;
 			}
-			
+
 		} catch (IllegalBlockSizeException e) {
 			e.printStackTrace();
 		} catch (BadPaddingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 }
