@@ -44,12 +44,15 @@ public class DBConnectionPool implements IDBConnectionPool {
 		props.setProperty("accessToUnderlyingConnectionAllowed", "true");
 
 		ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(dbURL, props);
-		new PoolableConnectionFactory(connectionFactory, connectionPool, null, "SELECT 1", false, true);
+		String validationQuery = "SELECT 1";
+		dt = DatabaseUtil.getDatabaseType(dbURL);
+		if (dt == DatabaseType.ORACLE) {
+			validationQuery = "SELECT 1 FROM DUAL";
+		}
+		new PoolableConnectionFactory(connectionFactory, connectionPool, null, validationQuery, false, true);
 		new PoolingDataSource(connectionPool);
 		connectionPool.setMaxIdle(200);
 		connectionPool.setMaxActive(2000);
-
-		dt = DatabaseUtil.getDatabaseType(dbURL);
 
 		checkConnection();
 		isValid = true;
@@ -112,7 +115,7 @@ public class DBConnectionPool implements IDBConnectionPool {
 		/*
 		 * if (null != conn) { try { // conn.close(); // } catch (SQLException
 		 * e) { //e.printStackTrace(); }
-		 * 
+		 *
 		 * }
 		 */
 	}
@@ -163,6 +166,9 @@ public class DBConnectionPool implements IDBConnectionPool {
 				break;
 			case POSTGRESQL:
 				checkVersionQuery = "SELECT VERSION()";
+				break;
+			case ORACLE:
+				checkVersionQuery = "SELECT * FROM V$VERSION";
 				break;
 			case MSSQL:
 				checkVersionQuery = "select @@VERSION";

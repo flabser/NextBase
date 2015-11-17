@@ -9,7 +9,6 @@ import kz.flabs.appdaemon.AppDaemonRule;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.DatabasePoolException;
 import kz.flabs.dataengine.DatabaseType;
-import kz.flabs.dataengine.IDatabase;
 import kz.flabs.dataengine.IDatabaseDeployer;
 import kz.flabs.runtimeobj.Application;
 import kz.flabs.webrule.scheduler.IScheduledProcessRule;
@@ -61,14 +60,16 @@ public class PortalInit extends HttpServlet {
 						if (env.globalSetting.autoDeployEnable) {
 							AppEnv.logger.normalLogEntry("Checking database structure ...");
 							dd.deploy();
-
 						}
 						env.setDataBase(new kz.flabs.dataengine.mssql.Database(env));
 						env.globalSetting.serializeKey();
 					} else if (env.globalSetting.databaseType == DatabaseType.ORACLE) {
 						dd = new kz.flabs.dataengine.oracle.DatabaseDeployer(env);
-						IDatabase db = new kz.flabs.dataengine.oracle.Database(env);
-						env.setDataBase(db);
+						if (env.globalSetting.autoDeployEnable) {
+							AppEnv.logger.normalLogEntry("Checking database structure ...");
+							dd.deploy();
+						}
+						env.setDataBase(new kz.flabs.dataengine.oracle.Database(env));
 						env.globalSetting.serializeKey();
 					} else {
 						dd = new kz.flabs.dataengine.h2.DatabaseDeployer(env);
