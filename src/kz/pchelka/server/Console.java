@@ -22,7 +22,10 @@ public class Console implements Runnable {
 			} else if (command.equalsIgnoreCase("reset rules") || command.equalsIgnoreCase("rr")) {
 				for (AppEnv env : Environment.getApplications()) {
 					env.ruleProvider.resetRules();
+					env.flush();
 				}
+				new Environment().flush();
+				Environment.flushSessionsCach();
 			} else if (command.equals("help") || command.equalsIgnoreCase("h")) {
 				System.out.println(Util.readFile("resources" + File.separator + "console_commands.txt"));
 			} else {

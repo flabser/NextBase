@@ -14,8 +14,8 @@ import kz.flabs.runtimeobj.Application;
 import kz.flabs.webrule.scheduler.IScheduledProcessRule;
 import kz.flabs.webrule.scheduler.ScheduleType;
 import kz.pchelka.env.Environment;
-import kz.pchelka.log.Log4jLogger;
 import kz.pchelka.scheduler.IDaemon;
+import kz.pchelka.server.Server;
 
 public class PortalInit extends HttpServlet {
 
@@ -26,7 +26,6 @@ public class PortalInit extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		ServletContext context = config.getServletContext();
 		String app = context.getServletContextName();
-		AppEnv.logger = new Log4jLogger(app);
 		AppEnv env = null;
 
 		if (app.equalsIgnoreCase("Administrator")) {
@@ -35,10 +34,10 @@ public class PortalInit extends HttpServlet {
 				Environment.systemBase = new kz.flabs.dataengine.h2.SystemDatabase();
 				isValid = true;
 			} catch (DatabasePoolException e) {
-				AppEnv.logger.errorLogEntry(e);
-				AppEnv.logger.fatalLogEntry("Server has not connected to system database");
+				Server.logger.errorLogEntry(e);
+				Server.logger.fatalLogEntry("Server has not connected to system database");
 			} catch (Exception e) {
-				AppEnv.logger.errorLogEntry(e);
+				Server.logger.errorLogEntry(e);
 			}
 		} else {
 			String global = Environment.webAppToStart.get(app).global;
@@ -49,7 +48,7 @@ public class PortalInit extends HttpServlet {
 					if (env.globalSetting.databaseType == DatabaseType.POSTGRESQL) {
 						dd = new kz.flabs.dataengine.postgresql.DatabaseDeployer(env);
 						if (env.globalSetting.autoDeployEnable) {
-							AppEnv.logger.normalLogEntry("Checking database structure ...");
+							Server.logger.normalLogEntry("Checking database structure ...");
 							dd.deploy();
 
 						}
@@ -58,7 +57,7 @@ public class PortalInit extends HttpServlet {
 					} else if (env.globalSetting.databaseType == DatabaseType.MSSQL) {
 						dd = new kz.flabs.dataengine.mssql.DatabaseDeployer(env);
 						if (env.globalSetting.autoDeployEnable) {
-							AppEnv.logger.normalLogEntry("Checking database structure ...");
+							Server.logger.normalLogEntry("Checking database structure ...");
 							dd.deploy();
 						}
 						env.setDataBase(new kz.flabs.dataengine.mssql.Database(env));
@@ -66,7 +65,7 @@ public class PortalInit extends HttpServlet {
 					} else if (env.globalSetting.databaseType == DatabaseType.ORACLE) {
 						dd = new kz.flabs.dataengine.oracle.DatabaseDeployer(env);
 						if (env.globalSetting.autoDeployEnable) {
-							AppEnv.logger.normalLogEntry("Checking database structure ...");
+							Server.logger.normalLogEntry("Checking database structure ...");
 							dd.deploy();
 						}
 						env.setDataBase(new kz.flabs.dataengine.oracle.Database(env));
@@ -74,7 +73,7 @@ public class PortalInit extends HttpServlet {
 					} else {
 						dd = new kz.flabs.dataengine.h2.DatabaseDeployer(env);
 						if (env.globalSetting.autoDeployEnable) {
-							AppEnv.logger.normalLogEntry("Checking database structure ...");
+							Server.logger.normalLogEntry("Checking database structure ...");
 							dd.deploy();
 						}
 						env.setDataBase(new kz.flabs.dataengine.h2.Database(env));
@@ -85,11 +84,11 @@ public class PortalInit extends HttpServlet {
 					isValid = true;
 
 				} catch (DatabasePoolException e) {
-					AppEnv.logger.fatalLogEntry("Application \"" + env.appType + "\" has not connected to database "
+					Server.logger.fatalLogEntry("Application \"" + env.appType + "\" has not connected to database "
 							+ env.globalSetting.databaseType + "(" + env.globalSetting.dbURL + ")");
 					Environment.reduceApplication();
 				} catch (Exception e) {
-					AppEnv.logger.errorLogEntry(e);
+					Server.logger.errorLogEntry(e);
 					Environment.reduceApplication();
 				}
 
@@ -111,11 +110,11 @@ public class PortalInit extends HttpServlet {
 							// Environment.scheduler.addProcess(rule, daemon);
 							// instead You should use handler written in Groovy
 						} catch (InstantiationException e) {
-							AppEnv.logger.errorLogEntry(e);
+							Server.logger.errorLogEntry(e);
 						} catch (IllegalAccessException e) {
-							AppEnv.logger.errorLogEntry(e);
+							Server.logger.errorLogEntry(e);
 						} catch (ClassNotFoundException e) {
-							AppEnv.logger.errorLogEntry(e);
+							Server.logger.errorLogEntry(e);
 						}
 					}
 
@@ -129,15 +128,15 @@ public class PortalInit extends HttpServlet {
 									Environment.scheduler.addProcess(rule, daemon);
 								}
 							} catch (InstantiationException e) {
-								AppEnv.logger.errorLogEntry(e);
+								Server.logger.errorLogEntry(e);
 							} catch (IllegalAccessException e) {
-								AppEnv.logger.errorLogEntry(e);
+								Server.logger.errorLogEntry(e);
 							} catch (ClassNotFoundException e) {
-								AppEnv.logger.errorLogEntry("Class not found class=" + rule.getClassName());
+								Server.logger.errorLogEntry("Class not found class=" + rule.getClassName());
 							} catch (ClassCastException e) {
-								AppEnv.logger.errorLogEntry(e);
+								Server.logger.errorLogEntry(e);
 							} catch (Exception e) {
-								AppEnv.logger.errorLogEntry(e);
+								Server.logger.errorLogEntry(e);
 							}
 						}
 					}

@@ -30,7 +30,7 @@ public class Server {
 	public static RMIServer rmiServer;
 
 	public static void start() throws MalformedURLException, LifecycleException, URISyntaxException {
-		logger = new Log4jLogger("");
+		logger = new Log4jLogger("Server");
 		logger.normalLogEntry(serverTitle + " start");
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 		logger.verboseLogEntry("Build " + compilationTime);

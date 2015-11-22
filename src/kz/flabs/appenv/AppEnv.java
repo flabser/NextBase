@@ -1,5 +1,10 @@
 package kz.flabs.appenv;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import kz.flabs.dataengine.Const;
 import kz.flabs.dataengine.IDatabase;
 import kz.flabs.dataengine.IGlossariesTuner;
@@ -24,23 +29,18 @@ import kz.flabs.webrule.module.ExternalModuleType;
 import kz.pchelka.env.AuthTypes;
 import kz.pchelka.env.Environment;
 import kz.pchelka.env.Site;
+import kz.pchelka.log.ILogger;
 import kz.pchelka.scheduler.IProcessInitiator;
 import kz.pchelka.scheduler.Scheduler;
 import kz.pchelka.server.Server;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-public class AppEnv implements Const, ICache, IProcessInitiator { 
+public class AppEnv implements Const, ICache, IProcessInitiator {
 	public boolean isValid;
-	public String appType = "undefined";	
+	public String appType = "undefined";
 	public WebRuleProvider ruleProvider;
 	public HashMap<String, File> xsltFileMap = new HashMap<String, File>();
-//	public String rulePath;
-	public String adminXSLTPath;	
-	public static kz.pchelka.log.ILogger logger;	
+	// public String rulePath;
+	public String adminXSLTPath;
 	public GlobalSetting globalSetting;
 	public boolean isSystem;
 	public boolean isWorkspace;
@@ -48,116 +48,117 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 	public Vocabulary vocabulary;
 	public Scheduler scheduler;
 	public Application application;
-	
-	
+	public static ILogger logger = Server.logger;
+
 	private IDatabase dataBase;
 	private HashMap<String, StringBuffer> cache = new HashMap<String, StringBuffer>();
 
-	public AppEnv(String at){
+	public AppEnv(String at) {
 		isSystem = true;
 		isValid = true;
 		appType = "administrator";
 	}
 
-
-	public AppEnv(String appType, String globalFileName){
+	public AppEnv(String appType, String globalFileName) {
 		this.appType = appType;
-		try{			
-			AppEnv.logger.normalLogEntry("# Start application \"" + appType + "\"");
+		try {
+			Server.logger.normalLogEntry("# Start application \"" + appType + "\"");
 			Site appSite = Environment.webAppToStart.get(appType);
-			if (appSite != null) authType = appSite.authType;
-	//		rulePath = "rule" + File.separator + appType;	
-			ruleProvider = new WebRuleProvider(this);		
+			if (appSite != null) {
+				authType = appSite.authType;
+			}
+			// rulePath = "rule" + File.separator + appType;
+			ruleProvider = new WebRuleProvider(this);
 			ruleProvider.initApp(globalFileName);
-			globalSetting = ruleProvider.global;			
+			globalSetting = ruleProvider.global;
 			isWorkspace = globalSetting.isWorkspace;
-			if (globalSetting.isOn == RunMode.ON){				
-				if (globalSetting.langsList.size() > 0){
-					AppEnv.logger.normalLogEntry("Dictionary is loading...");
+			if (globalSetting.isOn == RunMode.ON) {
+				if (globalSetting.langsList.size() > 0) {
+					Server.logger.normalLogEntry("Dictionary is loading...");
 
-					try{
+					try {
 						Localizator l = new Localizator(globalSetting);
 						vocabulary = l.populate("vocabulary");
-						if (vocabulary != null){
-							AppEnv.logger.normalLogEntry("Dictionary has loaded");
-						}							
-					}catch(LocalizatorException le){
-						AppEnv.logger.verboseLogEntry(le.getMessage());
+						if (vocabulary != null) {
+							Server.logger.normalLogEntry("Dictionary has loaded");
+						}
+					} catch (LocalizatorException le) {
+						Server.logger.verboseLogEntry(le.getMessage());
 					}
 
 				}
 				isValid = true;
-			}else{
-				AppEnv.logger.warningLogEntry("Application: \"" + appType + "\" is off");
+			} else {
+				Server.logger.warningLogEntry("Application: \"" + appType + "\" is off");
 				Environment.reduceApplication();
 			}
 
-		}catch(Exception e) {
-			AppEnv.logger.errorLogEntry(e);	
-			//e.printStackTrace();
+		} catch (Exception e) {
+			Server.logger.errorLogEntry(e);
+			// e.printStackTrace();
 		}
 	}
 
 	public void setDataBase(IDatabase db) {
-		if(!db.getDbID().equalsIgnoreCase("NoDatabase")){
+		if (!db.getDbID().equalsIgnoreCase("NoDatabase")) {
 			int cv = db.getVersion();
-			if(cv != Server.necessaryDbVersion){
-				AppEnv.logger.warningLogEntry("Database version do not accord to compatible version with core of the server (necessary:" + Server.necessaryDbVersion + ", current=" + cv + ")");	
+			if (cv != Server.necessaryDbVersion) {
+				Server.logger.warningLogEntry(
+						"Database version do not accord to compatible version with core of the server (necessary:"
+								+ Server.necessaryDbVersion + ", current=" + cv + ")");
 			}
 			this.dataBase = db;
-			//	checkLangsSupport();
-		}else{
+			// checkLangsSupport();
+		} else {
 			this.dataBase = db;
 		}
 	}
-	
-	public ArrayList<Role> getRolesList(){
-		ArrayList <Role> rolesList = (ArrayList<Role>) globalSetting.roleCollection.getRolesList().clone();
-		for(AppEnv extApp: Environment.getApplications()){
-			for(ExternalModule module:extApp.globalSetting.extModuleMap.values()){
-				if (module.getType() == ExternalModuleType.STRUCTURE && module.getName().equalsIgnoreCase(appType)){
+
+	public ArrayList<Role> getRolesList() {
+		ArrayList<Role> rolesList = (ArrayList<Role>) globalSetting.roleCollection.getRolesList().clone();
+		for (AppEnv extApp : Environment.getApplications()) {
+			for (ExternalModule module : extApp.globalSetting.extModuleMap.values()) {
+				if (module.getType() == ExternalModuleType.STRUCTURE && module.getName().equalsIgnoreCase(appType)) {
 					rolesList.addAll(extApp.getRolesList());
 				}
 			}
-		}		
+		}
 		return rolesList;
 	}
-	
 
-	
-	public HashMap<String, Role> getRolesMap(){
+	public HashMap<String, Role> getRolesMap() {
 		HashMap<String, Role> rolesMap = (HashMap<String, Role>) globalSetting.roleCollection.getRolesMap().clone();
-		for(AppEnv extApp: Environment.getApplications()){
-			for(ExternalModule module:extApp.globalSetting.extModuleMap.values()){
-				if (module.getType() == ExternalModuleType.STRUCTURE && module.getName().equalsIgnoreCase(appType)){
+		for (AppEnv extApp : Environment.getApplications()) {
+			for (ExternalModule module : extApp.globalSetting.extModuleMap.values()) {
+				if (module.getType() == ExternalModuleType.STRUCTURE && module.getName().equalsIgnoreCase(appType)) {
 					rolesMap.putAll(extApp.getRolesMap());
 				}
 			}
-		}	
+		}
 		return rolesMap;
 	}
-	
+
 	public IDatabase getDataBase() {
 		return dataBase;
 	}
 
-	public String toString(){
+	@Override
+	public String toString() {
 		return Server.serverTitle + "-" + appType;
 	}
 
-
-	private boolean checkLangsSupport(){
+	private boolean checkLangsSupport() {
 		ArrayList<Lang> unsupportedlangs = new ArrayList<Lang>();
 		IGlossariesTuner glosTuner = dataBase.getGlossaries().getGlossariesTuner();
 		ArrayList<String> langs = glosTuner.getSupportedLangs();
-		for(Lang lang: globalSetting.langsList){
-			if ((!langs.contains(lang.id)) && (!lang.isPrimary)){
+		for (Lang lang : globalSetting.langsList) {
+			if (!langs.contains(lang.id) && !lang.isPrimary) {
 				unsupportedlangs.add(lang);
 			}
 		}
 
-		for(Lang lang: unsupportedlangs){
-			AppEnv.logger.warningLogEntry("Tune database to support lang (" + lang + ")");
+		for (Lang lang : unsupportedlangs) {
+			Server.logger.warningLogEntry("Tune database to support lang (" + lang + ")");
 			glosTuner.addLang(lang);
 		}
 
@@ -165,47 +166,41 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 
 	}
 
-
 	@Override
-	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
+	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
+			QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
 		boolean reload = false;
-		Object obj = cache.get(page.getID());	
+		Object obj = cache.get(page.getID());
 		String p[] = formData.get("cache");
-		if (p != null){
-			String cacheParam = formData.get("cache")[0];	
-			if (cacheParam.equalsIgnoreCase("reload")){
+		if (p != null) {
+			String cacheParam = formData.get("cache")[0];
+			if (cacheParam.equalsIgnoreCase("reload")) {
 				reload = true;
 			}
-		}		
-		if (obj == null || reload){
+		}
+		if (obj == null || reload) {
 			StringBuffer buffer = page.getContent(formData);
-			cache.put(page.getID(),buffer);
+			cache.put(page.getID(), buffer);
 			return buffer;
-		}else{
-			return (StringBuffer)obj;	
+		} else {
+			return (StringBuffer) obj;
 		}
 
 	}
-
 
 	@Override
 	public void flush() {
 		cache.clear();
 	}
 
-	
 	@Override
 	public String getOwnerID() {
 		return appType;
 	}
 
-
 	public static String getName() {
 
 		return "appType";
 	}
-
-
-	
 
 }
