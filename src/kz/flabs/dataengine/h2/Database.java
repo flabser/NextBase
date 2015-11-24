@@ -3347,11 +3347,16 @@ public class Database extends DatabaseCore implements IDatabase, Const {
             if (rs.next()) {
                 ViewEntry entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat(), responseQueryCondition);
                 coll.add(entry);
-                coll.setCount(rs.getInt(1));
+
                 while (rs.next()) {
                     entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat(), responseQueryCondition);
                     coll.add(entry);
                 }
+            }
+            sql = condition.getCountForPaging(users, parameters.getFilters());
+            rs = s.executeQuery(sql);
+            if (rs.next()) {
+                coll.setCount(rs.getInt(1));
             }
             conn.commit();
             s.close();

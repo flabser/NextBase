@@ -4,6 +4,7 @@ import kz.flabs.dataengine.DatabaseUtil;
 import kz.flabs.dataengine.ISelectFormula;
 import kz.flabs.dataengine.h2.queryformula.SelectFormula;
 import kz.flabs.parser.FormulaBlocks;
+import kz.flabs.users.RunTimeParameters;
 import kz.flabs.users.RunTimeParameters.Filter;
 import kz.flabs.users.RunTimeParameters.Sorting;
 import kz.flabs.users.User;
@@ -12,8 +13,15 @@ import java.util.Set;
 
 public class ForumQueryFormula implements ISelectFormula {
 
+
+
 	public ForumQueryFormula(FormulaBlocks queryFormulaBlocks) {	
 		
+	}
+
+	@Override
+	public String getCountForPaging(Set<String> users, Set<Filter> filters) {
+		return null;
 	}
 
 	@Override

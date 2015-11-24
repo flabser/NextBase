@@ -7,6 +7,7 @@ import kz.flabs.parser.Block;
 import kz.flabs.parser.FormulaBlockType;
 import kz.flabs.parser.FormulaBlocks;
 import kz.flabs.runtimeobj.constants.SortingType;
+import kz.flabs.users.RunTimeParameters;
 import kz.flabs.users.RunTimeParameters.Filter;
 import kz.flabs.users.RunTimeParameters.Sorting;
 import kz.flabs.users.User;
@@ -25,8 +26,13 @@ public class SelectFormula implements ISelectFormula {
 		this.preparedBlocks = preparedBlocks;
 	}
 
+	@Override
+	public String getCountForPaging(Set<String> users, Set<Filter> filters) {
+		return null;
+	}
+
 	public String getCondition(Set <String> complexUserID, int pageSize, int offset, String[] filters,
-			String[] sorting, boolean checkResponse) {
+							   String[] sorting, boolean checkResponse) {
 		String cuID = DatabaseUtil.prepareListToQuery(complexUserID), ij = "", cc = "";
 		String sysCond = getSystemConditions(filters);
 		ArrayList <Condition> conds = getConditions();

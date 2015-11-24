@@ -1,5 +1,6 @@
 package kz.flabs.users;
 
+
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.*;
 import kz.flabs.dataengine.h2.UserApplicationProfile;
@@ -420,7 +421,7 @@ public class User extends BaseDocument implements Const {
                                 //KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry)ks.getEntry(alias, protParam);
                                 //Certificate cert = entry.getCertificate();
                                 Certificate cert = ks.getCertificate(alias);
-                                publicKey = Base64.encodeBase64String(cert.getEncoded());
+                               publicKey = Base64.encodeBase64String(cert.getEncoded());
                                 setPublicKey(publicKey);
                             }
                         } catch (IOException e) {

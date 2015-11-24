@@ -21,6 +21,7 @@ public class StructSelectFormula implements ISelectFormula {
     protected FormulaBlocks preparedBlocks;
 
 
+
     public StructSelectFormula(FormulaBlocks preparedBlocks) {
         this.preparedBlocks = preparedBlocks;
     }
@@ -49,6 +50,11 @@ public class StructSelectFormula implements ISelectFormula {
             value = value.substring(0, value.length() - 2);
         }
         return value;
+    }
+
+    @Override
+    public String getCountForPaging(Set<String> users, Set<Filter> filters) {
+        return null;
     }
 
     @Override
