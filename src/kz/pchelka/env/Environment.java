@@ -576,8 +576,9 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	}
 
 	public static void addSession(UserSession userSession) {
-		System.out.println("add session " + userSession.currentUser);
-		sess.add(userSession);
+		if (userSession != null) {
+			sess.add(userSession);
+		}
 
 	}
 }
