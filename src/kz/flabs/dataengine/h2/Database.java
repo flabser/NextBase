@@ -128,7 +128,6 @@ import kz.nextbase.script._ViewEntryCollection;
 import kz.nextbase.script.constants._ReadConditionType;
 import kz.pchelka.env.Environment;
 import kz.pchelka.log.ILogger;
-import kz.pchelka.log.Log4jLogger;
 import kz.pchelka.server.Server;
 
 public class Database extends DatabaseCore implements IDatabase, Const {
@@ -137,7 +136,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	public static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 	public static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat sqlDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	public static ILogger logger = new Log4jLogger("Database");
+	public static ILogger logger = Server.logger;
 
 	protected String connectionURL = "";
 	protected IDBConnectionPool dbPool;
@@ -3470,7 +3469,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	 * ResultSet rs = s.executeQuery(sql); if (rs.next()) { ViewEntry entry =
 	 * new ViewEntry(this, rs, toExpandResponses, user,
 	 * parameters.getDateFormat(), responseQueryCondition); coll.add(entry);
-	 * 
+	 *
 	 * while (rs.next()) { entry = new ViewEntry(this, rs, toExpandResponses,
 	 * user, parameters.getDateFormat(), responseQueryCondition);
 	 * coll.add(entry); } } sql = condition.getCountForPaging(users,
