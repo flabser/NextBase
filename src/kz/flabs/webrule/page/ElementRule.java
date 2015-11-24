@@ -1,5 +1,14 @@
 package kz.flabs.webrule.page;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.codehaus.groovy.control.CompilationFailedException;
+import org.codehaus.groovy.control.CompilerConfiguration;
+import org.codehaus.groovy.control.MultipleCompilationErrorsException;
+import org.w3c.dom.Node;
+
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyObject;
 import kz.flabs.appenv.AppEnv;
@@ -17,129 +26,128 @@ import kz.flabs.webrule.constants.TagPublicationFormatType;
 import kz.flabs.webrule.constants.ValueSourceType;
 import kz.flabs.webrule.query.IQueryRule;
 import kz.flabs.webrule.query.QueryFieldRule;
-import org.codehaus.groovy.control.CompilationFailedException;
-import org.codehaus.groovy.control.CompilerConfiguration;
-import org.codehaus.groovy.control.MultipleCompilationErrorsException;
-import org.w3c.dom.Node;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-public class ElementRule implements IQueryRule, Const{	
+public class ElementRule implements IQueryRule, Const {
 	public ElementType type;
 	public boolean isValid = true;
-    public String name;
+	public String name;
 	public boolean hasElementName;
 	public RunMode isOn;
 	public String value;
-	public String doClassName;
+	public ElementScript doClassName;
 	public QueryType queryType = QueryType.UNKNOWN;
 	public RuleValue query;
 	public FormulaBlocks queryFormulaBlocks;
 	public IQueryFormula queryFormula;
 
-    private QueryMacroType macro;
+	private QueryMacroType macro;
 	private IElement parentRule;
-	
-	public ElementRule(Node node, IElement parent){	
+
+	public ElementRule(Node node, IElement parent) {
 		parentRule = parent;
-		try{	
-			name = XMLUtil.getTextContent(node,"name", false);
-			if (!name.equals(""))hasElementName = true;
-			String mode = XMLUtil.getTextContent(node,"@mode", false);
-			if (mode.equalsIgnoreCase("off")){ 
+		try {
+			name = XMLUtil.getTextContent(node, "name", false);
+			if (!name.equals("")) {
+				hasElementName = true;
+			}
+			String mode = XMLUtil.getTextContent(node, "@mode", false);
+			if (mode.equalsIgnoreCase("off")) {
 				isOn = RunMode.OFF;
-				return;					
+				return;
 			}
 
-			type = ElementType.valueOf(XMLUtil.getTextContent(node,"@type",true,"UNKNOWN", false));	
-			switch(type){
+			type = ElementType.valueOf(XMLUtil.getTextContent(node, "@type", true, "UNKNOWN", false));
+			switch (type) {
 			case STATIC_TAG:
-				value = XMLUtil.getTextContent(node,"value", false);
+				value = XMLUtil.getTextContent(node, "value", false);
 				break;
 			case SCRIPT:
 				Node qoNode = XMLUtil.getNode(node, "events/doscript", false);
-				doClassName = getClassName(qoNode,"doscript");
-				if (doClassName == null){
+				doClassName = getClassName(qoNode, "doscript");
+				if (doClassName == null) {
 					isValid = false;
 				}
-				
+
 				break;
+
 			case INCLUDED_PAGE:
-				value = XMLUtil.getTextContent(node,"value", false);
+				value = XMLUtil.getTextContent(node, "value", false);
 				break;
 			case QUERY:
-				queryType = QueryType.valueOf(XMLUtil.getTextContent(node,"doctype",true,"UNKNOWN", false));
-				query = new RuleValue(XMLUtil.getTextContent(node,"query"), XMLUtil.getTextContent(node,"query/@source",true,"STATIC", false),	
-						XMLUtil.getTextContent(node,"query/@type",true,"TEXT", false));
+				queryType = QueryType.valueOf(XMLUtil.getTextContent(node, "doctype", true, "UNKNOWN", false));
+				query = new RuleValue(XMLUtil.getTextContent(node, "query"),
+						XMLUtil.getTextContent(node, "query/@source", true, "STATIC", false),
+						XMLUtil.getTextContent(node, "query/@type", true, "TEXT", false));
 				queryFormulaBlocks = new FormulaBlocks(query.getValue(), queryType);
-				if (!queryFormulaBlocks.paramatrizedQuery){
-					queryFormula = parent.getAppEnv().getDataBase().getQueryFormula(parent.getID(), queryFormulaBlocks);	
+				if (!queryFormulaBlocks.paramatrizedQuery) {
+					queryFormula = parent.getAppEnv().getDataBase().getQueryFormula(parent.getID(), queryFormulaBlocks);
 				}
-                if(query.getSourceType() == ValueSourceType.MACRO){
-                    if(query.getValue().equalsIgnoreCase("RESPONSES")){
-                        macro = QueryMacroType.RESPONSES;
-                    }
-                }
-				String sortBy = XMLUtil.getTextContent(node, "sortby");				
+				if (query.getSourceType() == ValueSourceType.MACRO) {
+					if (query.getValue().equalsIgnoreCase("RESPONSES")) {
+						macro = QueryMacroType.RESPONSES;
+					}
+				}
+				String sortBy = XMLUtil.getTextContent(node, "sortby");
 				SortByBlock sbb;
 				if (!sortBy.equals("")) {
-					sbb = new SortByBlock(sortBy);			
+					sbb = new SortByBlock(sortBy);
 				} else {
 					sbb = new SortByBlock();
 				}
 				queryFormulaBlocks.setSortByBlock(sbb);
+			default:
+				break;
 			}
-			
-			
-			
-		}catch(Exception e) {     
-			AppEnv.logger.errorLogEntry(e);			
+
+		} catch (Exception e) {
+			AppEnv.logger.errorLogEntry(e);
 			isValid = false;
 		}
 	}
 
-	public String toString(){
+	@Override
+	public String toString() {
 		return "name=\"" + name + "\", value=" + value;
 	}
-	
-	private String getClassName(Node node, String normailzator){		
+
+	@SuppressWarnings({ "unchecked", "resource" })
+	private ElementScript getClassName(Node node, String normailzator) {
 		ClassLoader parent = getClass().getClassLoader();
 
-		String value = XMLUtil.getTextContent(node,".", true);
-		ValueSourceType qsSourceType = ValueSourceType.valueOf(XMLUtil.getTextContent(node,"@source",true,"STATIC", true));	
-		try{		
+		String value = XMLUtil.getTextContent(node, ".", true);
+		ValueSourceType qsSourceType = ValueSourceType
+				.valueOf(XMLUtil.getTextContent(node, "@source", true, "STATIC", true));
+		try {
 			Class<GroovyObject> querySave = null;
-			if (qsSourceType == ValueSourceType.FILE){
+			if (qsSourceType == ValueSourceType.GROOVY_FILE || qsSourceType == ValueSourceType.FILE) {
 				CompilerConfiguration compiler = new CompilerConfiguration();
-			//	compiler.setRecompileGroovySource(true);
-			//	compiler.setMinimumRecompilationInterval(0);
 				compiler.setTargetDirectory(parentRule.getScriptDirPath());
-			//	compiler.setClasspath(parentRule.scriptDirPath);
-			//	compiler.setClasspath("c:\\workspace\\NextBase\\libs");
-				GroovyClassLoader loader = new GroovyClassLoader(parent, compiler); 
-				File groovyFile = new File(parentRule.getScriptDirPath() + File.separator + value.replace(".",File.separator) + ".groovy");
-				if (groovyFile.exists()){
-					try{		  
+				GroovyClassLoader loader = new GroovyClassLoader(parent, compiler);
+				File groovyFile = new File(parentRule.getScriptDirPath() + File.separator
+						+ value.replace(".", File.separator) + ".groovy");
+				if (groovyFile.exists()) {
+					try {
 						querySave = loader.parseClass(groovyFile);
-						return querySave.getName();					
+						return new ElementScript(qsSourceType, querySave.getName());
 					} catch (CompilationFailedException e) {
 						AppEnv.logger.errorLogEntry(e);
 					} catch (IOException e) {
 						AppEnv.logger.errorLogEntry(e);
-					}	
-				}else{
+					}
+				} else {
 					AppEnv.logger.errorLogEntry("File \"" + groovyFile.getAbsolutePath() + "\" not found");
 				}
+			} else if (qsSourceType == ValueSourceType.JAVA_CLASS) {
+				return new ElementScript(qsSourceType, XMLUtil.getTextContent(node, ".", true));
+			} else {
+				AppEnv.logger.errorLogEntry("Included script did not implemented, form rule=" + parentRule.getID()
+						+ ", node=" + node.getBaseURI());
+			}
 
-			}else{			
-				AppEnv.logger.errorLogEntry("Included script did not implemented, form rule=" + parentRule.getID() + ", node=" + node.getBaseURI());			
-			}	
-
-		}catch(MultipleCompilationErrorsException e){
-			AppEnv.logger.errorLogEntry("Script compilation error at form rule compiling=" + parentRule.getID() + ", node=" + node.getBaseURI());
-			AppEnv.logger.errorLogEntry(e.getMessage());		
+		} catch (MultipleCompilationErrorsException e) {
+			AppEnv.logger.errorLogEntry("Script compilation error at form rule compiling=" + parentRule.getID()
+					+ ", node=" + node.getBaseURI());
+			AppEnv.logger.errorLogEntry(e.getMessage());
 		}
 		return null;
 	}
@@ -204,11 +212,9 @@ public class ElementRule implements IQueryRule, Const{
 		return parentRule.getScriptDirPath();
 	}
 
-
 	@Override
 	public ArrayList<Caption> getCaptions() {
 		return parentRule.getCaptions();
 	}
-	
-	
+
 }

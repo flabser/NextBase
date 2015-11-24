@@ -3361,6 +3361,41 @@ public class Database extends DatabaseCore implements IDatabase, Const {
             conn.commit();
             s.close();
             rs.close();
+	@Override
+	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize,
+			Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse,
+			String responseQueryCondition) {
+		ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
+		Set<String> users = user.getAllUserGroups();
+		Connection conn = dbPool.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			if (pageNum == 0) {
+				String sql = condition.getCountCondition(users, parameters.getFilters());
+				ResultSet rs = s.executeQuery(sql);
+				if (rs.next()) {
+					pageNum = RuntimeObjUtil.countMaxPage(rs.getInt(1), pageSize);
+				}
+			}
+			int offset = calcStartEntry(pageNum, pageSize);
+			String sql = condition.getCondition(users, pageSize, offset, parameters.getFilters(),
+					parameters.getSorting(), checkResponse, responseQueryCondition);
+			ResultSet rs = s.executeQuery(sql);
+			if (rs.next()) {
+				ViewEntry entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat(),
+						responseQueryCondition);
+				coll.add(entry);
+				coll.setCount(rs.getInt(1));
+				while (rs.next()) {
+					entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat(),
+							responseQueryCondition);
+					coll.add(entry);
+				}
+			}
+			conn.commit();
+			s.close();
+			rs.close();
 
         } catch (SQLException e) {
             DatabaseUtil.errorPrint(dbID, e);

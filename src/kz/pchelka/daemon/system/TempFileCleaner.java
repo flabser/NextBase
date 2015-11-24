@@ -7,7 +7,7 @@ import kz.flabs.webrule.scheduler.DaysOfWeek;
 import kz.pchelka.env.Environment;
 import kz.pchelka.scheduler.AbstractDaemon;
 import kz.pchelka.scheduler.IProcessInitiator;
-import kz.pchelka.scheduler.Scheduler;
+import kz.pchelka.server.Server;
 
 public class TempFileCleaner extends AbstractDaemon {
 	private int ac;
@@ -15,49 +15,49 @@ public class TempFileCleaner extends AbstractDaemon {
 	@Override
 	public int process(IProcessInitiator processOwner) {
 		ac = 0;
-		if (isFirstStart){
+		if (isFirstStart) {
 			File folder = new File(Environment.tmpDir);
-			if (folder.exists()){
+			if (folder.exists()) {
 				File[] list = folder.listFiles();
-				for(int i = list.length; --i>=0;){
+				for (int i = list.length; --i >= 0;) {
 					File file = list[i];
 					delete(file);
 				}
 			}
 			isFirstStart = false;
-		}else{
-			for(String filePath: Environment.fileToDelete){
+		} else {
+			for (String filePath : Environment.fileToDelete) {
 				File file = new File(filePath);
-				while(file.getParentFile() != null && !file.getParentFile().getName().equals("tmp")){
+				while (file.getParentFile() != null && !file.getParentFile().getName().equals("tmp")) {
 					System.out.println(file.getParentFile().getName());
 					file = file.getParentFile();
 				}
-				if(file.getParentFile() == null) {
+				if (file.getParentFile() == null) {
 					file = null;
 				}
 				delete(file);
 			}
 		}
-		if (ac > 0){
-			Scheduler.logger.verboseLogEntry(getID() + ac + " temporary files were deleted");
+		if (ac > 0) {
+			Server.logger.verboseLogEntry(getID() + ac + " temporary files were deleted");
 		}
 		return 0;
 	}
 
 	public void delete(File file) {
-		if(file == null || !file.exists()) {
+		if (file == null || !file.exists()) {
 			return;
 		}
-		if(file.isDirectory()){
-			for(File f : file.listFiles()) {
+		if (file.isDirectory()) {
+			for (File f : file.listFiles()) {
 				delete(f);
 			}
 			if (file.delete()) {
-				ac ++ ;
+				ac++;
 			}
-		}else{
+		} else {
 			if (file.delete()) {
-				ac ++ ;
+				ac++;
 			}
 		}
 	}

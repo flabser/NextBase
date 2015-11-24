@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Timer;
 
+import org.apache.catalina.Host;
+import org.apache.catalina.LifecycleException;
+
 import kz.flabs.dataengine.IDatabase;
 import kz.pchelka.console.rmi.server.RMIServer;
 import kz.pchelka.env.Environment;
@@ -15,12 +18,9 @@ import kz.pchelka.log.Log4jLogger;
 import kz.pchelka.webserver.IWebServer;
 import kz.pchelka.webserver.WebServerFactory;
 
-import org.apache.catalina.Host;
-import org.apache.catalina.LifecycleException;
-
 public class Server {
 	public static kz.pchelka.log.ILogger logger;
-	public static final String serverVersion = "2.7.8";
+	public static final String serverVersion = "2.7.9";
 	public static final int necessaryDbVersion = 104;
 	public static String compilationTime = "";
 	public static final String serverTitle = "NextBase " + serverVersion + "-" + Integer.toString(necessaryDbVersion);
@@ -30,13 +30,14 @@ public class Server {
 	public static RMIServer rmiServer;
 
 	public static void start() throws MalformedURLException, LifecycleException, URISyntaxException {
-		logger = new Log4jLogger("");
+		logger = new Log4jLogger("Server");
 		logger.normalLogEntry(serverTitle + " start");
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 		logger.verboseLogEntry("Build " + compilationTime);
 		logger.normalLogEntry("Copyright(c) Lab of the Future 2014. All Right Reserved");
-		logger.normalLogEntry("Operating system: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "("
-				+ System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
+		logger.normalLogEntry(
+				"Operating system: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "("
+						+ System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
 
 		Environment.init();
 

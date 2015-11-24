@@ -1,88 +1,80 @@
 package kz.flabs.servlets;
 
-import kz.flabs.appdaemon.AppDaemonRule;
-import kz.flabs.appenv.AppEnv;
-import kz.flabs.dataengine.DatabasePoolException;
-import kz.flabs.dataengine.DatabaseType;
-import kz.flabs.dataengine.IDatabase;
-import kz.flabs.dataengine.IDatabaseDeployer;
-import kz.flabs.runtimeobj.Application;
-import kz.flabs.webrule.scheduler.IScheduledProcessRule;
-import kz.flabs.webrule.scheduler.ScheduleType;
-import kz.pchelka.env.Environment;
-import kz.pchelka.log.Log4jLogger;
-import kz.pchelka.scheduler.IDaemon;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-public class PortalInit extends HttpServlet{ 
+import kz.flabs.appdaemon.AppDaemonRule;
+import kz.flabs.appenv.AppEnv;
+import kz.flabs.dataengine.DatabasePoolException;
+import kz.flabs.dataengine.DatabaseType;
+import kz.flabs.dataengine.IDatabaseDeployer;
+import kz.flabs.runtimeobj.Application;
+import kz.flabs.webrule.scheduler.IScheduledProcessRule;
+import kz.flabs.webrule.scheduler.ScheduleType;
+import kz.pchelka.env.Environment;
+import kz.pchelka.scheduler.IDaemon;
+import kz.pchelka.server.Server;
+
+public class PortalInit extends HttpServlet {
 
 	private static final long serialVersionUID = -8913620140247217298L;
 	private boolean isValid;
 
-	public void init (ServletConfig config)throws ServletException{
+	@Override
+	public void init(ServletConfig config) throws ServletException {
 		ServletContext context = config.getServletContext();
 		String app = context.getServletContextName();
-		AppEnv.logger = new Log4jLogger(app);
 		AppEnv env = null;
 
-
-		if (app.equalsIgnoreCase("Administrator")){
-			try{
+		if (app.equalsIgnoreCase("Administrator")) {
+			try {
 				env = new AppEnv(app);
-				Environment.systemBase = new kz.flabs.dataengine.h2.SystemDatabase();	
+				Environment.systemBase = new kz.flabs.dataengine.h2.SystemDatabase();
 				isValid = true;
-			}catch(DatabasePoolException e) {
-                AppEnv.logger.errorLogEntry(e);
-				AppEnv.logger.fatalLogEntry("Server has not connected to system database");
-			}catch(Exception e){
-				AppEnv.logger.errorLogEntry(e);
+			} catch (DatabasePoolException e) {
+				Server.logger.errorLogEntry(e);
+				Server.logger.fatalLogEntry("Server has not connected to system database");
+			} catch (Exception e) {
+				Server.logger.errorLogEntry(e);
 			}
-		}else{
+		} else {
 			String global = Environment.webAppToStart.get(app).global;
 			env = new AppEnv(app, global);
-			if (env.globalSetting.databaseEnable){
+			if (env.globalSetting.databaseEnable) {
 				IDatabaseDeployer dd = null;
-				try{
-					if (env.globalSetting.databaseType == DatabaseType.POSTGRESQL){
+				try {
+					if (env.globalSetting.databaseType == DatabaseType.POSTGRESQL) {
 						dd = new kz.flabs.dataengine.postgresql.DatabaseDeployer(env);
-						if (env.globalSetting.autoDeployEnable){
-							AppEnv.logger.normalLogEntry("Checking database structure ...");
-							dd.deploy();		
+						if (env.globalSetting.autoDeployEnable) {
+							Server.logger.normalLogEntry("Checking database structure ...");
+							dd.deploy();
 
 						}
-						env.setDataBase(new kz.flabs.dataengine.postgresql.Database(env));	
-					    env.globalSetting.serializeKey();
+						env.setDataBase(new kz.flabs.dataengine.postgresql.Database(env));
+						env.globalSetting.serializeKey();
 					} else if (env.globalSetting.databaseType == DatabaseType.MSSQL) {
 						dd = new kz.flabs.dataengine.mssql.DatabaseDeployer(env);
-						if (env.globalSetting.autoDeployEnable){
-							AppEnv.logger.normalLogEntry("Checking database structure ...");
-							dd.deploy();		
-
+						if (env.globalSetting.autoDeployEnable) {
+							Server.logger.normalLogEntry("Checking database structure ...");
+							dd.deploy();
 						}
 						env.setDataBase(new kz.flabs.dataengine.mssql.Database(env));
-					    env.globalSetting.serializeKey();
-					}else if (env.globalSetting.databaseType == DatabaseType.NSF) {
-						dd = new kz.flabs.dataengine.nsf.DatabaseDeployer(env);
-						IDatabase db = new kz.flabs.dataengine.nsf.Database(env);
-						env.setDataBase(db);
 						env.globalSetting.serializeKey();
-					} else if (env.globalSetting.databaseType == DatabaseType.POSTGRESQL_CT) {
-                        dd = new kz.flabs.dataengine.postgresql.ct.DatabaseDeployer(env);
-                        if (env.globalSetting.autoDeployEnable) {
-                            AppEnv.logger.normalLogEntry("Checking database structure... ");
-                            dd.deploy();
-                        }
-                        env.setDataBase(new kz.flabs.dataengine.postgresql.ct.Database(env));
-                        env.globalSetting.serializeKey();
-                    } else {
+					} else if (env.globalSetting.databaseType == DatabaseType.ORACLE) {
+						dd = new kz.flabs.dataengine.oracle.DatabaseDeployer(env);
+						if (env.globalSetting.autoDeployEnable) {
+							Server.logger.normalLogEntry("Checking database structure ...");
+							dd.deploy();
+						}
+						env.setDataBase(new kz.flabs.dataengine.oracle.Database(env));
+						env.globalSetting.serializeKey();
+					} else {
 						dd = new kz.flabs.dataengine.h2.DatabaseDeployer(env);
-						if (env.globalSetting.autoDeployEnable){
-							AppEnv.logger.normalLogEntry("Checking database structure ...");
-							dd.deploy();	
+						if (env.globalSetting.autoDeployEnable) {
+							Server.logger.normalLogEntry("Checking database structure ...");
+							dd.deploy();
 						}
 						env.setDataBase(new kz.flabs.dataengine.h2.Database(env));
 					}
@@ -90,61 +82,61 @@ public class PortalInit extends HttpServlet{
 					env.ruleProvider.loadRules();
 					dd.patch();
 					isValid = true;
-                
-				}catch(DatabasePoolException e){
-					AppEnv.logger.fatalLogEntry("Application \"" + env.appType + "\" has not connected to database " + env.globalSetting.databaseType + "(" + env.globalSetting.dbURL + ")");
+
+				} catch (DatabasePoolException e) {
+					Server.logger.fatalLogEntry("Application \"" + env.appType + "\" has not connected to database "
+							+ env.globalSetting.databaseType + "(" + env.globalSetting.dbURL + ")");
 					Environment.reduceApplication();
-				}catch(Exception e){
-					AppEnv.logger.errorLogEntry(e);
+				} catch (Exception e) {
+					Server.logger.errorLogEntry(e);
 					Environment.reduceApplication();
 				}
 
-			}else{
-				env.setDataBase(new kz.flabs.dataengine.nodatabase.Database(env));					
+			} else {
+				env.setDataBase(new kz.flabs.dataengine.nodatabase.Database(env));
 				isValid = true;
 			}
 
-			
-			
-			if(isValid){				
+			if (isValid) {
 
-                Environment.addApplication(env);
+				Environment.addApplication(env);
 
-				if (env.globalSetting.databaseEnable){		
-					for(AppDaemonRule rule:env.globalSetting.schedSettings){
-						try{
-							Class c = Class.forName(rule.getClassName());					
-							IDaemon daemon =  (IDaemon)c.newInstance();
+				if (env.globalSetting.databaseEnable) {
+					for (AppDaemonRule rule : env.globalSetting.schedSettings) {
+						try {
+							Class c = Class.forName(rule.getClassName());
+							IDaemon daemon = (IDaemon) c.newInstance();
 							daemon.init(rule);
-				//			Environment.scheduler.addProcess(rule, daemon);		instead You should use handler written in Groovy 
-						}catch (InstantiationException e) {
-							AppEnv.logger.errorLogEntry(e);
+							// Environment.scheduler.addProcess(rule, daemon);
+							// instead You should use handler written in Groovy
+						} catch (InstantiationException e) {
+							Server.logger.errorLogEntry(e);
 						} catch (IllegalAccessException e) {
-							AppEnv.logger.errorLogEntry(e);
+							Server.logger.errorLogEntry(e);
 						} catch (ClassNotFoundException e) {
-							AppEnv.logger.errorLogEntry(e);
+							Server.logger.errorLogEntry(e);
 						}
 					}
 
-					for(IScheduledProcessRule rule:env.ruleProvider.getScheduledRules()){
-						if (rule.getScheduleType() != ScheduleType.UNDEFINED){
-							try{
-								if(rule.scriptIsValid()){
+					for (IScheduledProcessRule rule : env.ruleProvider.getScheduledRules()) {
+						if (rule.getScheduleType() != ScheduleType.UNDEFINED) {
+							try {
+								if (rule.scriptIsValid()) {
 									Class c = Class.forName(rule.getClassName());
-									IDaemon daemon =  (IDaemon)c.newInstance();
-									daemon.init(rule);								
+									IDaemon daemon = (IDaemon) c.newInstance();
+									daemon.init(rule);
 									Environment.scheduler.addProcess(rule, daemon);
 								}
-							}catch (InstantiationException e) {
-								AppEnv.logger.errorLogEntry(e);
+							} catch (InstantiationException e) {
+								Server.logger.errorLogEntry(e);
 							} catch (IllegalAccessException e) {
-								AppEnv.logger.errorLogEntry(e);
+								Server.logger.errorLogEntry(e);
 							} catch (ClassNotFoundException e) {
-								AppEnv.logger.errorLogEntry("Class not found class=" + rule.getClassName());
-							} catch(ClassCastException e){
-								AppEnv.logger.errorLogEntry(e);
-							}catch(Exception e){
-								AppEnv.logger.errorLogEntry(e);
+								Server.logger.errorLogEntry("Class not found class=" + rule.getClassName());
+							} catch (ClassCastException e) {
+								Server.logger.errorLogEntry(e);
+							} catch (Exception e) {
+								Server.logger.errorLogEntry(e);
 							}
 						}
 					}
@@ -154,7 +146,9 @@ public class PortalInit extends HttpServlet{
 
 		}
 
-		if(isValid)	context.setAttribute("portalenv", env);
+		if (isValid) {
+			context.setAttribute("portalenv", env);
+		}
 
 	}
 }

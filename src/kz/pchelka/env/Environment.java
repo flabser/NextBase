@@ -15,6 +15,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.jivesoftware.smack.ChatManager;
+import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.SASLAuthentication;
+import org.jivesoftware.smack.XMPPConnection;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.Const;
 import kz.flabs.dataengine.IDatabase;
@@ -26,6 +35,7 @@ import kz.flabs.exception.RuleException;
 import kz.flabs.parser.QueryFormulaParserException;
 import kz.flabs.runtimeobj.caching.ICache;
 import kz.flabs.runtimeobj.page.Page;
+import kz.flabs.users.UserSession;
 import kz.flabs.util.XMLUtil;
 import kz.flabs.webrule.constants.RunMode;
 import kz.flabs.webrule.module.ExternalModuleType;
@@ -38,15 +48,6 @@ import kz.pchelka.scheduler.IDaemon;
 import kz.pchelka.scheduler.IProcessInitiator;
 import kz.pchelka.scheduler.Scheduler;
 import kz.pchelka.server.Server;
-
-import org.jivesoftware.smack.ChatManager;
-import org.jivesoftware.smack.ConnectionConfiguration;
-import org.jivesoftware.smack.SASLAuthentication;
-import org.jivesoftware.smack.XMPPConnection;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 public class Environment implements Const, ICache, IProcessInitiator {
 
@@ -115,6 +116,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	private static Integer rtfLimitSize = 3892;
 
 	public static String backupDir;
+	private static ArrayList<UserSession> sess = new ArrayList<UserSession>();
 
 	public static void init() {
 		logger = Server.logger;
@@ -136,7 +138,8 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 			serverVersion = XMLUtil.getNumberContent(xmlDocument, "/nextbase/webserver/version", 7);
 
-			webServicesEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/webserver/webservices/@mode").equalsIgnoreCase("on");
+			webServicesEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/webserver/webservices/@mode")
+					.equalsIgnoreCase("on");
 
 			hostName = XMLUtil.getTextContent(xmlDocument, "/nextbase/hostname");
 			if (hostName.isEmpty()) {
@@ -171,7 +174,8 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 			delaySchedulerStart = XMLUtil.getNumberContent(xmlDocument, "/nextbase/scheduler/startdelaymin", 1);
 
-			defaultRedirectURL = "/" + XMLUtil.getTextContent(xmlDocument, "/nextbase/applications/@default", false, "Workspace", true);
+			defaultRedirectURL = "/"
+					+ XMLUtil.getTextContent(xmlDocument, "/nextbase/applications/@default", false, "Workspace", true);
 
 			NodeList nodeList = XMLUtil.getNodeList(xmlDocument, "/nextbase/applications");
 			if (nodeList.getLength() > 0) {
@@ -183,7 +187,8 @@ public class Environment implements Const, ICache, IProcessInitiator {
 						String appName = XMLUtil.getTextContent(appNode, "name", false);
 						Site site = new Site();
 						site.appBase = appName;
-						site.authType = AuthTypes.valueOf(XMLUtil.getTextContent(appNode, "authtype", false, "WORKSPACE", false));
+						site.authType = AuthTypes
+								.valueOf(XMLUtil.getTextContent(appNode, "authtype", false, "WORKSPACE", false));
 						site.name = XMLUtil.getTextContent(appNode, "name/@sitename", false);
 						String globalAttrValue = XMLUtil.getTextContent(appNode, "name/@global", false);
 						if (!globalAttrValue.isEmpty()) {
@@ -202,7 +207,8 @@ public class Environment implements Const, ICache, IProcessInitiator {
 					secureHttpPort = XMLUtil.getNumberContent(xmlDocument, "/nextbase/ssl/port", 38789);
 					keyPwd = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/keypass");
 					keyStore = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/keystore");
-					isClientSSLAuthEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/clientauth/@mode").equalsIgnoreCase("on");
+					isClientSSLAuthEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/clientauth/@mode")
+							.equalsIgnoreCase("on");
 					if (isClientSSLAuthEnable) {
 						trustStore = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/clientauth/truststorefile");
 						trustStorePwd = XMLUtil.getTextContent(xmlDocument, "/nextbase/ssl/clientauth/truststorepass");
@@ -221,7 +227,8 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			}
 
 			try {
-				mailEnable = (XMLUtil.getTextContent(xmlDocument, "/nextbase/mailagent/@mode").equalsIgnoreCase("on")) ? true : false;
+				mailEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/mailagent/@mode").equalsIgnoreCase("on")
+						? true : false;
 				if (mailEnable) {
 					SMTPHost = XMLUtil.getTextContent(xmlDocument, "/nextbase/mailagent/smtphost");
 					defaultSender = XMLUtil.getTextContent(xmlDocument, "/nextbase/mailagent/defaultsender");
@@ -241,11 +248,15 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 			try {
 				if (adminConsoleEnable) {
-					remoteConsole = (XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/@mode").equalsIgnoreCase("on")) ? true : false;
+					remoteConsole = XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/@mode")
+							.equalsIgnoreCase("on") ? true : false;
 					if (remoteConsole) {
-						remoteConsoleServer = XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/server");
-						remoteConsolePort = Integer.parseInt(XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/port"));
-						logger.normalLogEntry("RemoteConsole server: " + remoteConsoleServer + " port: " + remoteConsolePort);
+						remoteConsoleServer = XMLUtil.getTextContent(xmlDocument,
+								"/nextbase/adminapp/remoteconsole/server");
+						remoteConsolePort = Integer
+								.parseInt(XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/port"));
+						logger.normalLogEntry(
+								"RemoteConsole server: " + remoteConsoleServer + " port: " + remoteConsolePort);
 					} else {
 						logger.normalLogEntry("RemoteConsole disabled");
 					}
@@ -258,15 +269,17 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			}
 
 			try {
-				xmppEnable = (XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/@mode").equalsIgnoreCase("on")) ? true : false;
+				xmppEnable = XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/@mode").equalsIgnoreCase("on")
+						? true : false;
 				if (xmppEnable) {
 					XMPPServer = XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/xmppserver");
-					XMPPServerPort = XMLUtil.getNumberContent(xmlDocument, "/nextbase/instmsgagent/xmppserverport", 5222);
+					XMPPServerPort = XMLUtil.getNumberContent(xmlDocument, "/nextbase/instmsgagent/xmppserverport",
+							5222);
 					XMPPLogin = XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/xmpplogin");
 					XMPPPwd = XMLUtil.getTextContent(xmlDocument, "/nextbase/instmsgagent/xmpppwd");
 					logger.normalLogEntry("InstantMessengerAgent is going to connect to server: " + XMPPServer);
 
-					if ((!XMPPServer.isEmpty()) && (!XMPPLogin.isEmpty())) {
+					if (!XMPPServer.isEmpty() && !XMPPLogin.isEmpty()) {
 						ConnectManager chMan = new ConnectManager();
 						chMan.start();
 					}
@@ -420,7 +433,8 @@ public class Environment implements Const, ICache, IProcessInitiator {
 		if (applications.size() >= countOfApp) {
 			if (delayedStart.size() > 0) {
 				for (IDatabase db : delayedStart) {
-					logger.normalLogEntry("Connecting to external module " + db.initExternalPool(ExternalModuleType.STRUCTURE));
+					logger.normalLogEntry(
+							"Connecting to external module " + db.initExternalPool(ExternalModuleType.STRUCTURE));
 					if (!schedulerStarted) {
 						Thread schedulerThread = new Thread(scheduler);
 						schedulerThread.start();
@@ -527,8 +541,8 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	}
 
 	@Override
-	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, QueryFormulaParserException,
-			DocumentException, DocumentAccessException, QueryException {
+	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
+			QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
 		Object obj = cache.get(page.getID());
 		String cacheParam = formData.get("cache")[0];
 		if (obj == null || cacheParam.equalsIgnoreCase("reload")) {
@@ -546,6 +560,12 @@ public class Environment implements Const, ICache, IProcessInitiator {
 		cache.clear();
 	}
 
+	public static void flushSessionsCach() {
+		for (UserSession ses : sess) {
+			ses.flush();
+		}
+	}
+
 	public static void shutdown() {
 		// if (XMPPServerEnable) Environment.connection.disconnect();
 	}
@@ -553,5 +573,11 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	@Override
 	public String getOwnerID() {
 		return "";
+	}
+
+	public static void addSession(UserSession userSession) {
+		System.out.println("add session " + userSession.currentUser);
+		sess.add(userSession);
+
 	}
 }
