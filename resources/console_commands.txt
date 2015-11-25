@@ -1,3 +1,4 @@
 quit, exit (q) - stop server with safety;
-reset rules(rr) - reset loaded rules;
+reset rules(rr) - reset loaded rules and cashes;
+reload vocabulary(rv) - reload vocabularies and reset cashes;
 help (h) - show this help;

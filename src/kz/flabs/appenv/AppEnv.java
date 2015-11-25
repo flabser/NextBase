@@ -7,7 +7,6 @@ import java.util.Map;
 
 import kz.flabs.dataengine.Const;
 import kz.flabs.dataengine.IDatabase;
-import kz.flabs.dataengine.IGlossariesTuner;
 import kz.flabs.exception.DocumentAccessException;
 import kz.flabs.exception.DocumentException;
 import kz.flabs.exception.QueryException;
@@ -20,7 +19,6 @@ import kz.flabs.runtimeobj.Application;
 import kz.flabs.runtimeobj.caching.ICache;
 import kz.flabs.runtimeobj.page.Page;
 import kz.flabs.webrule.GlobalSetting;
-import kz.flabs.webrule.Lang;
 import kz.flabs.webrule.Role;
 import kz.flabs.webrule.WebRuleProvider;
 import kz.flabs.webrule.constants.RunMode;
@@ -75,17 +73,7 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 			if (globalSetting.isOn == RunMode.ON) {
 				if (globalSetting.langsList.size() > 0) {
 					Server.logger.normalLogEntry("Dictionary is loading...");
-
-					try {
-						Localizator l = new Localizator(globalSetting);
-						vocabulary = l.populate("vocabulary");
-						if (vocabulary != null) {
-							Server.logger.normalLogEntry("Dictionary has loaded");
-						}
-					} catch (LocalizatorException le) {
-						Server.logger.verboseLogEntry(le.getMessage());
-					}
-
+					loadVocabulary();
 				}
 				isValid = true;
 			} else {
@@ -147,23 +135,9 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 		return Server.serverTitle + "-" + appType;
 	}
 
-	private boolean checkLangsSupport() {
-		ArrayList<Lang> unsupportedlangs = new ArrayList<Lang>();
-		IGlossariesTuner glosTuner = dataBase.getGlossaries().getGlossariesTuner();
-		ArrayList<String> langs = glosTuner.getSupportedLangs();
-		for (Lang lang : globalSetting.langsList) {
-			if (!langs.contains(lang.id) && !lang.isPrimary) {
-				unsupportedlangs.add(lang);
-			}
-		}
-
-		for (Lang lang : unsupportedlangs) {
-			Server.logger.warningLogEntry("Tune database to support lang (" + lang + ")");
-			glosTuner.addLang(lang);
-		}
-
-		return true;
-
+	public void reloadVocabulary() {
+		Server.logger.normalLogEntry("Dictionary is reloading (" + toString() + ")...");
+		loadVocabulary();
 	}
 
 	@Override
@@ -201,6 +175,18 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 	public static String getName() {
 
 		return "appType";
+	}
+
+	private void loadVocabulary() {
+		try {
+			Localizator l = new Localizator(globalSetting);
+			vocabulary = l.populate("vocabulary");
+			if (vocabulary != null) {
+				Server.logger.normalLogEntry("Dictionary has loaded");
+			}
+		} catch (LocalizatorException le) {
+			Server.logger.verboseLogEntry(le.getMessage());
+		}
 	}
 
 }

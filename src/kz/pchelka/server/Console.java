@@ -26,6 +26,13 @@ public class Console implements Runnable {
 				}
 				new Environment().flush();
 				Environment.flushSessionsCach();
+			} else if (command.equalsIgnoreCase("reload vocabulary") || command.equalsIgnoreCase("rv")) {
+				for (AppEnv env : Environment.getApplications()) {
+					env.reloadVocabulary();
+					env.flush();
+				}
+				new Environment().flush();
+				Environment.flushSessionsCach();
 			} else if (command.equals("help") || command.equalsIgnoreCase("h")) {
 				System.out.println(Util.readFile("resources" + File.separator + "console_commands.txt"));
 			} else {

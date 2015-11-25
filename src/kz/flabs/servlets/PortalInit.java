@@ -36,8 +36,10 @@ public class PortalInit extends HttpServlet {
 			} catch (DatabasePoolException e) {
 				Server.logger.errorLogEntry(e);
 				Server.logger.fatalLogEntry("Server has not connected to system database");
+				Server.shutdown();
 			} catch (Exception e) {
 				Server.logger.errorLogEntry(e);
+				Server.shutdown();
 			}
 		} else {
 			String global = Environment.webAppToStart.get(app).global;
