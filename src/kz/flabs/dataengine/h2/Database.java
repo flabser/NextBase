@@ -4000,7 +4000,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	@Override
 	public String toString() {
-		return "dataengine version:" + getVersion() + ", dbid:" + dbID + ", URL:" + connectionURL;
+		return "version:" + getVersion() + ", dbid:" + dbID + ", URL:" + connectionURL;
 	}
 
 	public String toXML() {

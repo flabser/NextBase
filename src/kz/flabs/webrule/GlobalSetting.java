@@ -53,6 +53,7 @@ public class GlobalSetting {
 	public String id = "";
 	public String databaseName;
 	public boolean databaseEnable;
+	@Deprecated
 	public boolean databaseResponseUsed = true;
 	public boolean isWorkspace;
 	public String driver;
@@ -85,7 +86,7 @@ public class GlobalSetting {
 	public String vocabulary = "vocabulary.xml";
 	public boolean stopCoordAfterNo = Boolean.FALSE;
 	public boolean sendToSignAfterNo = Boolean.TRUE;
-
+	public DataEngineImpl dbImpl;
 	public UserRoleCollection roleCollection = new UserRoleCollection();
 	public HashMap<String, ExternalModule> extModuleMap = new HashMap<String, ExternalModule>();
 
@@ -97,7 +98,6 @@ public class GlobalSetting {
 	private String globalFilePath = "";
 	private String dbUserName;
 	private String userNameEnco = "";
-	private String authmethod = "";
 
 	public GlobalSetting(String path, AppEnv env) {
 		globalFilePath = path;
@@ -185,6 +185,17 @@ public class GlobalSetting {
 					databaseType = getDatabaseType(dbURL);
 					databaseHost = XMLUtil.getTextContent(doc, "/rule/database/host");
 					databaseEnable = true;
+
+					String deployerClass = XMLUtil.getTextContent(doc,
+							"/rule/database/implementation/idatabasedeployer");
+					String databaseClass = XMLUtil.getTextContent(doc, "/rule/database/implementation/idatabase");
+
+					if (!deployerClass.equals("") && !databaseClass.equals("")) {
+						dbImpl = new DataEngineImpl(deployerClass, databaseClass);
+					} else {
+						dbImpl = new DataEngineImpl(databaseType);
+					}
+
 					String ru = XMLUtil.getTextContent(doc, "/rule/database/responseused");
 					if (ru.equals("0") || ru.equalsIgnoreCase("false")) {
 						databaseResponseUsed = false;
@@ -194,7 +205,7 @@ public class GlobalSetting {
 				}
 
 			} catch (Exception e) {
-				AppEnv.logger.warningLogEntry("Unable to determine parameters of the database");
+				AppEnv.logger.errorLogEntry("Unable to determine parameters of the database");
 				databaseName = "";
 			}
 

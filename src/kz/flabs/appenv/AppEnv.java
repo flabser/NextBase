@@ -136,7 +136,7 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 	}
 
 	public void reloadVocabulary() {
-		Server.logger.normalLogEntry("Dictionary is reloading (" + toString() + ")...");
+		Server.logger.normalLogEntry("Dictionary is reloading (" + appType + ")...");
 		loadVocabulary();
 	}
 

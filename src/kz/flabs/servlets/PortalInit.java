@@ -1,5 +1,7 @@
 package kz.flabs.servlets;
 
+import java.lang.reflect.Constructor;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -8,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import kz.flabs.appdaemon.AppDaemonRule;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.DatabasePoolException;
-import kz.flabs.dataengine.DatabaseType;
+import kz.flabs.dataengine.IDatabase;
 import kz.flabs.dataengine.IDatabaseDeployer;
 import kz.flabs.runtimeobj.Application;
 import kz.flabs.webrule.scheduler.IScheduledProcessRule;
@@ -47,51 +49,71 @@ public class PortalInit extends HttpServlet {
 			if (env.globalSetting.databaseEnable) {
 				IDatabaseDeployer dd = null;
 				try {
-					if (env.globalSetting.databaseType == DatabaseType.POSTGRESQL) {
-						dd = new kz.flabs.dataengine.postgresql.DatabaseDeployer(env);
-						if (env.globalSetting.autoDeployEnable) {
-							Server.logger.normalLogEntry("Checking database structure ...");
-							dd.deploy();
+					@SuppressWarnings("rawtypes")
+					Class[] intArgsClass = new Class[] { AppEnv.class };
+					Constructor<?> deployerConstr = env.globalSetting.dbImpl.getDeployerClass()
+							.getConstructor(intArgsClass);
+					dd = (IDatabaseDeployer) deployerConstr.newInstance(new Object[] { env });
 
-						}
-						env.setDataBase(new kz.flabs.dataengine.postgresql.Database(env));
-						env.globalSetting.serializeKey();
-					} else if (env.globalSetting.databaseType == DatabaseType.MSSQL) {
-						dd = new kz.flabs.dataengine.mssql.DatabaseDeployer(env);
-						if (env.globalSetting.autoDeployEnable) {
-							Server.logger.normalLogEntry("Checking database structure ...");
-							dd.deploy();
-						}
-						env.setDataBase(new kz.flabs.dataengine.mssql.Database(env));
-						env.globalSetting.serializeKey();
-					} else if (env.globalSetting.databaseType == DatabaseType.ORACLE) {
-						dd = new kz.flabs.dataengine.oracle.DatabaseDeployer(env);
-						if (env.globalSetting.autoDeployEnable) {
-							Server.logger.normalLogEntry("Checking database structure ...");
-							dd.deploy();
-						}
-						env.setDataBase(new kz.flabs.dataengine.oracle.Database(env));
-						env.globalSetting.serializeKey();
-					} else {
-						dd = new kz.flabs.dataengine.h2.DatabaseDeployer(env);
-						if (env.globalSetting.autoDeployEnable) {
-							Server.logger.normalLogEntry("Checking database structure ...");
-							dd.deploy();
-						}
-						env.setDataBase(new kz.flabs.dataengine.h2.Database(env));
+					Constructor<?> dbConstr = env.globalSetting.dbImpl.getDatabaseClass().getConstructor(intArgsClass);
+					IDatabase db = (IDatabase) dbConstr.newInstance(new Object[] { env });
+
+					if (env.globalSetting.autoDeployEnable) {
+						Server.logger.normalLogEntry("Checking database structure ...");
+						dd.deploy();
 					}
+					AppEnv.logger.verboseLogEntry("Application will use \"" + db + "\" database");
+					env.setDataBase(db);
+
+					/*
+					 * if (env.globalSetting.databaseType ==
+					 * DatabaseType.POSTGRESQL) { dd = new
+					 * kz.flabs.dataengine.postgresql.DatabaseDeployer(env); if
+					 * (env.globalSetting.autoDeployEnable) {
+					 * Server.logger.normalLogEntry(
+					 * "Checking database structure ..."); dd.deploy();
+					 *
+					 * } env.setDataBase(new
+					 * kz.flabs.dataengine.postgresql.Database(env));
+					 * env.globalSetting.serializeKey(); } else if
+					 * (env.globalSetting.databaseType == DatabaseType.MSSQL) {
+					 * dd = new kz.flabs.dataengine.mssql.DatabaseDeployer(env);
+					 * if (env.globalSetting.autoDeployEnable) {
+					 * Server.logger.normalLogEntry(
+					 * "Checking database structure ..."); dd.deploy(); }
+					 * env.setDataBase(new
+					 * kz.flabs.dataengine.mssql.Database(env));
+					 * env.globalSetting.serializeKey(); } else if
+					 * (env.globalSetting.databaseType == DatabaseType.ORACLE) {
+					 * dd = new
+					 * kz.flabs.dataengine.oracle.DatabaseDeployer(env); if
+					 * (env.globalSetting.autoDeployEnable) {
+					 * Server.logger.normalLogEntry(
+					 * "Checking database structure ..."); dd.deploy(); }
+					 * env.setDataBase(new
+					 * kz.flabs.dataengine.oracle.Database(env));
+					 * env.globalSetting.serializeKey(); } else { dd = new
+					 * kz.flabs.dataengine.h2.DatabaseDeployer(env); if
+					 * (env.globalSetting.autoDeployEnable) {
+					 * Server.logger.normalLogEntry(
+					 * "Checking database structure ..."); dd.deploy(); }
+					 * env.setDataBase(new
+					 * kz.flabs.dataengine.h2.Database(env)); }
+					 */
 					Environment.addDatabases(env.getDataBase());
 					env.ruleProvider.loadRules();
 					dd.patch();
 					isValid = true;
 
-				} catch (DatabasePoolException e) {
-					Server.logger.fatalLogEntry("Application \"" + env.appType + "\" has not connected to database "
-							+ env.globalSetting.databaseType + "(" + env.globalSetting.dbURL + ")");
-					Environment.reduceApplication();
 				} catch (Exception e) {
-					Server.logger.errorLogEntry(e);
-					Environment.reduceApplication();
+					if (e instanceof DatabasePoolException) {
+						Server.logger.fatalLogEntry("Application \"" + env.appType + "\" has not connected to database "
+								+ env.globalSetting.databaseType + "(" + env.globalSetting.dbURL + ")");
+						Environment.reduceApplication();
+					} else {
+						Server.logger.errorLogEntry(e);
+						Environment.reduceApplication();
+					}
 				}
 
 			} else {
@@ -106,7 +128,7 @@ public class PortalInit extends HttpServlet {
 				if (env.globalSetting.databaseEnable) {
 					for (AppDaemonRule rule : env.globalSetting.schedSettings) {
 						try {
-							Class c = Class.forName(rule.getClassName());
+							Class<?> c = Class.forName(rule.getClassName());
 							IDaemon daemon = (IDaemon) c.newInstance();
 							daemon.init(rule);
 							// Environment.scheduler.addProcess(rule, daemon);
@@ -124,7 +146,7 @@ public class PortalInit extends HttpServlet {
 						if (rule.getScheduleType() != ScheduleType.UNDEFINED) {
 							try {
 								if (rule.scriptIsValid()) {
-									Class c = Class.forName(rule.getClassName());
+									Class<?> c = Class.forName(rule.getClassName());
 									IDaemon daemon = (IDaemon) c.newInstance();
 									daemon.init(rule);
 									Environment.scheduler.addProcess(rule, daemon);
