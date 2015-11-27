@@ -89,20 +89,21 @@ public class HandlerRule extends Rule implements IScheduledProcessRule, Const {
 
 			Node qsNode = XMLUtil.getNode(doc, "/rule/events/trigger", true);
 			handlerClassName = getClassName(qsNode);
-			if (handlerClassName != null && isOn != RunMode.OFF) {
-				scriptIsValid = true;
-			} else {
-				ClassLoader parent = getClass().getClassLoader();
-				GroovyClassLoader loader = new GroovyClassLoader(parent);
-				try {
-					handlerClass = loader.parseClass(ScriptProcessor.normalizeScript(script));
-				} catch (MultipleCompilationErrorsException e) {
-					AppEnv.logger.errorLogEntry(
-							"Handler Script compilation error at compiling=" + id + ":" + e.getMessage());
-					isValid = false;
+			if (isOn != RunMode.OFF) {
+				if (handlerClassName != null) {
+					scriptIsValid = true;
+				} else {
+					ClassLoader parent = getClass().getClassLoader();
+					GroovyClassLoader loader = new GroovyClassLoader(parent);
+					try {
+						handlerClass = loader.parseClass(ScriptProcessor.normalizeScript(script));
+					} catch (MultipleCompilationErrorsException e) {
+						AppEnv.logger.errorLogEntry(
+								"Handler Script compilation error at compiling=" + id + ":" + e.getMessage());
+						isValid = false;
+					}
 				}
 			}
-
 			try {
 				String mt = XMLUtil.getTextContent(doc, "/rule/waitresponse");
 				if (mt.equalsIgnoreCase("true")) {
