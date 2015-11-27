@@ -131,8 +131,6 @@ public class PortalInit extends HttpServlet {
 							Class<?> c = Class.forName(rule.getClassName());
 							IDaemon daemon = (IDaemon) c.newInstance();
 							daemon.init(rule);
-							// Environment.scheduler.addProcess(rule, daemon);
-							// instead You should use handler written in Groovy
 						} catch (InstantiationException e) {
 							Server.logger.errorLogEntry(e);
 						} catch (IllegalAccessException e) {
