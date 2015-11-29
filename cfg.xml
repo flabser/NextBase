@@ -29,10 +29,10 @@
         </app>
         
          <app>
-            <name mode="on">Help</name>
+            <name mode="off">Help</name>
         </app>
         <app>
-            <name mode="on">KnowledgeBase</name>
+            <name mode="off">KnowledgeBase</name>
         </app>
          <app>
             <name mode="off">Agriculture</name>
