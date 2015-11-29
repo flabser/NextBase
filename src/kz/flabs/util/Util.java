@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -157,7 +158,7 @@ public class Util {
 			return simpleDateFormat.parse(date);
 		} catch (Exception e) {
 			AppEnv.logger.errorLogEntry("Util, Не удалось преобразовать текст в дату " + date + ", ожидался формат: "
-					+ dateFormat.toPattern());
+					+ simpleDateFormat.toPattern());
 			// AppEnv.logger.errorLogEntry(e);
 			return null;
 		}
@@ -389,9 +390,9 @@ public class Util {
 
 	public static String getTimeDiffInMilSec(long start_time) {
 		long time = System.currentTimeMillis() - start_time;
-		// int sec = (int) time / 1000;//find seconds
-		// int msec = (int) time % 1000;//find milliseconds
-		return Long.toString(time);
+		return String.format("%d.%d sec", TimeUnit.MILLISECONDS.toMinutes(time), TimeUnit.MILLISECONDS.toSeconds(time)
+				- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time)));
+
 	}
 
 	public static String getTimeDiffInSec(long start_time) {
