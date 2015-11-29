@@ -156,8 +156,9 @@ public class Util {
 		try {
 			return simpleDateFormat.parse(date);
 		} catch (Exception e) {
-			AppEnv.logger.errorLogEntry("Util, Не удалось преобразовать текст в дату " + date + ", ожидался формат: "
-					+ simpleDateFormat.toPattern());
+			// AppEnv.logger.errorLogEntry("Util, Не удалось преобразовать текст
+			// в дату " + date + ", ожидался формат: " +
+			// simpleDateFormat.toPattern());
 			// AppEnv.logger.errorLogEntry(e);
 			return null;
 		}
@@ -409,8 +410,7 @@ public class Util {
 	public static String readFile(String file) {
 		BufferedReader reader = null;
 		try {
-			File f = new File(file);
-			System.out.println(f.getAbsolutePath());
+			// File f = new File(file);
 			reader = new BufferedReader(new FileReader(file));
 			String line = null;
 			StringBuilder stringBuilder = new StringBuilder();
