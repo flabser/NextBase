@@ -153,13 +153,15 @@ public class Util {
 	}
 
 	public static Date convertStringToSimpleDate(String date) {
-		try {
-			return simpleDateFormat.parse(date);
-		} catch (Exception e) {
-			// AppEnv.logger.errorLogEntry("Util, Не удалось преобразовать текст
-			// в дату " + date + ", ожидался формат: " +
-			// simpleDateFormat.toPattern());
-			// AppEnv.logger.errorLogEntry(e);
+		if (date != null) {
+			try {
+				return simpleDateFormat.parse(date);
+			} catch (Exception e) {
+				AppEnv.logger.errorLogEntry("Util, Cannot convert a date to String (date=" + date + "), exepted : "
+						+ simpleDateFormat.toPattern());
+				return null;
+			}
+		} else {
 			return null;
 		}
 	}
