@@ -153,11 +153,11 @@ public class Util {
 	}
 
 	public static Date convertStringToSimpleDate(String date) {
-		if (date != null) {
+		if (date != null && !date.trim().equals("")) {
 			try {
 				return simpleDateFormat.parse(date);
 			} catch (Exception e) {
-				AppEnv.logger.errorLogEntry("Util, Cannot convert a date to String (date=" + date + "), exepted : "
+				AppEnv.logger.errorLogEntry("Util, Cannot convert the date to String (date=" + date + "), exepted : "
 						+ simpleDateFormat.toPattern());
 				return null;
 			}
