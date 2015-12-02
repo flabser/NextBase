@@ -21,10 +21,6 @@
             <name mode="on">Structure</name>
         </app>
         <app>
-            <name mode="off">CloudDashBoard</name>
-        </app>   
-        
-        <app>
             <name mode="off">Billing</name>
         </app>
         
