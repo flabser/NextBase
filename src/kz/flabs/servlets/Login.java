@@ -129,7 +129,8 @@ public class Login extends HttpServlet implements Const {
 					}
 				}
 			} else {
-				AppEnv.logger.warningLogEntry("Authorization failed, special login or password is incorrect");
+				// AppEnv.logger.warningLogEntry("Authorization failed, special
+				// login or password is incorrect");
 				Cookies appCookies = new Cookies(request);
 				if (qID == null) {
 					user = new User(env);
