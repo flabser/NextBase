@@ -166,6 +166,14 @@ public class Util {
 		}
 	}
 
+	public static long convertStringToLong(String date) {
+		try {
+			return Long.parseLong(date);
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+
 	public static int getRandomNumber(int anyNumber) {
 		if (anyNumber > 0) {
 			Random random = new Random();
