@@ -66,6 +66,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	public static boolean adminConsoleEnable;
 	public static HashMap<String, Site> webAppToStart = new HashMap<String, Site>();
 	public static String tmpDir;
+	public static String trash;
 	public static ArrayList<String> fileToDelete = new ArrayList<String>();
 	public static ILogger logger;
 	public static int delaySchedulerStart;
@@ -337,6 +338,13 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			}
 
 			tmpDir = tmp.getAbsolutePath();
+
+			File jrDir = new File(tmpDir + File.separator + "trash");
+			if (!jrDir.exists()) {
+				jrDir.mkdir();
+			}
+
+			trash = jrDir.getAbsolutePath();
 
 			File backup = new File("backup");
 			if (!backup.exists()) {

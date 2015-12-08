@@ -17,3 +17,7 @@ node_modules
 .project
 .settings
 cfg.xml
+
+#jasper
+/webapps/*/reports/templates/*.jasper
+

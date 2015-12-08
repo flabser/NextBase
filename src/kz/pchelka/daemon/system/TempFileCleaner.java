@@ -15,10 +15,20 @@ public class TempFileCleaner extends AbstractDaemon {
 	@Override
 	public int process(IProcessInitiator processOwner) {
 		ac = 0;
+		File folder = new File(Environment.tmpDir);
+		File trashFolder = new File(Environment.trash);
 		if (isFirstStart) {
-			File folder = new File(Environment.tmpDir);
 			if (folder.exists()) {
 				File[] list = folder.listFiles();
+				for (int i = list.length; --i >= 0;) {
+					File file = list[i];
+					if (!file.getName().equalsIgnoreCase("trash")) {
+						delete(file);
+					}
+				}
+			}
+			if (trashFolder.exists()) {
+				File[] list = trashFolder.listFiles();
 				for (int i = list.length; --i >= 0;) {
 					File file = list[i];
 					delete(file);
@@ -29,7 +39,6 @@ public class TempFileCleaner extends AbstractDaemon {
 			for (String filePath : Environment.fileToDelete) {
 				File file = new File(filePath);
 				while (file.getParentFile() != null && !file.getParentFile().getName().equals("tmp")) {
-					System.out.println(file.getParentFile().getName());
 					file = file.getParentFile();
 				}
 				if (file.getParentFile() == null) {
@@ -37,9 +46,15 @@ public class TempFileCleaner extends AbstractDaemon {
 				}
 				delete(file);
 			}
+
+			File[] list = trashFolder.listFiles();
+			for (int i = list.length; --i >= 0;) {
+				File file = list[i];
+				Environment.fileToDelete.add(file.getAbsolutePath());
+			}
 		}
 		if (ac > 0) {
-			Server.logger.verboseLogEntry(getID() + ac + " temporary files were deleted");
+			Server.logger.verboseLogEntry(getID() + " " + ac + " temporary files were deleted");
 		}
 		return 0;
 	}

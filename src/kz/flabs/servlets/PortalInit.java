@@ -65,41 +65,6 @@ public class PortalInit extends HttpServlet {
 					AppEnv.logger.verboseLogEntry("Application will use \"" + db + "\" database");
 					env.setDataBase(db);
 
-					/*
-					 * if (env.globalSetting.databaseType ==
-					 * DatabaseType.POSTGRESQL) { dd = new
-					 * kz.flabs.dataengine.postgresql.DatabaseDeployer(env); if
-					 * (env.globalSetting.autoDeployEnable) {
-					 * Server.logger.normalLogEntry(
-					 * "Checking database structure ..."); dd.deploy();
-					 *
-					 * } env.setDataBase(new
-					 * kz.flabs.dataengine.postgresql.Database(env));
-					 * env.globalSetting.serializeKey(); } else if
-					 * (env.globalSetting.databaseType == DatabaseType.MSSQL) {
-					 * dd = new kz.flabs.dataengine.mssql.DatabaseDeployer(env);
-					 * if (env.globalSetting.autoDeployEnable) {
-					 * Server.logger.normalLogEntry(
-					 * "Checking database structure ..."); dd.deploy(); }
-					 * env.setDataBase(new
-					 * kz.flabs.dataengine.mssql.Database(env));
-					 * env.globalSetting.serializeKey(); } else if
-					 * (env.globalSetting.databaseType == DatabaseType.ORACLE) {
-					 * dd = new
-					 * kz.flabs.dataengine.oracle.DatabaseDeployer(env); if
-					 * (env.globalSetting.autoDeployEnable) {
-					 * Server.logger.normalLogEntry(
-					 * "Checking database structure ..."); dd.deploy(); }
-					 * env.setDataBase(new
-					 * kz.flabs.dataengine.oracle.Database(env));
-					 * env.globalSetting.serializeKey(); } else { dd = new
-					 * kz.flabs.dataengine.h2.DatabaseDeployer(env); if
-					 * (env.globalSetting.autoDeployEnable) {
-					 * Server.logger.normalLogEntry(
-					 * "Checking database structure ..."); dd.deploy(); }
-					 * env.setDataBase(new
-					 * kz.flabs.dataengine.h2.Database(env)); }
-					 */
 					Environment.addDatabases(env.getDataBase());
 					env.ruleProvider.loadRules();
 					dd.patch();

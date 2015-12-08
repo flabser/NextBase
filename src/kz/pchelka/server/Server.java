@@ -20,7 +20,7 @@ import kz.pchelka.webserver.WebServerFactory;
 
 public class Server {
 	public static kz.pchelka.log.ILogger logger;
-	public static final String serverVersion = "2.8.2";
+	public static final String serverVersion = "2.8.3";
 	public static final int necessaryDbVersion = 104;
 	public static String compilationTime = "";
 	public static final String serverTitle = "NextBase " + serverVersion + "-" + Integer.toString(necessaryDbVersion);
