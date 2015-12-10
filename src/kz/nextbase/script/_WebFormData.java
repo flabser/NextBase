@@ -67,6 +67,19 @@ public class _WebFormData {
 		}
 	}
 
+	public Integer[] getNumberValuesSilently(String fn, int defaultValue) {
+		String value[] = formData.get(fn);
+		Integer[] nValue = new Integer[value.length];
+		for (int i = 0; i < value.length; i++) {
+			try {
+				nValue[i] = Integer.parseInt(value[i].trim());
+			} catch (Exception e) {
+				nValue[i] = defaultValue;
+			}
+		}
+		return nValue;
+	}
+
 	public double getNumberDoubleValueSilently(String fn, double defaultValue) {
 		try {
 			String value[] = formData.get(fn);
