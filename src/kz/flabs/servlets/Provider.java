@@ -357,8 +357,10 @@ public class Provider extends HttpServlet implements Const {
 		} catch (UserException e) {
 			new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML, userSession.skin);
 		} catch (SaxonApiException e) {
-			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML,
-					userSession.skin);
+			Server.logger.errorLogEntry(e);
+			// new PortalException(e, env, response,
+			// ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR,
+			// PublishAsType.HTML, userSession.skin);
 		} catch (TransformatorException e) {
 			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML,
 					userSession.skin);
