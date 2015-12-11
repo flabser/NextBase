@@ -80,7 +80,7 @@ public class _Block  implements _IXMLContent {
         }
     }
 
-	ArrayList<_Coordinator> getCurrentCoordinators(){
+	public ArrayList<_Coordinator> getCurrentCoordinators(){
 		ArrayList<_Coordinator> cc =  new ArrayList<_Coordinator>();
 		for(Coordinator c: bl.getCurrentCoordinators()){
 			cc.add(new _Coordinator(ses,c));
@@ -171,8 +171,8 @@ public class _Block  implements _IXMLContent {
 		}
 		return null; 
 	}
-	
-	ArrayList<_Coordinator> getCoordinators(){
+
+	public ArrayList<_Coordinator> getCoordinators(){
 		ArrayList<_Coordinator> cc =  new ArrayList<_Coordinator>();
 		for(Coordinator c: bl.getCoordinators()){
 			cc.add(new _Coordinator(ses,c));
