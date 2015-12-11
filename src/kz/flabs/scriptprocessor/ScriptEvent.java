@@ -96,6 +96,10 @@ public class ScriptEvent {
 		ScriptProcessor.logger.normalLogEntry(logText.toString());
 	}
 
+	public static void error(Exception e) {
+		ScriptProcessor.logger.errorLogEntry(e);
+	}
+
 	@Deprecated
 	public void setRedirectURL(String url) {
 		redirectURL = url;

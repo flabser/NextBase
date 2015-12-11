@@ -6,7 +6,7 @@ public class ElementScript {
 	private String className;
 	private ValueSourceType type;
 
-	ElementScript(ValueSourceType type, String className) {
+	public ElementScript(ValueSourceType type, String className) {
 		this.type = type;
 		this.className = className;
 	}

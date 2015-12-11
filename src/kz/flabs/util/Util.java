@@ -166,9 +166,28 @@ public class Util {
 		}
 	}
 
-	public static long convertStringToLong(String date) {
+	public static long convertStringToLong(String d) {
+		d = d.replaceAll("\\s+", "").replace(",", "").replace("/\\D/g", "");
 		try {
-			return Long.parseLong(date);
+			return Long.parseLong(d);
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+
+	public static int convertStringToInt(String d) {
+		d = d.replaceAll("\\s+", "").replaceAll(",", "").replaceAll("/\\D/g", "");
+		try {
+			return Integer.parseInt(d);
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+
+	public static float convertStringToFloat(String d) {
+		d = d.replaceAll("\\s+", "").replaceAll(",", ".").replaceAll("/\\D/g", "");
+		try {
+			return Float.parseFloat(d);
 		} catch (Exception e) {
 			return 0;
 		}
