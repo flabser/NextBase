@@ -1,5 +1,8 @@
 package kz.flabs.util;
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -209,6 +213,39 @@ public class Util {
 
 	public static String generateRandomAsText() {
 		return Integer.toString(generateRandom());
+	}
+
+	public static String toStringGettersVal(Object clazz) {
+		Class<?> noparams[] = {};
+		StringBuilder result = new StringBuilder();
+		String newLine = System.getProperty("line.separator");
+
+		result.append(clazz.getClass().getName());
+		result.append(" Object {");
+		result.append(newLine);
+
+		try {
+			for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(clazz.getClass())
+					.getPropertyDescriptors()) {
+				Method method = propertyDescriptor.getReadMethod();
+				if (method != null && !method.getName().equals("getClass")) {
+					result.append(String.format("%" + 2 + "s", ""));
+					result.append(method.getName());
+					result.append(": ");
+					try {
+						result.append(method.invoke(clazz, noparams));
+					} catch (Exception e) {
+						AppEnv.logger.errorLogEntry(e);
+					}
+					result.append(newLine);
+				}
+			}
+		} catch (IntrospectionException e) {
+			AppEnv.logger.errorLogEntry(e);
+		}
+
+		result.append("}");
+		return result.toString();
 	}
 
 	public static boolean isGroupName(String userID) {

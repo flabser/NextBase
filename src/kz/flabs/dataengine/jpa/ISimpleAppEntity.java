@@ -1,12 +1,11 @@
 package kz.flabs.dataengine.jpa;
 
-
+import java.util.UUID;
 
 public interface ISimpleAppEntity {
 
-	void setId(long id);
+	void setId(UUID id);
 
-	long getId();
-
+	UUID getId();
 
 }

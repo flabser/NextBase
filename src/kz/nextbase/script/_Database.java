@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.persistence.EntityManagerFactory;
+
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.Const;
 import kz.flabs.dataengine.DatabasePoolException;
@@ -1051,5 +1053,10 @@ public class _Database implements Const {
 
 	public IDatabase getBaseObject() {
 		return dataBase;
+	}
+
+	public EntityManagerFactory getEntityManagerFactory() {
+		// TODO Auto-generated method stub
+		return dataBase.getEntityManagerFactory();
 	}
 }

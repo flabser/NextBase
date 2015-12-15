@@ -1,29 +1,26 @@
 package kz.flabs.dataengine.jpa;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import java.util.UUID;
+
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-
 
 @MappedSuperclass
 public abstract class SimpleAppEntity implements ISimpleAppEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected long id;
-
+	@Column(columnDefinition = "uuid")
+	private UUID id;
 
 	@Override
-	public void setId(long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
 	@Override
-	public long getId() {
+	public UUID getId() {
 		return id;
 	}
-
-
 
 }

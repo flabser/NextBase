@@ -30,6 +30,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.EntityManagerFactory;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -284,7 +286,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			pst.close();
 			conn.commit();
 		} catch (SQLException e) {
-			DatabaseUtil.errorPrint(dbID, e);
+			// Server.logger.errorLogEntry(e.getMessage());
 		} finally {
 			dbPool.returnConnection(conn);
 		}
@@ -4021,7 +4023,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				return new Structure(this, structDbPool);
 			}
 		} else {
-			return new Structure(this, structDbPool);
+			return new Structure(this, dbPool);
 		}
 	}
 
@@ -4678,6 +4680,12 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	private boolean hasDocsWithParent() {
 		return env.globalSetting.databaseResponseUsed;
+	}
+
+	@Override
+	public EntityManagerFactory getEntityManagerFactory() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

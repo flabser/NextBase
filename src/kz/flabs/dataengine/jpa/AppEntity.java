@@ -1,20 +1,27 @@
 package kz.flabs.dataengine.jpa;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 
-@MappedSuperclass
-public abstract class AppEntity implements IAppEntity {
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.TypeDef;
 
+import kz.flabs.util.Util;
+
+@MappedSuperclass
+@TypeDef(name = "uuid", defaultForType = UUID.class, typeClass = UuidType.class)
+public abstract class AppEntity implements IAppEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected long id;
+	@GeneratedValue(generator = "uuid-gen")
+	@GenericGenerator(name = "uuid-gen", strategy = "uuid2")
+	@Column(name = "id", columnDefinition = "uuid")
+	protected UUID id;
 
 	@Column(name = "author", nullable = false, updatable = false)
 	protected Long author;
@@ -28,12 +35,12 @@ public abstract class AppEntity implements IAppEntity {
 	}
 
 	@Override
-	public void setId(long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
 	@Override
-	public long getId() {
+	public UUID getId() {
 		return id;
 	}
 
@@ -61,5 +68,10 @@ public abstract class AppEntity implements IAppEntity {
 	@Override
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
+	}
+
+	@Override
+	public String toString() {
+		return Util.toStringGettersVal(this);
 	}
 }
