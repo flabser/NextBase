@@ -9,18 +9,21 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.TypeDef;
+import org.eclipse.persistence.annotations.Convert;
+import org.eclipse.persistence.annotations.Converter;
+import org.eclipse.persistence.annotations.UuidGenerator;
 
+import kz.flabs.dataengine.jpa.util.UUIDConverter;
 import kz.flabs.util.Util;
 
 @MappedSuperclass
-@TypeDef(name = "uuid", defaultForType = UUID.class, typeClass = UuidType.class)
+@Converter(name = "uuidConverter", converterClass = UUIDConverter.class)
+@UuidGenerator(name = "uuid-gen")
 public abstract class AppEntity implements IAppEntity {
 	@Id
 	@GeneratedValue(generator = "uuid-gen")
-	@GenericGenerator(name = "uuid-gen", strategy = "uuid2")
-	@Column(name = "id", columnDefinition = "uuid")
+	@Convert("uuidConverter")
+	@Column(name = "id", nullable = false)
 	protected UUID id;
 
 	@Column(name = "author", nullable = false, updatable = false)
@@ -52,6 +55,10 @@ public abstract class AppEntity implements IAppEntity {
 	@Override
 	public void setAuthor(Long author) {
 		this.author = author;
+	}
+
+	public void setAuthor(String userID) {
+
 	}
 
 	public String getAuthorName() {

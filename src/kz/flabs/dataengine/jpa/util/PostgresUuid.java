@@ -1,4 +1,4 @@
-package kz.flabs.dataengine.jpa;
+package kz.flabs.dataengine.jpa.util;
 
 import org.postgresql.util.PGobject;
 

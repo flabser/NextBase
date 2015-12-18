@@ -1,31 +1,20 @@
 package kz.flabs.dataengine.jpa;
 
+import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
+
+import kz.flabs.dataengine.jpa.embedded.ACL;
 
 @MappedSuperclass
 public abstract class SecureAppEntity extends AppEntity {
-	/*	@ElementCollection
-	@CollectionTable(name = "editors1",joinColumns =  @JoinColumn(name = "fk_parent"))
-	@Column(name = "editors")
-	List<String> editors;
+	@Embedded
+	private ACL acl;
 
-	@ElementCollection
-	@CollectionTable(name = "readers1",joinColumns =  @JoinColumn(name = "fk_parent"))
-	@Column(name = "readers")
-	List<String> readers;
-
-	public List<String> getEditors() {
-		return editors;
+	public ACL getAcl() {
+		return acl;
 	}
-	public void setEditors(List<String> editors) {
-		this.editors = editors;
-	}
-	public List<String> getReaders() {
-		return readers;
-	}
-	public void setReaders(List<String> readers) {
-		this.readers = readers;
-	}*/
 
-
+	public void setAcl(ACL acl) {
+		this.acl = acl;
+	}
 }

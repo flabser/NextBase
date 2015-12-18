@@ -3,15 +3,25 @@ package kz.flabs.dataengine.jpa;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-@MappedSuperclass
-public abstract class SimpleAppEntity implements ISimpleAppEntity {
+import org.eclipse.persistence.annotations.Convert;
+import org.eclipse.persistence.annotations.Converter;
+import org.eclipse.persistence.annotations.UuidGenerator;
 
+import kz.flabs.dataengine.jpa.util.UUIDConverter;
+
+@MappedSuperclass
+@Converter(name = "uuidConverter", converterClass = UUIDConverter.class)
+@UuidGenerator(name = "uuid-gen")
+public abstract class SimpleAppEntity implements ISimpleAppEntity {
 	@Id
-	@Column(columnDefinition = "uuid")
-	private UUID id;
+	@GeneratedValue(generator = "uuid-gen")
+	@Convert("uuidConverter")
+	@Column(name = "id", nullable = false)
+	protected UUID id;
 
 	@Override
 	public void setId(UUID id) {
