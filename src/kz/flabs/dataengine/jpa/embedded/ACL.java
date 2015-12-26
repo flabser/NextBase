@@ -1,28 +1,42 @@
 package kz.flabs.dataengine.jpa.embedded;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Embeddable;
 
+import kz.flabs.users.User;
+
 @Embeddable
 public class ACL {
-	private List<Long> editors;
+	private Set<Long> editors;
 
-	private List<Long> readers;
+	private Set<Long> readers;
 
-	public List<Long> getEditors() {
+	public Set<Long> getEditors() {
 		return editors;
 	}
 
-	public void setEditors(List<Long> editors) {
+	public void setEditors(Set<Long> editors) {
 		this.editors = editors;
 	}
 
-	public List<Long> getReaders() {
+	public void addEditor(User user) {
+		this.editors.add((long) user.docID);
+	}
+
+	public Set<Long> getReaders() {
 		return readers;
 	}
 
-	public void setReaders(List<Long> readers) {
+	public void setReaders(Set<Long> readers) {
 		this.readers = readers;
+	}
+
+	public void addReader(User user) {
+		this.readers.add((long) user.docID);
+	}
+
+	public void addEditor(String role) {
+
 	}
 }

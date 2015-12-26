@@ -2,17 +2,14 @@ package kz.flabs.dataengine.jpa;
 
 import java.util.Date;
 
-
 public interface IAppEntity extends ISimpleAppEntity {
 
-	Long getAuthor();
+	long getAuthor();
 
-	void setAuthor(Long author);
+	void setAuthor(long author);
 
 	Date getRegDate();
 
 	void setRegDate(Date regDate);
-
-
 
 }

@@ -51,6 +51,7 @@ import sun.misc.BASE64Encoder;
 public class GlobalSetting {
 	public String description;
 	public String id = "";
+	// TODO it need to check whether it necessary
 	public String databaseName;
 	public boolean databaseEnable;
 	@Deprecated

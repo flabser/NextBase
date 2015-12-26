@@ -12,6 +12,7 @@ import kz.flabs.util.XMLResponse;
 import kz.nextbase.script._Session;
 import kz.nextbase.script._WebFormData;
 import kz.pchelka.scheduler.IProcessInitiator;
+import kz.pchelka.server.Server;
 
 public class DoProcessor {
 	public ArrayList<IQuerySaveTransaction> transactionToPost = new ArrayList<IQuerySaveTransaction>();
@@ -51,15 +52,15 @@ public class DoProcessor {
 
 	}
 
-	public XMLResponse processJava(String className) throws ClassNotFoundException {
+	public XMLResponse processJava(String className, String method) throws ClassNotFoundException {
 		Object object = null;
 		try {
 			Class<?> pageClass = Class.forName(className);
 			object = pageClass.newInstance();
 		} catch (InstantiationException e) {
-			e.printStackTrace();
+			Server.logger.errorLogEntry(e);
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			Server.logger.errorLogEntry(e);
 		}
 
 		IPageScript myObject = (IPageScript) object;
@@ -68,7 +69,7 @@ public class DoProcessor {
 		myObject.setFormData(webFormData);
 		myObject.setCurrentLang(vocabulary, lang);
 
-		return myObject.process();
+		return myObject.process(method);
 	}
 
 }

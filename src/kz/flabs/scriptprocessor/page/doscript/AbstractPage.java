@@ -19,7 +19,7 @@ import kz.nextbase.script._XMLDocument;
 import kz.nextbase.script.reports._ExportManager;
 import kz.pchelka.server.Server;
 
-public abstract class AbstractPageScript extends ScriptEvent implements IPageScript {
+public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 	public ArrayList<Msg> messages = new ArrayList<Msg>();
 
 	private String lang;
@@ -31,6 +31,10 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 	@Override
 	public void setSession(_Session ses) {
 		this.ses = ses;
+	}
+
+	public void localizedMsgBox(String m) {
+		messages.add(new Msg(vocabulary.getWord(m, lang)[0], m));
 	}
 
 	@Override
@@ -62,7 +66,7 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 	}
 
 	public void println(Object text) {
-		System.out.println(text);
+		System.out.println(text.toString());
 	}
 
 	public void log(String text) {
@@ -82,11 +86,15 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 	}
 
 	@Override
-	public XMLResponse process() {
+	public XMLResponse process(String method) {
 
 		long start_time = System.currentTimeMillis();
 		try {
-			doProcess(ses, formData, lang);
+			if (method.equalsIgnoreCase("POST")) {
+				doPOST(ses, formData, lang);
+			} else {
+				doGET(ses, formData, lang);
+			}
 			xmlResp.setPublishResult(toPublishElement);
 			xmlResp.setResponseStatus(true);
 			for (Msg message : messages) {
@@ -112,11 +120,11 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 	}
 
 	@Override
-	public XMLResponse process(String method) {
-		return process();
-
+	public XMLResponse process() {
+		return process("GET");
 	}
 
-	public abstract void doProcess(_Session session, _WebFormData formData, String lang);
+	public abstract void doGET(_Session session, _WebFormData formData, String lang);
 
+	public abstract void doPOST(_Session session, _WebFormData formData, String lang);
 }

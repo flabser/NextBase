@@ -10,9 +10,14 @@ public interface IDAO<T, K> {
 
 	List<T> findAll();
 
+	Long getCount();
+
+	List<T> findAll(int firstRec, int pageSize);
+
 	T add(T entity);
 
 	T update(T entity);
 
 	void delete(T entity);
+
 }

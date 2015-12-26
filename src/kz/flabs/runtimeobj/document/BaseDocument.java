@@ -94,7 +94,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 	public boolean hasDiscussion = false;
 
 	protected int docID;
-	protected String ddbID = "";
+	public String ddbID = "";
 	protected Date lastUpdate;
 	protected HashMap<String, Field> fieldsMap = new HashMap<String, Field>();
 	protected HashSet<Reader> readers = new HashSet<Reader>();

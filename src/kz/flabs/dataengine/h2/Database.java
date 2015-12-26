@@ -150,10 +150,27 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	protected IActivity activity;
 	protected static String baseTable = "MAINDOCS";
 
-	private String externalStructureApp;
+	protected String externalStructureApp;
 	private static final String maindocFields = "MAINDOCS.DOCID, DDBID, AUTHOR, PARENTDOCID, PARENTDOCTYPE, REGDATE, DOCTYPE, LASTUPDATE, VIEWTEXT, "
 			+ DatabaseUtil.getViewTextList("") + ", VIEWNUMBER, VIEWDATE, VIEWICON, FORM, HAS_ATTACHMENT ";
 	private boolean respUsed;
+
+	public Database(AppEnv env, DatabaseType dbType)
+			throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		this.env = env;
+		if (env.globalSetting.databaseEnable) {
+			dbID = env.globalSetting.databaseName;
+			connectionURL = env.globalSetting.dbURL;
+			dbPool = new DBConnectionPool();
+			dbPool.initConnectionPool(env.globalSetting.driver, connectionURL, env.globalSetting.getDbUserName(),
+					env.globalSetting.getDbPassword());
+
+			usersActivity = new UsersActivity(this);
+		}
+
+		databaseType = dbType;
+
+	}
 
 	public Database(AppEnv env)
 			throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -192,7 +209,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 		respUsed = hasDocsWithParent();
 	}
 
-	private void initStructPool() {
+	protected void initStructPool() {
 		for (ExternalModule module : env.globalSetting.extModuleMap.values()) {
 			if (module.getType() == ExternalModuleType.STRUCTURE) {
 				externalStructureApp = module.getName();
@@ -207,9 +224,13 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	@Override
 	public String initExternalPool(ExternalModuleType extModule) {
 		AppEnv extApp = Environment.getApplication(externalStructureApp);
-		IDBConnectionPool pool = DatabaseFactory.getDatabase(extApp.appType).getConnectionPool();
-		structDbPool = pool;
-		return extModule.name() + " " + getParent().appType + ">" + extApp.appType;
+		if (extApp != null) {
+			IDBConnectionPool pool = DatabaseFactory.getDatabase(extApp.appType).getConnectionPool();
+			structDbPool = pool;
+			return env.appType + " has connected to >" + extApp.appType;
+		} else {
+			return env.appType + " has not connected to external module " + extModule;
+		}
 
 	}
 

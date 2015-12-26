@@ -441,8 +441,11 @@ public class Environment implements Const, ICache, IProcessInitiator {
 		if (applications.size() >= countOfApp) {
 			if (delayedStart.size() > 0) {
 				for (IDatabase db : delayedStart) {
-					logger.normalLogEntry(
-							"Connecting to external module " + db.initExternalPool(ExternalModuleType.STRUCTURE));
+					System.out.println(db.getClass().getCanonicalName());
+					for (ExternalModuleType extModule : ExternalModuleType.values()) {
+						logger.normalLogEntry("Connecting to external module " + db.initExternalPool(extModule));
+					}
+
 					if (!schedulerStarted) {
 						Thread schedulerThread = new Thread(scheduler);
 						schedulerThread.start();
@@ -552,9 +555,13 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
 			QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
 		Object obj = cache.get(page.getID());
-		String cacheParam = formData.get("cache")[0];
-		if (obj == null || cacheParam.equalsIgnoreCase("reload")) {
-			StringBuffer buffer = page.getContent(formData);
+		String cacheParam[] = formData.get("cache");
+		if (cacheParam == null) {
+			StringBuffer buffer = page.getContent(formData, "GET");
+			cache.put(page.getID(), buffer);
+			return buffer;
+		} else if (cacheParam[0].equalsIgnoreCase("reload")) {
+			StringBuffer buffer = page.getContent(formData, "GET");
 			cache.put(page.getID(), buffer);
 			return buffer;
 		} else {

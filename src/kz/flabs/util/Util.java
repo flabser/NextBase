@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kz.flabs.appenv.AppEnv;
+import kz.flabs.dataengine.jpa.AppEntity;
 import kz.flabs.exception.ConversionError;
 import kz.flabs.exception.DataConversionException;
 import kz.pchelka.server.Server;
@@ -215,9 +216,10 @@ public class Util {
 		return Integer.toString(generateRandom());
 	}
 
+	// TODO It can cause StackOvervlow error
 	public static String toStringGettersVal(Object clazz) {
 		Class<?> noparams[] = {};
-		StringBuilder result = new StringBuilder();
+		StringBuilder result = new StringBuilder(10000);
 		String newLine = System.getProperty("line.separator");
 
 		result.append(clazz.getClass().getName());
@@ -229,11 +231,25 @@ public class Util {
 					.getPropertyDescriptors()) {
 				Method method = propertyDescriptor.getReadMethod();
 				if (method != null && !method.getName().equals("getClass")) {
-					result.append(String.format("%" + 2 + "s", ""));
+					System.out.println(result);
+					result.append(" ");
 					result.append(method.getName());
 					result.append(": ");
 					try {
-						result.append(method.invoke(clazz, noparams));
+						String methodValue = "";
+						Object val = method.invoke(clazz, noparams);
+						if (val != null) {
+							if (val instanceof Date) {
+								methodValue = Util.simpleDateFormat.format((Date) val);
+							} else if (val.getClass().isInstance(AppEntity.class)) {
+								methodValue = val.getClass().getCanonicalName();
+							} else {
+								methodValue = val.toString();
+							}
+							result.append(methodValue);
+						} else {
+							result.append("null");
+						}
 					} catch (Exception e) {
 						AppEnv.logger.errorLogEntry(e);
 					}
@@ -418,6 +434,11 @@ public class Util {
 		double k = Math.round(a / 1024.0 * 100000.0) / 100000.0;
 		return k;
 
+	}
+
+	public static boolean getRandomBoolean() {
+		Random random = new Random();
+		return random.nextBoolean();
 	}
 
 	public static String generateRandomAsText(String setOfTheLetters) {

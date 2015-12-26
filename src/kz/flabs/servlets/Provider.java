@@ -390,6 +390,7 @@ public class Provider extends HttpServlet implements Const {
 		return result;
 	}
 
+	@Deprecated
 	private ProviderResult content(HttpServletRequest request, HttpServletResponse response, IRule rule,
 			UserSession userSession, String id) throws RuleException, DocumentException, DocumentAccessException,
 					QueryFormulaParserException, QueryException, LocalizatorException {
@@ -552,9 +553,8 @@ public class Provider extends HttpServlet implements Const {
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
 		Page page = new Page(env, userSession, pageRule);
-		// result.output.append(page.process(fields, request, response, id,
-		// userSession, jses));
-		result.output.append(page.process(fields));
+
+		result.output.append(page.process(fields, request.getMethod()));
 		if (page.fileGenerated) {
 			result.publishAs = PublishAsType.OUTPUTSTREAM;
 			result.filePath = page.generatedFilePath;

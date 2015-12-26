@@ -71,13 +71,19 @@ public class Page implements IProcessInitiator, Const {
 
 	public String getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions)
 			throws DocumentException {
-		StringBuffer captionsText = new StringBuffer("<captions>");
+		StringBuffer captionsText = new StringBuffer(100);
 		for (Caption cap : captions) {
 			captionsText.append(
 					"<" + cap.captionID + captionTextSupplier.getValueAsCaption(cap.source, cap.value).toAttrValue()
 							+ "></" + cap.captionID + ">");
 		}
-		return captionsText.append("</captions>").toString();
+
+		if (captionsText.toString().equals("")) {
+			return "";
+		} else {
+			return "<captions>" + captionsText.toString() + "</captions>";
+		}
+
 	}
 
 	public String getAsXML(User user, String lang) throws RuleException, DocumentException, DocumentAccessException,
@@ -88,13 +94,13 @@ public class Page implements IProcessInitiator, Const {
 		return "<content>" + rule.getAsXML() + glossarySet + captions + "</content>";
 	}
 
-	public StringBuffer process(Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
-			QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
+	public StringBuffer process(Map<String, String[]> formData, String method) throws ClassNotFoundException,
+			RuleException, QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
 		StringBuffer resultOut = null;
 		long start_time = System.currentTimeMillis();
 		switch (rule.caching) {
 		case NO_CACHING:
-			resultOut = getContent(formData);
+			resultOut = getContent(formData, method);
 			break;
 		case CACHING_IN_USER_SESSION_SCOPE:
 			resultOut = userSession.getPage(this, formData);
@@ -106,7 +112,7 @@ public class Page implements IProcessInitiator, Const {
 			resultOut = new Environment().getPage(this, formData);
 			break;
 		default:
-			resultOut = getContent(formData);
+			resultOut = getContent(formData, method);
 		}
 		DocID toFlash = userSession.getFlashDoc();
 		String flashAttr = "";
@@ -126,9 +132,10 @@ public class Page implements IProcessInitiator, Const {
 
 	}
 
-	public StringBuffer getContent(Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
-			QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
+	public StringBuffer getContent(Map<String, String[]> formData, String method) throws ClassNotFoundException,
+			RuleException, QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
 		fields = formData;
+
 		StringBuffer output = new StringBuffer(1000);
 		User user = userSession.currentUser;
 		if (rule.runUnderUser.getSourceType() == ValueSourceType.STATIC) {
@@ -155,7 +162,7 @@ public class Page implements IProcessInitiator, Const {
 						xmlResp = sProcessor.processScript(elementRule.doClassName.getClassName());
 						break;
 					case JAVA_CLASS:
-						xmlResp = sProcessor.processJava(elementRule.doClassName.getClassName());
+						xmlResp = sProcessor.processJava(elementRule.doClassName.getClassName(), method);
 						break;
 					case UNKNOWN:
 						break;
@@ -254,7 +261,7 @@ public class Page implements IProcessInitiator, Const {
 					// IncludedPage page = new IncludedPage(env, userSession,
 					// rule, request, response);
 					IncludedPage page = new IncludedPage(env, userSession, rule);
-					output.append(page.process(fields));
+					output.append(page.process(fields, method));
 					break;
 				default:
 					break;

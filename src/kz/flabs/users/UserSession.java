@@ -510,7 +510,7 @@ public class UserSession implements Const, ICache {
 		if (c != null) {
 			String cache = c[0];
 			if (obj == null || cache.equalsIgnoreCase("reload")) {
-				StringBuffer buffer = page.getContent(formData);
+				StringBuffer buffer = page.getContent(formData, "GET");
 				setObject(cid, buffer);
 				return buffer;
 			} else {
@@ -518,7 +518,7 @@ public class UserSession implements Const, ICache {
 			}
 		} else {
 			if (obj == null) {
-				StringBuffer buffer = page.getContent(formData);
+				StringBuffer buffer = page.getContent(formData, "GET");
 				setObject(cid, buffer);
 				return buffer;
 			} else {

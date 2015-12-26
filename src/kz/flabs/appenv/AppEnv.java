@@ -153,7 +153,7 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 			}
 		}
 		if (obj == null || reload) {
-			StringBuffer buffer = page.getContent(formData);
+			StringBuffer buffer = page.getContent(formData, "GET");
 			cache.put(page.getID(), buffer);
 			return buffer;
 		} else {
