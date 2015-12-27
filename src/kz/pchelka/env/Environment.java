@@ -118,6 +118,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 	public static String backupDir;
 	private static ArrayList<UserSession> sess = new ArrayList<UserSession>();
+	public static boolean isDevMode;
 
 	public static void init() {
 		logger = Server.logger;

@@ -141,6 +141,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 		}
 	}
 
+	@Override
 	public Long getCount() {
 		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {

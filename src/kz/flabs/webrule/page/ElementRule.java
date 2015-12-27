@@ -26,6 +26,7 @@ import kz.flabs.webrule.constants.TagPublicationFormatType;
 import kz.flabs.webrule.constants.ValueSourceType;
 import kz.flabs.webrule.query.IQueryRule;
 import kz.flabs.webrule.query.QueryFieldRule;
+import kz.pchelka.env.Environment;
 
 public class ElementRule implements IQueryRule, Const {
 	public ElementType type;
@@ -121,7 +122,12 @@ public class ElementRule implements IQueryRule, Const {
 			Class<GroovyObject> querySave = null;
 			if (qsSourceType == ValueSourceType.GROOVY_FILE || qsSourceType == ValueSourceType.FILE) {
 				CompilerConfiguration compiler = new CompilerConfiguration();
-				compiler.setTargetDirectory(parentRule.getScriptDirPath());
+				
+				if (Environment.isDevMode){
+					compiler.setTargetDirectory("bin");
+				}else{
+					compiler.setTargetDirectory(parentRule.getScriptDirPath());	
+				}
 				GroovyClassLoader loader = new GroovyClassLoader(parent, compiler);
 				File groovyFile = new File(parentRule.getScriptDirPath() + File.separator
 						+ value.replace(".", File.separator) + ".groovy");

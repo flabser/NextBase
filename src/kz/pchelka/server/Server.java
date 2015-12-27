@@ -40,7 +40,7 @@ public class Server {
 						+ System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
 
 		Environment.init();
-
+		
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
 		webServerInst.init(Environment.hostName);
 
@@ -76,6 +76,11 @@ public class Server {
 
 	public static void main(String[] arg) {
 		try {
+			  for(int i = 0; i < arg.length; i++) {
+		           if (arg[i].equals("developing")){
+		        	   Environment.isDevMode = true;
+		           }
+		        }
 			Server.start();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

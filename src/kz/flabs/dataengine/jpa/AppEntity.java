@@ -9,17 +9,14 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 
-import org.eclipse.persistence.annotations.Convert;
-import org.eclipse.persistence.annotations.Converter;
-import org.eclipse.persistence.annotations.UuidGenerator;
-import org.eclipse.persistence.internal.indirection.jdk8.IndirectList;
-
 import kz.flabs.appenv.AppEnv;
+import kz.flabs.dataengine.jpa.embedded.ReadingMark;
 import kz.flabs.dataengine.jpa.util.UUIDConverter;
 import kz.flabs.users.User;
 import kz.flabs.util.Util;
@@ -28,6 +25,11 @@ import kz.nextbase.script._Exception;
 import kz.nextbase.script._IPOJOObject;
 import kz.nextbase.script._IXMLContent;
 import kz.nextbase.script._URL;
+
+import org.eclipse.persistence.annotations.Convert;
+import org.eclipse.persistence.annotations.Converter;
+import org.eclipse.persistence.annotations.UuidGenerator;
+import org.eclipse.persistence.internal.indirection.jdk8.IndirectList;
 
 @MappedSuperclass
 @Converter(name = "uuidConverter", converterClass = UUIDConverter.class)
@@ -40,10 +42,13 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 	protected UUID id;
 
 	@Column(name = "author", nullable = false, updatable = false)
-	protected long author;
+	protected Long author;
 
 	@Column(name = "reg_date", nullable = false, updatable = false)
 	protected Date regDate;
+
+	@ElementCollection
+	private List<ReadingMark> readingMarks;
 
 	@PrePersist
 	private void prePersist() {
@@ -70,12 +75,8 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 		this.author = author;
 	}
 
-	public void setAuthor(String userID) {
-
-	}
-
 	public void setAuthor(User user) {
-		author = user.docID;
+		author = (long) user.docID;
 
 	}
 
@@ -106,8 +107,7 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 		Class<?> noparams[] = {};
 		StringBuilder value = new StringBuilder(1000);
 		try {
-			for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(this.getClass())
-					.getPropertyDescriptors()) {
+			for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(this.getClass()).getPropertyDescriptors()) {
 				Method method = propertyDescriptor.getReadMethod();
 				if (method != null && !method.getName().equals("getClass")) {
 					String methodValue = "";

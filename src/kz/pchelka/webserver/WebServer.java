@@ -169,6 +169,9 @@ public class WebServer implements IWebServer {
 		Tomcat.addServlet(context, "Uploader", "kz.flabs.servlets.Uploader");
 		context.addServletMapping("/Uploader", "Uploader");
 
+		Tomcat.addServlet(context, "UploadFile", "kz.flabs.servlets.UploadFile");
+		context.addServletMapping("/UploadFile", "UploadFile");
+
 		Tomcat.addServlet(context, "Error", "kz.flabs.servlets.Error");
 		context.addServletMapping("/Error", "Error");
 
