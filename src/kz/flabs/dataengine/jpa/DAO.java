@@ -7,7 +7,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
+import kz.flabs.dataengine.Const;
 import kz.flabs.users.User;
 import kz.nextbase.script._Session;
 
@@ -156,4 +161,20 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 		String queryName = entityClass.getSimpleName() + ".findAll";
 		return queryName;
 	}
+
+	protected Predicate addAccessCondition(CriteriaBuilder cBuilder, Root<T> root) {
+		if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
+			return root.get("readers").in((long) user.docID);
+		} else {
+			return cBuilder.disjunction();
+		}
+	}
+
+	protected CriteriaQuery<T> addAccessRestriction(CriteriaQuery<T> select, Root<T> root) {
+		if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
+			select.where(root.get("readers").in((long) user.docID));
+		}
+		return select;
+	}
+
 }

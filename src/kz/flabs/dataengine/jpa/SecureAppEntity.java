@@ -25,8 +25,11 @@ public abstract class SecureAppEntity extends AppEntity {
 	}
 
 	public void addReaderEditor(User user) {
-		this.editors.add((long) user.docID);
-		addReader(user);
+		int id = user.docID;
+		if (id != 0) {
+			this.editors.add((long) id);
+			addReader(user);
+		}
 	}
 
 	public Set<Long> getReaders() {
@@ -37,13 +40,11 @@ public abstract class SecureAppEntity extends AppEntity {
 		this.readers = readers;
 	}
 
-	public void addReader(int i) {
-		this.readers.add((long) i);
-
-	}
-
 	public void addReader(User user) {
-		this.readers.add((long) user.docID);
+		int id = user.docID;
+		if (id != 0) {
+			this.readers.add((long) id);
+		}
 	}
 
 	public void addEditor(String role) {
@@ -53,8 +54,9 @@ public abstract class SecureAppEntity extends AppEntity {
 	@Override
 	public void setAuthor(User user) {
 		author = (long) user.docID;
-		addReader(user);
-		addReaderEditor(user);
-
+		if (author != 0) {
+			addReader(user);
+			addReaderEditor(user);
+		}
 	}
 }

@@ -6,10 +6,10 @@
 	<database autodeploy="ON">
 		<name>Structure</name>
 		<driver>org.postgresql.Driver</driver>
-		<url>jdbc:postgresql://192.168.10.13/Structure</url>
-		<username/>
-		<password/>
-	<connectionid>nDA+WXyYaWo2Lfw2huEK8w==@@@6glzrIZJAVg=</connectionid></database>
+		<url>jdbc:postgresql://localhost:5433/Structure</url>
+		<username>postgres</username>
+		<password>smartdoc</password>
+	</database>
 	<daemons>
 		<cyclecontrol>
 			<scheduler>

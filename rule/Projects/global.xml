@@ -5,12 +5,12 @@
 	<logo>projects_small.png</logo>
 	<appname>Система управления проектами</appname>
 	<database autodeploy="ON">
-		<name>Projects</name>
+		<name>Workflow</name>
 		<driver>org.postgresql.Driver</driver>
-		<url>jdbc:postgresql://192.168.10.13/Projects</url>
-		<username/>
-		<password/>
-	<connectionid>iZZ5ZpRMZCmKFtwiUTG0vA==@@@A99Xs6Q2QWs=</connectionid></database>
+		<url>jdbc:postgresql://localhost:5433/Workflow</url>
+		<username>postgres</username>
+		<password>smartdoc</password>
+	</database>
 	<externalmodule type="STRUCTURE">Structure</externalmodule>
 	 <eds mode="OFF"/>
 	<entrypoint/>
