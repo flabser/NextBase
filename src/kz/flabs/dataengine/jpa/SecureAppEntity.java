@@ -24,8 +24,9 @@ public abstract class SecureAppEntity extends AppEntity {
 		this.editors = editors;
 	}
 
-	public void addEditor(User user) {
+	public void addReaderEditor(User user) {
 		this.editors.add((long) user.docID);
+		addReader(user);
 	}
 
 	public Set<Long> getReaders() {
@@ -53,7 +54,7 @@ public abstract class SecureAppEntity extends AppEntity {
 	public void setAuthor(User user) {
 		author = (long) user.docID;
 		addReader(user);
-		addEditor(user);
+		addReaderEditor(user);
 
 	}
 }
