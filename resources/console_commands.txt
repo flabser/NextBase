@@ -1,4 +1,6 @@
 quit, exit (q) - stop server with safety;
 reset rules(rr) - reset loaded rules and cashes;
 reload vocabulary(rv) - reload vocabularies and reset cashes;
+show initializers(si) - show all available Initializers;
+start initializer * - run initializer;
 help (h) - show this help;

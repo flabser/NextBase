@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,12 +14,14 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import kz.flabs.dataengine.Const;
+import kz.flabs.runtimeobj.RuntimeObjUtil;
 import kz.flabs.users.User;
 import kz.nextbase.script._Session;
+import kz.pchelka.server.Server;
 
 public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 	public User user;
-	private Class<T> entityClass;
+	private final Class<T> entityClass;
 	private EntityManagerFactory emf;
 
 	public DAO(Class<T> entityClass, _Session session) {
@@ -96,6 +99,9 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 				em.persist(entity);
 				t.commit();
 				return entity;
+			} catch (PersistenceException e) {
+				Server.logger.errorLogEntry(e.getMessage());
+				return null;
 			} finally {
 				if (t.isActive()) {
 					t.rollback();
@@ -116,6 +122,9 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 				em.merge(entity);
 				t.commit();
 				return entity;
+			} catch (PersistenceException e) {
+				Server.logger.errorLogEntry(e.getMessage());
+				return null;
 			} finally {
 				if (t.isActive()) {
 					t.rollback();
@@ -157,6 +166,44 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 		}
 	}
 
+	public <T1> ViewResult<T> findIN(String fieldName, T1 value, int pageNum, int pageSize) {
+		Class<T1> valueClass = (Class<T1>) value.getClass();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		try {
+			CriteriaQuery<T> cq = cb.createQuery(entityClass);
+			CriteriaQuery<Long> countCq = cb.createQuery(Long.class);
+			Root<T> c = cq.from(entityClass);
+			cq.select(c);
+			countCq.select(cb.count(c));
+			cq.where(c.get(fieldName).in(cb.parameter(valueClass, "val")));
+			countCq.where(c.get(fieldName).in(cb.parameter(valueClass, "val")));
+			if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
+				cq.where(c.get("readers").in((long) user.docID));
+				countCq.where(c.get("readers").in((long) user.docID));
+			}
+
+			TypedQuery<T> typedQuery = em.createQuery(cq);
+			typedQuery.setParameter("val", value);
+			Query query = em.createQuery(countCq);
+			query.setParameter("val", value);
+			int count = (int) query.getSingleResult();
+			int maxPage = RuntimeObjUtil.countMaxPage(count, pageSize);
+			if (pageNum == 0) {
+				pageNum = maxPage;
+			}
+			int firstRec = RuntimeObjUtil.calcStartEntry(pageNum, pageSize);
+			typedQuery.setFirstResult(firstRec);
+			typedQuery.setMaxResults(pageSize);
+			List<T> result = typedQuery.getResultList();
+
+			ViewResult<T> r = new ViewResult<T>(result, count, maxPage);
+			return r;
+		} finally {
+			em.close();
+		}
+	}
+
 	public String getQueryNameForAll() {
 		String queryName = entityClass.getSimpleName() + ".findAll";
 		return queryName;
@@ -175,6 +222,30 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 			select.where(root.get("readers").in((long) user.docID));
 		}
 		return select;
+	}
+
+	public class ViewResult<T> {
+		private List<T> result;
+		private int count;
+		private int maxPage;
+
+		ViewResult(List<T> result, int count2, int maxPage) {
+			this.result = result;
+			this.count = count2;
+			this.maxPage = maxPage;
+		}
+
+		public int getCount() {
+			return count;
+		}
+
+		public List<T> getResult() {
+			return result;
+		}
+
+		public int getMaxPage() {
+			return maxPage;
+		}
 	}
 
 }
