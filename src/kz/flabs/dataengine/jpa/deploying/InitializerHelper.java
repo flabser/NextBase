@@ -16,6 +16,12 @@ import kz.pchelka.scheduler.IProcessInitiator;
 
 import com.eztech.util.JavaClassFinder;
 
+/**
+ * 
+ * 
+ * @author Kayra created 28-12-2015
+ */
+
 public class InitializerHelper implements IProcessInitiator {
 
 	public Map<String, Class<IInitialData>> getAllinitializers(boolean showConsoleOutput) {
@@ -35,7 +41,7 @@ public class InitializerHelper implements IProcessInitiator {
 					if (env != null) {
 						inits.put(name, (Class<IInitialData>) populatingClass);
 						if (showConsoleOutput) {
-							System.out.println("application: " + env.appType + ", name: " + name);
+							System.out.println(env.appType + ":" + name);
 						}
 					} else {
 						if (showConsoleOutput) {

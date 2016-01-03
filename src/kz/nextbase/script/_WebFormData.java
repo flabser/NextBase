@@ -50,6 +50,15 @@ public class _WebFormData {
 		}
 	}
 
+	public String getValueSilently(String fn, String defaultValue) {
+		try {
+			String value[] = formData.get(fn);
+			return value[0].trim();
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+
 	public String getEncodedValueSilently(String fn) {
 		try {
 			return new String(getValueSilently(fn).getBytes("ISO-8859-1"), "UTF-8");

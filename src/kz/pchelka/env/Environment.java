@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -474,7 +475,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	}
 
 	public static Collection<AppEnv> getApplications() {
-		return applications.values();
+		return new HashSet<AppEnv>(applications.values());
 	}
 
 	public static String getFullHostName() {

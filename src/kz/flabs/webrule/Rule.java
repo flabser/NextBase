@@ -13,12 +13,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.io.FilenameUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.exception.RuleException;
 import kz.flabs.exception.WebFormValueException;
@@ -36,6 +30,12 @@ import kz.flabs.webrule.form.GlossaryRule;
 import kz.flabs.webrule.page.ElementRule;
 import kz.flabs.webrule.page.IElement;
 import kz.flabs.webrule.scheduler.ScheduleSettings;
+
+import org.apache.commons.io.FilenameUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 public abstract class Rule implements IElement, IRule {
 	public RunMode isOn = RunMode.ON;
@@ -106,8 +106,7 @@ public abstract class Rule implements IElement, IRule {
 			}
 			description = XMLUtil.getTextContent(doc, "/rule/description");
 
-			setRunUnderUser(
-					XMLUtil.getTextContent(doc, "/rule/rununderuser", false, Macro.CURRENT_USER.toString(), false),
+			setRunUnderUser(XMLUtil.getTextContent(doc, "/rule/rununderuser", false, Macro.CURRENT_USER.toString(), false),
 					XMLUtil.getTextContent(doc, "/rule/rununderuser/@source", true, "MACRO", false),
 					XMLUtil.getTextContent(doc, "/rule/rununderuser/@type", true, "TEXT", false));
 
@@ -219,8 +218,8 @@ public abstract class Rule implements IElement, IRule {
 
 	@Override
 	public String getRuleAsXML(String app) {
-		String xmlText = "<rule id=\"" + id + "\" isvalid=\"" + isValid + "\" app=\"" + app + "\" ison=\"" + isOn
-				+ "\">" + "<description>" + description + "</description>";
+		String xmlText = "<rule id=\"" + id + "\" isvalid=\"" + isValid + "\" app=\"" + app + "\" ison=\"" + isOn + "\">" + "<description>"
+				+ description + "</description>";
 		return xmlText + "</fields></rule>";
 	}
 

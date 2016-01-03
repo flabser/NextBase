@@ -44,8 +44,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		this(connectionURL);
 	}
 
-	public SystemDatabase(String connURL) throws DatabasePoolException, InstantiationException, IllegalAccessException,
-	        ClassNotFoundException {
+	public SystemDatabase(String connURL) throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		dbPool = new kz.flabs.dataengine.h2.DBConnectionPool();
 		dbPool.initConnectionPool(jdbcDriver, connURL);
 		Connection conn = dbPool.getConnection();
@@ -82,8 +81,8 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		try {
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
-			String sql = "DELETE FROM ENABLEDAPPS WHERE DOCID = (SELECT DOCID FROM USERS WHERE USERID = '" + user.getUserID()
-			        + "') AND APP = '" + env.appType + "'";
+			String sql = "DELETE FROM ENABLEDAPPS WHERE DOCID = (SELECT DOCID FROM USERS WHERE USERID = '" + user.getUserID() + "') AND APP = '"
+					+ env.appType + "'";
 			s.execute(sql);
 			conn.commit();
 		} catch (SQLException e) {
@@ -765,8 +764,8 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			if (rs.next()) {
 				key = rs.getInt(1) + 1;
 			}
-			String insertUser = "insert into USERS(DOCID, USERID, EMAIL, INSTMSGADDR, ISADMIN, LOGINHASH, PUBLICKEY, PWDHASH )" + "values("
-			        + key + ", " + "'" + user.getUserID() + "', " + "'" + user.getEmail() + "','" + user.getInstMsgAddress() + "'" + ","
+			String insertUser = "insert into USERS(DOCID, USERID, EMAIL, INSTMSGADDR, ISADMIN, LOGINHASH, PUBLICKEY, PWDHASH )" + "values(" + key
+					+ ", " + "'" + user.getUserID() + "', " + "'" + user.getEmail() + "','" + user.getInstMsgAddress() + "'" + ","
 			        + user.getIsAdmin() + "," + (user.getUserID() + user.getPassword()).hashCode() + ", '" + user.getPublicKey() + "','"
 			        + user.getPasswordHash() + "')";
 
@@ -791,14 +790,13 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			 */
 
 			for (UserApplicationProfile app : user.enabledApps.values()) {
-				String insertURL = "insert into ENABLEDAPPS(DOCID, APP, LOGINMODE)values(" + key + ", '" + app.appName + "',"
-				        + app.loginMode + ")";
+				String insertURL = "insert into ENABLEDAPPS(DOCID, APP, LOGINMODE)values(" + key + ", '" + app.appName + "'," + app.loginMode + ")";
 				pst = conn.prepareStatement(insertURL);
 				pst.executeUpdate();
 				if (app.loginMode == UserApplicationProfile.LOGIN_AND_QUESTION) {
 					for (UserApplicationProfile.QuestionAnswer qa : app.getQuestionAnswer()) {
-						insertURL = "insert into QA(DOCID, APP, QUESTION, ANSWER)values(" + key + ",'" + app.appName + "','"
-						        + qa.controlQuestion + "','" + qa.answer + "')";
+						insertURL = "insert into QA(DOCID, APP, QUESTION, ANSWER)values(" + key + ",'" + app.appName + "','" + qa.controlQuestion
+								+ "','" + qa.answer + "')";
 						pst = conn.prepareStatement(insertURL);
 						pst.executeUpdate();
 					}
@@ -829,10 +827,10 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			} else {
 				pwd = user.getPassword();
 			}
-			String userUpdateSQL = "update USERS set USERID='" + user.getUserID() + "'," + " EMAIL='" + user.getEmail()
-			        + "', INSTMSGADDR='" + user.getInstMsgAddress() + "'," + "PWD='" + pwd + "', " + "ISADMIN = " + user.getIsAdmin() + ","
-			        + "LOGINHASH = " + (user.getUserID() + user.getPassword()).hashCode() + ", " + "PUBLICKEY = '" + user.getPublicKey()
-			        + "', PWDHASH='" + pwdHsh + "'" + " where DOCID=" + user.docID;
+			String userUpdateSQL = "update USERS set USERID='" + user.getUserID() + "'," + " EMAIL='" + user.getEmail() + "', INSTMSGADDR='"
+					+ user.getInstMsgAddress() + "'," + "PWD='" + pwd + "', " + "ISADMIN = " + user.getIsAdmin() + "," + "LOGINHASH = "
+					+ (user.getUserID() + user.getPassword()).hashCode() + ", " + "PUBLICKEY = '" + user.getPublicKey() + "', PWDHASH='" + pwdHsh
+					+ "'" + " where DOCID=" + user.docID;
 			PreparedStatement pst = conn.prepareStatement(userUpdateSQL);
 			pst.executeUpdate();
 			conn.commit();
@@ -845,8 +843,8 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			pst.executeUpdate();
 
 			for (UserApplicationProfile app : user.enabledApps.values()) {
-				String insertURL = "insert into ENABLEDAPPS(DOCID, APP, LOGINMODE)values (" + user.docID + ", '" + app.appName + "',"
-				        + app.loginMode + ")";
+				String insertURL = "insert into ENABLEDAPPS(DOCID, APP, LOGINMODE)values (" + user.docID + ", '" + app.appName + "'," + app.loginMode
+						+ ")";
 				PreparedStatement pst0 = conn.prepareStatement(insertURL);
 				pst0.executeUpdate();
 
@@ -1020,9 +1018,8 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
-				h = new Holiday(rs.getInt("ID"), rs.getString("COUNTRY"), rs.getString("TITLE"), rs.getInt("REPEAT"),
-				        rs.getDate("STARTDATE"), rs.getInt("CONTINUING"), rs.getDate("ENDDATE"), rs.getInt("IFFALLSON"),
-				        rs.getString("COMMENT"));
+				h = new Holiday(rs.getInt("ID"), rs.getString("COUNTRY"), rs.getString("TITLE"), rs.getInt("REPEAT"), rs.getDate("STARTDATE"),
+						rs.getInt("CONTINUING"), rs.getDate("ENDDATE"), rs.getInt("IFFALLSON"), rs.getString("COMMENT"));
 				holidays.add(h);
 			}
 
@@ -1042,12 +1039,12 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		try {
 			conn.setAutoCommit(false);
 
-			String insertHoliday = "update HOLIDAYS set " + "COUNTRY = " + (h.getCountry() != null ? "'" + h.getCountry() + "'" : "null")
-			        + ", " + "TITLE = " + (h.getTitle() != null ? "'" + h.getTitle() + "'" : "null") + ", " + "REPEAT = " + h.getRepeat()
-			        + ", " + "STARTDATE = " + (h.getStartDate() != null ? "'" + h.getStartDate() + "'" : "null") + ", " + "CONTINUING = "
+			String insertHoliday = "update HOLIDAYS set " + "COUNTRY = " + (h.getCountry() != null ? "'" + h.getCountry() + "'" : "null") + ", "
+					+ "TITLE = " + (h.getTitle() != null ? "'" + h.getTitle() + "'" : "null") + ", " + "REPEAT = " + h.getRepeat() + ", "
+					+ "STARTDATE = " + (h.getStartDate() != null ? "'" + h.getStartDate() + "'" : "null") + ", " + "CONTINUING = "
 			        + h.getContinuing() + ", " + "ENDDATE = " + (h.getEndDate() != null ? "'" + h.getEndDate() + "'" : "null") + ", "
-			        + "IFFALLSON = " + h.getIfFallSon() + ", " + "COMMENT = "
-			        + (h.getComment() != null ? "'" + h.getComment() + "'" : "null") + " " + "where ID = " + h.getId();
+			        + "IFFALLSON = " + h.getIfFallSon() + ", " + "COMMENT = " + (h.getComment() != null ? "'" + h.getComment() + "'" : "null") + " "
+					+ "where ID = " + h.getId();
 
 			PreparedStatement pst = conn.prepareStatement(insertHoliday);
 			pst.executeUpdate();
@@ -1126,9 +1123,8 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
-				h = new Holiday(rs.getInt("ID"), rs.getString("COUNTRY"), rs.getString("TITLE"), rs.getInt("REPEAT"),
-				        rs.getDate("STARTDATE"), rs.getInt("CONTINUING"), rs.getDate("ENDDATE"), rs.getInt("IFFALLSON"),
-				        rs.getString("COMMENT"));
+				h = new Holiday(rs.getInt("ID"), rs.getString("COUNTRY"), rs.getString("TITLE"), rs.getInt("REPEAT"), rs.getDate("STARTDATE"),
+						rs.getInt("CONTINUING"), rs.getDate("ENDDATE"), rs.getInt("IFFALLSON"), rs.getString("COMMENT"));
 				holidays.add(h);
 			}
 

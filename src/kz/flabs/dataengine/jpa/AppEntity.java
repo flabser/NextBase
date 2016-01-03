@@ -80,12 +80,6 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 
 	}
 
-	public String getAuthorName() {
-
-		return null;
-
-	}
-
 	@Override
 	public Date getRegDate() {
 		return regDate;

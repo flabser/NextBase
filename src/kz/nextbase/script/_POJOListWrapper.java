@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class _POJOListWrapper<T extends _IPOJOObject, K> implements _IXMLContent {
+public class _POJOListWrapper<T extends _IPOJOObject> implements _IXMLContent {
 	private int maxPage;
 	private int count;
 	private int currentPage;
@@ -17,8 +17,8 @@ public class _POJOListWrapper<T extends _IPOJOObject, K> implements _IXMLContent
 		this.list = list;
 	}
 
-	public _POJOListWrapper(List<T> list, int count) {
-		this.count = count;
+	public _POJOListWrapper(List<T> list) {
+		this.count = list.size();
 		this.list = list;
 	}
 

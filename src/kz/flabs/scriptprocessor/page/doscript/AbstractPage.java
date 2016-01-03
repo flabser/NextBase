@@ -56,6 +56,11 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 		xml.addAll(documents);
 	}
 
+	protected void setBadRequest() {
+		// TODO Auto-generated method stub
+
+	}
+
 	public void println(Exception e) {
 		String errText = e.toString();
 		System.out.println(errText);

@@ -1,5 +1,8 @@
 package kz.flabs.webrule.handler;
 
+import groovy.lang.GroovyClassLoader;
+import groovy.lang.GroovyObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,15 +19,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.codehaus.groovy.control.CompilationFailedException;
-import org.codehaus.groovy.control.CompilerConfiguration;
-import org.codehaus.groovy.control.MultipleCompilationErrorsException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
-
-import groovy.lang.GroovyClassLoader;
-import groovy.lang.GroovyObject;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.Const;
 import kz.flabs.exception.RuleException;
@@ -34,6 +28,7 @@ import kz.flabs.scriptprocessor.ScriptProcessor;
 import kz.flabs.sourcesupplier.DocumentCollectionMacro;
 import kz.flabs.util.XMLUtil;
 import kz.flabs.webrule.Rule;
+import kz.flabs.webrule.constants.RuleType;
 import kz.flabs.webrule.constants.RunMode;
 import kz.flabs.webrule.constants.ValueSourceType;
 import kz.flabs.webrule.rulefile.RuleFile;
@@ -45,6 +40,13 @@ import kz.flabs.webrule.scheduler.ScheduleSettings;
 import kz.flabs.webrule.scheduler.ScheduleType;
 import kz.pchelka.scheduler.DaemonType;
 import kz.pchelka.scheduler.IProcessInitiator;
+
+import org.codehaus.groovy.control.CompilationFailedException;
+import org.codehaus.groovy.control.CompilerConfiguration;
+import org.codehaus.groovy.control.MultipleCompilationErrorsException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 public class HandlerRule extends Rule implements IScheduledProcessRule, Const {
 	public RunUnderUser runUnderUser;
@@ -98,8 +100,7 @@ public class HandlerRule extends Rule implements IScheduledProcessRule, Const {
 					try {
 						handlerClass = loader.parseClass(ScriptProcessor.normalizeScript(script));
 					} catch (MultipleCompilationErrorsException e) {
-						AppEnv.logger.errorLogEntry(
-								"Handler Script compilation error at compiling=" + id + ":" + e.getMessage());
+						AppEnv.logger.errorLogEntry("Handler Script compilation error at compiling=" + id + ":" + e.getMessage());
 						isValid = false;
 					}
 				}
@@ -128,6 +129,7 @@ public class HandlerRule extends Rule implements IScheduledProcessRule, Const {
 				showFile = false;
 			}
 
+			type = RuleType.HANDLER;
 			isValid = true;
 		} catch (Exception e) {
 			AppEnv.logger.errorLogEntry(e);
@@ -191,14 +193,13 @@ public class HandlerRule extends Rule implements IScheduledProcessRule, Const {
 	public String getRuleAsXML(String app) {
 		String scriptBlock = "";
 		if (scriptIsValid) {
-			scriptBlock = "<events><trigger source=\"" + qsSourceType + "\">" + handlerClassName
-					+ "</trigger></events>";
+			scriptBlock = "<events><trigger source=\"" + qsSourceType + "\">" + handlerClassName + "</trigger></events>";
 		} else {
 			scriptBlock = "<script><![CDATA[" + script + "]]></script>";
 		}
-		String xmlText = "<rule id=\"" + id + "\" isvalid=\"" + isValid + "\" app=\"" + app + "\">" + "<description>"
-				+ description + "</description>" + "<xsltfile>" + xsltFile + "</xsltfile>" + "<waitresponse>"
-				+ waitResponse + "</waitresponse>" + "<trigger>" + trigger + "</trigger>" + scriptBlock + "</rule>";
+		String xmlText = "<rule id=\"" + id + "\" isvalid=\"" + isValid + "\" app=\"" + app + "\">" + "<description>" + description
+		        + "</description>" + "<xsltfile>" + xsltFile + "</xsltfile>" + "<waitresponse>" + waitResponse + "</waitresponse>" + "<trigger>"
+		        + trigger + "</trigger>" + scriptBlock + "</rule>";
 
 		return xmlText;
 	}
@@ -324,8 +325,7 @@ public class HandlerRule extends Rule implements IScheduledProcessRule, Const {
 				compiler.setTargetDirectory(scriptDirPath);
 				compiler.setClasspath(scriptDirPath);
 				GroovyClassLoader loader = new GroovyClassLoader(parent, compiler);
-				File groovyFile = new File(
-						scriptDirPath + File.separator + value.replace(".", File.separator) + ".groovy");
+				File groovyFile = new File(scriptDirPath + File.separator + value.replace(".", File.separator) + ".groovy");
 				if (groovyFile.exists()) {
 					try {
 						querySave = loader.parseClass(groovyFile);
@@ -341,8 +341,7 @@ public class HandlerRule extends Rule implements IScheduledProcessRule, Const {
 
 			}
 		} catch (MultipleCompilationErrorsException e) {
-			AppEnv.logger.errorLogEntry(
-					"Script compilation error at form rule compiling=" + id + ", node=" + node.getBaseURI());
+			AppEnv.logger.errorLogEntry("Script compilation error at form rule compiling=" + id + ", node=" + node.getBaseURI());
 			AppEnv.logger.errorLogEntry(e.getMessage());
 		}
 		return null;
