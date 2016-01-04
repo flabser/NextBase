@@ -17,8 +17,7 @@ public class _ActionBar implements _IXMLContent {
 	private _Session session;
 
 	public _ActionBar() throws _Exception {
-		throw new _Exception(_ExceptionType.CONSTRUCTOR_UNDEFINED,
-				"Defaul constructor undefined, you should use  \"new _ActionBar(_Session)\"");
+		throw new _Exception(_ExceptionType.CONSTRUCTOR_UNDEFINED, "Default constructor undefined, you should use  \"new _ActionBar(_Session)\"");
 	}
 
 	public _ActionBar(_Session ses) {
@@ -36,8 +35,7 @@ public class _ActionBar implements _IXMLContent {
 		for (_Action act : actions) {
 			a += act.toXML();
 		}
-		return "<actionbar mode=\"" + isOn + "\" caption=\"" + caption + "\" hint=\"" + hint + "\">" + a
-				+ "</actionbar>";
+		return "<actionbar mode=\"" + isOn + "\" caption=\"" + caption + "\" hint=\"" + hint + "\">" + a + "</actionbar>";
 	}
 
 	@Override

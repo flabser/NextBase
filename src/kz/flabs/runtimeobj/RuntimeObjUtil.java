@@ -32,8 +32,8 @@ public class RuntimeObjUtil implements Const {
 	int minComplication;
 	int maxComplication;
 
-	public BaseDocument getGrandParentDocument(IDatabase db, BaseDocument doc)
-			throws DocumentException, DocumentAccessException, ComplexObjectException {
+	public BaseDocument getGrandParentDocument(IDatabase db, BaseDocument doc) throws DocumentException, DocumentAccessException,
+	        ComplexObjectException {
 		if (!doc.isNewDoc()) {
 			BaseDocument parentDoc = null;
 			parentDoc = db.getDocumentByComplexID(doc.parentDocType, doc.parentDocID);
@@ -48,8 +48,7 @@ public class RuntimeObjUtil implements Const {
 	}
 
 	public static Calendar getCtrlDate(Calendar fromTime, int priority, int complication) {
-		Calendar ctrlDate = Calendar.getInstance(), startDate = Calendar.getInstance(),
-				tempDate = Calendar.getInstance();
+		Calendar ctrlDate = Calendar.getInstance(), startDate = Calendar.getInstance(), tempDate = Calendar.getInstance();
 		float dayCount;
 		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy.HH.mm.ss");
 		try {
@@ -111,8 +110,7 @@ public class RuntimeObjUtil implements Const {
 		return ctrlDate;
 	}
 
-	public static int getDiffBetweenDays(Calendar currentDate, Calendar ctrlDate, Calendar[] holidays,
-			boolean sixWorkdays) {
+	public static int getDiffBetweenDays(Calendar currentDate, Calendar ctrlDate, Calendar[] holidays, boolean sixWorkdays) {
 		int dayOfWeek, workDayCount, allDayCount, weekCount;
 		allDayCount = (int) Math.floor((ctrlDate.getTimeInMillis() - currentDate.getTimeInMillis()) / (v * 24));
 		weekCount = (int) Math.ceil(allDayCount / 7);
@@ -135,8 +133,7 @@ public class RuntimeObjUtil implements Const {
 		for (int i = currentDate.get(Calendar.YEAR); i <= ctrlDate.get(Calendar.YEAR); i++) {
 			for (int j = 0; j < tHolidays.length; j++) {
 				tHolidays[j].set(Calendar.YEAR, i + 1900);
-				if (currentDate.getTime().compareTo(tHolidays[j].getTime())
-						* tHolidays[j].getTime().compareTo(ctrlDate.getTime()) > 0) {
+				if (currentDate.getTime().compareTo(tHolidays[j].getTime()) * tHolidays[j].getTime().compareTo(ctrlDate.getTime()) > 0) {
 					workDayCount--;
 				}
 			}
@@ -202,6 +199,21 @@ public class RuntimeObjUtil implements Const {
 		return attr;
 	}
 
+	public static int countMaxPage(long colCount, int pageSize) {
+		float mp = (float) colCount / (float) pageSize;
+		float d = Math.round(mp);
+
+		int maxPage = (int) d;
+		if (mp > d) {
+			maxPage++;
+		}
+		if (maxPage < 1) {
+			maxPage = 1;
+		}
+		return maxPage;
+	}
+
+	@Deprecated
 	public static int countMaxPage(int colCount, int pageSize) {
 		float mp = (float) colCount / (float) pageSize;
 		float d = Math.round(mp);
@@ -275,14 +287,14 @@ public class RuntimeObjUtil implements Const {
 				boolean isHoliday = false;
 				for (Holiday h : holidays.holidays) {
 					if (h.getStartDate().get(Calendar.DAY_OF_YEAR) <= date.get(Calendar.DAY_OF_YEAR)
-							&& date.get(Calendar.DAY_OF_YEAR) <= h.getEndDate().get(Calendar.DAY_OF_YEAR)) {
+					        && date.get(Calendar.DAY_OF_YEAR) <= h.getEndDate().get(Calendar.DAY_OF_YEAR)) {
 						isHoliday = true;
 						break;
 					}
 				}
 
 				if (!isHoliday && date.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY
-						&& (sixWorkDays || date.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY)) {
+				        && (sixWorkDays || date.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY)) {
 					resultList.add(0, (Calendar) date.clone());
 				}
 				date.add(Calendar.DATE, -1);
@@ -301,24 +313,24 @@ public class RuntimeObjUtil implements Const {
 			switch (pType) {
 			case END_OF_WEEK:
 				isEnd = date.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
-						|| date.get(Calendar.DAY_OF_YEAR) == shiftedEndDate.get(Calendar.DAY_OF_YEAR)
-								&& date.get(Calendar.YEAR) == shiftedEndDate.get(Calendar.YEAR);
+				        || date.get(Calendar.DAY_OF_YEAR) == shiftedEndDate.get(Calendar.DAY_OF_YEAR)
+				        && date.get(Calendar.YEAR) == shiftedEndDate.get(Calendar.YEAR);
 				break;
 			case END_OF_MONTH:
 				isEnd = date.get(Calendar.DAY_OF_MONTH) == date.getActualMaximum(Calendar.DAY_OF_MONTH)
-						|| date.get(Calendar.DAY_OF_YEAR) == shiftedEndDate.get(Calendar.DAY_OF_YEAR)
-								&& date.get(Calendar.YEAR) == shiftedEndDate.get(Calendar.YEAR);
+				        || date.get(Calendar.DAY_OF_YEAR) == shiftedEndDate.get(Calendar.DAY_OF_YEAR)
+				        && date.get(Calendar.YEAR) == shiftedEndDate.get(Calendar.YEAR);
 				break;
 			case END_OF_QUARTER:
 				isEnd = date.get(Calendar.MONTH) == (int) Math.floor(date.get(Calendar.MONTH) / 3.0) * 3 + 2
-						&& date.get(Calendar.DAY_OF_MONTH) == date.getActualMaximum(Calendar.DAY_OF_MONTH)
-						|| date.get(Calendar.DAY_OF_YEAR) == shiftedEndDate.get(Calendar.DAY_OF_YEAR)
-								&& date.get(Calendar.YEAR) == shiftedEndDate.get(Calendar.YEAR);
+				        && date.get(Calendar.DAY_OF_MONTH) == date.getActualMaximum(Calendar.DAY_OF_MONTH)
+				        || date.get(Calendar.DAY_OF_YEAR) == shiftedEndDate.get(Calendar.DAY_OF_YEAR)
+				        && date.get(Calendar.YEAR) == shiftedEndDate.get(Calendar.YEAR);
 				break;
 			case END_OF_YEAR:
 				isEnd = date.get(Calendar.DAY_OF_YEAR) == date.getActualMaximum(Calendar.DAY_OF_YEAR)
-						|| date.get(Calendar.DAY_OF_YEAR) == shiftedEndDate.get(Calendar.DAY_OF_YEAR)
-								&& date.get(Calendar.YEAR) == shiftedEndDate.get(Calendar.YEAR);
+				        || date.get(Calendar.DAY_OF_YEAR) == shiftedEndDate.get(Calendar.DAY_OF_YEAR)
+				        && date.get(Calendar.YEAR) == shiftedEndDate.get(Calendar.YEAR);
 				break;
 			}
 
@@ -326,13 +338,13 @@ public class RuntimeObjUtil implements Const {
 				boolean isHoliday = false;
 				for (Holiday h : holidays.holidays) {
 					if (h.getStartDate().get(Calendar.DAY_OF_YEAR) <= date.get(Calendar.DAY_OF_YEAR)
-							&& date.get(Calendar.DAY_OF_YEAR) <= h.getEndDate().get(Calendar.DAY_OF_YEAR)) {
+					        && date.get(Calendar.DAY_OF_YEAR) <= h.getEndDate().get(Calendar.DAY_OF_YEAR)) {
 						isHoliday = true;
 						break;
 					}
 				}
-				if (isHoliday || date.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
-						|| !sixWorkDays && date.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+				if (isHoliday || date.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || !sixWorkDays
+				        && date.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
 					shiftedEndDate = (Calendar) date.clone();
 					shiftedEndDate.add(Calendar.DATE, -1);
 				} else {

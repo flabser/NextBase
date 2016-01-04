@@ -58,16 +58,14 @@ public class ScriptEvent {
 		toPublishElement.add(value);
 	}
 
-	public void publishElement(String spot, String launcher, _AJAXHandler value, boolean async,
-			_JSONTemplate template) {
+	public void publishElement(String spot, String launcher, _AJAXHandler value, boolean async, _JSONTemplate template) {
 		_JSONHandler jsHandler = new _JSONHandler(spot, launcher, value, template);
 		UserSession userSession = ses.getUser().getSession();
 		userSession.addDynmaicClass(jsHandler.id, jsHandler.getInstance());
 		toPublishElement.add(jsHandler);
 	}
 
-	public void publishElement(String id, String spot, String launcher, _AJAXHandler value, boolean async,
-			_JSONTemplate template) {
+	public void publishElement(String id, String spot, String launcher, _AJAXHandler value, boolean async, _JSONTemplate template) {
 		_JSONHandler jsHandler = new _JSONHandler(id, spot, launcher, value, "", template);
 		UserSession userSession = ses.getUser().getSession();
 		userSession.addDynmaicClass(jsHandler.id, jsHandler.getInstance());
@@ -77,8 +75,7 @@ public class ScriptEvent {
 	public String getGroovyError(StackTraceElement stack[]) {
 		for (int i = 0; i < stack.length; i++) {
 			if (stack[i].getClassName().contains(this.getClass().getName())) {
-				return stack[i].getClassName() + " method=" + stack[i].getMethodName() + " > "
-						+ Integer.toString(stack[i].getLineNumber()) + "\n";
+				return stack[i].getClassName() + " method=" + stack[i].getMethodName() + " > " + Integer.toString(stack[i].getLineNumber()) + "\n";
 			}
 		}
 		return "";

@@ -210,14 +210,12 @@ public class Provider extends HttpServlet implements Const {
 					} else {
 						String reqEnc = request.getCharacterEncoding();
 						type = new String(type.getBytes("ISO-8859-1"), reqEnc);
-						new PortalException("Request has been undefined, type=" + type + ", id=" + id + ", key=" + key,
-								env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML,
-								userSession.skin);
+						new PortalException("Request has been undefined, type=" + type + ", id=" + id + ", key=" + key, env, response,
+						        ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML, userSession.skin);
 						return;
 					}
 
-					if (userSession.browserType == BrowserType.APPLICATION
-							&& result.publishAs != PublishAsType.OUTPUTSTREAM || onlyXML != null) {
+					if (userSession.browserType == BrowserType.APPLICATION && result.publishAs != PublishAsType.OUTPUTSTREAM || onlyXML != null) {
 						result.publishAs = PublishAsType.XML;
 						result.addHistory = false;
 					}
@@ -231,8 +229,8 @@ public class Provider extends HttpServlet implements Const {
 						if (result.disableClientCache) {
 							disableCash(response);
 						}
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, response, userSession,
-								jses, result.title, result.addHistory);
+						ProviderOutput po = new ProviderOutput(type, id, result.output, request, response, userSession, jses, result.title,
+						        result.addHistory);
 						response.setContentType("text/html");
 						Skin skin = null;
 						if (po.browser == BrowserType.IPAD_SAFARI || po.browser == BrowserType.ANDROID) {
@@ -261,8 +259,8 @@ public class Provider extends HttpServlet implements Const {
 							disableCash(response);
 						}
 						response.setContentType("text/xml;charset=utf-8");
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, response, userSession,
-								jses, result.title, result.addHistory);
+						ProviderOutput po = new ProviderOutput(type, id, result.output, request, response, userSession, jses, result.title,
+						        result.addHistory);
 						String outputContent = po.getStandartUTF8Output();
 						// System.out.println(outputContent);
 						PrintWriter out = response.getWriter();
@@ -272,8 +270,8 @@ public class Provider extends HttpServlet implements Const {
 						if (result.disableClientCache) {
 							disableCash(response);
 						}
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, response, userSession,
-								jses, result.title, result.addHistory);
+						ProviderOutput po = new ProviderOutput(type, id, result.output, request, response, userSession, jses, result.title,
+						        result.addHistory);
 						String outputContent = po.getPlainText();
 						response.setContentType("text/text;charset=utf-8");
 						response.getWriter().println(outputContent);
@@ -295,8 +293,7 @@ public class Provider extends HttpServlet implements Const {
 					return;
 				}
 			} else {
-				throw new ServerException(ServerExceptionType.APPENV_HAS_NOT_INITIALIZED,
-						"context=" + context.getServletContextName());
+				throw new ServerException(ServerExceptionType.APPENV_HAS_NOT_INITIALIZED, "context=" + context.getServletContextName());
 			}
 		} catch (AuthFailedException e) {
 			String referer = request.getRequestURI() + "?" + request.getQueryString();
@@ -319,41 +316,34 @@ public class Provider extends HttpServlet implements Const {
 					response.sendRedirect("Logout");
 				} else if (e.type == AuthFailedExceptionType.UNANSWERED_QUESTION) {
 					// response.sendRedirect("Error?type=ws_auth_error_caused_unanswered_question");
-					request.getRequestDispatcher("/Error?type=ws_auth_error_caused_unanswered_question")
-							.forward(request, response);
+					request.getRequestDispatcher("/Error?type=ws_auth_error_caused_unanswered_question").forward(request, response);
 				} else {
 					// response.sendRedirect("Error?type=ws_auth_error");
 					request.getRequestDispatcher("/Error?type=ws_auth_error").forward(request, response);
 				}
 
 			} catch (IOException e1) {
-				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML,
-						userSession.skin);
+				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML, userSession.skin);
 			} catch (ServletException e2) {
-				new PortalException(e2, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML,
-						userSession.skin);
+				new PortalException(e2, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML, userSession.skin);
 			}
 
 		} catch (DocumentAccessException dae) {
-			new PortalException(dae, env, response, ProviderExceptionType.DOCUMENTEXCEPTION, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(dae, env, response, ProviderExceptionType.DOCUMENTEXCEPTION, PublishAsType.HTML, userSession.skin);
 		} catch (RuleException rnf) {
 			new PortalException(rnf, env, response, ProviderExceptionType.RULENOTFOUND);
 		} catch (ViewException sdre) {
 			new PortalException(sdre, env, response, PublishAsType.HTML, userSession.skin);
 		} catch (XSLTFileNotFoundException xfnf) {
-			new PortalException(xfnf, env, response, ProviderExceptionType.XSLTNOTFOUND, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(xfnf, env, response, ProviderExceptionType.XSLTNOTFOUND, PublishAsType.HTML, userSession.skin);
 		} catch (FTIndexEngineException e) {
-			new PortalException(e, env, response, ProviderExceptionType.DATAENGINERROR, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(e, env, response, ProviderExceptionType.DATAENGINERROR, PublishAsType.HTML, userSession.skin);
 		} catch (IOException ioe) {
 			new PortalException(ioe, env, response, PublishAsType.HTML, userSession.skin);
 		} catch (IllegalStateException ise) {
 			new PortalException(ise, env, response, PublishAsType.HTML, userSession.skin);
 		} catch (AttachmentHandlerException e) {
-			new PortalException(e, env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(e, env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML, userSession.skin);
 		} catch (UserException e) {
 			new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML, userSession.skin);
 		} catch (SaxonApiException e) {
@@ -362,14 +352,11 @@ public class Provider extends HttpServlet implements Const {
 			// ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR,
 			// PublishAsType.HTML, userSession.skin);
 		} catch (TransformatorException e) {
-			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML, userSession.skin);
 		} catch (ClassNotFoundException e) {
-			new PortalException(e, env, response, ProviderExceptionType.CLASS_NOT_FOUND_EXCEPTION, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(e, env, response, ProviderExceptionType.CLASS_NOT_FOUND_EXCEPTION, PublishAsType.HTML, userSession.skin);
 		} catch (WebFormValueException e) {
-			new PortalException(e, env, response, ProviderExceptionType.WEBFORM_VALUE_EXCEPTION, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(e, env, response, ProviderExceptionType.WEBFORM_VALUE_EXCEPTION, PublishAsType.HTML, userSession.skin);
 		} catch (ServerException e) {
 			new PortalException(e, response, ProviderExceptionType.SERVER, PublishAsType.HTML);
 		} catch (Exception e) {
@@ -380,9 +367,9 @@ public class Provider extends HttpServlet implements Const {
 
 	}
 
-	private ProviderResult json(UserSession userSession, String id)
-			throws RuleException, DocumentException, DocumentAccessException, QueryFormulaParserException,
-			QueryException, LocalizatorException, ClassNotFoundException {
+	@Deprecated
+	private ProviderResult json(UserSession userSession, String id) throws RuleException, DocumentException, DocumentAccessException,
+	        QueryFormulaParserException, QueryException, LocalizatorException, ClassNotFoundException {
 		ProviderResult result = new ProviderResult();
 		result.publishAs = PublishAsType.JSON;
 		DoAsyncProcessor dap = new DoAsyncProcessor(userSession);
@@ -391,9 +378,8 @@ public class Provider extends HttpServlet implements Const {
 	}
 
 	@Deprecated
-	private ProviderResult content(HttpServletRequest request, HttpServletResponse response, IRule rule,
-			UserSession userSession, String id) throws RuleException, DocumentException, DocumentAccessException,
-					QueryFormulaParserException, QueryException, LocalizatorException {
+	private ProviderResult content(HttpServletRequest request, HttpServletResponse response, IRule rule, UserSession userSession, String id)
+	        throws RuleException, DocumentException, DocumentAccessException, QueryFormulaParserException, QueryException, LocalizatorException {
 		StaticContentRule staticContentRule = (StaticContentRule) rule;
 		ProviderResult result = new ProviderResult(staticContentRule.publishAs, staticContentRule.getXSLT());
 
@@ -421,8 +407,9 @@ public class Provider extends HttpServlet implements Const {
 		return result;
 	}
 
-	private ProviderResult outline(HttpServletRequest request, IRule rule, UserSession userSession, String id)
-			throws UnsupportedEncodingException, RuleException, QueryFormulaParserException, DocumentException {
+	@Deprecated
+	private ProviderResult outline(HttpServletRequest request, IRule rule, UserSession userSession, String id) throws UnsupportedEncodingException,
+	        RuleException, QueryFormulaParserException, DocumentException {
 		OutlineRule outlineRule = (OutlineRule) rule;
 		ProviderResult result = new ProviderResult(outlineRule.publishAs, outlineRule.getXSLT());
 		Outline outline = null;
@@ -462,10 +449,9 @@ public class Provider extends HttpServlet implements Const {
 	}
 
 	@Deprecated
-	private ProviderResult view(HttpServletRequest request, HttpServletResponse response, IRule rule,
-			UserSession userSession, String id)
-					throws ViewException, DocumentException, DocumentAccessException, RuleException,
-					QueryFormulaParserException, QueryException, LocalizatorException, ComplexObjectException {
+	private ProviderResult view(HttpServletRequest request, HttpServletResponse response, IRule rule, UserSession userSession, String id)
+	        throws ViewException, DocumentException, DocumentAccessException, RuleException, QueryFormulaParserException, QueryException,
+	        LocalizatorException, ComplexObjectException {
 		ViewRule viewRule = (ViewRule) rule;
 		ProviderResult result = new ProviderResult(viewRule.publishAs, viewRule.getXSLT());
 		View view = new View(env, viewRule, userSession, userSession.lang);
@@ -516,8 +502,8 @@ public class Provider extends HttpServlet implements Const {
 
 					}
 				} catch (Exception e) {
-					new PortalException("Command has not recognized, incorrect syntax of the command=" + command, env,
-							response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML, userSession.skin);
+					new PortalException("Command has not recognized, incorrect syntax of the command=" + command, env, response,
+					        ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML, userSession.skin);
 					// return;
 				}
 			}
@@ -533,8 +519,8 @@ public class Provider extends HttpServlet implements Const {
 				pageSize = userSession.pageSize;
 			}
 		}
-		result.output.append(view.getContent(fields, page, pageSize, parentDocProp[0], parentDocProp[1],
-				userSession.expandedThread, userSession.expandedCategory, userSession.getFlashDoc()));
+		result.output.append(view.getContent(fields, page, pageSize, parentDocProp[0], parentDocProp[1], userSession.expandedThread,
+		        userSession.expandedCategory, userSession.getFlashDoc()));
 		userSession.setCurrentPage(id, page);
 		SourceSupplier titleSupplier = new SourceSupplier(userSession.currentUser, env, userSession.lang);
 		result.title = titleSupplier.getValueAsString(viewRule.getTitle().source, viewRule.getTitle().value)[0];
@@ -542,10 +528,9 @@ public class Provider extends HttpServlet implements Const {
 		return result;
 	}
 
-	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule,
-			UserSession userSession)
-					throws DocumentException, FTIndexEngineException, RuleException, QueryFormulaParserException,
-					UnsupportedEncodingException, DocumentAccessException, QueryException, ClassNotFoundException {
+	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule, UserSession userSession)
+	        throws DocumentException, FTIndexEngineException, RuleException, QueryFormulaParserException, UnsupportedEncodingException,
+	        DocumentAccessException, QueryException, ClassNotFoundException {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		result.addHistory = pageRule.addToHistory;
@@ -555,6 +540,7 @@ public class Provider extends HttpServlet implements Const {
 		Page page = new Page(env, userSession, pageRule);
 
 		result.output.append(page.process(fields, request.getMethod()));
+		result.httpStatus = page.status;
 		if (page.fileGenerated) {
 			result.publishAs = PublishAsType.OUTPUTSTREAM;
 			result.filePath = page.generatedFilePath;
@@ -563,9 +549,9 @@ public class Provider extends HttpServlet implements Const {
 		return result;
 	}
 
-	private ProviderResult query(HttpServletRequest request, IRule rule, UserSession userSession)
-			throws DocumentException, FTIndexEngineException, RuleException, QueryFormulaParserException,
-			UnsupportedEncodingException, DocumentAccessException, QueryException {
+	@Deprecated
+	private ProviderResult query(HttpServletRequest request, IRule rule, UserSession userSession) throws DocumentException, FTIndexEngineException,
+	        RuleException, QueryFormulaParserException, UnsupportedEncodingException, DocumentAccessException, QueryException {
 		ProviderResult result = new ProviderResult();
 		result.addHistory = false;
 		int parentDocProp[] = getParentDocProp(request);
@@ -596,9 +582,8 @@ public class Provider extends HttpServlet implements Const {
 		return result;
 	}
 
-	private ProviderResult count(HttpServletRequest request, IRule rule, UserSession userSession)
-			throws DocumentException, FTIndexEngineException, RuleException, QueryFormulaParserException,
-			UnsupportedEncodingException, DocumentAccessException, QueryException {
+	private ProviderResult count(HttpServletRequest request, IRule rule, UserSession userSession) throws DocumentException, FTIndexEngineException,
+	        RuleException, QueryFormulaParserException, UnsupportedEncodingException, DocumentAccessException, QueryException {
 		ProviderResult result = new ProviderResult();
 		HashMap<String, String[]> fields = new HashMap<String, String[]>();
 		Map<String, String[]> parMap = request.getParameterMap();
@@ -611,9 +596,8 @@ public class Provider extends HttpServlet implements Const {
 		return result;
 	}
 
-	private ProviderResult search(HttpServletRequest request, UserSession userSession)
-			throws DocumentException, FTIndexEngineException, RuleException, QueryFormulaParserException,
-			UnsupportedEncodingException, ComplexObjectException {
+	private ProviderResult search(HttpServletRequest request, UserSession userSession) throws DocumentException, FTIndexEngineException,
+	        RuleException, QueryFormulaParserException, UnsupportedEncodingException, ComplexObjectException {
 		ProviderResult result = new ProviderResult(PublishAsType.HTML, "searchres.xsl");
 		int page = 0;
 		try {
@@ -623,16 +607,16 @@ public class Provider extends HttpServlet implements Const {
 		}
 		String keyWord = request.getParameter("keyword");
 		keyWord = new String(keyWord.getBytes("ISO-8859-1"), "UTF-8");
-		FTSearchRequest ftRequest = new FTSearchRequest(env, userSession.currentUser.getAllUserGroups(),
-				userSession.currentUser.getUserID(), keyWord, page, userSession.pageSize);
+		FTSearchRequest ftRequest = new FTSearchRequest(env, userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID(),
+		        keyWord, page, userSession.pageSize);
 		result.output.append(ftRequest.getDataAsXML());
 		result.addHistory = true;
 		return result;
 	}
 
-	private ProviderResult edit(HttpServletRequest request, IRule rule, UserSession userSession, String key)
-			throws RuleException, DocumentException, DocumentAccessException, QueryFormulaParserException,
-			QueryException, LocalizatorException, ClassNotFoundException, _Exception, ComplexObjectException {
+	private ProviderResult edit(HttpServletRequest request, IRule rule, UserSession userSession, String key) throws RuleException, DocumentException,
+	        DocumentAccessException, QueryFormulaParserException, QueryException, LocalizatorException, ClassNotFoundException, _Exception,
+	        ComplexObjectException {
 		String element = request.getParameter("element");
 		FormRule formRule = (FormRule) rule;
 		ProviderResult result = new ProviderResult(formRule.publishAs, formRule.getXSLT());
@@ -663,60 +647,53 @@ public class Provider extends HttpServlet implements Const {
 		int parentDocProp[] = getParentDocProp(request);
 
 		if (key == "") {
-			result.output.append(form.getDefaultFieldsAsXML(parentDocProp[0], parentDocProp[1], page, userSession.lang)
-					+ "<formsesid>" + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789")
-					+ "</formsesid>");
+			result.output.append(form.getDefaultFieldsAsXML(parentDocProp[0], parentDocProp[1], page, userSession.lang) + "<formsesid>"
+			        + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789") + "</formsesid>");
 		} else {
 			if (element.equalsIgnoreCase("document")) {
 				String docID = request.getParameter("docid");
 				if (docID != null) {
 					if (docID.equalsIgnoreCase("")) {
-						result.output.append(
-								form.getDefaultFieldsAsXML(parentDocProp[0], parentDocProp[1], page, userSession.lang)
-										+ "<formsesid>"
-										+ Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789")
-										+ "</formsesid>");
+						result.output.append(form.getDefaultFieldsAsXML(parentDocProp[0], parentDocProp[1], page, userSession.lang) + "<formsesid>"
+						        + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789") + "</formsesid>");
 						result.addHistory = rule.addToHistory();
 						return result;
 					} else {
-						doc = db.getDocumentByDdbID(docID, userSession.currentUser.getAllUserGroups(),
-								userSession.currentUser.getUserID());
+						doc = db.getDocumentByDdbID(docID, userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());
 					}
 				} else {
 					doc = db.getMainDocumentByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(),
-							userSession.currentUser.getUserID());
+					        userSession.currentUser.getUserID());
 				}
 			} else if (element.equalsIgnoreCase("project")) {
 				doc = db.getProjects().getProjectByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(),
-						userSession.currentUser.getUserID());
+				        userSession.currentUser.getUserID());
 			} else if (element.equalsIgnoreCase("task")) {
 				doc = db.getTasks().getTaskByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(),
-						userSession.currentUser.getUserID());
+				        userSession.currentUser.getUserID());
 			} else if (element.equalsIgnoreCase("execution")) {
-				doc = db.getExecutions().getExecutionByID(Integer.parseInt(key),
-						userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());
+				doc = db.getExecutions().getExecutionByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(),
+				        userSession.currentUser.getUserID());
 			} else if (element.equalsIgnoreCase("discussion")) {
 				doc = db.getForum().getTopicByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(),
-						userSession.currentUser.getUserID());
+				        userSession.currentUser.getUserID());
 			} else if (element.equalsIgnoreCase("post")) {
 				doc = db.getForum().getPostByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(),
-						userSession.currentUser.getUserID());
+				        userSession.currentUser.getUserID());
 			} else if (element.equalsIgnoreCase("glossary")) {
 				IGlossaries glos = db.getGlossaries();
-				doc = glos.getGlossaryDocumentByID(Integer.parseInt(key), false,
-						userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());
+				doc = glos.getGlossaryDocumentByID(Integer.parseInt(key), false, userSession.currentUser.getAllUserGroups(),
+				        userSession.currentUser.getUserID());
 			} else if (element.equalsIgnoreCase("userprofile")) {
 				doc = userSession.getAsDocument(env.getDataBase());
 			} else if (element.equalsIgnoreCase("appprofile")) {
 				doc = env.application.getAsDocument();
 			}
 			if (doc.isValid) {
-				result.output.append(form.getFormAsXML(doc, page, doc.parentDocID, doc.parentDocType, userSession.lang)
-						+ "<formsesid>" + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789")
-						+ "</formsesid>");
+				result.output.append(form.getFormAsXML(doc, page, doc.parentDocID, doc.parentDocType, userSession.lang) + "<formsesid>"
+				        + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789") + "</formsesid>");
 			} else {
-				throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED,
-						userSession.currentUser.getUserID());
+				throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED, userSession.currentUser.getUserID());
 			}
 
 		}
@@ -733,10 +710,9 @@ public class Provider extends HttpServlet implements Const {
 	 * @deprecated
 	 **/
 	@Deprecated
-	private ProviderResult document(HttpServletRequest request, HttpServletResponse response, IRule rule,
-			UserSession userSession, String key, String id, String type) throws DocumentAccessException, RuleException,
-					QueryFormulaParserException, DocumentException, QueryException, LocalizatorException,
-					ClassNotFoundException, _Exception, NumberFormatException, ComplexObjectException {
+	private ProviderResult document(HttpServletRequest request, HttpServletResponse response, IRule rule, UserSession userSession, String key,
+	        String id, String type) throws DocumentAccessException, RuleException, QueryFormulaParserException, DocumentException, QueryException,
+	        LocalizatorException, ClassNotFoundException, _Exception, NumberFormatException, ComplexObjectException {
 		// FormRule formRule = (FormRule) rule;
 		FormRule formRule = (FormRule) env.ruleProvider.getRule(FORM_RULE, id);
 		ProviderResult result = new ProviderResult(formRule.publishAs, formRule.getXSLT());
@@ -749,45 +725,42 @@ public class Provider extends HttpServlet implements Const {
 		Form form = new Form(env, formRule, userSession);
 		int parentDocProp[] = getParentDocProp(request);
 		if (key == "") {
-			result.output.append(form.getDefaultFieldsAsXML(parentDocProp[0], parentDocProp[1], page, userSession.lang)
-					+ "<formsesid>" + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789")
-					+ "</formsesid>");
+			result.output.append(form.getDefaultFieldsAsXML(parentDocProp[0], parentDocProp[1], page, userSession.lang) + "<formsesid>"
+			        + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789") + "</formsesid>");
 		} else {
 			IDatabase db = env.getDataBase();
 			BaseDocument doc = null;
 			if (type.equals("glossary")) {
 				IGlossaries glos = db.getGlossaries();
-				doc = glos.getGlossaryDocumentByID(Integer.parseInt(key), false,
-						userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());
+				doc = glos.getGlossaryDocumentByID(Integer.parseInt(key), false, userSession.currentUser.getAllUserGroups(),
+				        userSession.currentUser.getUserID());
 			} else {
 				if (id.equalsIgnoreCase("kr") || id.equalsIgnoreCase("comment")) {
 					doc = db.getTasks().getTaskByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(),
-							userSession.currentUser.getUserID());
+					        userSession.currentUser.getUserID());
 				} else if (id.equalsIgnoreCase("ki")) {
-					doc = db.getExecutions().getExecutionByID(Integer.parseInt(key),
-							userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());
+					doc = db.getExecutions().getExecutionByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(),
+					        userSession.currentUser.getUserID());
 				} else if (id.equalsIgnoreCase("project") || id.equals("outdocprj") || id.equalsIgnoreCase("workdocprj")
-						|| id.equalsIgnoreCase("remark")) {
-					doc = db.getProjects().getProjectByID(Integer.parseInt(key),
-							userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());
+				        || id.equalsIgnoreCase("remark")) {
+					doc = db.getProjects().getProjectByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(),
+					        userSession.currentUser.getUserID());
 				} else if (id.equalsIgnoreCase("userprofile")) {
 					doc = userSession.getAsDocument(env.getDataBase());
 				} else if (id.equalsIgnoreCase("discussion")) {
 					doc = db.getForum().getTopicByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(),
-							userSession.currentUser.getUserID());
+					        userSession.currentUser.getUserID());
 				} else {
 					doc = db.getMainDocumentByID(Integer.parseInt(key), userSession.currentUser.getAllUserGroups(),
-							userSession.currentUser.getUserID());
+					        userSession.currentUser.getUserID());
 				}
 			}
 
 			if (doc.isValid) {
-				result.output.append(form.getFormAsXML(doc, page, doc.parentDocID, doc.parentDocType, userSession.lang)
-						+ "<formsesid>" + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789")
-						+ "</formsesid>");
+				result.output.append(form.getFormAsXML(doc, page, doc.parentDocID, doc.parentDocType, userSession.lang) + "<formsesid>"
+				        + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789") + "</formsesid>");
 			} else {
-				throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED,
-						userSession.currentUser.getUserID());
+				throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED, userSession.currentUser.getUserID());
 			}
 			// SourceSupplier titleSupplier = new
 			// SourceSupplier(doc,userSession.currentUser, env,
@@ -798,10 +771,9 @@ public class Provider extends HttpServlet implements Const {
 		return result;
 	}
 
-	private ProviderResult structure(HttpServletRequest request, HttpServletResponse response, IRule rule,
-			UserSession userSession, String key, String id)
-					throws DocumentAccessException, DocumentException, RuleException, QueryFormulaParserException,
-					QueryException, LocalizatorException, ClassNotFoundException, _Exception, ComplexObjectException {
+	private ProviderResult structure(HttpServletRequest request, HttpServletResponse response, IRule rule, UserSession userSession, String key,
+	        String id) throws DocumentAccessException, DocumentException, RuleException, QueryFormulaParserException, QueryException,
+	        LocalizatorException, ClassNotFoundException, _Exception, ComplexObjectException {
 		// FormRule formRule = (FormRule)rule;
 		FormRule formRule = (FormRule) env.ruleProvider.getRule(FORM_RULE, id);
 		ProviderResult result = new ProviderResult(formRule.publishAs, formRule.getXSLT());
@@ -827,9 +799,8 @@ public class Provider extends HttpServlet implements Const {
 
 		if (key == "") {
 			int parentDocProp[] = getParentDocProp(request);
-			result.output.append(form.getDefaultFieldsAsXML(parentDocProp[0], parentDocProp[1], page, userSession.lang)
-					+ "<formsesid>" + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789")
-					+ "</formsesid>");
+			result.output.append(form.getDefaultFieldsAsXML(parentDocProp[0], parentDocProp[1], page, userSession.lang) + "<formsesid>"
+			        + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789") + "</formsesid>");
 		} else {
 			IDatabase db = env.getDataBase();
 			BaseDocument doc = null;
@@ -838,35 +809,31 @@ public class Provider extends HttpServlet implements Const {
 				doc = db.getStructure().getOrganization(docKey, userSession.currentUser);
 			} else if (id.equalsIgnoreCase("department")) {
 				doc = db.getStructure().getDepartment(docKey, userSession.currentUser);
-			} else if (id.equalsIgnoreCase("employer") || id.equalsIgnoreCase("responsibleperson")
-					|| id.equalsIgnoreCase("legalentity") || id.equalsIgnoreCase("individualperson")) {
+			} else if (id.equalsIgnoreCase("employer") || id.equalsIgnoreCase("responsibleperson") || id.equalsIgnoreCase("legalentity")
+			        || id.equalsIgnoreCase("individualperson")) {
 				doc = db.getStructure().getEmployer(docKey, userSession.currentUser);
 			} else if (id.equalsIgnoreCase("role")) {
 				// doc = db.getStructure().getRole(docKey,
 				// userSession.currentUser.getAllUserGroups(),
 				// userSession.currentUser.getUserID());
 			} else if (id.equalsIgnoreCase("group")) {
-				doc = db.getStructure().getGroup(docKey, userSession.currentUser.getAllUserGroups(),
-						userSession.currentUser.getUserID());
+				doc = db.getStructure().getGroup(docKey, userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());
 			}
 
 			if (doc != null && doc.isValid) {
-				result.output.append(form.getFormAsXML(doc, page, doc.parentDocID, doc.parentDocType, userSession.lang)
-						+ "<formsesid>" + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789")
-						+ "</formsesid>");
+				result.output.append(form.getFormAsXML(doc, page, doc.parentDocID, doc.parentDocType, userSession.lang) + "<formsesid>"
+				        + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789") + "</formsesid>");
 			} else {
-				throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED,
-						userSession.currentUser.getUserID());
+				throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED, userSession.currentUser.getUserID());
 			}
 		}
 		result.addHistory = formRule.addToHistory();
 		return result;
 	}
 
-	private ProviderResult forum(HttpServletRequest request, HttpServletResponse response, IRule rule,
-			UserSession userSession, String key, String id)
-					throws DocumentAccessException, DocumentException, RuleException, QueryFormulaParserException,
-					QueryException, LocalizatorException, ClassNotFoundException, _Exception, ComplexObjectException {
+	private ProviderResult forum(HttpServletRequest request, HttpServletResponse response, IRule rule, UserSession userSession, String key, String id)
+	        throws DocumentAccessException, DocumentException, RuleException, QueryFormulaParserException, QueryException, LocalizatorException,
+	        ClassNotFoundException, _Exception, ComplexObjectException {
 		FormRule formRule = (FormRule) rule;
 		// FormRule formRule = (FormRule)env.ruleProvider.getRule(FORM_RULE,
 		// id);
@@ -886,36 +853,30 @@ public class Provider extends HttpServlet implements Const {
 			BaseDocument doc = null;
 
 			if (id.equalsIgnoreCase("topic")) {
-				doc = db.getForum().getTopicByID(docKey, userSession.currentUser.getAllUserGroups(),
-						userSession.currentUser.getUserID());
+				doc = db.getForum().getTopicByID(docKey, userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());
 			} else if (id.equalsIgnoreCase("comment")) {
-				doc = db.getForum().getPostByID(docKey, userSession.currentUser.getAllUserGroups(),
-						userSession.currentUser.getUserID());
+				doc = db.getForum().getPostByID(docKey, userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID());
 			}
 
 			if (doc != null && doc.isValid) {
-				result.output.append(form.getFormAsXML(doc, page, doc.parentDocID, doc.parentDocType, userSession.lang)
-						+ "<formsesid>" + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789")
-						+ "</formsesid>");
+				result.output.append(form.getFormAsXML(doc, page, doc.parentDocID, doc.parentDocType, userSession.lang) + "<formsesid>"
+				        + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789") + "</formsesid>");
 			} else {
-				throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED,
-						userSession.currentUser.getUserID());
+				throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED, userSession.currentUser.getUserID());
 			}
 		} catch (NumberFormatException e) {
 			int parentDocProp[] = getParentDocProp(request);
-			result.output.append(form.getDefaultFieldsAsXML(parentDocProp[0], parentDocProp[1], page, userSession.lang)
-					+ "<formsesid>" + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789")
-					+ "</formsesid>");
+			result.output.append(form.getDefaultFieldsAsXML(parentDocProp[0], parentDocProp[1], page, userSession.lang) + "<formsesid>"
+			        + Util.generateRandomAsText("0qwertyuiopasdfghjklzxcvbnm123456789") + "</formsesid>");
 		}
 
 		result.addHistory = formRule.addToHistory();
 		return result;
 	}
 
-	private ProviderResult save(HttpServletRequest request, HttpServletResponse response, IRule rule,
-			UserSession userSession, String key) throws UnsupportedEncodingException, WebFormValueException,
-					LicenseException, DocumentException, RuleException, QueryFormulaParserException,
-					DocumentAccessException, ClassNotFoundException, ComplexObjectException {
+	private ProviderResult save(HttpServletRequest request, HttpServletResponse response, IRule rule, UserSession userSession, String key)
+	        throws UnsupportedEncodingException, WebFormValueException, LicenseException, DocumentException, RuleException,
+	        QueryFormulaParserException, DocumentAccessException, ClassNotFoundException, ComplexObjectException {
 		ProviderResult result = new ProviderResult();
 
 		String element = request.getParameter("element");
@@ -957,22 +918,17 @@ public class Provider extends HttpServlet implements Const {
 				fields.putAll(parMap);
 				DocumentForm form = new DocumentForm(fields, env, formRule, userSession);
 				int parentDocProp[] = getParentDocProp(request);
-				result.output.append(form
-						.save(key, fields, parentDocProp[0], parentDocProp[1], userSession.pageSize, userSession.lang)
-						.toXML());
+				result.output.append(form.save(key, fields, parentDocProp[0], parentDocProp[1], userSession.pageSize, userSession.lang).toXML());
 			} else {
 				Form form = new Form(env, formRule, userSession);
 				int parentDocProp[] = getParentDocProp(request);
-				result.output.append(form
-						.save(key, fields, parentDocProp[0], parentDocProp[1], userSession.pageSize, userSession.lang)
-						.toXML());
+				result.output.append(form.save(key, fields, parentDocProp[0], parentDocProp[1], userSession.pageSize, userSession.lang).toXML());
 			}
 		}
 		return result;
 	}
 
-	private ProviderResult getAttach(HttpServletRequest request, UserSession userSession, String key)
-			throws UnsupportedEncodingException {
+	private ProviderResult getAttach(HttpServletRequest request, UserSession userSession, String key) throws UnsupportedEncodingException {
 		ProviderResult result = new ProviderResult(PublishAsType.OUTPUTSTREAM, null);
 		String fieldName = request.getParameter("field");
 		String attachName = request.getParameter("file");
@@ -982,8 +938,8 @@ public class Provider extends HttpServlet implements Const {
 
 		String formSesID = request.getParameter("formsesid");
 		if (formSesID != null) {
-			File file = Util.getExistFile(result.originalAttachName,
-					Environment.tmpDir + File.separator + formSesID + File.separator + fieldName + File.separator);
+			File file = Util.getExistFile(result.originalAttachName, Environment.tmpDir + File.separator + formSesID + File.separator + fieldName
+			        + File.separator);
 			if (!file.exists()) {
 				IDatabase dataBase = env.getDataBase();
 				String docTypeAsText = request.getParameter("doctype");
@@ -992,8 +948,8 @@ public class Provider extends HttpServlet implements Const {
 				// Integer.parseInt(docTypeAsText),
 				// userSession.currentUser.getAllUserGroups(), fieldName,
 				// result.originalAttachName);
-				result.filePath = dataBase.getDocumentAttach(Integer.parseInt(key), Integer.parseInt(docTypeAsText),
-						fieldName, result.originalAttachName);
+				result.filePath = dataBase.getDocumentAttach(Integer.parseInt(key), Integer.parseInt(docTypeAsText), fieldName,
+				        result.originalAttachName);
 			} else {
 				result.filePath = file.getAbsolutePath();
 			}
@@ -1001,7 +957,7 @@ public class Provider extends HttpServlet implements Const {
 			IDatabase dataBase = env.getDataBase();
 			String docTypeAsText = request.getParameter("doctype");
 			result.filePath = dataBase.getDocumentAttach(Integer.parseInt(key), Integer.parseInt(docTypeAsText),
-					userSession.currentUser.getAllUserGroups(), fieldName, result.originalAttachName);
+			        userSession.currentUser.getAllUserGroups(), fieldName, result.originalAttachName);
 		}
 		return result;
 	}
@@ -1047,8 +1003,7 @@ public class Provider extends HttpServlet implements Const {
 			}
 
 			if (handlerRule.scriptIsValid) {
-				HandlerScriptProcessor handler = new HandlerScriptProcessor(env, user, request.getParameterMap(),
-						userSession.lang);
+				HandlerScriptProcessor handler = new HandlerScriptProcessor(env, user, request.getParameterMap(), userSession.lang);
 				handler.setClassName(handlerRule.handlerClassName);
 				if (handlerRule.waitResponse) {
 					XMLResponse xmlResp = handler.processScript();
@@ -1100,9 +1055,9 @@ public class Provider extends HttpServlet implements Const {
 		return result;
 	}
 
-	private ProviderResult service(HttpServletRequest request, HttpServletResponse response, UserSession userSession,
-			String key, IRule rule) throws InterruptedException, RuleException, QueryFormulaParserException,
-					DocumentException, DocumentAccessException, ComplexObjectException {
+	private ProviderResult service(HttpServletRequest request, HttpServletResponse response, UserSession userSession, String key, IRule rule)
+	        throws InterruptedException, RuleException, QueryFormulaParserException, DocumentException, DocumentAccessException,
+	        ComplexObjectException {
 		String element = request.getParameter("element");
 		ProviderResult result = new ProviderResult();
 		IDatabase db = env.getDataBase();
@@ -1143,14 +1098,12 @@ public class Provider extends HttpServlet implements Const {
 			result.output.append(ua.getActivity(userid, page, pageSize));
 		} else if (operation.equalsIgnoreCase("service_activity")) {
 			String serviceName = request.getParameter("servicename");
-			result.output.append(
-					ua.getActivityByService(serviceName, page, pageSize, UsersActivityType.CUSTOM_EVENT.getCode()));
+			result.output.append(ua.getActivityByService(serviceName, page, pageSize, UsersActivityType.CUSTOM_EVENT.getCode()));
 		} else if (operation.equalsIgnoreCase("users_by_role")) {
 			String role = request.getParameter("role");
 			result.output.append(env.getDataBase().getStructure().getEmployersByRoles(role));
 		} else if (operation.equalsIgnoreCase("add_to_favourites")) {
-			ua.postAddToFavorites(docID, docType, userSession.currentUser.getUserID(),
-					userSession.currentUser.getAllUserGroups());
+			ua.postAddToFavorites(docID, docType, userSession.currentUser.getUserID(), userSession.currentUser.getAllUserGroups());
 		} else if (operation.equalsIgnoreCase("get_accesslist")) {
 			ServiceHandler sh = new ServiceHandler();
 			result.output.append(sh.getAccessList(db, request.getParameter("docid")));
@@ -1198,8 +1151,7 @@ public class Provider extends HttpServlet implements Const {
 			result.output.append(xmlResp.toXML());
 
 		} else if (operation.equalsIgnoreCase("remove_from_favourites")) {
-			ua.postRemoveFromFavorites(docID, docType, userSession.currentUser.getUserID(),
-					userSession.currentUser.getAllUserGroups());
+			ua.postRemoveFromFavorites(docID, docType, userSession.currentUser.getUserID(), userSession.currentUser.getAllUserGroups());
 		} else if (operation.equalsIgnoreCase("fields_to_sign")) {
 			FormRule formRule = (FormRule) env.ruleProvider.getRule(FORM_RULE, key);
 			result.output.append(formRule.getFieldsToSign());

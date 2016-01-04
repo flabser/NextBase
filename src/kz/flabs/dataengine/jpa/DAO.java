@@ -225,7 +225,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 			typedQuery.setParameter("val", value);
 			Query query = em.createQuery(countCq);
 			query.setParameter("val", value);
-			int count = (int) query.getSingleResult();
+			long count = (long) query.getSingleResult();
 			int maxPage = RuntimeObjUtil.countMaxPage(count, pageSize);
 			if (pageNum == 0) {
 				pageNum = maxPage;
@@ -264,16 +264,16 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 
 	public class ViewResult<T> {
 		private List<T> result;
-		private int count;
+		private long count;
 		private int maxPage;
 
-		ViewResult(List<T> result, int count2, int maxPage) {
+		ViewResult(List<T> result, long count2, int maxPage) {
 			this.result = result;
 			this.count = count2;
 			this.maxPage = maxPage;
 		}
 
-		public int getCount() {
+		public long getCount() {
 			return count;
 		}
 

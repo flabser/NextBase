@@ -6,11 +6,11 @@ import java.util.UUID;
 
 public class _POJOListWrapper<T extends _IPOJOObject> implements _IXMLContent {
 	private int maxPage;
-	private int count;
+	private long count;
 	private int currentPage;
 	private List<T> list;
 
-	public _POJOListWrapper(List<T> list, int maxPage, int count, int currentPage) {
+	public _POJOListWrapper(List<T> list, int maxPage, long count, int currentPage) {
 		this.maxPage = maxPage;
 		this.count = count;
 		this.currentPage = currentPage;
@@ -31,7 +31,16 @@ public class _POJOListWrapper<T extends _IPOJOObject> implements _IXMLContent {
 
 	@Override
 	public String toXML() throws _Exception {
-		String result = "<query maxpage=\"" + maxPage + "\" count=\"" + count + "\" currentpage=\"" + currentPage + "\">";
+		String entityType = "undefined";
+		try {
+			final Class<T> listClass = (Class<T>) list.get(0).getClass();
+			entityType = listClass.getSimpleName().toLowerCase();
+		} catch (ArrayIndexOutOfBoundsException e) {
+
+		}
+
+		String result = "<query entity=\"" + entityType + "\"  maxpage=\"" + maxPage + "\" count=\"" + count + "\" currentpage=\"" + currentPage
+		        + "\">";
 		for (T val : list) {
 			result += "<entry isread=\"1\" hasattach=\"0\" hasresponse=\"0\" id=\"" + val.getId() + "\" " + "url=\"" + val.getURL()
 			        + "\"><viewcontent>";

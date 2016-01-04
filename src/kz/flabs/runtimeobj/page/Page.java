@@ -36,7 +36,7 @@ public class Page implements IProcessInitiator, Const {
 	public boolean fileGenerated;
 	public String generatedFilePath;
 	public String generatedFileOriginalName;
-
+	public int status;
 	protected AppEnv env;
 	protected PageRule rule;
 	protected Map<String, String[]> fields = new HashMap<String, String[]>();
@@ -58,24 +58,21 @@ public class Page implements IProcessInitiator, Const {
 		this.rule = rule;
 	}
 
-	public String getSpravFieldSet(User user, String lang) throws RuleException, DocumentException,
-			DocumentAccessException, QueryFormulaParserException, QueryException, LocalizatorException {
+	public String getSpravFieldSet(User user, String lang) throws RuleException, DocumentException, DocumentAccessException,
+	        QueryFormulaParserException, QueryException, LocalizatorException {
 		StringBuffer glossariesAsText = new StringBuffer("<glossaries>");
 		SourceSupplier ss = new SourceSupplier(user, env, lang);
 		for (GlossaryRule glos : rule.getGlossary()) {
-			glossariesAsText.append("<" + glos.name + ">"
-					+ ss.getDataAsXML(glos.valueSource, glos.value, glos.macro, lang) + "</" + glos.name + ">");
+			glossariesAsText.append("<" + glos.name + ">" + ss.getDataAsXML(glos.valueSource, glos.value, glos.macro, lang) + "</" + glos.name + ">");
 		}
 		return glossariesAsText.append("</glossaries>").toString();
 	}
 
-	public String getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions)
-			throws DocumentException {
+	public String getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) throws DocumentException {
 		StringBuffer captionsText = new StringBuffer(100);
 		for (Caption cap : captions) {
-			captionsText.append(
-					"<" + cap.captionID + captionTextSupplier.getValueAsCaption(cap.source, cap.value).toAttrValue()
-							+ "></" + cap.captionID + ">");
+			captionsText.append("<" + cap.captionID + captionTextSupplier.getValueAsCaption(cap.source, cap.value).toAttrValue() + "></"
+			        + cap.captionID + ">");
 		}
 
 		if (captionsText.toString().equals("")) {
@@ -86,16 +83,16 @@ public class Page implements IProcessInitiator, Const {
 
 	}
 
-	public String getAsXML(User user, String lang) throws RuleException, DocumentException, DocumentAccessException,
-			QueryFormulaParserException, QueryException, LocalizatorException {
+	public String getAsXML(User user, String lang) throws RuleException, DocumentException, DocumentAccessException, QueryFormulaParserException,
+	        QueryException, LocalizatorException {
 		SourceSupplier captionTextSupplier = new SourceSupplier(env, lang);
 		String captions = getCaptions(captionTextSupplier, rule.captions);
 		String glossarySet = getSpravFieldSet(user, lang);
 		return "<content>" + rule.getAsXML() + glossarySet + captions + "</content>";
 	}
 
-	public StringBuffer process(Map<String, String[]> formData, String method) throws ClassNotFoundException,
-			RuleException, QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
+	public StringBuffer process(Map<String, String[]> formData, String method) throws ClassNotFoundException, RuleException,
+	        QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
 		StringBuffer resultOut = null;
 		long start_time = System.currentTimeMillis();
 		switch (rule.caching) {
@@ -121,8 +118,8 @@ public class Page implements IProcessInitiator, Const {
 		}
 		StringBuffer output = new StringBuffer(5000);
 
-		output.append("<page id=\"" + rule.id + "\" cache=\"" + rule.caching + "\" elapsed_time = \""
-				+ Util.getTimeDiffInSec(start_time) + "\" " + flashAttr + ">");
+		output.append("<page id=\"" + rule.id + "\" cache=\"" + rule.caching + "\" elapsed_time = \"" + Util.getTimeDiffInSec(start_time) + "\" "
+		        + flashAttr + ">");
 		output.append(resultOut);
 		return output.append("</page>");
 	}
@@ -132,8 +129,8 @@ public class Page implements IProcessInitiator, Const {
 
 	}
 
-	public StringBuffer getContent(Map<String, String[]> formData, String method) throws ClassNotFoundException,
-			RuleException, QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
+	public StringBuffer getContent(Map<String, String[]> formData, String method) throws ClassNotFoundException, RuleException,
+	        QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
 		fields = formData;
 
 		StringBuffer output = new StringBuffer(1000);
@@ -163,6 +160,7 @@ public class Page implements IProcessInitiator, Const {
 						break;
 					case JAVA_CLASS:
 						xmlResp = sProcessor.processJava(elementRule.doClassName.getClassName(), method);
+						status = xmlResp.status;
 						break;
 					case UNKNOWN:
 						break;
@@ -248,9 +246,8 @@ public class Page implements IProcessInitiator, Const {
 					// Query query = new Query(env, (IQueryRule)elementRule,
 					// userSession.currentUser);
 					query.setQiuckFilter(fields, env);
-					int result = query.fetch(pageNum, pageSize, parentDocProp[0], parentDocProp[1],
-							userSession.expandedThread, userSession.expandedCategory, userSession.getFlashDoc(),
-							fields);
+					int result = query.fetch(pageNum, pageSize, parentDocProp[0], parentDocProp[1], userSession.expandedThread,
+					        userSession.expandedCategory, userSession.getFlashDoc(), fields);
 					if (result > -1) {
 						xmlContent.append(query.toXML());
 					}
