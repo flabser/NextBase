@@ -20,12 +20,12 @@ public class _Action {
 		this.type = type;
 		switch (type) {
 		case CLOSE:
-			caption = "Close";
-			hint = "Close";
+			caption = "close";
+			hint = "just_close";
 			break;
 		case GET_DOCUMENT_ACCESSLIST:
-			caption = "Get document access list";
-			hint = "Get document access list";
+			caption = "get_document_acl";
+			hint = "who_can_read_and_edit_the_document";
 			break;
 		default:
 			caption = "";
@@ -53,8 +53,8 @@ public class _Action {
 	}
 
 	public String toXML() {
-		return "<action  mode=\"" + isOn + "\"" + XMLUtil.getAsAttribute("url", url) + " id=\"" + customID
-				+ "\" caption=\"" + caption + "\" hint=\"" + hint + "\">" + type + getJson(type) + "</action>";
+		return "<action  mode=\"" + isOn + "\"" + XMLUtil.getAsAttribute("url", url) + " id=\"" + customID + "\" caption=\"" + caption + "\" hint=\""
+				+ hint + "\">" + type + getJson(type) + "</action>";
 	}
 
 	void setSession(_Session ses) {
@@ -72,8 +72,8 @@ public class _Action {
 		case GET_DOCUMENT_ACCESSLIST:
 			_Document doc = session.getDocumentInConext();
 			if (doc != null) {
-				return "<js><![CDATA[window.location.href = \"Provider?type=service&operation=get_accesslist&id=get_accesslist&docid="
-						+ doc.getID() + "\"]]></js>";
+				return "<js><![CDATA[window.location.href = \"Provider?type=service&operation=get_accesslist&id=get_accesslist&docid=" + doc.getID()
+						+ "\"]]></js>";
 			} else {
 				return "<js><![CDATA[window.location.href = \"Provider?type=service&operation=get_accesslist&id=get_accesslist&docid==\"]]></js>";
 			}

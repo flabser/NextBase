@@ -176,51 +176,12 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 			Root<T> c = cq.from(entityClass);
 			cq.select(c);
 			countCq.select(cb.count(c));
-			cq.where(cb.equal(c.get(fieldName), cb.parameter(valueClass, "val")));
-			countCq.where(cb.equal(c.get(fieldName), cb.parameter(valueClass, "val")));
+			Predicate condition = c.get(fieldName).in(cb.parameter(valueClass, "val"));
 			if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
-				cq.where(c.get("readers").in((long) user.docID));
-				countCq.where(c.get("readers").in((long) user.docID));
+				condition = cb.and(c.get("readers").in((long) user.docID), condition);
 			}
-
-			TypedQuery<T> typedQuery = em.createQuery(cq);
-			typedQuery.setParameter("val", value);
-			Query query = em.createQuery(countCq);
-			query.setParameter("val", value);
-			int count = (int) query.getSingleResult();
-			int maxPage = RuntimeObjUtil.countMaxPage(count, pageSize);
-			if (pageNum == 0) {
-				pageNum = maxPage;
-			}
-			int firstRec = RuntimeObjUtil.calcStartEntry(pageNum, pageSize);
-			typedQuery.setFirstResult(firstRec);
-			typedQuery.setMaxResults(pageSize);
-			List<T> result = typedQuery.getResultList();
-
-			ViewResult<T> r = new ViewResult<T>(result, count, maxPage);
-			return r;
-		} finally {
-			em.close();
-		}
-	}
-
-	public <T1> ViewResult<T> findAllIN(String fieldName, T1 value, int pageNum, int pageSize) {
-		Class<T1> valueClass = (Class<T1>) value.getClass();
-		EntityManager em = getEntityManagerFactory().createEntityManager();
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		try {
-			CriteriaQuery<T> cq = cb.createQuery(entityClass);
-			CriteriaQuery<Long> countCq = cb.createQuery(Long.class);
-			Root<T> c = cq.from(entityClass);
-			cq.select(c);
-			countCq.select(cb.count(c));
-			cq.where(c.get(fieldName).in(cb.parameter(valueClass, "val")));
-			countCq.where(c.get(fieldName).in(cb.parameter(valueClass, "val")));
-			if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
-				cq.where(c.get("readers").in((long) user.docID));
-				countCq.where(c.get("readers").in((long) user.docID));
-			}
-
+			cq.where(condition);
+			countCq.where(condition);
 			TypedQuery<T> typedQuery = em.createQuery(cq);
 			typedQuery.setParameter("val", value);
 			Query query = em.createQuery(countCq);
@@ -235,7 +196,41 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 			typedQuery.setMaxResults(pageSize);
 			List<T> result = typedQuery.getResultList();
 
-			ViewResult<T> r = new ViewResult<T>(result, count, maxPage);
+			ViewResult<T> r = new ViewResult<T>(result, count, maxPage, pageNum);
+			return r;
+		} finally {
+			em.close();
+		}
+	}
+
+	public ViewResult<T> findAllIN(String fieldName, List value, int pageNum, int pageSize) {
+		EntityManager em = getEntityManagerFactory().createEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		try {
+			CriteriaQuery<T> cq = cb.createQuery(entityClass);
+			CriteriaQuery<Long> countCq = cb.createQuery(Long.class);
+			Root<T> c = cq.from(entityClass);
+			cq.select(c);
+			countCq.select(cb.count(c));
+			Predicate condition = c.get(fieldName).in(value);
+			if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
+				condition = cb.and(c.get("readers").in((long) user.docID), condition);
+			}
+			cq.where(condition);
+			countCq.where(condition);
+			TypedQuery<T> typedQuery = em.createQuery(cq);
+			Query query = em.createQuery(countCq);
+			long count = (long) query.getSingleResult();
+			int maxPage = RuntimeObjUtil.countMaxPage(count, pageSize);
+			if (pageNum == 0) {
+				pageNum = maxPage;
+			}
+			int firstRec = RuntimeObjUtil.calcStartEntry(pageNum, pageSize);
+			typedQuery.setFirstResult(firstRec);
+			typedQuery.setMaxResults(pageSize);
+			List<T> result = typedQuery.getResultList();
+
+			ViewResult<T> r = new ViewResult<T>(result, count, maxPage, pageNum);
 			return r;
 		} finally {
 			em.close();
@@ -266,11 +261,13 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 		private List<T> result;
 		private long count;
 		private int maxPage;
+		private int pageNum;
 
-		ViewResult(List<T> result, long count2, int maxPage) {
+		ViewResult(List<T> result, long count2, int maxPage, int pageNum) {
 			this.result = result;
 			this.count = count2;
 			this.maxPage = maxPage;
+			this.pageNum = pageNum;
 		}
 
 		public long getCount() {
@@ -283,6 +280,10 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 
 		public int getMaxPage() {
 			return maxPage;
+		}
+
+		public int getPageNum() {
+			return pageNum;
 		}
 	}
 

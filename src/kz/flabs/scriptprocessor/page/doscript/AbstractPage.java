@@ -18,10 +18,14 @@ import kz.flabs.util.XMLResponse;
 import kz.nextbase.script._IPOJOObject;
 import kz.nextbase.script._IXMLContent;
 import kz.nextbase.script._POJOListWrapper;
+import kz.nextbase.script._POJOObjectWrapper;
 import kz.nextbase.script._Session;
 import kz.nextbase.script._Tag;
 import kz.nextbase.script._WebFormData;
 import kz.nextbase.script._XMLDocument;
+import kz.nextbase.script.actions._Action;
+import kz.nextbase.script.actions._ActionBar;
+import kz.nextbase.script.actions._ActionType;
 import kz.nextbase.script.reports._ExportManager;
 import kz.pchelka.server.Server;
 
@@ -72,17 +76,31 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 		this.vocabulary = vocabulary;
 	}
 
-	public void setContent(_IXMLContent document) {
+	protected void setContent(_IXMLContent document) {
 		xml.add(document);
 	}
 
-	public void setContent(Collection<_IXMLContent> documents) {
+	protected void setContent(Collection<_IXMLContent> documents) {
 		xml.addAll(documents);
+	}
+
+	protected void setContent(_IPOJOObject pojo) {
+		setContent(new _POJOObjectWrapper(pojo));
+
 	}
 
 	protected void setBadRequest() {
 		httpStatus = HttpStatus.SC_BAD_REQUEST;
 
+	}
+
+	protected _ActionBar getSimpleActionBar(_Session session, String type, String lang) {
+		_ActionBar actionBar = new _ActionBar(session);
+		_Action newDocAction = new _Action(getLocalizedWord("new_" + type, lang), getLocalizedWord("add_new_" + type, lang), "new_" + type);
+		newDocAction.setURL("Provider?id=" + type + "_form&key=");
+		actionBar.addAction(newDocAction);
+		actionBar.addAction(new _Action(getLocalizedWord("del_document", lang), getLocalizedWord("del_document", lang), _ActionType.DELETE_DOCUMENT));
+		return actionBar;
 	}
 
 	protected _IXMLContent getViewContent(DAO<? extends _IPOJOObject, UUID> dao, _WebFormData formData) {
@@ -92,13 +110,13 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 			pageNum = formData.getNumberValueSilently("page", pageNum);
 		}
 		long count = dao.getCount();
-		int maxPage = RuntimeObjUtil.countMaxPage((int) count, pageSize);
+		int maxPage = RuntimeObjUtil.countMaxPage(count, pageSize);
 		if (pageNum == 0) {
 			pageNum = maxPage;
 		}
 		int startRec = RuntimeObjUtil.calcStartEntry(pageNum, pageSize);
 		List<? extends _IPOJOObject> list = dao.findAll(startRec, pageSize);
-		return new _POJOListWrapper(list, maxPage, (int) count, pageNum);
+		return new _POJOListWrapper(list, maxPage, count, pageNum);
 
 	}
 

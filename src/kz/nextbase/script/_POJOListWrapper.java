@@ -40,11 +40,11 @@ public class _POJOListWrapper<T extends _IPOJOObject> implements _IXMLContent {
 		}
 
 		String result = "<query entity=\"" + entityType + "\"  maxpage=\"" + maxPage + "\" count=\"" + count + "\" currentpage=\"" + currentPage
-		        + "\">";
+				+ "\">";
 		for (T val : list) {
 			result += "<entry isread=\"1\" hasattach=\"0\" hasresponse=\"0\" id=\"" + val.getId() + "\" " + "url=\"" + val.getURL()
-			        + "\"><viewcontent>";
-			result += val.toXML() + "</viewcontent></entry>";
+					+ "\"><viewcontent>";
+			result += val.getXMLChunk() + "</viewcontent></entry>";
 		}
 		return result + "</query>";
 	}
@@ -57,7 +57,7 @@ public class _POJOListWrapper<T extends _IPOJOObject> implements _IXMLContent {
 		}
 
 		@Override
-		public String toXML() throws _Exception {
+		public String getXMLChunk() {
 			return "<message>" + msg + "</message>";
 		}
 

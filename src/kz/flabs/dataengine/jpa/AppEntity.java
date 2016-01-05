@@ -21,9 +21,7 @@ import kz.flabs.dataengine.jpa.util.UUIDConverter;
 import kz.flabs.users.User;
 import kz.flabs.util.Util;
 import kz.flabs.util.XMLUtil;
-import kz.nextbase.script._Exception;
 import kz.nextbase.script._IPOJOObject;
-import kz.nextbase.script._IXMLContent;
 import kz.nextbase.script._URL;
 
 import org.eclipse.persistence.annotations.Convert;
@@ -97,14 +95,15 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 	}
 
 	@Override
-	public String toXML() throws _Exception {
+	public String getXMLChunk() {
 		Class<?> noparams[] = {};
 		StringBuilder value = new StringBuilder(1000);
 		try {
 			for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(this.getClass()).getPropertyDescriptors()) {
 				Method method = propertyDescriptor.getReadMethod();
-				if (method != null && !method.getName().equals("getClass")) {
+				if (method != null && !method.getName().equals("getXMLChunk") && !method.getName().equals("getClass")) {
 					String methodValue = "";
+					// TODO boolean getters is not considered
 					String fieldName = method.getName().toLowerCase().substring(3);
 					try {
 						Object val = method.invoke(this, noparams);
@@ -112,13 +111,13 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 						if (val instanceof Date) {
 							methodValue = Util.simpleDateFormat.format((Date) val);
 						} else if (val instanceof IndirectList) {
-							List<_IXMLContent> list = (List<_IXMLContent>) val;
-							for (_IXMLContent nestedValue : list) {
+							List<_IPOJOObject> list = (List<_IPOJOObject>) val;
+							for (_IPOJOObject nestedValue : list) {
 								// methodValue += nestedValue.toXML();
 								methodValue = nestedValue.getClass().getName();
 							}
-						} else if (val.getClass().isInstance(_IXMLContent.class)) {
-							methodValue = ((_IXMLContent) val).toXML();
+						} else if (val.getClass().isInstance(_IPOJOObject.class)) {
+							methodValue = ((_IPOJOObject) val).getXMLChunk();
 						} else {
 							methodValue = val.toString();
 						}

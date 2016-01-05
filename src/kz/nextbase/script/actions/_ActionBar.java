@@ -24,9 +24,10 @@ public class _ActionBar implements _IXMLContent {
 		session = ses;
 	}
 
-	public void addAction(_Action action) {
+	public _ActionBar addAction(_Action action) {
 		action.setSession(session);
 		actions.add(action);
+		return this;
 	}
 
 	@Override

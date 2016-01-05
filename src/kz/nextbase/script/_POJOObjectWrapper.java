@@ -10,6 +10,6 @@ public class _POJOObjectWrapper implements _IXMLContent {
 	@Override
 	public String toXML() throws _Exception {
 		return "<document entity=\"" + object.getClass().getSimpleName().toLowerCase() + "\"  docid=\"" + object.getId()
-		        + "\" status=\"existing\"><fields>" + object.toXML() + "</fields></document>";
+				+ "\" status=\"existing\"><fields>" + object.getXMLChunk() + "</fields></document>";
 	}
 }

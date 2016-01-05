@@ -41,7 +41,7 @@ public class PageRule extends Rule implements IElement, Const {
 			}
 
 			type = RuleType.PAGE;
-			if (xsltFile.equals("*")) {
+			if (xsltFile.equalsIgnoreCase("default") || xsltFile.equals("*")) {
 				xsltFile = type.name().toLowerCase() + File.separator + id + ".xsl";
 			}
 			isValid = true;
@@ -65,7 +65,7 @@ public class PageRule extends Rule implements IElement, Const {
 		String xmlText = "";
 
 		xmlText = "<ison>" + isOn + "</ison>" + "<rununderuser>" + runUnderUser + "</rununderuser>" + "<cache>" + caching + "</cache>" + "<elements>"
-		        + elements + "</elements>" + "<hits>" + hits + "</hits>" + "<app>" + app + "</app>";
+				+ elements + "</elements>" + "<hits>" + hits + "</hits>" + "<app>" + app + "</app>";
 
 		return xmlText;
 	}

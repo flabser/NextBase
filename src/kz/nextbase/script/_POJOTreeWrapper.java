@@ -16,10 +16,10 @@ public class _POJOTreeWrapper implements _IXMLContent {
 		String result = "";
 		result += "<entry isread=\"1\" hasattach=\"0\" hasresponse=\"0\" id=\"" + object.getId() + "\" "
 				+ "url=\"Provider?id=furniture_form&amp;docid=" + object.getId() + "\"><viewcontent>";
-		result += object.toXML() + "</viewcontent></entry>";
+		result += object.getXMLChunk() + "</viewcontent></entry>";
 		result += "<responses>";
 		for (_IPOJOObject val : list) {
-			result += val.toXML();
+			result += val.getXMLChunk();
 		}
 		result += "</responses>";
 		return result;
