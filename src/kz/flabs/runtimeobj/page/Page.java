@@ -32,11 +32,13 @@ import kz.flabs.webrule.page.PageRule;
 import kz.pchelka.env.Environment;
 import kz.pchelka.scheduler.IProcessInitiator;
 
+import org.apache.http.HttpStatus;
+
 public class Page implements IProcessInitiator, Const {
 	public boolean fileGenerated;
 	public String generatedFilePath;
 	public String generatedFileOriginalName;
-	public int status;
+	public int status = HttpStatus.SC_OK;
 	protected AppEnv env;
 	protected PageRule rule;
 	protected Map<String, String[]> fields = new HashMap<String, String[]>();

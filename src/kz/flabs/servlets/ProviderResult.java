@@ -1,5 +1,6 @@
 package kz.flabs.servlets;
 
+import org.apache.http.HttpStatus;
 
 public class ProviderResult {
 	public StringBuffer output = new StringBuffer(10000);
@@ -13,7 +14,7 @@ public class ProviderResult {
 	public String originalAttachName;
 	@Deprecated
 	public boolean addHistory;
-	public int httpStatus;
+	public int httpStatus = HttpStatus.SC_OK;;
 
 	ProviderResult(PublishAsType publishAs, String xslt) {
 		this.publishAs = publishAs;

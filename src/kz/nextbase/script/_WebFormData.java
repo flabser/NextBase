@@ -173,6 +173,15 @@ public class _WebFormData {
 		}
 	}
 
+	public Date getDateSilently(String fn) {
+		try {
+			String value[] = formData.get(fn);
+			return Util.convertStringToSimpleDate(value[0].trim());
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 	@Override
 	public String toString() {
 		String result = "-----------begin of list of web form data-----------\n";
@@ -192,15 +201,6 @@ public class _WebFormData {
 		result += "----------------- end of list-----------------------";
 		return result;
 
-	}
-
-	public Date getDateSilently(String fn) {
-		try {
-			String value[] = formData.get(fn);
-			return Util.convertStringToSimpleDate(value[0].trim());
-		} catch (Exception e) {
-			return null;
-		}
 	}
 
 }

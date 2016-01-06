@@ -103,7 +103,7 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 		return actionBar;
 	}
 
-	protected _IXMLContent getViewContent(DAO<? extends _IPOJOObject, UUID> dao, _WebFormData formData) {
+	protected _IXMLContent getViewPage(DAO<? extends _IPOJOObject, UUID> dao, _WebFormData formData) {
 		int pageNum = 1;
 		int pageSize = dao.user.getSession().pageSize;
 		if (formData.containsField("page")) {

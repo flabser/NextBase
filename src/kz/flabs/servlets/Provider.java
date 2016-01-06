@@ -219,6 +219,7 @@ public class Provider extends HttpServlet implements Const {
 						result.publishAs = PublishAsType.XML;
 						result.addHistory = false;
 					}
+					response.setStatus(result.httpStatus);
 
 					if (result.publishAs == PublishAsType.JSON) {
 						response.setContentType("application/json;charset=utf-8");

@@ -2,11 +2,13 @@ package kz.flabs.dataengine.jpa;
 
 import java.util.List;
 
+import kz.flabs.dataengine.jpa.DAO.ViewPage;
+
 public interface IDAO<T, K> {
 
 	T findById(K id);
 
-	List<T> findAllByIds(List<K> ids);
+	ViewPage findAllByIds(List<K> ids, int pageNum, int pageSize);
 
 	List<T> findAll();
 

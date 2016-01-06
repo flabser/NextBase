@@ -45,6 +45,8 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 			String jpql = "SELECT m FROM " + entityClass.getName() + " AS m WHERE m.id = :id";
 			TypedQuery<T> q = em.createQuery(jpql, entityClass);
 			q.setParameter("id", id);
+			// T result = q.getSingleResult();
+
 			return q.getSingleResult();
 		} finally {
 			em.close();
@@ -52,16 +54,8 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 	}
 
 	@Override
-	public List<T> findAllByIds(List<K> ids) {
-		EntityManager em = getEntityManagerFactory().createEntityManager();
-		try {
-			String jpql = "SELECT m FROM " + entityClass.getName() + " AS m WHERE m.id IN :ids";
-			TypedQuery<T> q = em.createQuery(jpql, entityClass);
-			q.setParameter("ids", ids);
-			return q.getResultList();
-		} finally {
-			em.close();
-		}
+	public ViewPage<T> findAllByIds(List<K> value, int pageNum, int pageSize) {
+		return findAllIN("id", value, pageNum, pageSize);
 	}
 
 	@Override
@@ -166,7 +160,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 		}
 	}
 
-	public <T1> ViewResult<T> findAllEQUAL(String fieldName, T1 value, int pageNum, int pageSize) {
+	public <T1> ViewPage<T> findAllEQUAL(String fieldName, T1 value, int pageNum, int pageSize) {
 		Class<T1> valueClass = (Class<T1>) value.getClass();
 		EntityManager em = getEntityManagerFactory().createEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -196,14 +190,14 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 			typedQuery.setMaxResults(pageSize);
 			List<T> result = typedQuery.getResultList();
 
-			ViewResult<T> r = new ViewResult<T>(result, count, maxPage, pageNum);
+			ViewPage<T> r = new ViewPage<T>(result, count, maxPage, pageNum);
 			return r;
 		} finally {
 			em.close();
 		}
 	}
 
-	public ViewResult<T> findAllIN(String fieldName, List value, int pageNum, int pageSize) {
+	public ViewPage<T> findAllIN(String fieldName, List value, int pageNum, int pageSize) {
 		EntityManager em = getEntityManagerFactory().createEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		try {
@@ -230,7 +224,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 			typedQuery.setMaxResults(pageSize);
 			List<T> result = typedQuery.getResultList();
 
-			ViewResult<T> r = new ViewResult<T>(result, count, maxPage, pageNum);
+			ViewPage<T> r = new ViewPage<T>(result, count, maxPage, pageNum);
 			return r;
 		} finally {
 			em.close();
@@ -257,13 +251,13 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 		return select;
 	}
 
-	public class ViewResult<T> {
+	public class ViewPage<T> {
 		private List<T> result;
 		private long count;
 		private int maxPage;
 		private int pageNum;
 
-		ViewResult(List<T> result, long count2, int maxPage, int pageNum) {
+		ViewPage(List<T> result, long count2, int maxPage, int pageNum) {
 			this.result = result;
 			this.count = count2;
 			this.maxPage = maxPage;
