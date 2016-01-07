@@ -17,8 +17,8 @@ import kz.pchelka.scheduler.IProcessInitiator;
 import com.eztech.util.JavaClassFinder;
 
 /**
- * 
- * 
+ *
+ *
  * @author Kayra created 28-12-2015
  */
 
@@ -68,6 +68,7 @@ public class InitializerHelper implements IProcessInitiator {
 
 	public String runInitializer(String name, boolean showConsoleOutput) {
 		int count = 0;
+		boolean isFound = false;
 		JavaClassFinder classFinder = new JavaClassFinder();
 		List<Class<? extends IInitialData>> classesList = null;
 		classesList = classFinder.findAllMatchingTypes(IInitialData.class);
@@ -75,6 +76,7 @@ public class InitializerHelper implements IProcessInitiator {
 			if (!populatingClass.isInterface() && !populatingClass.getCanonicalName().equals(InitialDataAdapter.class.getCanonicalName())) {
 				if (name.equals(populatingClass.getSimpleName())) {
 					if (populatingClass.getSimpleName().equals(name)) {
+						isFound = true;
 						IInitialData<ISimpleAppEntity, IDAO> pcInstance = null;
 						try {
 							String packageName = populatingClass.getPackage().getName();
@@ -111,8 +113,12 @@ public class InitializerHelper implements IProcessInitiator {
 				}
 			}
 		}
-		if (showConsoleOutput) {
-			System.out.println(count + " records have been added");
+		if (isFound) {
+			if (showConsoleOutput) {
+				System.out.println(count + " records have been added");
+			}
+		} else {
+			System.out.println("initializer \"" + name + "\" has not found");
 		}
 		return "";
 	}

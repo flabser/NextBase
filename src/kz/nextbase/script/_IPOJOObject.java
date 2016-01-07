@@ -7,6 +7,10 @@ public interface _IPOJOObject {
 
 	_URL getURL();
 
-	String getXMLChunk();
+	String getFullXMLChunk();
+
+	String getShortXMLChunk();
+
+	public boolean isEditable();
 
 }

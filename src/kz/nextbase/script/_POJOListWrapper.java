@@ -40,11 +40,10 @@ public class _POJOListWrapper<T extends _IPOJOObject> implements _IXMLContent {
 		}
 
 		String result = "<query entity=\"" + entityType + "\"  maxpage=\"" + maxPage + "\" count=\"" + count + "\" currentpage=\"" + currentPage
-				+ "\">";
+		        + "\">";
 		for (T val : list) {
-			result += "<entry isread=\"1\" hasattach=\"0\" hasresponse=\"0\" id=\"" + val.getId() + "\" " + "url=\"" + val.getURL()
-					+ "\"><viewcontent>";
-			result += val.getXMLChunk() + "</viewcontent></entry>";
+			result += "<entry isread=\"1\" hasattach=\"0\" id=\"" + val.getId() + "\" " + "url=\"" + val.getURL() + "\"><viewcontent>";
+			result += val.getShortXMLChunk() + "</viewcontent></entry>";
 		}
 		return result + "</query>";
 	}
@@ -57,11 +56,6 @@ public class _POJOListWrapper<T extends _IPOJOObject> implements _IXMLContent {
 		}
 
 		@Override
-		public String getXMLChunk() {
-			return "<message>" + msg + "</message>";
-		}
-
-		@Override
 		public UUID getId() {
 			return null;
 		}
@@ -69,6 +63,21 @@ public class _POJOListWrapper<T extends _IPOJOObject> implements _IXMLContent {
 		@Override
 		public _URL getURL() {
 			return new _URL("");
+		}
+
+		@Override
+		public boolean isEditable() {
+			return false;
+		}
+
+		@Override
+		public String getFullXMLChunk() {
+			return "<message>" + msg + "</message>";
+		}
+
+		@Override
+		public String getShortXMLChunk() {
+			return getFullXMLChunk();
 		}
 
 	}

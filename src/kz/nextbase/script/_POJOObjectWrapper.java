@@ -9,7 +9,7 @@ public class _POJOObjectWrapper implements _IXMLContent {
 
 	@Override
 	public String toXML() throws _Exception {
-		return "<document entity=\"" + object.getClass().getSimpleName().toLowerCase() + "\"  docid=\"" + object.getId()
-				+ "\" status=\"existing\"><fields>" + object.getXMLChunk() + "</fields></document>";
+		return "<document entity=\"" + object.getClass().getSimpleName().toLowerCase() + "\"  docid=\"" + object.getId() + "\" editable=\""
+		        + object.isEditable() + "\"><fields>" + object.getFullXMLChunk() + "</fields></document>";
 	}
 }

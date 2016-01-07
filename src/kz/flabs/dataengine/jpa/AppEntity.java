@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
+import javax.persistence.Transient;
 
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.jpa.embedded.ReadingMark;
@@ -47,6 +48,9 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 
 	@ElementCollection
 	private List<ReadingMark> readingMarks;
+
+	@Transient
+	protected boolean isEditable;
 
 	@PrePersist
 	private void prePersist() {
@@ -95,13 +99,14 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 	}
 
 	@Override
-	public String getXMLChunk() {
+	public String getFullXMLChunk() {
 		Class<?> noparams[] = {};
 		StringBuilder value = new StringBuilder(1000);
 		try {
 			for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(this.getClass()).getPropertyDescriptors()) {
 				Method method = propertyDescriptor.getReadMethod();
-				if (method != null && !method.getName().equals("getXMLChunk") && !method.getName().equals("getClass")) {
+				if (method != null && !method.getName().equals("getShortXMLChunk") && !method.getName().equals("getFullXMLChunk")
+				        && !method.getName().equals("getClass")) {
 					String methodValue = "";
 					// TODO boolean getters is not considered
 					String fieldName = method.getName().toLowerCase().substring(3);
@@ -117,7 +122,7 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 								methodValue = nestedValue.getClass().getName();
 							}
 						} else if (val.getClass().isInstance(_IPOJOObject.class)) {
-							methodValue = ((_IPOJOObject) val).getXMLChunk();
+							methodValue = ((_IPOJOObject) val).getFullXMLChunk();
 						} else {
 							methodValue = val.toString();
 						}
@@ -135,7 +140,22 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 	}
 
 	@Override
+	public String getShortXMLChunk() {
+		return getFullXMLChunk();
+	}
+
+	@Override
 	public _URL getURL() {
 		return new _URL("Provider?id=" + this.getClass().getSimpleName().toLowerCase() + "_form&amp;docid=" + getId());
+	}
+
+	@Override
+	public boolean isEditable() {
+		return true;
+	}
+
+	@Override
+	public void setEditable(boolean isEditable) {
+		this.isEditable = isEditable;
 	}
 }

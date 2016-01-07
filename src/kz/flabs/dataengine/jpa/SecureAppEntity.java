@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 
 import kz.flabs.users.User;
 
@@ -16,9 +15,6 @@ public abstract class SecureAppEntity extends AppEntity {
 
 	@ElementCollection
 	private Set<Long> readers = new HashSet<Long>();
-
-	@Transient
-	private boolean isEditable;
 
 	public Set<Long> getEditors() {
 		return editors;
@@ -62,6 +58,11 @@ public abstract class SecureAppEntity extends AppEntity {
 			addReader(user);
 			addReaderEditor(user);
 		}
+	}
+
+	@Override
+	public boolean isEditable() {
+		return isEditable;
 	}
 
 }

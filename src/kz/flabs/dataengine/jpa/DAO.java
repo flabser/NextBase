@@ -41,13 +41,21 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 	@Override
 	public T findById(K id) {
 		EntityManager em = getEntityManagerFactory().createEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
 		try {
-			String jpql = "SELECT m FROM " + entityClass.getName() + " AS m WHERE m.id = :id";
-			TypedQuery<T> q = em.createQuery(jpql, entityClass);
-			q.setParameter("id", id);
-			// T result = q.getSingleResult();
-
-			return q.getSingleResult();
+			CriteriaQuery<T> cq = cb.createQuery(entityClass);
+			Root<T> c = cq.from(entityClass);
+			cq.select(c);
+			Predicate condition = c.get("id").in(id);
+			cq.where(condition);
+			Query query = em.createQuery(cq);
+			T entity = (T) query.getSingleResult();
+			if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
+				if (((SecureAppEntity) entity).getEditors().contains(user.docID)) {
+					entity.setEditable(false);
+				}
+			}
+			return entity;
 		} finally {
 			em.close();
 		}

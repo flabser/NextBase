@@ -92,11 +92,10 @@ public class _AppEntourage {
 						throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, "internal error: function: _Document.getAvailableApps()");
 					}
 					for (UserApplicationProfile uap : enabledApps) {
-						System.out.println(uap.appName + " " + appEnv.appType);
 						if (uap.appName.equals(appEnv.appType)) {
 
 							String p[] = { appEnv.appType, appEnv.globalSetting.defaultRedirectURL, appEnv.globalSetting.logo,
-							        appEnv.globalSetting.orgName, appEnv.globalSetting.description };
+									appEnv.globalSetting.orgName, appEnv.globalSetting.description };
 							try {
 								IViewEntry entry = new ViewEntry(p);
 								vec.add(entry);

@@ -12,4 +12,8 @@ public interface IAppEntity extends ISimpleAppEntity {
 
 	void setRegDate(Date regDate);
 
+	public boolean isEditable();
+
+	public void setEditable(boolean isEditable);
+
 }
