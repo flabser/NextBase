@@ -98,6 +98,9 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 		return getId().toString();
 	}
 
+	/**
+	 * To more faster processing the method should be reloaded in real object
+	 */
 	@Override
 	public String getFullXMLChunk() {
 		Class<?> noparams[] = {};
@@ -139,6 +142,10 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 
 	}
 
+	/**
+	 * To more faster processing the method during showing in a view should be
+	 * reloaded in real object
+	 */
 	@Override
 	public String getShortXMLChunk() {
 		return getFullXMLChunk();

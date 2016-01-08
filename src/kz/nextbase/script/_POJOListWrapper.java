@@ -20,6 +20,8 @@ public class _POJOListWrapper<T extends _IPOJOObject> implements _IXMLContent {
 	public _POJOListWrapper(List<T> list) {
 		this.count = list.size();
 		this.list = list;
+		maxPage = 1;
+		currentPage = 1;
 	}
 
 	public _POJOListWrapper(String msg) {

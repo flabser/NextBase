@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -42,6 +43,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 	public T findById(K id) {
 		EntityManager em = getEntityManagerFactory().createEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
+		boolean isSecureEntity = false;
 		try {
 			CriteriaQuery<T> cq = cb.createQuery(entityClass);
 			Root<T> c = cq.from(entityClass);
@@ -49,13 +51,19 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 			Predicate condition = c.get("id").in(id);
 			cq.where(condition);
 			Query query = em.createQuery(cq);
-			T entity = (T) query.getSingleResult();
 			if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
-				if (((SecureAppEntity) entity).getEditors().contains(user.docID)) {
+				condition = cb.and(c.get("readers").in((long) user.docID), condition);
+				isSecureEntity = true;
+			}
+			T entity = (T) query.getSingleResult();
+			if (isSecureEntity) {
+				if (!((SecureAppEntity) entity).getEditors().contains(user.docID)) {
 					entity.setEditable(false);
 				}
 			}
 			return entity;
+		} catch (NoResultException e) {
+			return null;
 		} finally {
 			em.close();
 		}
@@ -63,7 +71,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 
 	@Override
 	public ViewPage<T> findAllByIds(List<K> value, int pageNum, int pageSize) {
-		return findAllIN("id", value, pageNum, pageSize);
+		return findAllin("id", value, pageNum, pageSize);
 	}
 
 	@Override
@@ -168,44 +176,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 		}
 	}
 
-	public <T1> ViewPage<T> findAllEQUAL(String fieldName, T1 value, int pageNum, int pageSize) {
-		Class<T1> valueClass = (Class<T1>) value.getClass();
-		EntityManager em = getEntityManagerFactory().createEntityManager();
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		try {
-			CriteriaQuery<T> cq = cb.createQuery(entityClass);
-			CriteriaQuery<Long> countCq = cb.createQuery(Long.class);
-			Root<T> c = cq.from(entityClass);
-			cq.select(c);
-			countCq.select(cb.count(c));
-			Predicate condition = c.get(fieldName).in(cb.parameter(valueClass, "val"));
-			if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
-				condition = cb.and(c.get("readers").in((long) user.docID), condition);
-			}
-			cq.where(condition);
-			countCq.where(condition);
-			TypedQuery<T> typedQuery = em.createQuery(cq);
-			typedQuery.setParameter("val", value);
-			Query query = em.createQuery(countCq);
-			query.setParameter("val", value);
-			long count = (long) query.getSingleResult();
-			int maxPage = RuntimeObjUtil.countMaxPage(count, pageSize);
-			if (pageNum == 0) {
-				pageNum = maxPage;
-			}
-			int firstRec = RuntimeObjUtil.calcStartEntry(pageNum, pageSize);
-			typedQuery.setFirstResult(firstRec);
-			typedQuery.setMaxResults(pageSize);
-			List<T> result = typedQuery.getResultList();
-
-			ViewPage<T> r = new ViewPage<T>(result, count, maxPage, pageNum);
-			return r;
-		} finally {
-			em.close();
-		}
-	}
-
-	public ViewPage<T> findAllIN(String fieldName, List value, int pageNum, int pageSize) {
+	public ViewPage<T> findAllin(String fieldName, List value, int pageNum, int pageSize) {
 		EntityManager em = getEntityManagerFactory().createEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		try {
@@ -242,21 +213,6 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 	public String getQueryNameForAll() {
 		String queryName = entityClass.getSimpleName() + ".findAll";
 		return queryName;
-	}
-
-	protected Predicate addAccessCondition(CriteriaBuilder cBuilder, Root<T> root) {
-		if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
-			return root.get("readers").in((long) user.docID);
-		} else {
-			return cBuilder.disjunction();
-		}
-	}
-
-	protected CriteriaQuery<T> addAccessRestriction(CriteriaQuery<T> select, Root<T> root) {
-		if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
-			select.where(root.get("readers").in((long) user.docID));
-		}
-		return select;
 	}
 
 	public class ViewPage<T> {

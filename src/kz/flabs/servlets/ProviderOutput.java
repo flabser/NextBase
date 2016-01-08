@@ -36,7 +36,7 @@ public class ProviderOutput {
 	private HttpServletResponse response;
 
 	public ProviderOutput(String type, String id, StringBuffer output, HttpServletRequest request, HttpServletResponse response,
-	        UserSession userSession, HttpSession jses, String title, boolean addHistory) throws UserException {
+			UserSession userSession, HttpSession jses, String title, boolean addHistory) throws UserException {
 		this.type = type;
 		this.id = id;
 		this.output = output;
@@ -55,7 +55,7 @@ public class ProviderOutput {
 		if (userSession.history != null) {
 			for (UserSession.HistoryEntry entry : userSession.history.getEntries()) {
 				historyXML += "<entry type=\"" + entry.type + "\" title=\"" + entry.title + "\">" + XMLUtil.getAsTagValue(entry.URLforXML)
-				        + "</entry>";
+						+ "</entry>";
 			}
 		}
 
@@ -99,7 +99,7 @@ public class ProviderOutput {
 							writer.println("<xsl:output method=\"html\" encoding=\"utf-8\"/>");
 							writer.println("<xsl:template match=\"/\">");
 							writer.println("<!-- it was generated programmatically -->");
-							writer.println("<html><body> <xmp><xsl:copy-of select=\".\"/></body></html>");
+							writer.println("<html><body> <xmp><xsl:copy-of select=\".\"/></xmp></body></html>");
 							writer.println("</xsl:template>");
 							writer.println("</xsl:stylesheet>");
 							writer.close();
@@ -145,9 +145,9 @@ public class ProviderOutput {
 		}
 
 		return xmlTextUTF8Header + "<request " + queryString + " type=\"" + type + "\" title=\"" + title + "\" lang=\"" + userSession.lang
-		        + "\" id=\"" + id + "\" " + "useragent=\"" + browser + "\"  skin=\"" + userSession.skin + "\" userid=\""
-		        + userSession.currentUser.getUserID() + "\" username=\"" + localUserName + "\">" + "<history>" + historyXML + "</history>" + output
-		        + "</request>";
+				+ "\" id=\"" + id + "\" " + "useragent=\"" + browser + "\"  skin=\"" + userSession.skin + "\" userid=\""
+				+ userSession.currentUser.getUserID() + "\" username=\"" + localUserName + "\">" + "<history>" + historyXML + "</history>" + output
+				+ "</request>";
 	}
 
 	public String getStandartUTF8Output() {
@@ -162,8 +162,8 @@ public class ProviderOutput {
 		}
 
 		String outputContent = xmlTextUTF8Header + "<request " + queryString + " type=\"" + type + "\" title=\"" + title + "\" lang=\""
-		        + userSession.lang + "\" id=\"" + id + "\" " + "useragent=\"" + browser + "\"  skin=\"" + userSession.skin + "\" userid=\"" + "\" "
-		        + "username=\"" + localUserName + "\"><history>" + historyXML + "</history>" + output + "</request>";
+				+ userSession.lang + "\" id=\"" + id + "\" " + "useragent=\"" + browser + "\"  skin=\"" + userSession.skin + "\" userid=\"" + "\" "
+				+ "username=\"" + localUserName + "\"><history>" + historyXML + "</history>" + output + "</request>";
 
 		return outputContent;
 	}

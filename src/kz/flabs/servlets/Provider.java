@@ -832,6 +832,7 @@ public class Provider extends HttpServlet implements Const {
 		return result;
 	}
 
+	@Deprecated
 	private ProviderResult forum(HttpServletRequest request, HttpServletResponse response, IRule rule, UserSession userSession, String key, String id)
 	        throws DocumentAccessException, DocumentException, RuleException, QueryFormulaParserException, QueryException, LocalizatorException,
 	        ClassNotFoundException, _Exception, ComplexObjectException {
@@ -992,6 +993,7 @@ public class Provider extends HttpServlet implements Const {
 		return result;
 	}
 
+	@Deprecated
 	private ProviderResult handler(HttpServletRequest request, IRule rule, UserSession userSession) throws Exception {
 		ProviderResult result = new ProviderResult();
 		result.addHistory = false;
@@ -1056,6 +1058,7 @@ public class Provider extends HttpServlet implements Const {
 		return result;
 	}
 
+	@Deprecated
 	private ProviderResult service(HttpServletRequest request, HttpServletResponse response, UserSession userSession, String key, IRule rule)
 	        throws InterruptedException, RuleException, QueryFormulaParserException, DocumentException, DocumentAccessException,
 	        ComplexObjectException {
