@@ -15,6 +15,7 @@ import kz.flabs.servlets.SignalType;
 import kz.flabs.util.ResponseType;
 import kz.flabs.util.Util;
 import kz.flabs.util.XMLResponse;
+import kz.nextbase.script._Exception;
 import kz.nextbase.script._IPOJOObject;
 import kz.nextbase.script._IXMLContent;
 import kz.nextbase.script._POJOListWrapper;
@@ -174,6 +175,7 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 			xmlResp.setRedirect(redirectURL);
 
 		} catch (Exception e) {
+			xmlResp.status = HttpStatus.SC_BAD_REQUEST;
 			xmlResp.setResponseStatus(false);
 			xmlResp.addMessage(e.getMessage());
 			println(e);
@@ -189,7 +191,7 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 		return process("GET");
 	}
 
-	public abstract void doGET(_Session session, _WebFormData formData, String lang);
+	public abstract void doGET(_Session session, _WebFormData formData, String lang) throws _Exception;
 
-	public abstract void doPOST(_Session session, _WebFormData formData, String lang);
+	public abstract void doPOST(_Session session, _WebFormData formData, String lang) throws _Exception;
 }

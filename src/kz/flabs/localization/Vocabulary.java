@@ -2,13 +2,13 @@ package kz.flabs.localization;
 
 import java.util.HashMap;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-
 import kz.flabs.runtimeobj.viewentry.ViewEntry;
 import kz.flabs.util.XMLUtil;
 import kz.flabs.webrule.GlobalSetting;
 import kz.pchelka.log.Log4jLogger;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 public class Vocabulary {
 	public String id;
@@ -20,8 +20,7 @@ public class Vocabulary {
 		this.id = id;
 		this.globalSetting = globalSetting;
 		org.w3c.dom.Element root = doc.getDocumentElement();
-		Language primaryLang = Language
-				.valueOf(XMLUtil.getTextContent(doc, "/vocabulary/@primary", true, "UNKNOWN", false).toUpperCase());
+		Language primaryLang = Language.valueOf(XMLUtil.getTextContent(doc, "/vocabulary/@primary", true, "UNKNOWN", false).toUpperCase());
 
 		NodeList nodename = root.getElementsByTagName("sentence");
 		for (int i = 0; i < nodename.getLength(); i++) {
@@ -37,8 +36,8 @@ public class Vocabulary {
 		Sentence sent = words.get(keyWord);
 		if (sent == null && keyWord != "№") {
 			if (globalSetting.multiLangEnable) {
-				logger.warningLogEntry(
-						"Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");
+				logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary ("
+				        + globalSetting.appName + ")");
 			}
 			returnVal[0] = keyWord;
 			returnVal[1] = "";
@@ -54,10 +53,11 @@ public class Vocabulary {
 	public SentenceCaption getSentenceCaption(String keyWord, String lang) {
 		Sentence sent = words.get(keyWord.trim());
 		if (sent == null) {
-			logger.warningLogEntry(
-					"Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");
-			SentenceCaption primary = new SentenceCaption(keyWord, keyWord);
-			return primary;
+			logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary (" + globalSetting.appName
+			        + ")");
+			;
+					SentenceCaption primary = new SentenceCaption(keyWord, keyWord);
+					return primary;
 		} else {
 			SentenceCaption caption = sent.words.get(lang);
 			if (caption != null) {

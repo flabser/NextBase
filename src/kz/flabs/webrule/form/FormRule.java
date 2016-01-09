@@ -1,19 +1,14 @@
 package kz.flabs.webrule.form;
 
+import groovy.lang.GroovyClassLoader;
+import groovy.lang.GroovyObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.codehaus.groovy.control.CompilationFailedException;
-import org.codehaus.groovy.control.CompilerConfiguration;
-import org.codehaus.groovy.control.MultipleCompilationErrorsException;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import groovy.lang.GroovyClassLoader;
-import groovy.lang.GroovyObject;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.Const;
 import kz.flabs.exception.RuleException;
@@ -29,6 +24,13 @@ import kz.flabs.webrule.constants.ValueSourceType;
 import kz.flabs.webrule.page.ElementRule;
 import kz.flabs.webrule.page.ElementScript;
 
+import org.codehaus.groovy.control.CompilationFailedException;
+import org.codehaus.groovy.control.CompilerConfiguration;
+import org.codehaus.groovy.control.MultipleCompilationErrorsException;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+@Deprecated
 public class FormRule extends Rule implements Const {
 	public boolean isValid;
 	public int docType = DOCTYPE_UNKNOWN;
@@ -218,8 +220,7 @@ public class FormRule extends Rule implements Const {
 					try {
 						querySaveClass = loader.parseClass(QuerySaveProcessor.normalizeScript(querySaveScript));
 					} catch (MultipleCompilationErrorsException e) {
-						AppEnv.logger.errorLogEntry("QuerySaveScript compilation error at form rule compiling=" + id
-								+ ":" + e.getMessage());
+						AppEnv.logger.errorLogEntry("QuerySaveScript compilation error at form rule compiling=" + id + ":" + e.getMessage());
 						querySaveEnable = false;
 					}
 				}
@@ -239,8 +240,7 @@ public class FormRule extends Rule implements Const {
 					try {
 						postSaveClass = loader.parseClass(PostSaveProcessor.normalizeScript(postSaveScript));
 					} catch (MultipleCompilationErrorsException e) {
-						AppEnv.logger.errorLogEntry(
-								"PostSaveScript compilation error at form rule compiling=" + id + ":" + e.getMessage());
+						AppEnv.logger.errorLogEntry("PostSaveScript compilation error at form rule compiling=" + id + ":" + e.getMessage());
 						postSaveEnable = false;
 					}
 				}
@@ -291,16 +291,14 @@ public class FormRule extends Rule implements Const {
 		ClassLoader parent = getClass().getClassLoader();
 
 		String value = XMLUtil.getTextContent(node, ".", true);
-		ValueSourceType qsSourceType = ValueSourceType
-				.valueOf(XMLUtil.getTextContent(node, "@source", true, "STATIC", true));
+		ValueSourceType qsSourceType = ValueSourceType.valueOf(XMLUtil.getTextContent(node, "@source", true, "STATIC", true));
 		try {
 			Class<GroovyObject> querySave = null;
 			if (qsSourceType == ValueSourceType.GROOVY_FILE || qsSourceType == ValueSourceType.FILE) {
 				CompilerConfiguration compiler = new CompilerConfiguration();
 				compiler.setTargetDirectory(scriptDirPath);
 				GroovyClassLoader loader = new GroovyClassLoader(parent, compiler);
-				File groovyFile = new File(
-						scriptDirPath + File.separator + value.replace(".", File.separator) + ".groovy");
+				File groovyFile = new File(scriptDirPath + File.separator + value.replace(".", File.separator) + ".groovy");
 				if (groovyFile.exists()) {
 					try {
 						querySave = loader.parseClass(groovyFile);
@@ -329,8 +327,7 @@ public class FormRule extends Rule implements Const {
 			}
 
 		} catch (MultipleCompilationErrorsException e) {
-			AppEnv.logger.errorLogEntry(
-					"Script compilation error at form rule compiling=" + id + ", node=" + node.getBaseURI());
+			AppEnv.logger.errorLogEntry("Script compilation error at form rule compiling=" + id + ", node=" + node.getBaseURI());
 			AppEnv.logger.errorLogEntry(e.getMessage());
 		}
 		return null;

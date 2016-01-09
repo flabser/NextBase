@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -17,7 +16,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import kz.flabs.appenv.AppEnv;
-import kz.flabs.dataengine.jpa.embedded.ReadingMark;
 import kz.flabs.dataengine.jpa.util.UUIDConverter;
 import kz.flabs.users.User;
 import kz.flabs.util.Util;
@@ -46,11 +44,8 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 	@Column(name = "reg_date", nullable = false, updatable = false)
 	protected Date regDate;
 
-	@ElementCollection
-	private List<ReadingMark> readingMarks;
-
 	@Transient
-	protected boolean isEditable;
+	protected boolean isEditable = true;
 
 	@PrePersist
 	private void prePersist() {
@@ -158,7 +153,7 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 
 	@Override
 	public boolean isEditable() {
-		return true;
+		return isEditable;
 	}
 
 	@Override

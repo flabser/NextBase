@@ -29,12 +29,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
 import kz.flabs.appdaemon.AppDaemonRule;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.DatabaseType;
@@ -45,6 +39,13 @@ import kz.flabs.webrule.eds.EDSSetting;
 import kz.flabs.webrule.module.ExternalModule;
 import kz.flabs.webrule.scheduler.ScheduleSettings;
 import kz.flabs.webrule.synchronizer.SynchroGlobalSetting;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -60,37 +61,54 @@ public class GlobalSetting {
 	public String driver;
 	public String dbURL;
 	public String rulePath;
+	@Deprecated
 	public DatabaseType databaseType;
+	@Deprecated
 	public String databaseHost;
+	@Deprecated
 	public String entryPoint;
 	public String defaultRedirectURL;
+	@Deprecated
 	public String orgName;
+	@Deprecated
 	public String logo;
 	public String appName;
+	@Deprecated
 	public int licCount;
 	public RunMode isOn;
 	public boolean autoDeployEnable;
 	public boolean isValid;
+	@Deprecated
 	public boolean multiLangEnable;
 	public ArrayList<Lang> langsList = new ArrayList<Lang>();
 	public Lang primaryLang;
+	@Deprecated
 	public ArrayList<Skin> skinsList = new ArrayList<Skin>();
+	@Deprecated
 	public HashMap<String, Skin> skinsMap = new HashMap<String, Skin>();
+	@Deprecated
 	public Skin defaultSkin;
+	@Deprecated
 	public SynchroGlobalSetting syncroGlobalSettings;
 	public EDSSetting edsSettings;
 	public int markAsReadMsDelay;
 	public ArrayList<AppDaemonRule> schedSettings = new ArrayList<AppDaemonRule>();
+	@Deprecated
 	public ScheduleSettings cycleContrSchedSetings;
+	@Deprecated
 	public ScheduleSettings timeWaitingSchedSettings;
+	@Deprecated
 	public ScheduleSettings recalcualtorSchedSettings;
-	public String vocabulary = "vocabulary.xml";
+	public static final String vocabulary = "vocabulary.xml";
+	@Deprecated
 	public boolean stopCoordAfterNo = Boolean.FALSE;
+	@Deprecated
 	public boolean sendToSignAfterNo = Boolean.TRUE;
 	public DataEngineImpl dbImpl;
 	public UserRoleCollection roleCollection = new UserRoleCollection();
 	public HashMap<String, ExternalModule> extModuleMap = new HashMap<String, ExternalModule>();
 
+	@Deprecated
 	private String dbPassword;
 	private String pwdEnco = "";
 	private SecretKey key = null;
@@ -129,7 +147,7 @@ public class GlobalSetting {
 			description = XMLUtil.getTextContent(doc, "/rule/description");
 			orgName = XMLUtil.getTextContent(doc, "/rule/orgname");
 			logo = XMLUtil.getTextContent(doc, "/rule/logo");
-			appName = XMLUtil.getTextContent(doc, "/rule/appname");
+			// appName = XMLUtil.getTextContent(doc, "/rule/appname");
 
 			try {
 				String licenseCount = XMLUtil.getTextContent(doc, "/rule/liccount");
@@ -156,7 +174,7 @@ public class GlobalSetting {
 					Node pw = doc.getElementsByTagName("connectionid").item(0);
 
 					if (!dbUserName.trim().equals("") || !dbPassword.trim().equals("")
-							|| database.getLastChild().getNodeName().contains("connectionid")) {
+					        || database.getLastChild().getNodeName().contains("connectionid")) {
 
 						if (dbUserName.trim().equals("") && dbPassword.trim().equals("")) {
 							String temp = pw.getTextContent();
@@ -177,7 +195,7 @@ public class GlobalSetting {
 						}
 
 						if (!dbUserName.trim().equals("") && !dbPassword.trim().equals("")
-								&& database.getLastChild().getNodeName().contains("connectionid")) {
+						        && database.getLastChild().getNodeName().contains("connectionid")) {
 							database.removeChild(pw);
 						}
 						deserializeKey();
@@ -187,8 +205,7 @@ public class GlobalSetting {
 					databaseHost = XMLUtil.getTextContent(doc, "/rule/database/host");
 					databaseEnable = true;
 
-					String deployerClass = XMLUtil.getTextContent(doc,
-							"/rule/database/implementation/idatabasedeployer");
+					String deployerClass = XMLUtil.getTextContent(doc, "/rule/database/implementation/idatabasedeployer");
 					String databaseClass = XMLUtil.getTextContent(doc, "/rule/database/implementation/idatabase");
 
 					if (!deployerClass.equals("") && !databaseClass.equals("")) {
@@ -278,8 +295,8 @@ public class GlobalSetting {
 					if (!role.name.equalsIgnoreCase("supervisor")) {
 						roleCollection.put(role);
 					} else {
-						AppEnv.logger.warningLogEntry(
-								"A role name \"supervisor\" is reserved name of system roles. The role has not added to application");
+						AppEnv.logger
+						        .warningLogEntry("A role name \"supervisor\" is reserved name of system roles. The role has not added to application");
 					}
 				}
 			}

@@ -69,6 +69,7 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 			ruleProvider = new WebRuleProvider(this);
 			ruleProvider.initApp(globalFileName);
 			globalSetting = ruleProvider.global;
+			globalSetting.appName = appType;
 			isWorkspace = globalSetting.isWorkspace;
 			if (globalSetting.isOn == RunMode.ON) {
 				if (globalSetting.langsList.size() > 0) {
@@ -91,9 +92,8 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 		if (!db.getDbID().equalsIgnoreCase("NoDatabase")) {
 			int cv = db.getVersion();
 			if (cv != Server.necessaryDbVersion) {
-				Server.logger.warningLogEntry(
-						"Database version do not accord to compatible version with core of the server (necessary:"
-								+ Server.necessaryDbVersion + ", current=" + cv + ")");
+				Server.logger.warningLogEntry("Database version do not accord to compatible version with core of the server (necessary:"
+				        + Server.necessaryDbVersion + ", current=" + cv + ")");
 			}
 			this.dataBase = db;
 			// checkLangsSupport();
@@ -141,8 +141,8 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 	}
 
 	@Override
-	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
-			QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
+	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, QueryFormulaParserException,
+	        DocumentException, DocumentAccessException, QueryException {
 		boolean reload = false;
 		Object obj = cache.get(page.getID());
 		String p[] = formData.get("cache");

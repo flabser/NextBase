@@ -20,6 +20,6 @@ public interface IDAO<T, K> {
 
 	T update(T entity);
 
-	void delete(T entity);
+	void delete(T uuid);
 
 }

@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,7 +17,6 @@ import kz.flabs.dataengine.Const;
 import kz.flabs.runtimeobj.RuntimeObjUtil;
 import kz.flabs.users.User;
 import kz.nextbase.script._Session;
-import kz.pchelka.server.Server;
 
 public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 	public User user;
@@ -109,9 +107,6 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 				em.persist(entity);
 				t.commit();
 				return entity;
-			} catch (PersistenceException e) {
-				Server.logger.errorLogEntry(e.getMessage());
-				return null;
 			} finally {
 				if (t.isActive()) {
 					t.rollback();
@@ -132,9 +127,6 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 				em.merge(entity);
 				t.commit();
 				return entity;
-			} catch (PersistenceException e) {
-				Server.logger.errorLogEntry(e.getMessage());
-				return null;
 			} finally {
 				if (t.isActive()) {
 					t.rollback();
