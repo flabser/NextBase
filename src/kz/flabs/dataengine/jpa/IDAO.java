@@ -2,8 +2,6 @@ package kz.flabs.dataengine.jpa;
 
 import java.util.List;
 
-import kz.flabs.dataengine.jpa.DAO.ViewPage;
-
 public interface IDAO<T, K> {
 
 	T findById(K id);

@@ -14,7 +14,7 @@ import kz.flabs.dataengine.FTIndexEngineExceptionType;
 import kz.flabs.dataengine.IDBConnectionPool;
 import kz.flabs.dataengine.IDatabase;
 import kz.flabs.dataengine.IFTIndexEngine;
-import kz.flabs.dataengine.jpa.DAO.ViewPage;
+import kz.flabs.dataengine.jpa.ViewPage;
 import kz.flabs.exception.ComplexObjectException;
 import kz.flabs.exception.DocumentAccessException;
 import kz.flabs.exception.DocumentException;
@@ -45,7 +45,7 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
 
 	@Override
 	public _ViewEntryCollection search(String keyWord, User user, int pageNum, int pageSize, String[] filters, String[] sorting)
-			throws FTIndexEngineException {
+	        throws FTIndexEngineException {
 		HashSet<String> userGroups = user.getAllUserGroups();
 		String userName = user.getUserID();
 		ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, new String[4], new String[4]);
@@ -62,42 +62,42 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
 			String _keyWord = normalizeKeywordToTSQuery(keyWord);
 
 			String sql = "SELECT distinct "
-					+ fields
-					+ " FROM maindocs, plainto_tsquery('"
-					+ _keyWord
-					+ "') q where fts @@ q \n"
-					+ (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? ""
-							: " and docid in (select docid from readers_maindocs where username IN (" + cuID + "))")
-							+ (filterCondition.length() != 0 ? " and " + filterCondition : "")
-							+ " union \n"
-							+ "SELECT distinct "
-							+ fields
-							+ " from maindocs where docid in ("
-							+ "SELECT id as docid FROM custom_fields, plainto_tsquery('"
-							+ _keyWord
-							+ "') q where fts @@ q) \n"
-							+ (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? ""
-									: " and docid in (select docid from readers_maindocs where username  IN (" + cuID + ") )")
-									+ (filterCondition.length() != 0 ? " and " + filterCondition : "") +
-									/*
-									 * " union \n" + "SELECT distinct " + fields +
-									 * " FROM tasks, plainto_tsquery('" + _keyWord +
-									 * "') q where fts @@ q \n" + (filterCondition.length() != 0
-									 * ? " and " + filterCondition : "" ) +
-									 * " and docid in (select docid from readers_tasks where username  IN ("
-									 * + cuID + "))" + " union \n" + "SELECT distinct " + fields
-									 * + " FROM executions, plainto_tsquery('" + _keyWord +
-									 * "') q where fts @@ q \n" + (filterCondition.length() != 0
-									 * ? " and " + filterCondition : "" ) +
-									 * " and docid in (select docid from readers_executions where username  IN ("
-									 * + cuID + "))" + " union \n" + "SELECT distinct " + fields
-									 * + " FROM projects, plainto_tsquery('" + _keyWord +
-									 * "') q where fts @@ q \n" + (filterCondition.length() != 0
-									 * ? " and " + filterCondition : "" ) +
-									 * " and docid in (select docid from readers_projects where username  IN ("
-									 * + cuID + ")) " +
-									 */
-									getOrderCondition(sorting) + " " + getPagingCondition(pageSize, pageNum) + ";";
+			        + fields
+			        + " FROM maindocs, plainto_tsquery('"
+			        + _keyWord
+			        + "') q where fts @@ q \n"
+			        + (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? ""
+			                : " and docid in (select docid from readers_maindocs where username IN (" + cuID + "))")
+			        + (filterCondition.length() != 0 ? " and " + filterCondition : "")
+			        + " union \n"
+			        + "SELECT distinct "
+			        + fields
+			        + " from maindocs where docid in ("
+			        + "SELECT id as docid FROM custom_fields, plainto_tsquery('"
+			        + _keyWord
+			        + "') q where fts @@ q) \n"
+			        + (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? ""
+			                : " and docid in (select docid from readers_maindocs where username  IN (" + cuID + ") )")
+			        + (filterCondition.length() != 0 ? " and " + filterCondition : "") +
+			        /*
+					 * " union \n" + "SELECT distinct " + fields +
+					 * " FROM tasks, plainto_tsquery('" + _keyWord +
+					 * "') q where fts @@ q \n" + (filterCondition.length() != 0
+					 * ? " and " + filterCondition : "" ) +
+					 * " and docid in (select docid from readers_tasks where username  IN ("
+					 * + cuID + "))" + " union \n" + "SELECT distinct " + fields
+					 * + " FROM executions, plainto_tsquery('" + _keyWord +
+					 * "') q where fts @@ q \n" + (filterCondition.length() != 0
+					 * ? " and " + filterCondition : "" ) +
+					 * " and docid in (select docid from readers_executions where username  IN ("
+					 * + cuID + "))" + " union \n" + "SELECT distinct " + fields
+					 * + " FROM projects, plainto_tsquery('" + _keyWord +
+					 * "') q where fts @@ q \n" + (filterCondition.length() != 0
+					 * ? " and " + filterCondition : "" ) +
+					 * " and docid in (select docid from readers_projects where username  IN ("
+					 * + cuID + ")) " +
+					 */
+			        getOrderCondition(sorting) + " " + getPagingCondition(pageSize, pageNum) + ";";
 
 			PreparedStatement pst = conn.prepareStatement(sql);
 			ResultSet rs = null;
@@ -113,18 +113,18 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
 			}
 
 			sql = "SELECT count(DISTINCT total) from (SELECT distinct docid FROM maindocs, plainto_tsquery('"
-					+ _keyWord
-					+ "') q where fts @@ q \n"
-					+ (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? ""
-							: " and docid in (select docid from readers_maindocs where username IN (" + cuID + ")) ")
-							+ (filterCondition.length() != 0 ? " and " + filterCondition : "")
-							+ "union \n"
-							+ "SELECT distinct docid from maindocs where docid in (SELECT id as docid FROM custom_fields, plainto_tsquery('"
-							+ _keyWord
-							+ "') q where fts @@ q) \n"
-							+ (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? ""
-									: " and docid in (select docid from readers_maindocs where username  IN (" + cuID + "))")
-									+ (filterCondition.length() != 0 ? " and " + filterCondition : "") + ") as total;";
+			        + _keyWord
+			        + "') q where fts @@ q \n"
+			        + (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? ""
+			                : " and docid in (select docid from readers_maindocs where username IN (" + cuID + ")) ")
+			        + (filterCondition.length() != 0 ? " and " + filterCondition : "")
+			        + "union \n"
+			        + "SELECT distinct docid from maindocs where docid in (SELECT id as docid FROM custom_fields, plainto_tsquery('"
+			        + _keyWord
+			        + "') q where fts @@ q) \n"
+			        + (userGroups.contains("[observer]") || userGroups.contains("[supervisor]") ? ""
+			                : " and docid in (select docid from readers_maindocs where username  IN (" + cuID + "))")
+			        + (filterCondition.length() != 0 ? " and " + filterCondition : "") + ") as total;";
 
 			/*
 			 * sql =
@@ -183,7 +183,7 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
 	@Override
 	@Deprecated
 	public StringBuffer ftSearch(Set<String> complexUserID, String absoluteUserID, String keyWord, int offset, int pageSize)
-			throws DocumentException, FTIndexEngineException, ComplexObjectException {
+	        throws DocumentException, FTIndexEngineException, ComplexObjectException {
 		StringBuffer xmlContent = new StringBuffer(10000);
 		Set<String> set = new HashSet<String>();
 
@@ -197,17 +197,17 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
 			String _keyWord = normalizeKeywordToTSQuery(keyWord);
 
 			String sql = "SELECT distinct docid, 'maindocs' as tablename FROM maindocs, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n"
-					+ " and docid in (select docid from readers_maindocs where username = '" + absoluteUserID + "')" + " union \n"
-					+ "SELECT id as docid, 'custom_fields' as tablename FROM custom_fields, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n"
-					+ " and docid in (select docid from readers_maindocs where username = '" + absoluteUserID + "' and \n"
-					+ "  docid not in (SELECT distinct docid FROM maindocs, plainto_tsquery('" + _keyWord + "') q where fts @@ q))" + " union \n"
-					+ "SELECT distinct docid, 'tasks' as tablename FROM tasks, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n"
-					+ " and docid in (select docid from readers_tasks where username = '" + absoluteUserID + "')" + " union \n"
-					+ "SELECT distinct docid, 'executions' as tablename FROM executions, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n"
-					+ " and docid in (select docid from readers_executions where username = '" + absoluteUserID + "')" + " union \n"
-					+ "SELECT distinct docid, 'projects' as tablename FROM projects, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n"
-					+ " and docid in (select docid from readers_projects where username = '" + absoluteUserID + "') " + "offset " + offset
-					+ " limit " + pageSize + ";";
+			        + " and docid in (select docid from readers_maindocs where username = '" + absoluteUserID + "')" + " union \n"
+			        + "SELECT id as docid, 'custom_fields' as tablename FROM custom_fields, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n"
+			        + " and docid in (select docid from readers_maindocs where username = '" + absoluteUserID + "' and \n"
+			        + "  docid not in (SELECT distinct docid FROM maindocs, plainto_tsquery('" + _keyWord + "') q where fts @@ q))" + " union \n"
+			        + "SELECT distinct docid, 'tasks' as tablename FROM tasks, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n"
+			        + " and docid in (select docid from readers_tasks where username = '" + absoluteUserID + "')" + " union \n"
+			        + "SELECT distinct docid, 'executions' as tablename FROM executions, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n"
+			        + " and docid in (select docid from readers_executions where username = '" + absoluteUserID + "')" + " union \n"
+			        + "SELECT distinct docid, 'projects' as tablename FROM projects, plainto_tsquery('" + _keyWord + "') q where fts @@ q \n"
+			        + " and docid in (select docid from readers_projects where username = '" + absoluteUserID + "') " + "offset " + offset
+			        + " limit " + pageSize + ";";
 
 			PreparedStatement pst = conn.prepareStatement(sql);
 			ResultSet rs = null;
@@ -274,16 +274,16 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
 			String _keyWord = normalizeKeywordToTSQuery(keyWord);
 
 			String sql = "SELECT count(distinct docid), 'maindocs' as tablename FROM maindocs, plainto_tsquery('" + _keyWord
-					+ "') q where fts @@ q \n" + " and docid in (select docid from readers_maindocs where username = '" + absoluteUserID + "')"
-					+ " union \n" + "SELECT count(distinct docid), 'custom_fields' as tablename FROM custom_fields, plainto_tsquery('" + _keyWord
-					+ "') q where fts @@ q \n" + " and docid in (select docid from readers_maindocs where username = '" + absoluteUserID
-					+ "') and \n" + "  docid not in (SELECT distinct docid FROM maindocs, plainto_tsquery('" + _keyWord + "') q where fts @@ q)"
-					+ " union \n" + "SELECT count(distinct docid), 'tasks' as tablename FROM tasks, plainto_tsquery('" + _keyWord
-					+ "') q where fts @@ q \n" + " and docid in (select docid from readers_tasks where username = '" + absoluteUserID + "')"
-					+ " union \n" + "SELECT count(distinct docid), 'executions' as tablename FROM executions, plainto_tsquery('" + _keyWord
-					+ "') q where fts @@ q \n" + " and docid in (select docid from readers_executions where username = '" + absoluteUserID + "')"
-					+ " union \n" + "SELECT count(distinct docid), 'projects' as tablename FROM projects, plainto_tsquery('" + _keyWord
-					+ "') q where fts @@ q \n" + " and docid in (select docid from readers_projects where username = '" + absoluteUserID + "');";
+			        + "') q where fts @@ q \n" + " and docid in (select docid from readers_maindocs where username = '" + absoluteUserID + "')"
+			        + " union \n" + "SELECT count(distinct docid), 'custom_fields' as tablename FROM custom_fields, plainto_tsquery('" + _keyWord
+			        + "') q where fts @@ q \n" + " and docid in (select docid from readers_maindocs where username = '" + absoluteUserID
+			        + "') and \n" + "  docid not in (SELECT distinct docid FROM maindocs, plainto_tsquery('" + _keyWord + "') q where fts @@ q)"
+			        + " union \n" + "SELECT count(distinct docid), 'tasks' as tablename FROM tasks, plainto_tsquery('" + _keyWord
+			        + "') q where fts @@ q \n" + " and docid in (select docid from readers_tasks where username = '" + absoluteUserID + "')"
+			        + " union \n" + "SELECT count(distinct docid), 'executions' as tablename FROM executions, plainto_tsquery('" + _keyWord
+			        + "') q where fts @@ q \n" + " and docid in (select docid from readers_executions where username = '" + absoluteUserID + "')"
+			        + " union \n" + "SELECT count(distinct docid), 'projects' as tablename FROM projects, plainto_tsquery('" + _keyWord
+			        + "') q where fts @@ q \n" + " and docid in (select docid from readers_projects where username = '" + absoluteUserID + "');";
 
 			/*
 			 * String sql =
@@ -322,7 +322,7 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
 			/*
 			 * while (rs.next()) { doc = null; key = rs.getInt("docid"); table =
 			 * rs.getString("tablename");
-			 *
+			 * 
 			 * if (table.equalsIgnoreCase("custom_fields")){ sql =
 			 * "SELECT DOCID FROM CUSTOM_FIELDS WHERE ID = " + key;
 			 * PreparedStatement pst1 = conn.prepareStatement(sql); ResultSet

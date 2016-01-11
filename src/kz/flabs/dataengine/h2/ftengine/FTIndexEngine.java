@@ -17,7 +17,7 @@ import kz.flabs.dataengine.FTIndexEngineExceptionType;
 import kz.flabs.dataengine.IDBConnectionPool;
 import kz.flabs.dataengine.IDatabase;
 import kz.flabs.dataengine.IFTIndexEngine;
-import kz.flabs.dataengine.jpa.DAO.ViewPage;
+import kz.flabs.dataengine.jpa.ViewPage;
 import kz.flabs.exception.ComplexObjectException;
 import kz.flabs.exception.DocumentAccessException;
 import kz.flabs.exception.DocumentException;
@@ -44,7 +44,7 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
 
 	@Override
 	public StringBuffer ftSearch(Set<String> complexUserID, String absoluteUserID, String keyWord, int offset, int pageSize)
-			throws DocumentException, FTIndexEngineException, ComplexObjectException {
+	        throws DocumentException, FTIndexEngineException, ComplexObjectException {
 		StringBuffer xmlContent = new StringBuffer(10000);
 		Set<String> set = new HashSet<String>();
 
@@ -316,13 +316,13 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
 
 	@Override
 	public _ViewEntryCollection search(String keyWord, User user, int pageNum, int pageSize, String[] sorting, String[] filters)
-			throws FTIndexEngineException {
+	        throws FTIndexEngineException {
 		HashSet<String> userGroups = user.getAllUserGroups();
 		ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, new String[4], new String[4]);
 		String cuID = DatabaseUtil.prepareListToQuery(userGroups);
 		String filterCondition = getFilterCondition(filters);
 		String fields = "mt.docid, mt.doctype, mt.ddbid, mt.form, mt.has_attachment, mt.viewtext, " + DatabaseUtil.getViewTextList("mt")
-				+ ", mt.viewnumber, mt.viewdate";
+		        + ", mt.viewnumber, mt.viewdate";
 		Set<String> set = new HashSet<>();
 
 		Connection conn = dbPool.getConnection();
@@ -397,46 +397,46 @@ public class FTIndexEngine implements IFTIndexEngine, Const {
 				switch (table.toUpperCase()) {
 				case "CUSTOM_FIELDS":
 					sql = "SELECT distinct " + fields + " FROM maindocs as mt, readers_maindocs as rm, custom_fields as cf where exists "
-							+ "(select * from readers_maindocs where readers_maindocs.docid = rm.docid and readers_maindocs.username in (" + cuID
-							+ ")) and exists " + "(select * from custom_fields where custom_fields.docid = cf.docid and custom_fields.id = " + key
-							+ ")" + (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
-							+ getPagingCondition(pageSize, pageNum) + ";";
+					        + "(select * from readers_maindocs where readers_maindocs.docid = rm.docid and readers_maindocs.username in (" + cuID
+					        + ")) and exists " + "(select * from custom_fields where custom_fields.docid = cf.docid and custom_fields.id = " + key
+					        + ")" + (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
+					        + getPagingCondition(pageSize, pageNum) + ";";
 					break;
 				case "MAINDOCS":
 					sql = "SELECT distinct " + fields + " FROM maindocs as mt, readers_maindocs as rm where mt.docid = " + key + " and exists "
-							+ "(select * from readers_maindocs where readers_maindocs.docid = rm.docid and readers_maindocs.username in (" + cuID
-							+ "))" + (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
-							+ getPagingCondition(pageSize, pageNum) + ";";
+					        + "(select * from readers_maindocs where readers_maindocs.docid = rm.docid and readers_maindocs.username in (" + cuID
+					        + "))" + (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
+					        + getPagingCondition(pageSize, pageNum) + ";";
 					break;
 				case "TASKS":
 					sql = "SELECT distinct " + fields + " FROM tasks as mt, readers_tasks as rt where mt.docid = " + key + " and exists "
-							+ "(select * from readers_tasks where readers_tasks.docid = rt.docid and readers_tasks.username in (" + cuID + "))"
-							+ (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
-							+ getPagingCondition(pageSize, pageNum) + ";";
+					        + "(select * from readers_tasks where readers_tasks.docid = rt.docid and readers_tasks.username in (" + cuID + "))"
+					        + (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
+					        + getPagingCondition(pageSize, pageNum) + ";";
 					break;
 				case "EXECUTIONS":
 					sql = "SELECT distinct " + fields + " FROM executions as mt, readers_executions as re where mt.docid = " + key + " and exists "
-							+ "(select * from readers_executions where readers_executions.docid = re.docid and readers_executions.username in ("
-							+ cuID + "))" + (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
-							+ getPagingCondition(pageSize, pageNum) + ";";
+					        + "(select * from readers_executions where readers_executions.docid = re.docid and readers_executions.username in ("
+					        + cuID + "))" + (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
+					        + getPagingCondition(pageSize, pageNum) + ";";
 					break;
 				case "PROJECTS":
 					sql = "SELECT distinct " + fields + " FROM projects as mt, readers_projects as rp where mt.docid = " + key + " and exists "
-							+ "(select * from readers_projects where readers_projects.docid = rp.docid and readers_projects.username in (" + cuID
-							+ "))" + (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
-							+ getPagingCondition(pageSize, pageNum) + ";";
+					        + "(select * from readers_projects where readers_projects.docid = rp.docid and readers_projects.username in (" + cuID
+					        + "))" + (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
+					        + getPagingCondition(pageSize, pageNum) + ";";
 					break;
 				case "TOPICS":
 					sql = "SELECT distinct " + fields + " FROM topics as mt, readers_topics as rp where mt.docid = " + key + " and exists "
-							+ "(select * from readers_topics where readers_topics.docid = rp.docid and readers_topics.username in (" + cuID + "))"
-							+ (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
-							+ getPagingCondition(pageSize, pageNum) + ";";
+					        + "(select * from readers_topics where readers_topics.docid = rp.docid and readers_topics.username in (" + cuID + "))"
+					        + (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
+					        + getPagingCondition(pageSize, pageNum) + ";";
 					break;
 				case "POSTS":
 					sql = "SELECT distinct " + fields + " FROM posts as mt, readers_posts as rp where mt.docid = " + key + " and exists "
-							+ "(select * from readers_posts where readers_posts.docid = rp.docid and readers_posts.username in (" + cuID + "))"
-							+ (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
-							+ getPagingCondition(pageSize, pageNum) + ";";
+					        + "(select * from readers_posts where readers_posts.docid = rp.docid and readers_posts.username in (" + cuID + "))"
+					        + (filterCondition.length() != 0 ? " and " + filterCondition : "") + getOrderCondition(sorting) + " "
+					        + getPagingCondition(pageSize, pageNum) + ";";
 					break;
 				default:
 					break;
