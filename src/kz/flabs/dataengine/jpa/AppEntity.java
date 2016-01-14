@@ -148,7 +148,7 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 
 	@Override
 	public _URL getURL() {
-		return new _URL("Provider?id=" + this.getClass().getSimpleName().toLowerCase() + "_form&amp;docid=" + getId());
+		return new _URL("Provider?id=" + this.getClass().getSimpleName().toLowerCase() + "-form&amp;docid=" + getId());
 	}
 
 	@Override

@@ -98,7 +98,7 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 	protected _ActionBar getSimpleActionBar(_Session session, String type, String lang) {
 		_ActionBar actionBar = new _ActionBar(session);
 		_Action newDocAction = new _Action(getLocalizedWord("new_" + type, lang), getLocalizedWord("add_new_" + type, lang), "new_" + type);
-		newDocAction.setURL("Provider?id=" + type + "_form&key=");
+		newDocAction.setURL("Provider?id=" + type + "&key=");
 		actionBar.addAction(newDocAction);
 		actionBar.addAction(new _Action(getLocalizedWord("del_document", lang), getLocalizedWord("del_document", lang), _ActionType.DELETE_DOCUMENT));
 		return actionBar;
