@@ -28,6 +28,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.FileCleanerCleanup;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileCleaningTracker;
+import org.apache.http.entity.ContentProducer;
+import org.apache.http.entity.ContentType;
 
 public class UploadFile extends HttpServlet {
 	private static final long serialVersionUID = -6070611526857723049L;
@@ -103,15 +105,16 @@ public class UploadFile extends HttpServlet {
 		if (progress.startsWith("100")) {
 			HttpSession jses = req.getSession();
 			jses.removeAttribute(time);
-			appendPiece = ",filename:\"" + jses.getAttribute("filename") + "\"}}";
+			appendPiece = ", \"filename\":\"" + jses.getAttribute("filename") + "\"}}";
 		}
 
 		StringBuilder sb = new StringBuilder("");
 		// String jsonString = new Gson().toJson(map)
 		// sb.append("{progress: {").append(time).append(":").append(progress).append("}}");
-		sb.append("{progress: {").append(time).append(":").append(progress).append(appendPiece);
+		sb.append("{\"progress\": {\"").append(time).append("\":\"").append(progress).append("\"").append(appendPiece);
 		// sb.append(",filename:\"exel.xls\"}}");
 		System.out.println(sb.toString());
+		resp.setContentType(ContentType.APPLICATION_JSON.toString());
 		PrintWriter out = resp.getWriter();
 		out.println(sb.toString());
 		out.close();
