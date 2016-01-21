@@ -41,7 +41,9 @@ public class Page implements IProcessInitiator, Const {
 	public int status = HttpStatus.SC_OK;
 	protected AppEnv env;
 	protected PageRule rule;
-	protected Map<String, String[]> fields = new HashMap<String, String[]>();
+
+
+	protected Map<String, String[]> fields = new HashMap<>();
 	protected UserSession userSession;
 
 	// private HttpServletRequest request;
@@ -68,6 +70,14 @@ public class Page implements IProcessInitiator, Const {
 			glossariesAsText.append("<" + glos.name + ">" + ss.getDataAsXML(glos.valueSource, glos.value, glos.macro, lang) + "</" + glos.name + ">");
 		}
 		return glossariesAsText.append("</glossaries>").toString();
+	}
+
+	public Map<String, String[]> getFields() {
+		return fields;
+	}
+
+	public void setFields(Map<String, String[]> fields) {
+		this.fields = fields;
 	}
 
 	public String getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) throws DocumentException {
@@ -127,7 +137,11 @@ public class Page implements IProcessInitiator, Const {
 	}
 
 	public String getID() {
-		return "PAGE_" + rule.id + "_" + userSession.lang;
+		String searchKey = "";
+		if (fields != null && fields.containsKey("keyword")) {
+			searchKey = fields.get("keyword")[0] != null ? fields.get("keyword")[0] : "";
+		}
+		return "PAGE_" + rule.id + "_" + userSession.lang + searchKey;
 
 	}
 

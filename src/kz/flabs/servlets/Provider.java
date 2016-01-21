@@ -539,6 +539,7 @@ public class Provider extends HttpServlet implements Const {
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
 		Page page = new Page(env, userSession, pageRule);
+		page.setFields(fields);
 
 		result.output.append(page.process(fields, request.getMethod()));
 		result.httpStatus = page.status;
