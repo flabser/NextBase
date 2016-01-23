@@ -92,7 +92,6 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 
 	protected void setBadRequest() {
 		httpStatus = HttpStatus.SC_BAD_REQUEST;
-
 	}
 
 	protected _ActionBar getSimpleActionBar(_Session session, String type, String lang) {
@@ -162,7 +161,11 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 			}
 			xmlResp.setPublishResult(toPublishElement);
 			xmlResp.status = httpStatus;
-			xmlResp.setResponseStatus(true);
+			if (httpStatus == HttpStatus.SC_BAD_REQUEST) {
+				xmlResp.setResponseStatus(false);
+			} else {
+				xmlResp.setResponseStatus(true);
+			}
 			for (Msg message : messages) {
 				xmlResp.addMessage(message.text, message.id);
 			}
