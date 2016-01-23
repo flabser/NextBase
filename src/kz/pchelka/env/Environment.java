@@ -24,6 +24,9 @@ import kz.flabs.exception.DocumentAccessException;
 import kz.flabs.exception.DocumentException;
 import kz.flabs.exception.QueryException;
 import kz.flabs.exception.RuleException;
+import kz.flabs.localization.Localizator;
+import kz.flabs.localization.LocalizatorException;
+import kz.flabs.localization.Vocabulary;
 import kz.flabs.parser.QueryFormulaParserException;
 import kz.flabs.runtimeobj.caching.ICache;
 import kz.flabs.runtimeobj.page.Page;
@@ -120,6 +123,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	public static String backupDir;
 	private static ArrayList<UserSession> sess = new ArrayList<UserSession>();
 	public static boolean isDevMode;
+	public static Vocabulary vocabulary;
 
 	public static void init() {
 		logger = Server.logger;
@@ -344,6 +348,13 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			}
 
 			backupDir = backup.getAbsolutePath();
+
+			Localizator l = new Localizator();
+			try {
+				vocabulary = l.populate();
+			} catch (LocalizatorException e1) {
+				logger.errorLogEntry(e1);
+			}
 
 			NodeList hosts = XMLUtil.getNodeList(xmlDocument, "/nextbase/externalhost/host");
 			for (int i = 0; i < hosts.getLength(); i++) {
