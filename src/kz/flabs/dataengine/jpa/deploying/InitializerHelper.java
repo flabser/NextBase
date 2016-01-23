@@ -30,22 +30,29 @@ import com.eztech.util.JavaClassFinder;
 
 public class InitializerHelper implements IProcessInitiator {
 
+	// TODO it need to improve for checking if an application switched off
 	public Map<String, Class<IInitialData>> getAllinitializers(boolean showConsoleOutput) throws IOException {
 		ZipInputStream zip = null;
 		Map<String, Class<IInitialData>> inits = new HashMap<String, Class<IInitialData>>();
 		File jarFile = new File(EnvConst.NB_JAR_FILE);
 		if (jarFile.exists()) {
+			System.out.println("check " + jarFile.getAbsolutePath() + "...");
 			zip = new ZipInputStream(new FileInputStream(EnvConst.NB_JAR_FILE));
 			for (ZipEntry entry = zip.getNextEntry(); entry != null; entry = zip.getNextEntry()) {
 				String resource = entry.getName().replace("/", ".");
 				for (AppEnv env : Environment.getApplications()) {
 					if (!entry.isDirectory() && resource.startsWith(env.appType.toLowerCase() + ".init")) {
 						try {
-							Class<?> clazz = Class.forName(resource);
-							if (clazz.isInstance(IInitialData.class)) {
-								inits.put(resource, (Class<IInitialData>) clazz);
+							String name = resource.substring(0, resource.indexOf(".class"));
+							Class<?> clazz = Class.forName(name);
+							IInitialData<ISimpleAppEntity, IDAO> instance = (IInitialData<ISimpleAppEntity, IDAO>) clazz.newInstance();
+							if (instance instanceof IInitialData) {
+								inits.put(name, (Class<IInitialData>) instance.getClass());
+								if (showConsoleOutput) {
+									System.out.println(env.appType + ":" + name);
+								}
 							}
-						} catch (ClassNotFoundException e) {
+						} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 							System.out.println(e);
 						}
 					}
