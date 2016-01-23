@@ -1,7 +1,11 @@
 package kz.pchelka.env;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -9,6 +13,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -127,6 +132,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 	public static void init() {
 		logger = Server.logger;
+		loadProperties();
 		initProcess();
 	}
 
@@ -599,5 +605,28 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			sess.add(userSession);
 		}
 
+	}
+
+	private static void loadProperties() {
+		Properties prop = new Properties();
+		InputStream input = null;
+
+		try {
+
+			input = new FileInputStream("resources" + File.separator + "config.properties");
+			prop.load(input);
+			Field[] declaredFields = EnvConst.class.getDeclaredFields();
+			for (Field field : declaredFields) {
+				if (Modifier.isStatic(field.getModifiers())) {
+					String value = prop.getProperty(field.getName());
+					if (value != null) {
+						field.set(String.class, prop.getProperty(field.getName()));
+					}
+				}
+			}
+		} catch (Exception e) {
+			// e.printStackTrace();
+
+		}
 	}
 }
