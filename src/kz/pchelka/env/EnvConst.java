@@ -1,6 +1,5 @@
 package kz.pchelka.env;
 
-
 /**
  *
  *
@@ -9,5 +8,6 @@ package kz.pchelka.env;
 
 // TODO need to secure this class
 public class EnvConst {
+	public static String RESOURCES_DIR = "resources";
 	public static String NB_JAR_FILE = "nb.jar";
 }

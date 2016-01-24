@@ -257,7 +257,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			try {
 				if (adminConsoleEnable) {
 					remoteConsole = XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/@mode").equalsIgnoreCase("on") ? true
-					        : false;
+							: false;
 					if (remoteConsole) {
 						remoteConsoleServer = XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/server");
 						remoteConsolePort = Integer.parseInt(XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/port"));
@@ -563,7 +563,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 	@Override
 	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, QueryFormulaParserException,
-	        DocumentException, DocumentAccessException, QueryException {
+	DocumentException, DocumentAccessException, QueryException {
 		Object obj = cache.get(page.getID());
 		String cacheParam[] = formData.get("cache");
 		if (cacheParam == null) {

@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,8 +39,7 @@ public class Util {
 	public static final Pattern pTag = Pattern.compile("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>");
 	public static final Pattern pAtEnd = Pattern.compile("\\G\\z");
 	public static final Pattern pWord = Pattern.compile("\\G(\\w|\\pL)+");
-	public static final Pattern pNonHtml = Pattern
-			.compile("\\G([^(\\w|\\p{L})]|\\p{Ps}|\\p{Pe}|\\p{Pi}|\\p{Pf}|\\p{P}|\\p{S})+");
+	public static final Pattern pNonHtml = Pattern.compile("\\G([^(\\w|\\p{L})]|\\p{Ps}|\\p{Pe}|\\p{Pi}|\\p{Pf}|\\p{P}|\\p{S})+");
 	public static final int dayInMs = 1000 * 60 * 60 * 24;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -96,8 +96,7 @@ public class Util {
 		try {
 			return dateTimeFormat.parse(date);
 		} catch (Exception e) {
-			AppEnv.logger.errorLogEntry("Util, Unbale to convert text to date " + date + ", expected format: "
-					+ dateTimeFormat.toPattern());
+			AppEnv.logger.errorLogEntry("Util, Unbale to convert text to date " + date + ", expected format: " + dateTimeFormat.toPattern());
 			return null;
 		}
 	}
@@ -150,8 +149,7 @@ public class Util {
 		try {
 			return dateFormat.parse(date);
 		} catch (Exception e) {
-			AppEnv.logger.errorLogEntry("Util, Не удалось преобразовать текст в дату " + date + ", ожидался формат: "
-					+ dateFormat.toPattern());
+			AppEnv.logger.errorLogEntry("Util, Не удалось преобразовать текст в дату " + date + ", ожидался формат: " + dateFormat.toPattern());
 			// AppEnv.logger.errorLogEntry(e);
 			return null;
 		}
@@ -162,8 +160,7 @@ public class Util {
 			try {
 				return simpleDateFormat.parse(date);
 			} catch (Exception e) {
-				AppEnv.logger.errorLogEntry("Util, Cannot convert the date to String (date=" + date + "), exepted : "
-						+ simpleDateFormat.toPattern());
+				AppEnv.logger.errorLogEntry("Util, Cannot convert the date to String (date=" + date + "), exepted : " + simpleDateFormat.toPattern());
 				return null;
 			}
 		} else {
@@ -216,6 +213,12 @@ public class Util {
 		return Integer.toString(generateRandom());
 	}
 
+	public static Object getRndListElement(List<?> list) {
+		Random random = new Random();
+		int index = random.nextInt(list.size());
+		return list.get(index);
+	}
+
 	// TODO It can cause StackOvervlow error
 	public static String toStringGettersVal(Object clazz) {
 		Class<?> noparams[] = {};
@@ -227,8 +230,7 @@ public class Util {
 		result.append(newLine);
 
 		try {
-			for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(clazz.getClass())
-					.getPropertyDescriptors()) {
+			for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(clazz.getClass()).getPropertyDescriptors()) {
 				Method method = propertyDescriptor.getReadMethod();
 				if (method != null && !method.getName().equals("getClass")) {
 					System.out.println(result);
@@ -318,8 +320,7 @@ public class Util {
 			is.close();
 			result = md.digest();
 		} catch (FileNotFoundException e) {
-			AppEnv.logger.errorLogEntry(
-					"Util, не удалось получить контрольную сумму файла " + filePath + ": файл не найден");
+			AppEnv.logger.errorLogEntry("Util, не удалось получить контрольную сумму файла " + filePath + ": файл не найден");
 			return null;
 		} catch (NoSuchAlgorithmException e) {
 			AppEnv.logger.errorLogEntry("Util, не удалось инициализировать алгоритм шифрования");
@@ -382,11 +383,12 @@ public class Util {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(removeHTMLTags(
-				"<p1><p></p1>I-4979: Берг П. П. -> (Берг П. П.)<p><p> <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>")
-						.length());
-		System.out.println(removeHTMLTags(
-				"I-4979: Берг П. П. -> (Берг П. П.) <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>"));
+		System.out
+		        .println(removeHTMLTags(
+		                "<p1><p></p1>I-4979: Берг П. П. -> (Берг П. П.)<p><p> <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>")
+		                .length());
+		System.out
+		        .println(removeHTMLTags("I-4979: Берг П. П. -> (Берг П. П.) <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>"));
 	}
 
 	public static String removeHTMLTags(String text) {
@@ -466,8 +468,7 @@ public class Util {
 	}
 
 	public static boolean addrIsCorrect(String email) {
-		String validate = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		String validate = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 		Pattern pattern = Pattern.compile(validate);
 		Matcher matcher = pattern.matcher(email);

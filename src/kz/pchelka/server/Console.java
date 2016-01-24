@@ -6,6 +6,7 @@ import java.util.Scanner;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.jpa.deploying.InitializerHelper;
 import kz.flabs.util.Util;
+import kz.pchelka.env.EnvConst;
 import kz.pchelka.env.Environment;
 
 public class Console implements Runnable {
@@ -16,7 +17,7 @@ public class Console implements Runnable {
 		final Scanner in = new Scanner(System.in);
 		while (in.hasNext()) {
 			try {
-				final String command = in.nextLine();
+				String command = in.nextLine();
 				System.out.println("> " + command);
 				if (command.equalsIgnoreCase("quit") || command.equalsIgnoreCase("exit") || command.equalsIgnoreCase("q")) {
 					Server.shutdown();
@@ -38,8 +39,13 @@ public class Console implements Runnable {
 				} else if (command.equalsIgnoreCase("show initializers") || command.equalsIgnoreCase("si")) {
 					InitializerHelper helper = new InitializerHelper();
 					helper.getAllinitializers(true);
-				} else if (command.contains("start initializer")) {
-					int start = "start initializer".length();
+				} else if (command.contains("start initializer") || command.startsWith("stini")) {
+					int start = 0;
+					if (command.contains("start initializer")) {
+						start = "start initializer".length();
+					} else if (command.startsWith("stini")) {
+						start = "stini".length();
+					}
 					String ini = command.substring(start).trim();
 					if (ini.trim().equals("")) {
 						System.err.println("error -initializer name is empty");
@@ -48,8 +54,9 @@ public class Console implements Runnable {
 						helper.runInitializer(ini, true);
 						System.out.println("done");
 					}
+					command = "start initializer";
 				} else if (command.equals("help") || command.equalsIgnoreCase("h")) {
-					System.out.println(Util.readFile("resources" + File.separator + "console_commands.txt"));
+					System.out.println(Util.readFile(EnvConst.RESOURCES_DIR + File.separator + "console_commands.txt"));
 				} else {
 					if (!command.trim().equalsIgnoreCase("")) {
 						System.err.println("error -command \"" + command + "\" is not recognized");
