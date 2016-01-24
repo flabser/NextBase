@@ -12,7 +12,6 @@ import kz.flabs.exception.DocumentException;
 import kz.flabs.exception.QueryException;
 import kz.flabs.exception.RuleException;
 import kz.flabs.localization.Localizator;
-import kz.flabs.localization.LocalizatorException;
 import kz.flabs.localization.Vocabulary;
 import kz.flabs.parser.QueryFormulaParserException;
 import kz.flabs.runtimeobj.Application;
@@ -51,6 +50,7 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 	private IDatabase dataBase;
 	private HashMap<String, StringBuffer> cache = new HashMap<String, StringBuffer>();
 
+	@Deprecated
 	public AppEnv(String at) {
 		isSystem = true;
 		isValid = true;
@@ -172,20 +172,17 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 		return appType;
 	}
 
+	@Deprecated
 	public static String getName() {
-
 		return "appType";
 	}
 
 	private void loadVocabulary() {
-		try {
-			Localizator l = new Localizator(globalSetting);
-			vocabulary = l.populate("vocabulary");
-			if (vocabulary != null) {
-				Server.logger.normalLogEntry("Dictionary has loaded");
-			}
-		} catch (LocalizatorException le) {
-			Server.logger.verboseLogEntry(le.getMessage());
+		Localizator l = new Localizator();
+		String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator + "vocabulary.xml";
+		vocabulary = l.populate(appType, vocabuarFilePath);
+		if (vocabulary != null) {
+			Server.logger.normalLogEntry("Dictionary has loaded");
 		}
 	}
 

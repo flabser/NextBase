@@ -30,7 +30,6 @@ import kz.flabs.exception.DocumentException;
 import kz.flabs.exception.QueryException;
 import kz.flabs.exception.RuleException;
 import kz.flabs.localization.Localizator;
-import kz.flabs.localization.LocalizatorException;
 import kz.flabs.localization.Vocabulary;
 import kz.flabs.parser.QueryFormulaParserException;
 import kz.flabs.runtimeobj.caching.ICache;
@@ -129,6 +128,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	private static ArrayList<UserSession> sess = new ArrayList<UserSession>();
 	public static boolean isDevMode;
 	public static Vocabulary vocabulary;
+	public static final String vocabuarFilePath = "resources" + File.separator + "vocabulary.xml";
 
 	public static void init() {
 		logger = Server.logger;
@@ -257,7 +257,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			try {
 				if (adminConsoleEnable) {
 					remoteConsole = XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/@mode").equalsIgnoreCase("on") ? true
-							: false;
+					        : false;
 					if (remoteConsole) {
 						remoteConsoleServer = XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/server");
 						remoteConsolePort = Integer.parseInt(XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/port"));
@@ -356,10 +356,9 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			backupDir = backup.getAbsolutePath();
 
 			Localizator l = new Localizator();
-			try {
-				vocabulary = l.populate();
-			} catch (LocalizatorException e1) {
-				logger.errorLogEntry(e1);
+			vocabulary = l.populate();
+			if (vocabulary == null) {
+				vocabulary = new Vocabulary("system");
 			}
 
 			NodeList hosts = XMLUtil.getNodeList(xmlDocument, "/nextbase/externalhost/host");
@@ -563,7 +562,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 	@Override
 	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, QueryFormulaParserException,
-	DocumentException, DocumentAccessException, QueryException {
+	        DocumentException, DocumentAccessException, QueryException {
 		Object obj = cache.get(page.getID());
 		String cacheParam[] = formData.get("cache");
 		if (cacheParam == null) {

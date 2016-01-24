@@ -10,14 +10,18 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 public class Vocabulary {
-	public String id;
-	public HashMap<String, Sentence> words = new HashMap<String, Sentence>();
+	public HashMap<String, Sentence> words;
 	public String appName;
 	private static Log4jLogger logger = new Log4jLogger("Vocabulary");
 
-	public Vocabulary(Document doc, String id, String appName) {
-		this.id = id;
+	public Vocabulary(String appName) {
 		this.appName = appName;
+		this.words = new HashMap<String, Sentence>();
+	}
+
+	public Vocabulary(Document doc, String appName, HashMap<String, Sentence> words) {
+		this.appName = appName;
+		this.words = words;
 		org.w3c.dom.Element root = doc.getDocumentElement();
 		Language primaryLang = Language.valueOf(XMLUtil.getTextContent(doc, "/vocabulary/@primary", true, "UNKNOWN", false).toUpperCase());
 

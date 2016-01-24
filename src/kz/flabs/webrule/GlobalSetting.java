@@ -72,6 +72,7 @@ public class GlobalSetting {
 	public String orgName;
 	@Deprecated
 	public String logo;
+	@Deprecated
 	public String appName;
 	@Deprecated
 	public int licCount;
@@ -174,7 +175,7 @@ public class GlobalSetting {
 					Node pw = doc.getElementsByTagName("connectionid").item(0);
 
 					if (!dbUserName.trim().equals("") || !dbPassword.trim().equals("")
-					        || database.getLastChild().getNodeName().contains("connectionid")) {
+							|| database.getLastChild().getNodeName().contains("connectionid")) {
 
 						if (dbUserName.trim().equals("") && dbPassword.trim().equals("")) {
 							String temp = pw.getTextContent();
@@ -195,7 +196,7 @@ public class GlobalSetting {
 						}
 
 						if (!dbUserName.trim().equals("") && !dbPassword.trim().equals("")
-						        && database.getLastChild().getNodeName().contains("connectionid")) {
+								&& database.getLastChild().getNodeName().contains("connectionid")) {
 							database.removeChild(pw);
 						}
 						deserializeKey();
@@ -296,7 +297,7 @@ public class GlobalSetting {
 						roleCollection.put(role);
 					} else {
 						AppEnv.logger
-						        .warningLogEntry("A role name \"supervisor\" is reserved name of system roles. The role has not added to application");
+						.warningLogEntry("A role name \"supervisor\" is reserved name of system roles. The role has not added to application");
 					}
 				}
 			}
