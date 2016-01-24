@@ -495,6 +495,7 @@ public class User extends BaseDocument implements Const {
 		this.session = session;
 	}
 
+	@Deprecated
 	public UserSession getSession() {
 		return session;
 	}
