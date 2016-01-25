@@ -168,6 +168,40 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 		}
 	}
 
+	public ViewPage<T> findAllequal(String fieldName, String value, int pageNum, int pageSize) {
+		EntityManager em = getEntityManagerFactory().createEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		try {
+			CriteriaQuery<T> cq = cb.createQuery(entityClass);
+			CriteriaQuery<Long> countCq = cb.createQuery(Long.class);
+			Root<T> c = cq.from(entityClass);
+			cq.select(c);
+			countCq.select(cb.count(c));
+			Predicate condition = cb.equal(c.get(fieldName), value);
+			if (!user.getUserID().equals(Const.sysUser) && SecureAppEntity.class.isAssignableFrom(getEntityClass())) {
+				condition = cb.and(c.get("readers").in((long) user.docID), condition);
+			}
+			cq.where(condition);
+			countCq.where(condition);
+			TypedQuery<T> typedQuery = em.createQuery(cq);
+			Query query = em.createQuery(countCq);
+			long count = (long) query.getSingleResult();
+			int maxPage = RuntimeObjUtil.countMaxPage(count, pageSize);
+			if (pageNum == 0) {
+				pageNum = maxPage;
+			}
+			int firstRec = RuntimeObjUtil.calcStartEntry(pageNum, pageSize);
+			typedQuery.setFirstResult(firstRec);
+			typedQuery.setMaxResults(pageSize);
+			List<T> result = typedQuery.getResultList();
+
+			ViewPage<T> r = new ViewPage<T>(result, count, maxPage, pageNum);
+			return r;
+		} finally {
+			em.close();
+		}
+	}
+
 	public ViewPage<T> findAllin(String fieldName, List value, int pageNum, int pageSize) {
 		EntityManager em = getEntityManagerFactory().createEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
