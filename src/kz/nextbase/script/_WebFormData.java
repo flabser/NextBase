@@ -44,7 +44,11 @@ public class _WebFormData {
 	public String getValueSilently(String fn) {
 		try {
 			String value[] = formData.get(fn);
-			return value[0].trim();
+			if (value[0].equals("null")) {
+				return "";
+			} else {
+				return value[0].trim();
+			}
 		} catch (Exception e) {
 			return "";
 		}
