@@ -298,7 +298,6 @@ public class Login extends HttpServlet implements Const {
 			} catch (IOException e1) {
 				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML, userSession.skin);
 			} catch (ServletException e2) {
-				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
 		} catch (IOException ioe) {

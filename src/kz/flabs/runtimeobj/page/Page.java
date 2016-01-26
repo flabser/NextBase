@@ -42,7 +42,6 @@ public class Page implements IProcessInitiator, Const {
 	protected AppEnv env;
 	protected PageRule rule;
 
-
 	protected Map<String, String[]> fields = new HashMap<>();
 	protected UserSession userSession;
 
@@ -271,8 +270,7 @@ public class Page implements IProcessInitiator, Const {
 					break;
 				case INCLUDED_PAGE:
 					PageRule rule = (PageRule) env.ruleProvider.getRule(PAGE_RULE, elementRule.value);
-					// IncludedPage page = new IncludedPage(env, userSession,
-					// rule, request, response);
+					// System.out.println(rule.getRuleID());
 					IncludedPage page = new IncludedPage(env, userSession, rule);
 					output.append(page.process(fields, method));
 					break;

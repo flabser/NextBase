@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -588,6 +589,29 @@ public class Environment implements Const, ICache, IProcessInitiator {
 		for (UserSession ses : sess) {
 			ses.flush();
 		}
+	}
+
+	public static List<String> getSessionCachesInfo() {
+		List<String> cachesList = new ArrayList<String>();
+		for (UserSession ses : sess) {
+			String ci = ses.getCacheInfo();
+			if (ci.equals("")) {
+				ci = "cache is empty";
+			}
+			cachesList.add(ses.currentUser.getUserID() + ":" + ses.getCacheInfo());
+		}
+		return cachesList;
+	}
+
+	public static String getCacheInfo() {
+		String ci = "";
+		for (String c : cache.keySet()) {
+			ci = ci + "," + c;
+		}
+		if (ci.equals("")) {
+			ci = "cache is empty";
+		}
+		return ci;
 	}
 
 	public static void shutdown() {

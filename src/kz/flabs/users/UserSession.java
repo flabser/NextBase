@@ -93,8 +93,7 @@ public class UserSession implements Const, ICache {
 		ipAddr = ServletUtil.getClientIpAddr(request);
 	}
 
-	public UserSession(User user, HttpServletRequest request, HttpServletResponse response, boolean saveToken,
-			HttpSession jses) throws UserException {
+	public UserSession(User user, HttpServletRequest request, HttpServletResponse response, boolean saveToken, HttpSession jses) throws UserException {
 		this.jses = jses;
 		currentUser = user;
 		currentUser.setSession(this);
@@ -126,8 +125,8 @@ public class UserSession implements Const, ICache {
 		ipAddr = ServletUtil.getClientIpAddr(request);
 	}
 
-	public UserSession(ServletContext context, HttpServletRequest request, HttpServletResponse response,
-			HttpSession jses) throws AuthFailedException, UserException {
+	public UserSession(ServletContext context, HttpServletRequest request, HttpServletResponse response, HttpSession jses)
+	        throws AuthFailedException, UserException {
 		this.jses = jses;
 		appCookies = new Cookies(request);
 		lang = appCookies.currentLang;
@@ -146,8 +145,7 @@ public class UserSession implements Const, ICache {
 				if (currentUser.authorized) {
 					WorkSpaceSession.addUserSession(currentUser);
 				} else {
-					AppEnv.logger.normalLogEntry(
-							"Authorization failed, login or password is incorrect (by workspace authorization)");
+					AppEnv.logger.normalLogEntry("Authorization failed, login or password is incorrect (by workspace authorization)");
 					throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, lu.getLogin());
 				}
 			} else {
@@ -303,8 +301,7 @@ public class UserSession implements Const, ICache {
 		doc.addField("lang", lang, FieldType.TEXT);
 		doc.setSkin(skin);
 		doc.setCountDocInView(pageSize);
-		UserGroup replaceGroup = db.getStructure().getGroup("[" + doc.getUserID() + "]", Const.sysGroupAsSet,
-				Const.sysUser);
+		UserGroup replaceGroup = db.getStructure().getGroup("[" + doc.getUserID() + "]", Const.sysGroupAsSet, Const.sysUser);
 		if (replaceGroup != null) {
 			doc.addListField("replacer", new ArrayList<String>(replaceGroup.getMembers()));
 		}
@@ -502,8 +499,8 @@ public class UserSession implements Const, ICache {
 	}
 
 	@Override
-	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
-			QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
+	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, QueryFormulaParserException,
+	        DocumentException, DocumentAccessException, QueryException {
 		String cid = page.getID() + "_";
 		Object obj = getObject(cid);
 		String c[] = formData.get("cache");
@@ -538,6 +535,16 @@ public class UserSession implements Const, ICache {
 		} catch (IllegalStateException e) {
 
 		}
+	}
+
+	public String getCacheInfo() {
+		String res = "";
+		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
+		for (String c : cache.keySet()) {
+			res = res + "," + c;
+
+		}
+		return res;
 	}
 
 	public void setRuntimeConditions(String key, RunTimeParameters value) {
