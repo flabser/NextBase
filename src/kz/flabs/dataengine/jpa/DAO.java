@@ -104,7 +104,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 			try {
 				t.begin();
 				entity.setAuthor(user.docID);
-				entity.setUrl("Provider?id=" + entity.getDefaultForm() + "-form&docid=000");
+				entity.setForm(entity.getDefaultForm());
 				em.persist(entity);
 				// em.flush();
 				// em.refresh(entity);

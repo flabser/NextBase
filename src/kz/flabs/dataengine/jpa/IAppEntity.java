@@ -12,9 +12,9 @@ public interface IAppEntity extends ISimpleAppEntity {
 
 	void setRegDate(Date regDate);
 
-	public String getUrl();
+	public String getForm();
 
-	public void setUrl(String url);
+	public void setForm(String form);
 
 	public String getDefaultForm();
 

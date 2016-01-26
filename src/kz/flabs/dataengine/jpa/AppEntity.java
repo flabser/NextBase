@@ -44,8 +44,8 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 	@Column(name = "reg_date", nullable = false, updatable = false)
 	protected Date regDate;
 
-	@Column(name = "url", nullable = false, updatable = false)
-	protected String url;
+	@Column(name = "form", nullable = false, updatable = false, length = 64)
+	protected String form;
 
 	@Transient
 	protected boolean isEditable = true;
@@ -160,13 +160,13 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 	}
 
 	@Override
-	public String getUrl() {
-		return url;
+	public String getForm() {
+		return form;
 	}
 
 	@Override
-	public void setUrl(String url) {
-		this.url = url;
+	public void setForm(String form) {
+		this.form = form;
 	}
 
 	@Override
