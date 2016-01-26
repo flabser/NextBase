@@ -12,6 +12,12 @@ public interface IAppEntity extends ISimpleAppEntity {
 
 	void setRegDate(Date regDate);
 
+	public String getUrl();
+
+	public void setUrl(String url);
+
+	public String getDefaultForm();
+
 	public boolean isEditable();
 
 	public void setEditable(boolean isEditable);
