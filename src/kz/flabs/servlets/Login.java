@@ -16,13 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.realm.RealmBase;
-
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.Const;
 import kz.flabs.dataengine.DatabaseFactory;
 import kz.flabs.dataengine.ISystemDatabase;
-import kz.flabs.dataengine.IUsersActivity;
 import kz.flabs.dataengine.h2.LoginModeType;
 import kz.flabs.dataengine.h2.UserApplicationProfile;
 import kz.flabs.exception.PortalException;
@@ -36,6 +33,8 @@ import kz.flabs.util.XMLResponse;
 import kz.flabs.webrule.constants.RunMode;
 import kz.flabs.webrule.eds.EDSSetting;
 import kz.pchelka.env.Environment;
+
+import org.apache.catalina.realm.RealmBase;
 
 public class Login extends HttpServlet implements Const {
 	private static final long serialVersionUID = 1L;
@@ -77,19 +76,18 @@ public class Login extends HttpServlet implements Const {
 								RealmBase rb = null;// !!!
 
 								if (admin != null
-										// &&
-										// admin.getPasswordHash().equals(pwd.hashCode()
-										// + "")) {
-										// &&
-										// admin.getPasswordHash().equals(getMD5Hash(pwd)))
-										// {
-										&& admin.getPasswordHash().equals(rb.Digest(pwd, "MD5", "UTF-8"))) {
+								// &&
+								// admin.getPasswordHash().equals(pwd.hashCode()
+								// + "")) {
+								// &&
+								// admin.getPasswordHash().equals(getMD5Hash(pwd)))
+								// {
+								        && admin.getPasswordHash().equals(rb.Digest(pwd, "MD5", "UTF-8"))) {
 									jses = request.getSession(true);
 									jses.setAttribute("adminLoggedIn", true);
 									response.sendRedirect("Provider?type=view&element=users");
 								} else {
-									AppEnv.logger
-											.warningLogEntry("Authorization failed, login or password is incorrect *");
+									AppEnv.logger.warningLogEntry("Authorization failed, login or password is incorrect *");
 									throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
 								}
 							} else {
@@ -98,8 +96,7 @@ public class Login extends HttpServlet implements Const {
 									jses.setAttribute("adminLoggedIn", true);
 									response.sendRedirect("Provider?type=view&element=users");
 								} else {
-									AppEnv.logger
-											.warningLogEntry("Authorization failed, login or password is incorrect *");
+									AppEnv.logger.warningLogEntry("Authorization failed, login or password is incorrect *");
 									throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
 								}
 							}
@@ -153,8 +150,9 @@ public class Login extends HttpServlet implements Const {
 						userSession = new UserSession(user, request, response, saveToken, jses);
 
 						AppEnv.logger.normalLogEntry(userID + " has connected");
-						IUsersActivity ua = env.getDataBase().getUserActivity();
-						ua.postLogin(userSession.browserType, user);
+						// IUsersActivity ua =
+						// env.getDataBase().getUserActivity();
+						// ua.postLogin(userSession.browserType, user);
 
 						EDSSetting es = env.ruleProvider.global.edsSettings;
 						if (es.isOn == RunMode.ON) {
@@ -200,16 +198,14 @@ public class Login extends HttpServlet implements Const {
 											} else {
 												String qid = Util.generateRandomAsText();
 												unauthorizedUserSessions.put(qid, userSession);
-												UserApplicationProfile.QuestionAnswer qa = userAppProfile
-														.getSomeQuestion();
+												UserApplicationProfile.QuestionAnswer qa = userAppProfile.getSomeQuestion();
 												jses.setAttribute("up", userAppProfile);
 												jses.setAttribute("qa", qa);
 												xmlResult.setResponseType(ResponseType.SUPPLY_LOGIN_QUESTION);
 												xmlResult.setResponseStatus(true);
 												xmlResult.setMessage(qid, "qid");
 												xmlResult.addMessage(qa.controlQuestion, "qq");
-												xmlResult.addMessage(Integer.toString(getQuestionAttempCount(jses)),
-														"attempt_count");
+												xmlResult.addMessage(Integer.toString(getQuestionAttempCount(jses)), "attempt_count");
 											}
 										} else if (userAppProfile.loginMod == LoginModeType.JUST_LOGIN) {
 											jses.setAttribute("usersession", userSession);
@@ -220,8 +216,7 @@ public class Login extends HttpServlet implements Const {
 										StringBuffer output = new StringBuffer(100);
 										output.append(xmlResult.toXML());
 										response.setContentType("text/xml;charset=UTF-8");
-										ProviderOutput po = new ProviderOutput("login", "", output, request, response,
-												userSession, jses, "", false);
+										ProviderOutput po = new ProviderOutput("login", "", output, request, response, userSession, jses, "", false);
 										String outputContent = po.getStandartUTF8Output();
 										PrintWriter out = response.getWriter();
 										out.println(outputContent);
@@ -253,8 +248,7 @@ public class Login extends HttpServlet implements Const {
 					jses = request.getSession(false);
 					XMLResponse xmlResp = new XMLResponse(ResponseType.AUTHENTICATION);
 					if (jses != null && unauthorizedUserSessions.containsKey(qID)) {
-						UserApplicationProfile.QuestionAnswer qa = (UserApplicationProfile.QuestionAnswer) jses
-								.getAttribute("qa");
+						UserApplicationProfile.QuestionAnswer qa = (UserApplicationProfile.QuestionAnswer) jses.getAttribute("qa");
 						userSession = unauthorizedUserSessions.get(qID);
 						String answer = request.getParameter("answer").trim();
 						if (answer.equalsIgnoreCase(qa.answer)) {
@@ -302,8 +296,7 @@ public class Login extends HttpServlet implements Const {
 				// response.sendRedirect("Error?type=ws_auth_error");
 				request.getRequestDispatcher("/Error?type=ws_auth_error").forward(request, response);
 			} catch (IOException e1) {
-				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML,
-						userSession.skin);
+				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML, userSession.skin);
 			} catch (ServletException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
