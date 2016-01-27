@@ -59,6 +59,7 @@ public class InitializerHelper implements IProcessInitiator {
 				}
 			}
 		} else {
+			System.out.println("checking class files...");
 			JavaClassFinder classFinder = new JavaClassFinder();
 			List<Class<? extends IInitialData>> classesList = null;
 			classesList = classFinder.findAllMatchingTypes(IInitialData.class);
