@@ -27,10 +27,10 @@ public class Console implements Runnable {
 				} else if (command.equalsIgnoreCase("info") || command.equalsIgnoreCase("i")) {
 					System.out.println("server version=" + Server.serverVersion);
 					System.out.println("os=" + System.getProperty("os.name") + " " + System.getProperty("os.version") + "("
-					        + System.getProperty("os.arch"));
+							+ System.getProperty("os.arch") + ")");
 					System.out.println("jvm=" + System.getProperty("java.version"));
 					File jarFile = new File(EnvConst.NB_JAR_FILE);
-					System.out.println("jar=" + EnvConst.NB_JAR_FILE + ", exist=" + jarFile.exists());
+					System.out.println("jar=" + EnvConst.NB_JAR_FILE + ", path=" + jarFile.getAbsolutePath() + ", exist=" + jarFile.exists());
 				} else if (command.equalsIgnoreCase("reset rules") || command.equalsIgnoreCase("rr")) {
 					for (AppEnv env : Environment.getApplications()) {
 						env.ruleProvider.resetRules();
