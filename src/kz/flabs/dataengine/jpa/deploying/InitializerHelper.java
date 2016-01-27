@@ -79,11 +79,11 @@ public class InitializerHelper implements IProcessInitiator {
 						if (env != null) {
 							inits.put(name, (Class<IInitialData>) populatingClass);
 							if (showConsoleOutput) {
-								System.out.println(env.appType + ":" + name);
+								System.out.println(env.appType + ":" + populatingClass.getCanonicalName());
 							}
 						} else {
 							if (showConsoleOutput) {
-								System.out.println("null " + name);
+								System.out.println("null " + populatingClass.getCanonicalName());
 							}
 						}
 					} catch (InstantiationException e) {
@@ -124,12 +124,12 @@ public class InitializerHelper implements IProcessInitiator {
 			classesList = classFinder.findAllMatchingTypes(IInitialData.class);
 			for (Class<?> populatingClass : classesList) {
 				if (!populatingClass.isInterface() && !populatingClass.getCanonicalName().equals(InitialDataAdapter.class.getCanonicalName())) {
-					if (name.equals(populatingClass.getSimpleName())) {
-						if (populatingClass.getSimpleName().equals(name)) {
-							isFound = true;
-							count = runToPopulate(populatingClass, showConsoleOutput);
-						}
+
+					if (populatingClass.getCanonicalName().equals(name) || populatingClass.getName().equals(name)) {
+						isFound = true;
+						count = runToPopulate(populatingClass, showConsoleOutput);
 					}
+
 				}
 			}
 		}
