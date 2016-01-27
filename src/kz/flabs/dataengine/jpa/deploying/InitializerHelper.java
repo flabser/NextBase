@@ -52,7 +52,9 @@ public class InitializerHelper implements IProcessInitiator {
 									System.out.println(env.appType + ":" + name);
 								}
 							}
-						} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+						} catch (InstantiationException e) {
+
+						} catch (ClassNotFoundException | IllegalAccessException e) {
 							System.out.println(e);
 						}
 					}
@@ -103,46 +105,27 @@ public class InitializerHelper implements IProcessInitiator {
 
 	public String runInitializer(String name, boolean showConsoleOutput) {
 		int count = 0;
+		IInitialData<ISimpleAppEntity, IDAO> pcInstance = null;
 		boolean isFound = false;
-		JavaClassFinder classFinder = new JavaClassFinder();
-		List<Class<? extends IInitialData>> classesList = null;
-		classesList = classFinder.findAllMatchingTypes(IInitialData.class);
-		for (Class<?> populatingClass : classesList) {
-			if (!populatingClass.isInterface() && !populatingClass.getCanonicalName().equals(InitialDataAdapter.class.getCanonicalName())) {
-				if (name.equals(populatingClass.getSimpleName())) {
-					if (populatingClass.getSimpleName().equals(name)) {
-						isFound = true;
-						IInitialData<ISimpleAppEntity, IDAO> pcInstance = null;
-						try {
-							String packageName = populatingClass.getPackage().getName();
-							String p = packageName.substring(0, packageName.indexOf("."));
-							AppEnv env = Environment.getApplication(p);
-							if (env != null) {
-								User user = new User(Const.sysUser, env);
-								_Session ses = new _Session(env, user, this);
-								pcInstance = (IInitialData<ISimpleAppEntity, IDAO>) Class.forName(populatingClass.getCanonicalName()).newInstance();
-								List<ISimpleAppEntity> entities = pcInstance.getData(ses, null, null);
-								Class<?> daoClass = pcInstance.getDAO();
-								IDAO dao = getDAOInstance(ses, daoClass);
-								if (dao != null) {
-									for (ISimpleAppEntity entity : entities) {
-										if (dao.add(entity) != null) {
-											if (showConsoleOutput) {
-												System.out.println(entity.toString() + " added");
-											}
-											count++;
-										}
-									}
-								}
-							}
-						} catch (InstantiationException e) {
-							e.printStackTrace();
-						} catch (IllegalAccessException e) {
-							e.printStackTrace();
-						} catch (ClassNotFoundException e) {
-							e.printStackTrace();
-						} catch (IllegalArgumentException e) {
-							e.printStackTrace();
+		File jarFile = new File(EnvConst.NB_JAR_FILE);
+		if (jarFile.exists()) {
+			try {
+				Class<?> populatingClass = populatingClass = Class.forName(name);
+				isFound = true;
+				count = runToPopulate(populatingClass, showConsoleOutput);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else {
+			JavaClassFinder classFinder = new JavaClassFinder();
+			List<Class<? extends IInitialData>> classesList = null;
+			classesList = classFinder.findAllMatchingTypes(IInitialData.class);
+			for (Class<?> populatingClass : classesList) {
+				if (!populatingClass.isInterface() && !populatingClass.getCanonicalName().equals(InitialDataAdapter.class.getCanonicalName())) {
+					if (name.equals(populatingClass.getSimpleName())) {
+						if (populatingClass.getSimpleName().equals(name)) {
+							isFound = true;
+							count = runToPopulate(populatingClass, showConsoleOutput);
 						}
 					}
 				}
@@ -156,6 +139,43 @@ public class InitializerHelper implements IProcessInitiator {
 			System.out.println("initializer \"" + name + "\" has not found");
 		}
 		return "";
+	}
+
+	private int runToPopulate(Class<?> populatingClass, boolean showConsoleOutput) {
+		int count = 0;
+		IInitialData<ISimpleAppEntity, IDAO> pcInstance;
+		try {
+			String packageName = populatingClass.getPackage().getName();
+			String p = packageName.substring(0, packageName.indexOf("."));
+			AppEnv env = Environment.getApplication(p);
+			if (env != null) {
+				User user = new User(Const.sysUser, env);
+				_Session ses = new _Session(env, user, this);
+				pcInstance = (IInitialData<ISimpleAppEntity, IDAO>) Class.forName(populatingClass.getCanonicalName()).newInstance();
+				List<ISimpleAppEntity> entities = pcInstance.getData(ses, null, null);
+				Class<?> daoClass = pcInstance.getDAO();
+				IDAO dao = getDAOInstance(ses, daoClass);
+				if (dao != null) {
+					for (ISimpleAppEntity entity : entities) {
+						if (dao.add(entity) != null) {
+							if (showConsoleOutput) {
+								System.out.println(entity.toString() + " added");
+							}
+							count++;
+						}
+					}
+				}
+			}
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	private IDAO<?, ?> getDAOInstance(_Session ses, Class<?> daoClass) {
