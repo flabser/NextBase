@@ -247,7 +247,8 @@
 		<entry lang="ENG">Editing</entry>
 		<entry lang="CHN">编辑</entry>
 	</sentence>
-	<sentence mode="on" keyword="Закрыть">
+	<sentence mode="on" keyword="close">
+		<entry lang="RUS">Закрыть</entry>
 		<entry lang="KAZ">Жабу</entry>
 		<entry lang="ENG">Close</entry>
 		<entry lang="CHN">关闭</entry>
@@ -337,11 +338,12 @@
 		<entry lang="ENG">File is not selected</entry>
 		<entry lang="CHN">该文件未被选中</entry>
 	</sentence>
-	<sentence mode="on" keyword="Добавить">
+	<sentence mode="on" keyword="new_">
+		<entry lang="RUS">Добавить</entry>
 		<entry lang="KAZ">Қосу</entry>
 		<entry lang="ENG">Add</entry>
 		<entry lang="CHN">加</entry>
-	</sentence>
+	</sentence>	
 	<sentence mode="on" keyword="del_document">
 		<entry lang="RUS">Удалить</entry>
 		<entry lang="KAZ">Жою</entry>
@@ -399,11 +401,6 @@
 		<entry lang="ENG">New</entry>
 		<entry lang="CHN">新</entry>
 	</sentence>
-	<sentence mode="on" keyword="Удалить документ">
-		<entry lang="KAZ">Құжатты жою</entry>
-		<entry lang="ENG">Delete document</entry>
-		<entry lang="CHN">删除的文件</entry>
-	</sentence>
 	<sentence mode="on" keyword="Содержание отчета">
 		<entry lang="KAZ">Есептеменің мазмұны</entry>
 		<entry lang="ENG">Report Content</entry>
@@ -414,12 +411,14 @@
 		<entry lang="ENG">Content</entry>
 		<entry lang="CHN">内容</entry>
 	</sentence>
-	<sentence mode="on" keyword="Сохранить и закрыть">
+	<sentence mode="on" keyword="save_close">
+		<entry lang="RUS">Сохранить и закрыть</entry>
 		<entry lang="KAZ">Сақтау және жабу</entry>
 		<entry lang="ENG">Save and close</entry>
 		<entry lang="CHN">保存并关闭</entry>
 	</sentence>
-	<sentence mode="on" keyword="Сохранить">
+	<sentence mode="on" keyword="save">
+		<entry lang="RUS">Сохранить</entry>
 		<entry lang="KAZ">Сақтау</entry>
 		<entry lang="ENG">Save</entry>
 		<entry lang="CHN">保存</entry>

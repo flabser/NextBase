@@ -178,4 +178,26 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 	public void setEditable(boolean isEditable) {
 		this.isEditable = isEditable;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+
+		if (obj == null) {
+			return false;
+		}
+
+		if (!(getClass() == obj.getClass())) {
+			return false;
+		} else {
+			AppEntity tmp = (AppEntity) obj;
+			if (tmp.id == this.id) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 }

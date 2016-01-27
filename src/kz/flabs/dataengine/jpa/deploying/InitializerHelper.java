@@ -54,7 +54,9 @@ public class InitializerHelper implements IProcessInitiator {
 							}
 						} catch (InstantiationException e) {
 
-						} catch (ClassNotFoundException | IllegalAccessException e) {
+						} catch (ClassNotFoundException e) {
+							System.out.println(e.getMessage());
+						} catch (IllegalAccessException e) {
 							System.out.println(e);
 						}
 					}
