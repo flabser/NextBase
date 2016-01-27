@@ -621,7 +621,35 @@ public class SelectFormula implements ISelectFormula {
 
     @Override
     public String getCondition(User user, int pageSize, int offset, Set<Filter> filters, Set<Sorting> sorting, boolean checkResponse, ReadCondition condition, String customFieldName) {
-        return null;
+        String cuID = DatabaseUtil.prepareListToQuery(user.getAllUserGroups()), existCond = "";
+        String sysCond = getSystemConditions(filters);
+        ArrayList<Condition> conds = getConditions();
+
+        for (Condition c : conds) {
+            String exCond = c.formula;
+            if (exCond.trim().toLowerCase().endsWith("and"))
+                exCond = exCond.trim().substring(0, exCond.trim().length() - 3);
+
+            existCond += " and exists(select 1 from CUSTOM_FIELDS " + c.alias + " where md.DOCID = " + c.alias + ".DOCID and " + exCond + ") ";
+        }
+
+        String sql =
+                " SELECT foo.count, " +
+                        "     mdocs.DDBID, mdocs.has_response, mdocs.DOCID, mdocs.DOCTYPE, mdocs.HAS_ATTACHMENT, mdocs.VIEWTEXT, mdocs.FORM," +
+                        "     mdocs.REGDATE, " + DatabaseUtil.getViewTextList("mdocs") + ", mdocs.VIEWNUMBER, mdocs.VIEWDATE, mdocs.TOPICID " +
+                        " FROM MAINDOCS mdocs, " +
+                        " (SELECT count(md.DOCID) as count FROM MAINDOCS md " +
+                        " WHERE " + sysCond.replaceAll("maindocs.", "md.") +
+                        " exists(select 1 from READERS_MAINDOCS where md.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME IN (" + cuID + ")) " +
+                        existCond +
+                        getReadConditionByCustField(condition, customFieldName).replaceAll("mdocs.", "md.") +
+                        ") " +
+                        " as foo " +
+
+                        " WHERE " + sysCond.replaceAll("maindocs.", "mdocs.") +
+                        " exists(select 1 from READERS_MAINDOCS where mdocs.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME IN (" + cuID + ")) " +
+                        existCond.replace("md.", "mdocs.") + " " + getReadConditionByCustField(condition, customFieldName) + getOrderCondition(sorting) + " " + getPagingCondition(pageSize, offset);
+        return sql;
     }
 
     protected String getReadConditionByType(ReadCondition type, String userid) {
