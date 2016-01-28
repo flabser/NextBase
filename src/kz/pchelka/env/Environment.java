@@ -443,7 +443,6 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 	public static void addApplication(AppEnv env) {
 		applications.put(env.appType, env);
-		applications.put(env.appType.toLowerCase(), env);
 		if (env.isWorkspace) {
 			workspaceAuth = true;
 		}
