@@ -574,7 +574,7 @@ public class SelectFormula implements ISelectFormula {
         }
 
         String sql =
-                " SELECT foo.count, " + getReadCondition(checkRead, user.getUserID()) +
+                " SELECT foo.count, " + getReadCondition(checkRead, "'" + user.getUserID() + "'") +
                         "     mdocs.DDBID, mdocs.has_response, mdocs.DOCID, mdocs.DOCTYPE, mdocs.HAS_ATTACHMENT, mdocs.VIEWTEXT, mdocs.FORM," +
                         "     mdocs.REGDATE, " + DatabaseUtil.getViewTextList("mdocs") + ", mdocs.VIEWNUMBER, mdocs.VIEWDATE, mdocs.TOPICID " +
                         " FROM MAINDOCS mdocs, " +
