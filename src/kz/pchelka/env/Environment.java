@@ -117,6 +117,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 	private static boolean schedulerStarted;
 	private static HashMap<String, ExternalHost> externalHost = new HashMap<String, ExternalHost>();
 	private static HashMap<String, AppEnv> applications = new HashMap<String, AppEnv>();
+	private static HashMap<String, AppEnv> allApplications = new HashMap<String, AppEnv>();
 	private static HashMap<String, IDatabase> dataBases = new HashMap<String, IDatabase>();
 	private static boolean xmppEnable;
 
@@ -443,7 +444,8 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 	public static void addApplication(AppEnv env) {
 		applications.put(env.appType, env);
-		applications.put(env.appType.toLowerCase(), env);
+		allApplications.put(env.appType, env);
+		allApplications.put(env.appType.toLowerCase(), env);
 		if (env.isWorkspace) {
 			workspaceAuth = true;
 		}
@@ -473,6 +475,10 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 	public static void addDatabases(IDatabase dataBase) {
 		dataBases.put(dataBase.getDbID(), dataBase);
+	}
+
+	public static AppEnv getAppEnv(String appID) {
+		return allApplications.get(appID);
 	}
 
 	public static AppEnv getApplication(String appID) {

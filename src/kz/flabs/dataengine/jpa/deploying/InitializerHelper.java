@@ -75,7 +75,7 @@ public class InitializerHelper implements IProcessInitiator {
 						String name = pcInstance.getName();
 						String packageName = populatingClass.getPackage().getName();
 						String p = packageName.substring(0, packageName.indexOf("."));
-						AppEnv env = Environment.getApplication(p);
+						AppEnv env = Environment.getAppEnv(p);
 						if (env != null) {
 							inits.put(name, (Class<IInitialData>) populatingClass);
 							if (showConsoleOutput) {
@@ -149,7 +149,7 @@ public class InitializerHelper implements IProcessInitiator {
 		try {
 			String packageName = populatingClass.getPackage().getName();
 			String p = packageName.substring(0, packageName.indexOf("."));
-			AppEnv env = Environment.getApplication(p);
+			AppEnv env = Environment.getAppEnv(p);
 			if (env != null) {
 				User user = new User(Const.sysUser, env);
 				_Session ses = new _Session(env, user, this);

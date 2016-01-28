@@ -106,7 +106,9 @@ public class Console implements Runnable {
 				try (BufferedReader br = new BufferedReader(new FileReader(EnvConst.RESOURCES_DIR + File.separator + batch))) {
 					String line;
 					while ((line = br.readLine()) != null) {
-						cliHandler(line);
+						if (!line.startsWith("#")) {
+							cliHandler(line);
+						}
 					}
 				} catch (IOException e) {
 					System.err.println(e);
