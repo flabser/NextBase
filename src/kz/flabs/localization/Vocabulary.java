@@ -23,7 +23,7 @@ public class Vocabulary {
 		this.appName = appName;
 		this.words = words;
 		org.w3c.dom.Element root = doc.getDocumentElement();
-		Language primaryLang = Language.valueOf(XMLUtil.getTextContent(doc, "/vocabulary/@primary", true, "UNKNOWN", false).toUpperCase());
+		LanguageType primaryLang = LanguageType.valueOf(XMLUtil.getTextContent(doc, "/vocabulary/@primary", true, "UNKNOWN", false).toUpperCase());
 
 		NodeList nodename = root.getElementsByTagName("sentence");
 		for (int i = 0; i < nodename.getLength(); i++) {

@@ -2,7 +2,7 @@ package kz.flabs.dataengine.jpa.deploying;
 
 import java.util.List;
 
-import kz.flabs.localization.Language;
+import kz.flabs.localization.LanguageType;
 import kz.flabs.localization.Vocabulary;
 import kz.nextbase.script._Session;
 
@@ -13,7 +13,7 @@ import kz.nextbase.script._Session;
 public abstract class InitialDataAdapter<T, T1> implements IInitialData<T, T1> {
 
 	@Override
-	public abstract List<T> getData(_Session ses, Language lang, Vocabulary vocabulary);
+	public abstract List<T> getData(_Session ses, LanguageType lang, Vocabulary vocabulary);
 
 	@Override
 	public abstract Class<T1> getDAO();

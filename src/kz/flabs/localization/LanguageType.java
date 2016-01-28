@@ -5,7 +5,9 @@ package kz.flabs.localization;
  *
  */
 public enum LanguageType {
-	UNKNOWN(0), ENG(45), RUS(570), KAZ(255), BUL(115), POR(545), SPA(230), CHI(315), DEU(316);
+	UNKNOWN(0), ENG(45), RUS(570), KAZ(255), BUL(115), POR(545), SPA(230), CHI(315), DEU(316), @Deprecated
+	CHN(9000), @Deprecated
+	CHO(9001);
 
 	private int code;
 

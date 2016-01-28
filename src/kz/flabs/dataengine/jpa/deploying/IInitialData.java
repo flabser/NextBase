@@ -2,7 +2,7 @@ package kz.flabs.dataengine.jpa.deploying;
 
 import java.util.List;
 
-import kz.flabs.localization.Language;
+import kz.flabs.localization.LanguageType;
 import kz.flabs.localization.Vocabulary;
 import kz.nextbase.script._Session;
 
@@ -11,7 +11,7 @@ import kz.nextbase.script._Session;
  */
 
 public interface IInitialData<T, T1> {
-	List<T> getData(_Session ses, Language lang, Vocabulary vocabulary);
+	List<T> getData(_Session ses, LanguageType lang, Vocabulary vocabulary);
 
 	Class<T1> getDAO();
 

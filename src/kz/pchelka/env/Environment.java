@@ -443,6 +443,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 	public static void addApplication(AppEnv env) {
 		applications.put(env.appType, env);
+		applications.put(env.appType.toLowerCase(), env);
 		if (env.isWorkspace) {
 			workspaceAuth = true;
 		}
@@ -450,8 +451,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 		if (applications.size() >= countOfApp) {
 			if (delayedStart.size() > 0) {
 				for (IDatabase db : delayedStart) {
-					logger.normalLogEntry(
-							"Connecting to external module " + db.initExternalPool(ExternalModuleType.STRUCTURE));
+					logger.normalLogEntry("Connecting to external module " + db.initExternalPool(ExternalModuleType.STRUCTURE));
 					if (!schedulerStarted) {
 						Thread schedulerThread = new Thread(scheduler);
 						schedulerThread.start();
