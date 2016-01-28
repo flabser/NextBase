@@ -20,8 +20,8 @@ import kz.nextbase.script._Session;
 
 public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 	public User user;
-	private final Class<T> entityClass;
 	private EntityManagerFactory emf;
+	protected final Class<T> entityClass;
 
 	public DAO(Class<T> entityClass, _Session session) {
 		this.entityClass = entityClass;
@@ -104,13 +104,8 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 			try {
 				t.begin();
 				entity.setAuthor(user.docID);
-				entity.setForm(entity.getDefaultForm());
+				entity.setForm(entity.getDefaultFormName());
 				em.persist(entity);
-				// em.flush();
-				// em.refresh(entity);
-				// entity.setUrl("Provider?id=" + entity.getDefaultForm() +
-				// "-form&docid=" + entity.getId());
-				// em.merge(entity);
 				t.commit();
 				update(entity);
 				return entity;

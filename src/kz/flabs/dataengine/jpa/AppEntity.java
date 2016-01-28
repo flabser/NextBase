@@ -161,7 +161,7 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 	}
 
 	@Override
-	public String getDefaultForm() {
+	public String getDefaultFormName() {
 		return this.getClass().getSimpleName().toLowerCase();
 	}
 
