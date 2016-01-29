@@ -186,4 +186,15 @@ public class AppEnv implements Const, ICache, IProcessInitiator {
 		}
 	}
 
+	public String getCacheInfo() {
+		String ci = "";
+		for (String c : cache.keySet()) {
+			ci = ci + "," + c;
+		}
+		if (ci.equals("")) {
+			ci = "cache is empty";
+		}
+		return ci;
+	}
+
 }

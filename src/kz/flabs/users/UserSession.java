@@ -539,11 +539,17 @@ public class UserSession implements Const, ICache {
 
 	public String getCacheInfo() {
 		String res = "";
-		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
-		for (String c : cache.keySet()) {
-			res = res + "," + c;
+		try {
+			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
+			if (cache != null) {
+				for (String c : cache.keySet()) {
+					res = res + "," + c;
+				}
+			}
+		} catch (IllegalStateException e) {
 
 		}
+
 		return res;
 	}
 
@@ -575,5 +581,10 @@ public class UserSession implements Const, ICache {
 
 	public HashMap<String, RunTimeParameters> getRuntimeConditions() {
 		return currConditions;
+	}
+
+	@Override
+	public String toString() {
+		return jses.getId();
 	}
 }

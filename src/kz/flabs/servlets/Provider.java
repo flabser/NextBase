@@ -153,11 +153,13 @@ public class Provider extends HttpServlet implements Const {
 							jses = request.getSession(true);
 							userSession = new UserSession(context, request, response, jses);
 							jses.setAttribute("usersession", userSession);
+							Environment.addSession(userSession);
 						} else {
 							userSession = (UserSession) jses.getAttribute("usersession");
 							if (userSession == null) {
 								userSession = new UserSession(context, request, response, jses);
 								jses.setAttribute("usersession", userSession);
+
 							}
 						}
 

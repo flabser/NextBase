@@ -259,7 +259,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			try {
 				if (adminConsoleEnable) {
 					remoteConsole = XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/@mode").equalsIgnoreCase("on") ? true
-					        : false;
+							: false;
 					if (remoteConsole) {
 						remoteConsoleServer = XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/server");
 						remoteConsolePort = Integer.parseInt(XMLUtil.getTextContent(xmlDocument, "/nextbase/adminapp/remoteconsole/port"));
@@ -565,7 +565,7 @@ public class Environment implements Const, ICache, IProcessInitiator {
 
 	@Override
 	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, QueryFormulaParserException,
-	        DocumentException, DocumentAccessException, QueryException {
+	DocumentException, DocumentAccessException, QueryException {
 		Object obj = cache.get(page.getID());
 		String cacheParam[] = formData.get("cache");
 		if (cacheParam == null) {
@@ -600,7 +600,16 @@ public class Environment implements Const, ICache, IProcessInitiator {
 			if (ci.equals("")) {
 				ci = "cache is empty";
 			}
-			cachesList.add(ses.currentUser.getUserID() + ":" + ses.getCacheInfo());
+			cachesList.add(ses.currentUser.getUserID() + ":" + ci);
+		}
+		return cachesList;
+	}
+
+	public static List<String> getAppsCachesInfo() {
+		List<String> cachesList = new ArrayList<String>();
+		for (AppEnv env : applications.values()) {
+			String ci = env.getCacheInfo();
+			cachesList.add(env.appType + ":" + ci);
 		}
 		return cachesList;
 	}

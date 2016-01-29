@@ -44,6 +44,8 @@ public class Console implements Runnable {
 			System.out.println("jvm=" + System.getProperty("java.version"));
 			File jarFile = new File(EnvConst.NB_JAR_FILE);
 			System.out.println("jar=" + EnvConst.NB_JAR_FILE + ", path=" + jarFile.getAbsolutePath() + ", exist=" + jarFile.exists());
+		} else if (command.equalsIgnoreCase("show logged users") || command.equalsIgnoreCase("slu")) {
+
 		} else if (command.equalsIgnoreCase("reset rules") || command.equalsIgnoreCase("rr")) {
 			for (AppEnv env : Environment.getApplications()) {
 				env.ruleProvider.resetRules();
@@ -53,6 +55,10 @@ public class Console implements Runnable {
 			Environment.flushSessionsCach();
 		} else if (command.equalsIgnoreCase("show server cache") || command.equalsIgnoreCase("ssc")) {
 			System.out.println(Environment.getCacheInfo());
+		} else if (command.equalsIgnoreCase("show apps cache") || command.equalsIgnoreCase("sac")) {
+			for (String ci : Environment.getAppsCachesInfo()) {
+				System.out.println(ci);
+			}
 		} else if (command.equalsIgnoreCase("show users cache") || command.equalsIgnoreCase("suc")) {
 			for (String ci : Environment.getSessionCachesInfo()) {
 				System.out.println(ci);
