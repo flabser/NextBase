@@ -95,6 +95,8 @@ import kz.pchelka.env.Environment;
 import kz.pchelka.server.Server;
 import net.sf.saxon.s9api.SaxonApiException;
 
+import com.google.gson.Gson;
+
 public class Provider extends HttpServlet implements Const {
 	private static final long serialVersionUID = 2352885167311108325L;
 	private AppEnv env;
@@ -224,7 +226,10 @@ public class Provider extends HttpServlet implements Const {
 					if (result.publishAs == PublishAsType.JSON) {
 						response.setContentType("application/json;charset=utf-8");
 						PrintWriter out = response.getWriter();
-						out.println(result.output);
+						Gson gson = new Gson();
+						String json = gson.toJson(result.jsonOutput);
+						System.out.println(json);
+						out.println(json);
 						out.close();
 					} else if (result.publishAs == PublishAsType.HTML) {
 						if (result.disableClientCache) {
@@ -541,8 +546,17 @@ public class Provider extends HttpServlet implements Const {
 		Page page = new Page(env, userSession, pageRule);
 		page.setFields(fields);
 
-		result.output.append(page.process(fields, request.getMethod()));
-		result.httpStatus = page.status;
+		String method = request.getMethod();
+		if (method.equalsIgnoreCase("POST")) {
+			page.postProcess(fields, method);
+			result.publishAs = PublishAsType.JSON;
+			result.jsonOutput = page.outcome;
+			result.httpStatus = page.status;
+		} else {
+			result.output.append(page.process(fields, method));
+			result.httpStatus = page.status;
+		}
+
 		if (page.fileGenerated) {
 			result.publishAs = PublishAsType.OUTPUTSTREAM;
 			result.filePath = page.generatedFilePath;

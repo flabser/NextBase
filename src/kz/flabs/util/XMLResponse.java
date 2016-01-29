@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import kz.flabs.exception.PortalException;
 import kz.flabs.servlets.SignalType;
+import kz.flabs.servlets.pojo.Outcome;
 import kz.nextbase.script._Exception;
 import kz.nextbase.script._IXMLContent;
 
@@ -13,6 +14,7 @@ public class XMLResponse {
 	public ResponseType type;
 	public boolean resultFlag;
 	public int status;
+	public Outcome json;
 
 	protected static final String xmlTextUTF8Header = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 

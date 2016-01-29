@@ -1,5 +1,7 @@
 package kz.flabs.servlets;
 
+import kz.flabs.servlets.pojo.Outcome;
+
 import org.apache.http.HttpStatus;
 
 public class ProviderResult {
@@ -14,7 +16,8 @@ public class ProviderResult {
 	public String originalAttachName;
 	@Deprecated
 	public boolean addHistory;
-	public int httpStatus = HttpStatus.SC_OK;;
+	public int httpStatus = HttpStatus.SC_OK;
+	public Outcome jsonOutput;
 
 	ProviderResult(PublishAsType publishAs, String xslt) {
 		this.publishAs = publishAs;

@@ -18,6 +18,7 @@ import kz.flabs.runtimeobj.queries.Query;
 import kz.flabs.runtimeobj.queries.QueryFactory;
 import kz.flabs.scriptprocessor.form.querysave.IQuerySaveTransaction;
 import kz.flabs.scriptprocessor.page.doscript.DoProcessor;
+import kz.flabs.servlets.pojo.Outcome;
 import kz.flabs.sourcesupplier.SourceSupplier;
 import kz.flabs.users.User;
 import kz.flabs.users.UserSession;
@@ -28,6 +29,7 @@ import kz.flabs.webrule.Caption;
 import kz.flabs.webrule.constants.ValueSourceType;
 import kz.flabs.webrule.form.GlossaryRule;
 import kz.flabs.webrule.page.ElementRule;
+import kz.flabs.webrule.page.ElementType;
 import kz.flabs.webrule.page.PageRule;
 import kz.pchelka.env.Environment;
 import kz.pchelka.scheduler.IProcessInitiator;
@@ -36,6 +38,8 @@ import org.apache.http.HttpStatus;
 
 public class Page implements IProcessInitiator, Const {
 	public boolean fileGenerated;
+	public boolean toJSON;
+	public Outcome outcome;
 	public String generatedFilePath;
 	public String generatedFileOriginalName;
 	public int status = HttpStatus.SC_OK;
@@ -135,6 +139,22 @@ public class Page implements IProcessInitiator, Const {
 		return output.append("</page>");
 	}
 
+	public void postProcess(Map<String, String[]> formData, String method) throws ClassNotFoundException, RuleException, QueryFormulaParserException,
+	        DocumentException, DocumentAccessException, QueryException {
+		for (ElementRule elementRule : rule.elements) {
+			if (elementRule.type == ElementType.SCRIPT && elementRule.doClassName.getType() == ValueSourceType.JAVA_CLASS) {
+				User user = userSession.currentUser;
+				DoProcessor sProcessor = new DoProcessor(env, user, userSession.lang, fields, this);
+				XMLResponse xmlResp = sProcessor.processJava(elementRule.doClassName.getClassName(), method);
+				status = xmlResp.status;
+				toJSON = true;
+				outcome = xmlResp.json;
+				break;
+			}
+		}
+
+	}
+
 	public String getID() {
 		String searchKey = "";
 		if (fields != null && fields.containsKey("keyword")) {
@@ -192,6 +212,10 @@ public class Page implements IProcessInitiator, Const {
 						fileGenerated = true;
 						generatedFilePath = xmlResp.getMessage("filepath").text;
 						generatedFileOriginalName = xmlResp.getMessage("originalname").text;
+						break loop;
+					} else if (xmlResp.type == ResponseType.JSON) {
+						toJSON = true;
+						outcome = xmlResp.json;
 						break loop;
 					} else {
 						output.append(xmlResp.toXML());

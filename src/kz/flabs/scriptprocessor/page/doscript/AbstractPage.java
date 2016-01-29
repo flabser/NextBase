@@ -13,6 +13,7 @@ import kz.flabs.scriptprocessor.Msg;
 import kz.flabs.scriptprocessor.ScriptEvent;
 import kz.flabs.scriptprocessor.ScriptProcessorUtil;
 import kz.flabs.servlets.SignalType;
+import kz.flabs.servlets.pojo.Outcome;
 import kz.flabs.util.ResponseType;
 import kz.flabs.util.Util;
 import kz.flabs.util.XMLResponse;
@@ -52,6 +53,10 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 	@Deprecated
 	public void localizedMsgBox(String m) {
 		messages.add(new Msg(vocabulary.getWord(m, lang.name())[0], m));
+	}
+
+	public void addMsg(String m) {
+		messages.add(new Msg(m, m));
 	}
 
 	public <T extends Enum<?>> String[] getLocalizedWord(T[] enumObj, String lang) {
@@ -158,26 +163,33 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 		try {
 			if (method.equalsIgnoreCase("POST")) {
 				doPOST(ses, formData, lang);
+				xmlResp.status = httpStatus;
+				xmlResp.type = ResponseType.JSON;
+				Outcome outcome = new Outcome();
+				for (Msg message : messages) {
+					outcome.addMessage(message.text);
+				}
+				xmlResp.json = outcome;
 			} else {
 				doGET(ses, formData, lang);
+				xmlResp.status = httpStatus;
+				xmlResp.setPublishResult(toPublishElement);
+				if (httpStatus == HttpStatus.SC_BAD_REQUEST) {
+					xmlResp.setResponseStatus(false);
+				} else {
+					xmlResp.setResponseStatus(true);
+				}
+				for (Msg message : messages) {
+					xmlResp.addMessage(message.text, message.id);
+				}
+				if (signal != null) {
+					xmlResp.addSignal(signal);
+				}
+				if (xml != null) {
+					xmlResp.addXMLDocumentElements(xml);
+				}
+				xmlResp.setRedirect(redirectURL);
 			}
-			xmlResp.setPublishResult(toPublishElement);
-			xmlResp.status = httpStatus;
-			if (httpStatus == HttpStatus.SC_BAD_REQUEST) {
-				xmlResp.setResponseStatus(false);
-			} else {
-				xmlResp.setResponseStatus(true);
-			}
-			for (Msg message : messages) {
-				xmlResp.addMessage(message.text, message.id);
-			}
-			if (signal != null) {
-				xmlResp.addSignal(signal);
-			}
-			if (xml != null) {
-				xmlResp.addXMLDocumentElements(xml);
-			}
-			xmlResp.setRedirect(redirectURL);
 
 		} catch (Exception e) {
 			xmlResp.status = HttpStatus.SC_BAD_REQUEST;
