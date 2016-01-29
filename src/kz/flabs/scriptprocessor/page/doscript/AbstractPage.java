@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import kz.flabs.dataengine.jpa.DAO;
+import kz.flabs.localization.LanguageType;
 import kz.flabs.localization.Vocabulary;
 import kz.flabs.runtimeobj.RuntimeObjUtil;
 import kz.flabs.scriptprocessor.Msg;
@@ -35,7 +36,7 @@ import org.apache.http.HttpStatus;
 public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 	public ArrayList<Msg> messages = new ArrayList<Msg>();
 
-	private String lang;
+	private LanguageType lang;
 	private _WebFormData formData;
 	private XMLResponse xmlResp = new XMLResponse(ResponseType.RESULT_OF_PAGE_SCRIPT);
 	@Deprecated
@@ -48,8 +49,9 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 		this.ses = ses;
 	}
 
+	@Deprecated
 	public void localizedMsgBox(String m) {
-		messages.add(new Msg(vocabulary.getWord(m, lang)[0], m));
+		messages.add(new Msg(vocabulary.getWord(m, lang.name())[0], m));
 	}
 
 	public <T extends Enum<?>> String[] getLocalizedWord(T[] enumObj, String lang) {
@@ -73,7 +75,7 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 
 	@Override
 	public void setCurrentLang(Vocabulary vocabulary, String lang) {
-		this.lang = lang;
+		this.lang = LanguageType.valueOf(lang);
 		this.vocabulary = vocabulary;
 	}
 
@@ -86,7 +88,7 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 	}
 
 	protected void setContent(_IPOJOObject pojo) {
-		setContent(new _POJOObjectWrapper(pojo));
+		setContent(new _POJOObjectWrapper(pojo, lang));
 
 	}
 
@@ -94,7 +96,7 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 		httpStatus = HttpStatus.SC_BAD_REQUEST;
 	}
 
-	protected _ActionBar getSimpleActionBar(_Session session, String type, String lang) {
+	protected _ActionBar getSimpleActionBar(_Session session, String type, LanguageType lang) {
 		_ActionBar actionBar = new _ActionBar(session);
 		_Action newDocAction = new _Action(getLocalizedWord("new_", lang), getLocalizedWord("add_new_", lang), "new_" + type);
 		newDocAction.setURL("Provider?id=" + type + "&key=");
@@ -116,7 +118,7 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 		}
 		int startRec = RuntimeObjUtil.calcStartEntry(pageNum, pageSize);
 		List<? extends _IPOJOObject> list = dao.findAll(startRec, pageSize);
-		return new _POJOListWrapper(list, maxPage, count, pageNum);
+		return new _POJOListWrapper(list, maxPage, count, pageNum, lang);
 
 	}
 
@@ -194,7 +196,7 @@ public abstract class AbstractPage extends ScriptEvent implements IPageScript {
 		return process("GET");
 	}
 
-	public abstract void doGET(_Session session, _WebFormData formData, String lang) throws _Exception;
+	public abstract void doGET(_Session session, _WebFormData formData, LanguageType lang) throws _Exception;
 
-	public abstract void doPOST(_Session session, _WebFormData formData, String lang) throws _Exception;
+	public abstract void doPOST(_Session session, _WebFormData formData, LanguageType lang) throws _Exception;
 }

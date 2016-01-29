@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 
+import kz.flabs.localization.LanguageType;
 import kz.flabs.localization.Vocabulary;
 import kz.flabs.users.UserSession;
 import kz.nextbase.script._Exception;
@@ -81,8 +82,13 @@ public class ScriptEvent {
 		return "";
 	}
 
+	@Deprecated
 	public String getLocalizedWord(String word, String lang) {
 		return getWord(word, vocabulary, lang);
+	}
+
+	public String getLocalizedWord(String word, LanguageType lang) {
+		return getWord(word, vocabulary, lang.name());
 	}
 
 	public void setRedirectURL(_URL url) {

@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.jpa.util.UUIDConverter;
+import kz.flabs.localization.LanguageType;
 import kz.flabs.users.User;
 import kz.flabs.util.Util;
 import kz.flabs.util.XMLUtil;
@@ -40,6 +41,9 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 
 	@Column(name = "author", nullable = false, updatable = false)
 	protected Long author;
+
+	@Transient
+	private String authorName;
 
 	@Column(name = "reg_date", nullable = false, updatable = false)
 	protected Date regDate;
@@ -77,7 +81,10 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 
 	public void setAuthor(User user) {
 		author = (long) user.docID;
+	}
 
+	public void setAuthorName(long author) {
+		this.author = author;
 	}
 
 	@Override
@@ -100,7 +107,7 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 	 * object
 	 */
 	@Override
-	public String getFullXMLChunk() {
+	public String getFullXMLChunk(LanguageType lang) {
 		Class<?> noparams[] = {};
 		StringBuilder value = new StringBuilder(1000);
 		try {
@@ -129,7 +136,7 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 								methodValue = nestedValue.getClass().getName();
 							}
 						} else if (val.getClass().isInstance(_IPOJOObject.class)) {
-							methodValue = ((_IPOJOObject) val).getFullXMLChunk();
+							methodValue = ((_IPOJOObject) val).getFullXMLChunk(null);
 						} else {
 							methodValue = val.toString();
 						}
@@ -151,8 +158,8 @@ public abstract class AppEntity implements IAppEntity, _IPOJOObject {
 	 * reloaded in real entity object
 	 */
 	@Override
-	public String getShortXMLChunk() {
-		return getFullXMLChunk();
+	public String getShortXMLChunk(LanguageType lang) {
+		return getFullXMLChunk(lang);
 	}
 
 	@Override
