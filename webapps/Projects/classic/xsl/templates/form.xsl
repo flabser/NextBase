@@ -274,6 +274,28 @@
 						</font>		
 					</td>
 				</tr>
+				<xsl:if test="document/fields/remind_demand">
+					<tr>
+						<td class="fc">
+							<xsl:value-of select="document/captions/remindcount/@caption"/> :
+						</td>
+						<td>
+							<font>
+								<xsl:value-of select="document/fields/remind_demand"/>
+							</font>
+						</td>
+					</tr>
+					<tr>
+						<td class="fc">
+							<xsl:value-of select="document/captions/lastremind/@caption"/> :
+						</td>
+						<td>
+							<font>
+								<xsl:value-of select="document/fields/lastRemindDemand"/>
+							</font>
+						</td>
+					</tr>
+				</xsl:if>
 				<tr>
 					<td class="fc">
 						<xsl:value-of select="document/captions/infofreaders/@caption"/> :

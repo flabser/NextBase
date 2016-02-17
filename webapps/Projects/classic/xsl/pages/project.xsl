@@ -273,8 +273,7 @@
 												<xsl:with-param name="sortmode" select="$query/columns/viewdate/sorting/@mode"/>
 											</xsl:call-template>
 										</td>
-										<td style="width:46px;" class="thcell">
-										</td>
+										<td style="width:46px;" class="thcell"/>
 									</tr>
 								</table>
 							</div>
@@ -310,7 +309,7 @@
 					</img>
 				</xsl:if>
 				<xsl:if test="@hasresponse='0'">
-					<span style="width:23px; display:inline-block"></span>
+					<span style="width:23px; display:inline-block"/>
 				</xsl:if>
 				<a href="{@url}" title="{viewcontent/viewtext}" class="doclink">
 					<xsl:if test="@isread = 0">

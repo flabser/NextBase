@@ -861,6 +861,7 @@ function processStateChange(){
 				cancel_button_action= $("#canceldoc").attr("onclick");
 				$("#canceldoc").attr("onclick","javascript:confirmCancelAttach()");
 			}
+
 			var xml = req.responseXML,
 				isNotFinished = $(xml).find("finished")[0],
 				myBytesRead = $(xml).find("bytes_read")[0],
@@ -2217,6 +2218,35 @@ function extendDemand(docid, doctype){
 			$("body").css("cursor","default");
 			$('#dialog-extend').focus()
 		});
+		},
+		error: function(data,status,xhr) {
+		}
+	});
+}
+
+function remindDemand(docid, doctype){
+	enableblockform();
+	$('body').css('cursor','wait');
+	$("body").notify({"text":"пожалуйста ждите... идет отправка запроса на сервер...","onopen":function(){}});
+	$.ajax({
+		type: "GET",
+		datatype:"xml",
+		url: "Provider",
+		data: "type=page&id=reminddemand&docid="+docid+"&doctype="+doctype,
+		success: function (msg){
+			if($(msg).find("response").attr("status") == "ok"){
+				var notifydiv = "<font>"+"Напоминание о заявке отправлено"+"</font>";
+				$("#notifydiv").html(notifydiv);
+				if($(msg).find("redirect").text()!='' && $(msg).find("redirect")){
+					setTimeout(function() {
+						$("body").hidenotify({"delay":200,"onclose":function(){window.location = $(msg).find("redirect").text();}})
+					},250);
+				}else{
+					setTimeout(function() {
+						$("body").hidenotify({"delay":200,"onclose":function(){window.history.back()}})
+					},250);
+				}
+			}
 		},
 		error: function(data,status,xhr) {
 		}

@@ -384,7 +384,20 @@
 											</font>
 										</span>
 									</button> 
-								</xsl:if> 
+								</xsl:if>
+
+								<!-- Ознакомить -->
+								<xsl:if test="document/actionbar/action[.='CUSTOM_ACTION']/@id = 'REMIND_DEMAND' and $fields/status !='notActual' and $fields/control/allcontrol !='0'">
+									 <button style="margin-right:5px; margin-bottom:5px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" title="{$captions/remind/@caption}" id="remind">
+										<xsl:attribute name="onclick">javascript:remindDemand(<xsl:value-of select="document/@docid"/>, <xsl:value-of select="document/@doctype"/>)</xsl:attribute>
+										<span>
+											<img src="/SharedResources/img/iconset/email.png" class="button_img"/>
+											<font class="button_text">
+												<xsl:value-of select="$captions/remind/@caption"/>
+											</font>
+										</span>
+									</button>
+								</xsl:if>
 							</span>
 							<!-- Закрыть -->
 							<span style="float:right; padding-right:15px;">								
