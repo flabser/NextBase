@@ -8,7 +8,7 @@
 		<queryopen source="file">projects.form.comment.QueryOpen</queryopen>
 		<querysave source="file">projects.form.comment.QuerySave</querysave>
 		<postsave source="file">projects.form.comment.PostSave</postsave>
-	</events> 
+	</events>
 	<caption name="commenttext" source="KEYWORD">Текст комментария</caption>
 	<caption name="close" source="KEYWORD">Закрыть</caption>
 	<caption name="properties" source="KEYWORD">Свойства</caption>
@@ -46,4 +46,3 @@
     <caption name="makecomment" source="KEYWORD">Комментировать</caption>
     <caption name="sendmessage" source="KEYWORD">Отправить сообщение</caption>
 </rule>
- 

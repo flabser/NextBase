@@ -68,6 +68,9 @@
 	<caption name="statusdoc" source="KEYWORD">Состояние документа</caption>
 	<caption name="permissions" source="KEYWORD">Права доступа</caption>
 	<caption name="infofread" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="remind" source="KEYWORD">Напомнить о заявке</caption>
+	<caption name="remindcount" source="KEYWORD">Количество напоминаний</caption>
+	<caption name="lastremind" source="KEYWORD">Последнее напоминание</caption>
 	<caption name="infofreaders" source="KEYWORD">Кем прочтен</caption>
 	<caption name="readtime" source="KEYWORD">Время прочтения</caption>
 	<caption name="read" source="KEYWORD">Прочтен</caption>
