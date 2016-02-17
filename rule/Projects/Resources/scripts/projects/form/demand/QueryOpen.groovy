@@ -106,6 +106,7 @@ class QueryOpen extends _FormQueryOpen {
 			actionBar.addAction(new _Action("Отметить как не актуальное", "Отметить как не актуальное", "STOP_DOCUMENT"))
 			actionBar.addAction(new _Action("Отменить заявку", "Отменить заявку", "REVOKE_DEMAND"))
 			actionBar.addAction(new _Action("Продлить заявку", "Продлить заявку", "EXTEND_DEMAND"))
+			actionBar.addAction(new _Action("Напомнить", "Напомнить", "REMIND_DEMAND"))
 			if(doc.getResponses().size() == 0){
 				actionBar.addAction(new _Action(getLocalizedWord("Изменить содержание документа", lang), getLocalizedWord("Изменить содержание документа", lang), "EDITCONTENT_DEMAND"))
 			}
@@ -127,7 +128,13 @@ class QueryOpen extends _FormQueryOpen {
 		def nav = session.getPage("outline", webFormData)
 		publishElement(nav)
 		publishEmployer("docauthor", doc.getAuthorID());
+		if(doc.getField("remind_demand")){
+			publishValue("remind_demand", doc.getValueNumber("remind_demand"))
+			publishValue("lastRemindDemand",doc.getValueString("lastRemindDemand"))
+		}
+
 		publishValue("docdate", doc.getValueString("docdate"))
+		publishValue("responsible", doc.getValueString("responsible"))
 		publishValue("responsible", doc.getValueString("responsible"))
 		publishValue("vn", doc.getValueString("vn"))
 		publishValue("regDate", doc.getRegDate().format("dd.MM.yyyy HH:mm"))
