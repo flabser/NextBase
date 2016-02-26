@@ -71,6 +71,8 @@ public class _Control implements _IXMLContent  {
 		control.addProlongation(days, reason, ses.getCurrentUserID());
 	}
 
+	public void addProlongation(int days, String reason, _Session session){control.addProlongation(days, reason, session.getCurrentUserID());}
+
     public void addMarkOfExpiration(int days) {
         control.addMarkOfExpiration(days);
     }
