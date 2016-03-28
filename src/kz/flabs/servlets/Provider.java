@@ -1150,7 +1150,7 @@ public class Provider extends HttpServlet implements Const {
 			if (element.equalsIgnoreCase("page")) {
 				RunTimeParameters rtp = new RunTimeParameters();
 				rtp.parseParameters(request.getParameterValues("param"));
-				userSession.setRuntimeConditions(RuleType.UNKNOWN + "_" + request.getParameter("id"), rtp);
+				userSession.setRuntimeConditions(RuleType.PAGE + "_" + request.getParameter("id"), rtp);
 			}
 		} else if (operation.equalsIgnoreCase("get_ctrl_date")) {
 			int priority = 0, complication = 0;
