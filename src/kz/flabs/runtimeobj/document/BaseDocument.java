@@ -25,13 +25,6 @@ import java.util.regex.Pattern;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
-import org.apache.commons.dbcp.DelegatingConnection;
-import org.apache.commons.lang3.StringUtils;
-import org.postgresql.largeobject.LargeObject;
-import org.postgresql.largeobject.LargeObjectManager;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.Const;
 import kz.flabs.dataengine.DatabaseUtil;
@@ -64,6 +57,13 @@ import kz.nextbase.script._Exception;
 import kz.nextbase.script._Helper;
 import kz.pchelka.env.Environment;
 import kz.pchelka.server.Server;
+
+import org.apache.commons.dbcp.DelegatingConnection;
+import org.apache.commons.lang3.StringUtils;
+import org.postgresql.largeobject.LargeObject;
+import org.postgresql.largeobject.LargeObjectManager;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 @XmlAccessorType(XmlAccessType.NONE)
 public class BaseDocument extends AbstractComplexObject implements Const, Serializable {
@@ -119,9 +119,8 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 
 		try {
 			Statement attachStatement = conn.createStatement();
-			ResultSet attachResultSet = attachStatement
-					.executeQuery("select * from CUSTOM_BLOBS_MAINDOCS " + " where CUSTOM_BLOBS_MAINDOCS.DOCID = "
-							+ docID + " AND CUSTOM_BLOBS_MAINDOCS.NAME = '" + fieldName + "' ");
+			ResultSet attachResultSet = attachStatement.executeQuery("select * from CUSTOM_BLOBS_MAINDOCS " + " where CUSTOM_BLOBS_MAINDOCS.DOCID = "
+			        + docID + " AND CUSTOM_BLOBS_MAINDOCS.NAME = '" + fieldName + "' ");
 			while (attachResultSet.next()) {
 				if (attachResultSet.getLong("VALUE_OID") == 0) {
 					continue;
@@ -132,8 +131,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 					new File(toPutFolder + File.separator + folderIdx).mkdirs();
 				}
 
-				LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn)
-						.getInnermostDelegate()).getLargeObjectAPI();
+				LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
 				// LargeObjectManager lobj = ((org.postgresql.PGConnection)
 				// ((DelegatingConnection)
 				// conn).getInnermostDelegate()).getLargeObjectAPI();
@@ -142,7 +140,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 				InputStream is = obj.getInputStream();
 
 				FileOutputStream out = new FileOutputStream(toPutFolder + File.separator + folderIdx + File.separator
-						+ attachResultSet.getString("ORIGINALNAME"));
+				        + attachResultSet.getString("ORIGINALNAME"));
 				byte[] b = new byte[1048576];
 				int len = 0;
 				while ((len = is.read(b)) > 0) {
@@ -180,9 +178,8 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 		Connection conn = pool.getConnection();
 		try {
 			Statement attachStatement = conn.createStatement();
-			ResultSet attachResultSet = attachStatement.executeQuery("select * from CUSTOM_BLOBS_" + tableName
-					+ " where CUSTOM_BLOBS_" + tableName + ".ID IN (" + StringUtils.join(attachIDS, ",") + ") "
-					+ " AND CUSTOM_BLOBS_" + tableName + ".NAME = '" + fieldName + "' ");
+			ResultSet attachResultSet = attachStatement.executeQuery("select * from CUSTOM_BLOBS_" + tableName + " where CUSTOM_BLOBS_" + tableName
+			        + ".ID IN (" + StringUtils.join(attachIDS, ",") + ") " + " AND CUSTOM_BLOBS_" + tableName + ".NAME = '" + fieldName + "' ");
 			while (attachResultSet.next()) {
 				if (attachResultSet.getLong("VALUE_OID") == 0) {
 					continue;
@@ -193,14 +190,13 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 					new File(toPutFolder + File.separator + folderIdx).mkdirs();
 				}
 
-				LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn)
-						.getInnermostDelegate()).getLargeObjectAPI();
+				LargeObjectManager lobj = ((org.postgresql.PGConnection) ((DelegatingConnection) conn).getInnermostDelegate()).getLargeObjectAPI();
 				long oid = attachResultSet.getLong("VALUE_OID");
 				LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
 				InputStream is = obj.getInputStream();
 
 				FileOutputStream out = new FileOutputStream(toPutFolder + File.separator + folderIdx + File.separator
-						+ attachResultSet.getString("ORIGINALNAME"));
+				        + attachResultSet.getString("ORIGINALNAME"));
 				byte[] b = new byte[1048576];
 				int len = 0;
 				while ((len = is.read(b)) > 0) {
@@ -470,28 +466,28 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 			}
 
 		}
-		/* now add files that are absent in blobFieldsMap */
-		blobs_loop: for (Entry<String, BlobField> blob : blobs.entrySet()) {
-			// files_loop:
-			for (BlobFile file : blob.getValue().getFiles()) {
-				if (!blobFieldsMap.containsKey(blob.getKey())) {
-					blobFieldsMap.put(blob.getKey(), (BlobField) blob.getValue().clone());
-					continue blobs_loop;
-				}
-				BlobField existingBlob = blobFieldsMap.get(blob.getKey());
-				existingBlob.addFile(file);
-				/*
-				 * for (BlobFile file2:
-				 * blobFieldsMap.get(blob.getKey()).getFiles()) { if
-				 * (file2.equals(file)) { if
-				 * (!file2.originalName.equals(file.originalName)) {
-				 * file2.originalName = file.originalName; continue files_loop;
-				 * } } } if (!blobFieldsMap.get(blob.getKey()).hasFileName(file.
-				 * originalName)) {
-				 * blobFieldsMap.get(blob.getKey()).addFile(file); }
-				 */
+	/* now add files that are absent in blobFieldsMap */
+	blobs_loop: for (Entry<String, BlobField> blob : blobs.entrySet()) {
+		// files_loop:
+		for (BlobFile file : blob.getValue().getFiles()) {
+			if (!blobFieldsMap.containsKey(blob.getKey())) {
+				blobFieldsMap.put(blob.getKey(), (BlobField) blob.getValue().clone());
+				continue blobs_loop;
 			}
+			BlobField existingBlob = blobFieldsMap.get(blob.getKey());
+			existingBlob.addFile(file);
+			/*
+			 * for (BlobFile file2:
+			 * blobFieldsMap.get(blob.getKey()).getFiles()) { if
+			 * (file2.equals(file)) { if
+			 * (!file2.originalName.equals(file.originalName)) {
+			 * file2.originalName = file.originalName; continue files_loop;
+			 * } } } if (!blobFieldsMap.get(blob.getKey()).hasFileName(file.
+			 * originalName)) {
+			 * blobFieldsMap.get(blob.getKey()).addFile(file); }
+			 */
 		}
+	}
 	}
 
 	public void replaceStringField(String name, String value) {
@@ -836,9 +832,8 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 		return viewIcon;
 	}
 
-	public void setAccessRelatedFields(kz.flabs.runtimeobj.document.BaseDocument doc,
-			HashMap<String, SaveFieldRule> saveFieldsMap, HashMap<String, String[]> fields)
-					throws WebFormValueException {
+	public void setAccessRelatedFields(kz.flabs.runtimeobj.document.BaseDocument doc, HashMap<String, SaveFieldRule> saveFieldsMap,
+	        HashMap<String, String[]> fields) throws WebFormValueException {
 		for (SaveFieldRule saveField : saveFieldsMap.values()) {
 			Field val = null;
 			switch (saveField.valueSourceType) {
@@ -879,8 +874,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 		}
 	}
 
-	public void fillFieldsToSave(HashMap<String, ISaveField> saveFieldsMap, HashMap<String, String[]> fields)
-			throws WebFormValueException {
+	public void fillFieldsToSave(HashMap<String, ISaveField> saveFieldsMap, HashMap<String, String[]> fields) throws WebFormValueException {
 		for (ISaveField saveField : saveFieldsMap.values()) {
 			switch (saveField.getSourceType()) {
 			case STATIC:
@@ -915,8 +909,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 					}
 				}
 				String formSesID = fields.get("formsesid")[0];
-				String tmpFolder = Environment.tmpDir + File.separator + formSesID + File.separator
-						+ saveField.getName() + File.separator;
+				String tmpFolder = Environment.tmpDir + File.separator + formSesID + File.separator + saveField.getName() + File.separator;
 				HashMap<String, BlobFile> uploadedFiles = new RuntimeObjUtil().getUploadedFiles(fields);
 
 				if (uploadedFiles.size() == 0) {
@@ -946,8 +939,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 	protected void blobDataProcess(ISaveField saveField, HashMap<String, String[]> fields) {
 		String filesToDelete[] = fields.get("delete" + saveField.getName() + "name");
 		String formSesID = fields.get("formsesid")[0];
-		String tmpFolder = Environment.tmpDir + File.separator + formSesID + File.separator + saveField.getName()
-				+ File.separator;
+		String tmpFolder = Environment.tmpDir + File.separator + formSesID + File.separator + saveField.getName() + File.separator;
 		if (filesToDelete != null) {
 			RuntimeObjUtil.checkUploadedFiles(tmpFolder, Arrays.asList(filesToDelete));
 			for (String fileName : filesToDelete) {
@@ -956,8 +948,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 					continue;
 				}
 				if (!targetBlob.removeFile(fileName)) {
-					AppEnv.logger.warningLogEntry(
-							"Attachment \"" + fileName + "\" has not been deleted from " + getComplexID());
+					AppEnv.logger.warningLogEntry("Attachment \"" + fileName + "\" has not been deleted from " + getComplexID());
 				}
 			}
 		}
@@ -989,8 +980,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 		toDeleteAfterSave = Environment.tmpDir + File.separator + formSesID;
 	}
 
-	protected Field getValueForDoc(Map<String, ISaveField> saveFieldsMap, String ruleID, Map<String, String[]> fields)
-			throws WebFormValueException {
+	protected Field getValueForDoc(Map<String, ISaveField> saveFieldsMap, String ruleID, Map<String, String[]> fields) throws WebFormValueException {
 		ISaveField saveField = saveFieldsMap.get(ruleID);
 		Field field = null;
 		if (saveField != null) {
@@ -1028,14 +1018,12 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 			if (o != null) {
 				return (String[]) o;
 			} else {
-				AppEnv.logger.warningLogEntry(
-						"Field \"" + fieldName + "\" has not found on webform, have to return default value");
+				AppEnv.logger.warningLogEntry("Field \"" + fieldName + "\" has not found on webform, have to return default value");
 				String val[] = { defaultValue };
 				return val;
 			}
 		} catch (Exception e) {
-			AppEnv.logger.errorLogEntry(
-					"Unable to get field \"" + fieldName + "\" from webform, have to return default value");
+			AppEnv.logger.errorLogEntry("Unable to get field \"" + fieldName + "\" from webform, have to return default value");
 			String val[] = { defaultValue };
 			return val;
 		}
@@ -1170,8 +1158,8 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 		return readers;
 	}
 
-	public ArrayList<BaseDocument> getResponses(int docID, int docType, Set<String> complexUserID,
-			String absoluteUserID) throws DocumentAccessException, DocumentException, ComplexObjectException {
+	public ArrayList<BaseDocument> getResponses(int docID, int docType, Set<String> complexUserID, String absoluteUserID)
+	        throws DocumentAccessException, DocumentException, ComplexObjectException {
 		return db.getResponses(docID, docType, complexUserID, absoluteUserID);
 	}
 
@@ -1179,8 +1167,8 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 		return db.getDescendants(docID, docType, null, 1, complexUserID, absoluteUserID);
 	}
 
-	public ArrayList<BaseDocument> getDescendantsArray(int docID, int docType, Set<String> complexUserID,
-			String absoluteUserID) throws DocumentException, ComplexObjectException {
+	public ArrayList<BaseDocument> getDescendantsArray(int docID, int docType, Set<String> complexUserID, String absoluteUserID)
+	        throws DocumentException, ComplexObjectException {
 		return db.getDescendantsArray(docID, docType, null, 1, complexUserID, absoluteUserID);
 	}
 
@@ -1232,15 +1220,13 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 
 	public ArrayList<String> copyAttachments(BaseDocument targetDoc) {
 		ArrayList<String> result = new ArrayList<String>();
-		for (BlobField existingBlob : this.blobFieldsMap.values()) {
+		for (BlobField existingBlob : blobFieldsMap.values()) {
 			for (BlobFile existingFile : existingBlob.getFiles()) {
-				existingFile.path = this.db.getDocumentAttach(this.getDocID(), this.docType, supervisorGroupAsSet,
-						existingBlob.name, existingFile.originalName);
+				existingFile.path = db.getDocumentAttach(getDocID(), docType, supervisorGroupAsSet, existingBlob.name, existingFile.originalName);
 				result.add(existingFile.originalName);
 			}
 		}
-		targetDoc.fillBlobs(this.blobFieldsMap);
-
+		targetDoc.fillBlobs(blobFieldsMap);
 		return result;
 	}
 
@@ -1294,8 +1280,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 		return fieldsMap;
 	}
 
-	public int save(User user)
-			throws DocumentAccessException, DocumentException, LicenseException, ComplexObjectException {
+	public int save(User user) throws DocumentAccessException, DocumentException, LicenseException, ComplexObjectException {
 		return -1;
 	}
 
@@ -1304,8 +1289,8 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 		return "form:" + form + ",docid:" + docID + ",docType:" + docType + "ddbid:" + ddbID + ":" + fieldsMap;
 	}
 
-	public void parseXml(org.w3c.dom.Document xmlDoc, int pDocId) throws ComplexObjectException, IllegalAccessException,
-			InstantiationException, ClassNotFoundException, _Exception {
+	public void parseXml(org.w3c.dom.Document xmlDoc, int pDocId) throws ComplexObjectException, IllegalAccessException, InstantiationException,
+	        ClassNotFoundException, _Exception {
 		// setParentDocumentID(String.valueOf(pDocId));
 
 		parentDocID = pDocId;
@@ -1410,28 +1395,27 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 		String[] viewTextList = getViewTextList().toArray(new String[getViewTextList().size()]);
 		String viewTexts = "";
 		for (int i = 0; i < viewTextList.length; i++) {
-			viewTexts += " viewtext" + i + "=\""
-					+ (viewTextList[i] != null && viewTextList[i].trim().length() > 0 ? viewTextList[i].trim()
-							.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", "\"")
-							.replace("&apos;", "'").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-							.replace("\"", "&quot;").replace("'", "&apos;") : "null")
-					+ "\" ";
+			viewTexts += " viewtext"
+			        + i
+			        + "=\""
+			        + (viewTextList[i] != null && viewTextList[i].trim().length() > 0 ? viewTextList[i].trim().replace("&amp;", "&")
+			                .replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", "\"").replace("&apos;", "'").replace("&", "&amp;")
+			                .replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&apos;") : "null") + "\" ";
 		}
 		viewTexts = viewTexts.replace("viewtext0", "viewtext");
 
 		String xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><document ";
 		for (Field field : fields()) {
 			String value = field.getType() == FieldType.COMPLEX_OBJECT ?
-					// field.valueAsObject.getPersistentValue()
-					AbstractComplexObject.marshall(field.valueAsObject.getClass().getName(), field.valueAsObject)
-					: field.valueAsText;
-			// TODO replace with lang3 escape method
-			value = value.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", "\"")
-					.replace("&apos;", "'").replace("&nbsp;", " ");
-			value = value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;")
-					.replace("'", "&apos;");
-			xmlFragment.append("<" + field.name + RuntimeObjUtil.getTypeAttribute(field.getTypeAsDatabaseType()) + ">"
-					+ value + "</" + field.name + ">");
+			// field.valueAsObject.getPersistentValue()
+			AbstractComplexObject.marshall(field.valueAsObject.getClass().getName(), field.valueAsObject)
+			        : field.valueAsText;
+					// TODO replace with lang3 escape method
+					value = value.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", "\"").replace("&apos;", "'")
+			        .replace("&nbsp;", " ");
+					value = value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&apos;");
+					xmlFragment.append("<" + field.name + RuntimeObjUtil.getTypeAttribute(field.getTypeAsDatabaseType()) + ">" + value + "</" + field.name
+			        + ">");
 		}
 
 		for (BlobField field : blobFieldsMap.values()) {
@@ -1463,23 +1447,25 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 				xmlFragment.append("<user>" + a + "</user>");
 			}
 			xmlFragment.append("</editors>");
-			xml += " doctype = \"" + docType + "\" form= \"" + form + "\" dbid= \"" + dbID + "\" docid = \"" + docID
-					+ "\" " + "parentdocid = \"" + parentDocID + "\" parentdoctype = \"" + parentDocType + "\""
-					+ " author=\"" + authorID + "\" ddbid = \"" + ddbID + "\" " + "regdate=\""
-					+ Util.convertDataTimeToString(regDate) + "\" " + "lastupdate=\""
-					+ Util.convertDataTimeToString(lastUpdate) + "\" " + viewTexts + "defaultreuleid= \""
-					+ defaultRuleID + "\" viewnumber= \"" + getViewNumber() + "\" " + "viewdate= \""
-					+ Util.convertDataTimeToString(getViewDate()) + "\" sign= \"" + getSign() + "\" " + "hastopic= \""
-					+ (hasDiscussion ? 1 : 0) + "\" signfields= \"" + getSignedFields() + "\">" + xmlFragment;
+			xml += " doctype = \"" + docType + "\" form= \"" + form + "\" dbid= \"" + dbID + "\" docid = \"" + docID + "\" " + "parentdocid = \""
+			        + parentDocID + "\" parentdoctype = \"" + parentDocType + "\"" + " author=\"" + authorID + "\" ddbid = \"" + ddbID + "\" "
+			        + "regdate=\"" + Util.convertDataTimeToString(regDate) + "\" " + "lastupdate=\"" + Util.convertDataTimeToString(lastUpdate)
+			        + "\" " + viewTexts + "defaultreuleid= \"" + defaultRuleID + "\" viewnumber= \"" + getViewNumber() + "\" " + "viewdate= \""
+			        + Util.convertDataTimeToString(getViewDate()) + "\" sign= \"" + getSign() + "\" " + "hastopic= \"" + (hasDiscussion ? 1 : 0)
+			        + "\" signfields= \"" + getSignedFields() + "\">" + xmlFragment;
 		} else {
 			String hasDescendant = this.hasResponse(Const.sysGroupAsSet, Const.sysUser);
-			xml += " hasDescendant=\"" + hasDescendant + "\" id=\"" + ddbID + "\" lastupdate=\""
-					+ Util.convertDataTimeToString(lastUpdate) + "\" viewtext =\""
-					+ (viewTextList[0] != null && viewTextList[0].trim().length() > 0 ? viewTextList[0].trim()
-							.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", "\"")
-							.replace("&apos;", "'").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-							.replace("\"", "&quot;").replace("'", "&apos;") : "null")
-					+ "\">" + "<fields>" + xmlFragment + "</fields>";
+			xml += " hasDescendant=\""
+			        + hasDescendant
+			        + "\" id=\""
+			        + ddbID
+			        + "\" lastupdate=\""
+			        + Util.convertDataTimeToString(lastUpdate)
+			        + "\" viewtext =\""
+			        + (viewTextList[0] != null && viewTextList[0].trim().length() > 0 ? viewTextList[0].trim().replace("&amp;", "&")
+			                .replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", "\"").replace("&apos;", "'").replace("&", "&amp;")
+			                .replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&apos;") : "null") + "\">" + "<fields>"
+			        + xmlFragment + "</fields>";
 
 			if (hasDescendant == "true") {
 
@@ -1487,8 +1473,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 				ArrayList<BaseDocument> descendantDoc = null;
 
 				try {
-					descendantDoc = this.getResponses(this.getDocID(), this.docType, Const.sysGroupAsSet,
-							Const.sysUser);
+					descendantDoc = this.getResponses(this.getDocID(), this.docType, Const.sysGroupAsSet, Const.sysUser);
 				} catch (DocumentAccessException e) {
 					e.printStackTrace();
 				} catch (DocumentException e) {
@@ -1526,7 +1511,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 
 	/*
 	 * public int getTopicID() { return topicID; }
-	 *
+	 * 
 	 * public void setTopicID(int topicID) { this.topicID = topicID; }
 	 */
 
@@ -1539,10 +1524,9 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 	}
 
 	public String toXMLEntry(String value) {
-		return "<entry hasattach=\"" + Integer.toString(0) + "\" doctype=\"" + docType + "\"  " + "docid=\"" + docID
-				+ "\"" + XMLUtil.getAsAttribute("viewtext", getViewText())
-				+ "url=\"Provider?type=edit&amp;element=document&amp;id=" + form + "&amp;key=" + docID + "\" " + ">"
-				+ value + "</entry>";
+		return "<entry hasattach=\"" + Integer.toString(0) + "\" doctype=\"" + docType + "\"  " + "docid=\"" + docID + "\""
+		        + XMLUtil.getAsAttribute("viewtext", getViewText()) + "url=\"Provider?type=edit&amp;element=document&amp;id=" + form + "&amp;key="
+		        + docID + "\" " + ">" + value + "</entry>";
 
 	}
 
@@ -1551,12 +1535,12 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 		String viewText = getViewText();
 
 		for (Field field : fields()) {
-			xmlFragment.append("<" + field.name + RuntimeObjUtil.getTypeAttribute(field.getTypeAsDatabaseType()) + ">"
-					+ field.valueAsText + "</" + field.name + ">");
+			xmlFragment.append("<" + field.name + RuntimeObjUtil.getTypeAttribute(field.getTypeAsDatabaseType()) + ">" + field.valueAsText + "</"
+			        + field.name + ">");
 		}
 
-		String xml = "<document doctype = \"" + docType + "\"" + "id = \"" + ddbID + "\" viewtext=\"" + viewText + "\" "
-				+ "lastupdate=\"" + Util.convertDataTimeToString(lastUpdate) + "\">" + xmlFragment + "</document>";
+		String xml = "<document doctype = \"" + docType + "\"" + "id = \"" + ddbID + "\" viewtext=\"" + viewText + "\" " + "lastupdate=\""
+		        + Util.convertDataTimeToString(lastUpdate) + "\">" + xmlFragment + "</document>";
 		return xml;
 
 	}
@@ -1588,8 +1572,7 @@ public class BaseDocument extends AbstractComplexObject implements Const, Serial
 
 	public String getParentDocumentID() {
 		try {
-			BaseDocument parentDoc = db.getDocumentByComplexID(parentDocType, parentDocID, Const.supervisorGroupAsSet,
-					Const.sysUser);
+			BaseDocument parentDoc = db.getDocumentByComplexID(parentDocType, parentDocID, Const.supervisorGroupAsSet, Const.sysUser);
 			return parentDoc.getDdbID();
 		} catch (Exception e) {
 			return "";
