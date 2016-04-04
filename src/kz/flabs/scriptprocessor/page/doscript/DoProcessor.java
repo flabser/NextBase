@@ -1,9 +1,10 @@
 package kz.flabs.scriptprocessor.page.doscript;
 
+import groovy.lang.GroovyObject;
+
 import java.util.ArrayList;
 import java.util.Map;
 
-import groovy.lang.GroovyObject;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.localization.Vocabulary;
 import kz.flabs.scriptprocessor.form.querysave.IQuerySaveTransaction;
@@ -31,11 +32,12 @@ public class DoProcessor {
 		webFormData = new _WebFormData(formData);
 	}
 
-	// @TODO logger
+	// TODO logger
 	public XMLResponse processScript(String className) throws ClassNotFoundException {
 		try {
 			Class pageClass = Class.forName(className);
 			groovyObject = (GroovyObject) pageClass.newInstance();
+			// System.out.println(className);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {

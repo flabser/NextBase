@@ -23,6 +23,7 @@ import kz.flabs.webrule.constants.RunMode;
 import kz.flabs.webrule.constants.ValueSourceType;
 import kz.flabs.webrule.page.ElementRule;
 import kz.flabs.webrule.page.ElementScript;
+import kz.pchelka.env.Environment;
 
 import org.codehaus.groovy.control.CompilationFailedException;
 import org.codehaus.groovy.control.CompilerConfiguration;
@@ -200,6 +201,13 @@ public class FormRule extends Rule implements Const {
 				docType = DOCTYPE_POST;
 			}
 
+			CompilerConfiguration compiler = new CompilerConfiguration();
+			if (Environment.isDevMode) {
+				compiler.setTargetDirectory("bin");
+			} else {
+				compiler.setTargetDirectory(getScriptDirPath());
+			}
+
 			Node qoNode = XMLUtil.getNode(doc, "/rule/events/queryopen", false);
 			qoClassName = getClassName(qoNode, "queryopen");
 			if (qoClassName != null) {
@@ -215,8 +223,9 @@ public class FormRule extends Rule implements Const {
 				if (!qs.equals("")) {
 					querySaveEnable = true;
 					querySaveScript = qs;
+
 					ClassLoader parent = getClass().getClassLoader();
-					GroovyClassLoader loader = new GroovyClassLoader(parent);
+					GroovyClassLoader loader = new GroovyClassLoader(parent, compiler);
 					try {
 						querySaveClass = loader.parseClass(QuerySaveProcessor.normalizeScript(querySaveScript));
 					} catch (MultipleCompilationErrorsException e) {
@@ -236,7 +245,7 @@ public class FormRule extends Rule implements Const {
 					postSaveEnable = true;
 					postSaveScript = ps;
 					ClassLoader parent = getClass().getClassLoader();
-					GroovyClassLoader loader = new GroovyClassLoader(parent);
+					GroovyClassLoader loader = new GroovyClassLoader(parent, compiler);
 					try {
 						postSaveClass = loader.parseClass(PostSaveProcessor.normalizeScript(postSaveScript));
 					} catch (MultipleCompilationErrorsException e) {
