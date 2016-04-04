@@ -20,7 +20,7 @@ import org.apache.catalina.LifecycleException;
 
 public class Server {
 	public static kz.pchelka.log.ILogger logger;
-	public static final String serverVersion = "2.8.5";
+	public static final String serverVersion = "2.8.6";
 	public static final int necessaryDbVersion = 104;
 	public static String compilationTime = "";
 	public static final String serverTitle = "NextBase " + serverVersion + "-" + Integer.toString(necessaryDbVersion);
@@ -36,7 +36,7 @@ public class Server {
 		logger.verboseLogEntry("Build " + compilationTime);
 		logger.normalLogEntry("Copyright(c) Lab of the Future 2014. All Right Reserved");
 		logger.normalLogEntry("Operating system: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "("
-				+ System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
+		        + System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
 
 		Environment.init();
 
