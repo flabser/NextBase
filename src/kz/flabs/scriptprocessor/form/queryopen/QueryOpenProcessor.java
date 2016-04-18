@@ -2,9 +2,6 @@ package kz.flabs.scriptprocessor.form.queryopen;
 
 import java.util.HashMap;
 
-import org.codehaus.groovy.control.CompilerConfiguration;
-
-import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyObject;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.localization.Vocabulary;
@@ -18,7 +15,7 @@ import kz.flabs.runtimeobj.document.task.Task;
 import kz.flabs.scriptprocessor.ScriptProcessorUtil;
 import kz.flabs.users.User;
 import kz.flabs.users.UserSession;
-import kz.flabs.webrule.constants.RunMode;
+import kz.flabs.util.Util;
 import kz.nextbase.script._Document;
 import kz.nextbase.script._Execution;
 import kz.nextbase.script._Glossary;
@@ -30,7 +27,6 @@ import kz.nextbase.script.struct._Employer;
 import kz.nextbase.script.struct._Organization;
 import kz.nextbase.script.struct._UserGroup;
 import kz.nextbase.script.task._Task;
-import kz.pchelka.env.Environment;
 import kz.pchelka.scheduler.IProcessInitiator;
 
 public class QueryOpenProcessor implements IProcessInitiator {
@@ -79,19 +75,13 @@ public class QueryOpenProcessor implements IProcessInitiator {
 
 	public PublishResult processScript(String className) throws ClassNotFoundException {
 		try {
-			Class queryClass = null;
-			ClassLoader parent = this.getClass().getClassLoader();
-			CompilerConfiguration compiler = new CompilerConfiguration();
-			if (Environment.debugMode == RunMode.ON) {
-				compiler.setRecompileGroovySource(true);
-				compiler.setMinimumRecompilationInterval(0);
-				GroovyClassLoader classLoader = new GroovyClassLoader(parent, compiler);
-				classLoader.setShouldRecompile(true);
-				queryClass = Class.forName(className, true, classLoader);
-			} else {
-				queryClass = Class.forName(className);
+			try {
+				Class queryOpenClass = Class.forName(className);
+
+				groovyObject = (GroovyObject) queryOpenClass.newInstance();
+			} catch (ClassNotFoundException e) {
+				groovyObject = Util.compileGroovy(env, className).newInstance();
 			}
-			groovyObject = (GroovyObject) queryClass.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -119,7 +109,7 @@ public class QueryOpenProcessor implements IProcessInitiator {
 	@Deprecated
 	public static String normalizeScript(String script) {
 		String beforeScript = "import kz.flabs.dataengine.Const;" + "import kz.flabs.scriptprocessor.form.queryopen.*;"
-				+ ScriptProcessorUtil.packageList + "class Foo extends AbstractQueryOpenScript{";
+		        + ScriptProcessorUtil.packageList + "class Foo extends AbstractQueryOpenScript{";
 		String afterScript = "}";
 		return beforeScript + script + afterScript;
 	}

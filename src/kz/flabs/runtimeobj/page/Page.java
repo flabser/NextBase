@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.apache.http.HttpStatus;
+
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.Const;
 import kz.flabs.exception.DocumentAccessException;
@@ -33,8 +35,6 @@ import kz.flabs.webrule.page.ElementType;
 import kz.flabs.webrule.page.PageRule;
 import kz.pchelka.env.Environment;
 import kz.pchelka.scheduler.IProcessInitiator;
-
-import org.apache.http.HttpStatus;
 
 public class Page implements IProcessInitiator, Const {
 	public boolean fileGenerated;
@@ -65,8 +65,8 @@ public class Page implements IProcessInitiator, Const {
 		this.rule = rule;
 	}
 
-	public String getSpravFieldSet(User user, String lang) throws RuleException, DocumentException, DocumentAccessException,
-	QueryFormulaParserException, QueryException, LocalizatorException {
+	public String getSpravFieldSet(User user, String lang)
+	        throws RuleException, DocumentException, DocumentAccessException, QueryFormulaParserException, QueryException, LocalizatorException {
 		StringBuffer glossariesAsText = new StringBuffer("<glossaries>");
 		SourceSupplier ss = new SourceSupplier(user, env, lang);
 		for (GlossaryRule glos : rule.getGlossary()) {
@@ -86,8 +86,8 @@ public class Page implements IProcessInitiator, Const {
 	public String getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) throws DocumentException {
 		StringBuffer captionsText = new StringBuffer(100);
 		for (Caption cap : captions) {
-			captionsText.append("<" + cap.captionID + captionTextSupplier.getValueAsCaption(cap.source, cap.value).toAttrValue() + "></"
-					+ cap.captionID + ">");
+			captionsText.append(
+			        "<" + cap.captionID + captionTextSupplier.getValueAsCaption(cap.source, cap.value).toAttrValue() + "></" + cap.captionID + ">");
 		}
 
 		if (captionsText.toString().equals("")) {
@@ -98,16 +98,16 @@ public class Page implements IProcessInitiator, Const {
 
 	}
 
-	public String getAsXML(User user, String lang) throws RuleException, DocumentException, DocumentAccessException, QueryFormulaParserException,
-	QueryException, LocalizatorException {
+	public String getAsXML(User user, String lang)
+	        throws RuleException, DocumentException, DocumentAccessException, QueryFormulaParserException, QueryException, LocalizatorException {
 		SourceSupplier captionTextSupplier = new SourceSupplier(env, lang);
 		String captions = getCaptions(captionTextSupplier, rule.captions);
 		String glossarySet = getSpravFieldSet(user, lang);
 		return "<content>" + rule.getAsXML() + glossarySet + captions + "</content>";
 	}
 
-	public StringBuffer process(Map<String, String[]> formData, String method) throws ClassNotFoundException, RuleException,
-	QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
+	public StringBuffer process(Map<String, String[]> formData, String method)
+	        throws ClassNotFoundException, RuleException, QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
 		StringBuffer resultOut = null;
 		long start_time = System.currentTimeMillis();
 		switch (rule.caching) {
@@ -134,21 +134,31 @@ public class Page implements IProcessInitiator, Const {
 		StringBuffer output = new StringBuffer(5000);
 
 		output.append("<page id=\"" + rule.id + "\" cache=\"" + rule.caching + "\" elapsed_time = \"" + Util.getTimeDiffInSec(start_time) + "\" "
-				+ flashAttr + ">");
+		        + flashAttr + ">");
 		output.append(resultOut);
 		return output.append("</page>");
 	}
 
-	public void postProcess(Map<String, String[]> formData, String method) throws ClassNotFoundException, RuleException, QueryFormulaParserException,
-	DocumentException, DocumentAccessException, QueryException {
+	public void postProcess(Map<String, String[]> formData, String method)
+	        throws ClassNotFoundException, RuleException, QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
 		for (ElementRule elementRule : rule.elements) {
 			if (elementRule.type == ElementType.SCRIPT && elementRule.doClassName.getType() == ValueSourceType.JAVA_CLASS) {
 				User user = userSession.currentUser;
 				DoProcessor sProcessor = new DoProcessor(env, user, userSession.lang, fields, this);
 				XMLResponse xmlResp = sProcessor.processJava(elementRule.doClassName.getClassName(), method);
+
 				status = xmlResp.status;
-				toJSON = true;
-				outcome = xmlResp.json;
+				if (xmlResp.json != null) {
+					toJSON = true;
+					outcome = xmlResp.json;
+				} else {
+					StringBuffer output = new StringBuffer(5000);
+					output.append("<page id=\"" + rule.id + "\" cache=\"" + rule.caching + "\">");
+					output.append(xmlResp.toXML());
+					output.append("</page>");
+					outcome = new Outcome();
+					outcome.setXMLContent(output);
+				}
 				break;
 			} else {
 				process(formData, method);
@@ -167,8 +177,8 @@ public class Page implements IProcessInitiator, Const {
 
 	}
 
-	public StringBuffer getContent(Map<String, String[]> formData, String method) throws ClassNotFoundException, RuleException,
-	QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
+	public StringBuffer getContent(Map<String, String[]> formData, String method)
+	        throws ClassNotFoundException, RuleException, QueryFormulaParserException, DocumentException, DocumentAccessException, QueryException {
 		fields = formData;
 
 		StringBuffer output = new StringBuffer(1000);
@@ -191,7 +201,7 @@ public class Page implements IProcessInitiator, Const {
 					DoProcessor sProcessor = new DoProcessor(env, user, userSession.lang, fields, this);
 					switch (elementRule.doClassName.getType()) {
 					case GROOVY_FILE:
-						System.out.println(this);
+						// System.out.println(this);
 						xmlResp = sProcessor.processScript(elementRule.doClassName.getClassName());
 						break;
 					case FILE:
@@ -290,7 +300,7 @@ public class Page implements IProcessInitiator, Const {
 					// userSession.currentUser);
 					query.setQiuckFilter(fields, env);
 					int result = query.fetch(pageNum, pageSize, parentDocProp[0], parentDocProp[1], userSession.expandedThread,
-							userSession.expandedCategory, userSession.getFlashDoc(), fields);
+					        userSession.expandedCategory, userSession.getFlashDoc(), fields);
 					if (result > -1) {
 						xmlContent.append(query.toXML());
 					}

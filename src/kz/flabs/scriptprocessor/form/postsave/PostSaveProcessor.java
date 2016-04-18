@@ -13,6 +13,7 @@ import kz.flabs.runtimeobj.document.task.Task;
 import kz.flabs.scriptprocessor.ScriptProcessorUtil;
 import kz.flabs.scriptprocessor.form.querysave.IQuerySaveTransaction;
 import kz.flabs.users.User;
+import kz.flabs.util.Util;
 import kz.flabs.webrule.constants.ValueSourceType;
 import kz.flabs.webrule.page.ElementScript;
 import kz.nextbase.script._Document;
@@ -86,14 +87,18 @@ public class PostSaveProcessor extends Thread implements IProcessInitiator {
 	@SuppressWarnings("unchecked")
 	public void setClass(ElementScript s) throws ClassNotFoundException {
 		script = s;
-		Class postSaveClass = Class.forName(script.getClassName());
+		Class postSaveClass;
+		try {
+			postSaveClass = Class.forName(script.getClassName());
+		} catch (ClassNotFoundException e) {
+			postSaveClass = Util.compileGroovy(env, script.getClassName());
+		}
 		this.scriptClass = postSaveClass;
 	}
 
 	public static String normalizeScript(String script) {
-		String beforeScript = "import java.util.HashSet;" + "import kz.flabs.dataengine.Const;"
-				+ "import kz.flabs.scriptprocessor.form.postsave.*;" + ScriptProcessorUtil.packageList
-				+ "class Foo extends AbstractPostSaveScript{";
+		String beforeScript = "import java.util.HashSet;" + "import kz.flabs.dataengine.Const;" + "import kz.flabs.scriptprocessor.form.postsave.*;"
+		        + ScriptProcessorUtil.packageList + "class Foo extends AbstractPostSaveScript{";
 		String afterScript = "}";
 		return beforeScript + script + afterScript;
 	}

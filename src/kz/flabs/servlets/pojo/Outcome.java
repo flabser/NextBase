@@ -6,6 +6,7 @@ import java.util.List;
 public class Outcome {
 	private OutcomeType type = OutcomeType.OK;
 	private List<String> message = new ArrayList<String>();
+	private StringBuffer XMLContent = new StringBuffer(5000);
 
 	public OutcomeType getType() {
 		return type;
@@ -29,6 +30,14 @@ public class Outcome {
 		message.clear();
 		addMessage(s);
 		return this;
+	}
+
+	public StringBuffer getXMLContent() {
+		return XMLContent;
+	}
+
+	public void setXMLContent(StringBuffer xMLContent) {
+		XMLContent.append(xMLContent);
 	}
 
 }

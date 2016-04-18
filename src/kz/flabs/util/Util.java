@@ -22,10 +22,16 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.codehaus.groovy.control.CompilationFailedException;
+import org.codehaus.groovy.control.CompilerConfiguration;
+
+import groovy.lang.GroovyClassLoader;
+import groovy.lang.GroovyObject;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.jpa.AppEntity;
 import kz.flabs.exception.ConversionError;
 import kz.flabs.exception.DataConversionException;
+import kz.pchelka.env.Environment;
 import kz.pchelka.server.Server;
 
 public class Util {
@@ -50,6 +56,34 @@ public class Util {
 			map.put(k, sourceMap.get(k));
 		}
 		return map;
+
+	}
+
+	public static Class<GroovyObject> compileGroovy(AppEnv env, String className) {
+		Class<GroovyObject> clazz = null;
+		ClassLoader parent = Util.class.getClassLoader();
+		CompilerConfiguration compiler = new CompilerConfiguration();
+		String scriptDirPath = env.globalSetting.rulePath + File.separator + "Resources" + File.separator + "scripts";
+		if (Environment.isDevMode) {
+			compiler.setTargetDirectory("bin");
+		} else {
+
+			compiler.setTargetDirectory(scriptDirPath);
+		}
+		GroovyClassLoader loader = new GroovyClassLoader(parent, compiler);
+		File groovyFile = new File(scriptDirPath + File.separator + className.replace(".", File.separator) + ".groovy");
+		if (groovyFile.exists()) {
+			try {
+				clazz = loader.parseClass(groovyFile);
+			} catch (CompilationFailedException e1) {
+				AppEnv.logger.errorLogEntry(e1);
+			} catch (IOException e1) {
+				AppEnv.logger.errorLogEntry(e1);
+			}
+		} else {
+			AppEnv.logger.errorLogEntry("File \"" + groovyFile.getAbsolutePath() + "\" not found");
+		}
+		return clazz;
 
 	}
 
@@ -383,12 +417,11 @@ public class Util {
 	}
 
 	public static void main(String[] args) {
-		System.out
-		.println(removeHTMLTags(
-				"<p1><p></p1>I-4979: Берг П. П. -> (Берг П. П.)<p><p> <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>")
-				.length());
-		System.out
-		.println(removeHTMLTags("I-4979: Берг П. П. -> (Берг П. П.) <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>"));
+		System.out.println(removeHTMLTags(
+		        "<p1><p></p1>I-4979: Берг П. П. -> (Берг П. П.)<p><p> <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>")
+		                .length());
+		System.out.println(removeHTMLTags(
+		        "I-4979: Берг П. П. -> (Берг П. П.) <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>"));
 	}
 
 	public static String removeHTMLTags(String text) {

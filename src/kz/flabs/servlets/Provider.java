@@ -551,8 +551,13 @@ public class Provider extends HttpServlet implements Const {
 		String method = request.getMethod();
 		if (method.equalsIgnoreCase("POST")) {
 			page.postProcess(fields, method);
-			result.publishAs = PublishAsType.JSON;
-			result.jsonOutput = page.outcome;
+			if (result.jsonOutput != null) {
+				result.publishAs = PublishAsType.JSON;
+				result.jsonOutput = page.outcome;
+			} else {
+				result.output.append(page.outcome.getXMLContent());
+			}
+
 			result.httpStatus = page.status;
 		} else {
 			result.output.append(page.process(fields, method));
