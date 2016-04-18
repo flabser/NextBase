@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.Const;
 import kz.flabs.dataengine.FTIndexEngineException;
@@ -94,8 +96,6 @@ import kz.nextbase.script._Exception;
 import kz.pchelka.env.Environment;
 import kz.pchelka.server.Server;
 import net.sf.saxon.s9api.SaxonApiException;
-
-import com.google.gson.Gson;
 
 public class Provider extends HttpServlet implements Const {
 	private static final long serialVersionUID = 2352885167311108325L;
@@ -230,7 +230,7 @@ public class Provider extends HttpServlet implements Const {
 						PrintWriter out = response.getWriter();
 						Gson gson = new Gson();
 						String json = gson.toJson(result.jsonOutput);
-						System.out.println(json);
+						// System.out.println(json);
 						out.println(json);
 						out.close();
 					} else if (result.publishAs == PublishAsType.HTML) {
@@ -416,8 +416,8 @@ public class Provider extends HttpServlet implements Const {
 	}
 
 	@Deprecated
-	private ProviderResult outline(HttpServletRequest request, IRule rule, UserSession userSession, String id) throws UnsupportedEncodingException,
-	        RuleException, QueryFormulaParserException, DocumentException {
+	private ProviderResult outline(HttpServletRequest request, IRule rule, UserSession userSession, String id)
+	        throws UnsupportedEncodingException, RuleException, QueryFormulaParserException, DocumentException {
 		OutlineRule outlineRule = (OutlineRule) rule;
 		ProviderResult result = new ProviderResult(outlineRule.publishAs, outlineRule.getXSLT());
 		Outline outline = null;
@@ -625,16 +625,16 @@ public class Provider extends HttpServlet implements Const {
 		}
 		String keyWord = request.getParameter("keyword");
 		keyWord = new String(keyWord.getBytes("ISO-8859-1"), "UTF-8");
-		FTSearchRequest ftRequest = new FTSearchRequest(env, userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID(),
-		        keyWord, page, userSession.pageSize);
+		FTSearchRequest ftRequest = new FTSearchRequest(env, userSession.currentUser.getAllUserGroups(), userSession.currentUser.getUserID(), keyWord,
+		        page, userSession.pageSize);
 		result.output.append(ftRequest.getDataAsXML());
 		result.addHistory = true;
 		return result;
 	}
 
-	private ProviderResult edit(HttpServletRequest request, IRule rule, UserSession userSession, String key) throws RuleException, DocumentException,
-	        DocumentAccessException, QueryFormulaParserException, QueryException, LocalizatorException, ClassNotFoundException, _Exception,
-	        ComplexObjectException {
+	private ProviderResult edit(HttpServletRequest request, IRule rule, UserSession userSession, String key)
+	        throws RuleException, DocumentException, DocumentAccessException, QueryFormulaParserException, QueryException, LocalizatorException,
+	        ClassNotFoundException, _Exception, ComplexObjectException {
 		String element = request.getParameter("element");
 		FormRule formRule = (FormRule) rule;
 		ProviderResult result = new ProviderResult(formRule.publishAs, formRule.getXSLT());
@@ -730,7 +730,7 @@ public class Provider extends HttpServlet implements Const {
 	@Deprecated
 	private ProviderResult document(HttpServletRequest request, HttpServletResponse response, IRule rule, UserSession userSession, String key,
 	        String id, String type) throws DocumentAccessException, RuleException, QueryFormulaParserException, DocumentException, QueryException,
-	        LocalizatorException, ClassNotFoundException, _Exception, NumberFormatException, ComplexObjectException {
+	                LocalizatorException, ClassNotFoundException, _Exception, NumberFormatException, ComplexObjectException {
 		// FormRule formRule = (FormRule) rule;
 		FormRule formRule = (FormRule) env.ruleProvider.getRule(FORM_RULE, id);
 		ProviderResult result = new ProviderResult(formRule.publishAs, formRule.getXSLT());
@@ -791,7 +791,7 @@ public class Provider extends HttpServlet implements Const {
 
 	private ProviderResult structure(HttpServletRequest request, HttpServletResponse response, IRule rule, UserSession userSession, String key,
 	        String id) throws DocumentAccessException, DocumentException, RuleException, QueryFormulaParserException, QueryException,
-	        LocalizatorException, ClassNotFoundException, _Exception, ComplexObjectException {
+	                LocalizatorException, ClassNotFoundException, _Exception, ComplexObjectException {
 		// FormRule formRule = (FormRule)rule;
 		FormRule formRule = (FormRule) env.ruleProvider.getRule(FORM_RULE, id);
 		ProviderResult result = new ProviderResult(formRule.publishAs, formRule.getXSLT());
@@ -957,8 +957,8 @@ public class Provider extends HttpServlet implements Const {
 
 		String formSesID = request.getParameter("formsesid");
 		if (formSesID != null) {
-			File file = Util.getExistFile(result.originalAttachName, Environment.tmpDir + File.separator + formSesID + File.separator + fieldName
-			        + File.separator);
+			File file = Util.getExistFile(result.originalAttachName,
+			        Environment.tmpDir + File.separator + formSesID + File.separator + fieldName + File.separator);
 			if (!file.exists()) {
 				IDatabase dataBase = env.getDataBase();
 				String docTypeAsText = request.getParameter("doctype");

@@ -68,9 +68,13 @@ public class _MailAgent {
 		return memo.send();
 	}
 
-	public boolean sendMail(ArrayList<String> recipients, String subj, String body) {
-		Memo memo = new Memo(Environment.defaultSender, organizeRecipients(recipients), subj, body);
-		return memo.send();
+	public boolean sendMail(List<String> recipients, String subj, String body) {
+		if (recipients != null) {
+			Memo memo = new Memo(Environment.defaultSender, organizeRecipients(recipients), subj, body);
+			return memo.send();
+		} else {
+			return false;
+		}
 	}
 
 	public boolean sendMailAfter(List<String> recipients, String subj, String body) {
