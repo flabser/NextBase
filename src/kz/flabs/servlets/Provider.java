@@ -119,7 +119,7 @@ public class Provider extends HttpServlet implements Const {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		// long start_time = System.currentTimeMillis();
+		long start_time = System.currentTimeMillis();
 		HttpSession jses = null;
 		UserSession userSession = null;
 		ProviderResult result = null;
@@ -294,8 +294,7 @@ public class Provider extends HttpServlet implements Const {
 						response.sendRedirect(result.forwardTo);
 						return;
 					}
-					// System.out.println(type + " " +
-					// Util.getTimeDiffInMilSec(start_time));
+					System.out.println(type + " " + id + " " + Util.getTimeDiffInMilSec(start_time));
 				} else {
 					response.sendRedirect(env.globalSetting.defaultRedirectURL);
 					return;
