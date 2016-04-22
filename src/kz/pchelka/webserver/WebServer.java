@@ -5,10 +5,6 @@ import java.net.MalformedURLException;
 
 import javax.servlet.ServletException;
 
-import kz.pchelka.env.AuthTypes;
-import kz.pchelka.env.Environment;
-import kz.pchelka.env.Site;
-
 import org.apache.catalina.Context;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
@@ -26,6 +22,10 @@ import org.apache.catalina.deploy.SecurityConstraint;
 import org.apache.catalina.realm.JDBCRealm;
 import org.apache.catalina.realm.LockOutRealm;
 import org.apache.catalina.startup.Tomcat;
+
+import kz.pchelka.env.AuthTypes;
+import kz.pchelka.env.Environment;
+import kz.pchelka.env.Site;
 
 public class WebServer implements IWebServer {
 	private Tomcat tomcat;
@@ -99,6 +99,7 @@ public class WebServer implements IWebServer {
 			}
 			context.addWelcomeFile("Provider");
 			Tomcat.addServlet(context, "Provider", "kz.flabs.servlets.Provider");
+
 		}
 
 		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");

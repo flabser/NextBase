@@ -147,8 +147,8 @@ public class Page implements IProcessInitiator, Const {
 				DoProcessor sProcessor = new DoProcessor(env, user, userSession.lang, fields, this);
 				XMLResponse xmlResp = sProcessor.processJava(elementRule.doClassName.getClassName(), method);
 
-				status = xmlResp.status;
 				if (xmlResp.json != null) {
+					status = xmlResp.status;
 					toJSON = true;
 					outcome = xmlResp.json;
 				} else {
