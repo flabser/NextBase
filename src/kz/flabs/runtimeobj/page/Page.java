@@ -161,7 +161,12 @@ public class Page implements IProcessInitiator, Const {
 				}
 				break;
 			} else {
-				process(formData, method);
+
+				StringBuffer output = process(formData, method);
+
+				outcome = new Outcome();
+				outcome.setXMLContent(output);
+
 				break;
 			}
 		}
