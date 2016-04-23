@@ -1,10 +1,12 @@
 package kz.flabs.runtimeobj;
 
-import groovy.lang.GroovyClassLoader;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.codehaus.groovy.control.CompilerConfiguration;
+import org.codehaus.groovy.control.MultipleCompilationErrorsException;
+
+import groovy.lang.GroovyClassLoader;
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.IDatabase;
 import kz.flabs.exception.ComplexObjectException;
@@ -42,22 +44,19 @@ import kz.nextbase.script._Exception;
 import kz.nextbase.script._IXMLContent;
 import kz.pchelka.env.Environment;
 
-import org.codehaus.groovy.control.CompilerConfiguration;
-import org.codehaus.groovy.control.MultipleCompilationErrorsException;
-
 public class DocumentForm extends Form {
 	private HashMap<String, String[]> fields;
 
-	public DocumentForm(HashMap<String, String[]> fields, AppEnv env, FormRule rule, UserSession user) throws RuleException,
-	        QueryFormulaParserException {
+	public DocumentForm(HashMap<String, String[]> fields, AppEnv env, FormRule rule, UserSession user)
+	        throws RuleException, QueryFormulaParserException {
 		super(env, rule, user);
 		this.fields = fields;
 	}
 
 	@Override
-	public String getDefaultFieldsAsXML(int parentDocID, int parentDocType, int page, String lang) throws RuleException, DocumentException,
-	        DocumentAccessException, QueryFormulaParserException, QueryException, LocalizatorException, ClassNotFoundException, _Exception,
-	        ComplexObjectException {
+	public String getDefaultFieldsAsXML(int parentDocID, int parentDocType, int page, String lang)
+	        throws RuleException, DocumentException, DocumentAccessException, QueryFormulaParserException, QueryException, LocalizatorException,
+	        ClassNotFoundException, _Exception, ComplexObjectException {
 		StringBuffer elementsContent = new StringBuffer(1000);
 		StringBuffer fieldsContent = new StringBuffer(1000);
 		@Deprecated
@@ -108,9 +107,9 @@ public class DocumentForm extends Form {
 	}
 
 	@Override
-	public String getFormAsXML(BaseDocument doc, int page, int parentDocID, int parentDocType, String lang) throws DocumentException,
-	        DocumentAccessException, RuleException, QueryFormulaParserException, ClassNotFoundException, QueryException, LocalizatorException,
-	        _Exception, ComplexObjectException {
+	public String getFormAsXML(BaseDocument doc, int page, int parentDocID, int parentDocType, String lang)
+	        throws DocumentException, DocumentAccessException, RuleException, QueryFormulaParserException, ClassNotFoundException, QueryException,
+	        LocalizatorException, _Exception, ComplexObjectException {
 		StringBuffer elementsContent = new StringBuffer(1000);
 		StringBuffer fieldsContent = new StringBuffer(1000);
 		@Deprecated
@@ -158,7 +157,7 @@ public class DocumentForm extends Form {
 
 		// String captions = getCaptions(captionTextSupplier, rule.captions);
 		String mode[] = getEditModeAttr(doc, lang);
-
+		System.out.println(mode[1]);
 		return "<document isvalid=\"true\"  " + "parentdocid=\"" + parentDocID + "\" parentdoctype=\"" + parentDocType + "\" id=\"" + doc.getDdbID()
 		        + "\" " + "docid=\"" + doc.getDocID() + "\" doctype=\"" + rule.docType + "\" " + "hastopic=\"" + (doc.hasDiscussion ? 1 : 0) + "\" "
 		        + "openfrompage=\"" + page + "\" status=\"existing\" isread=\"" + doc.isRead() + "\" " + mode[0] + ">" + outlineContent + "<actions>"
@@ -429,8 +428,8 @@ public class DocumentForm extends Form {
 						try {
 							loader.parseClass(rule.psClassName.getClassName());
 						} catch (MultipleCompilationErrorsException e1) {
-							AppEnv.logger.errorLogEntry("PostSaveScript compilation error at form rule compiling=" + rule.id + ":"
-							        + rule.psClassName.getClassName());
+							AppEnv.logger.errorLogEntry(
+							        "PostSaveScript compilation error at form rule compiling=" + rule.id + ":" + rule.psClassName.getClassName());
 							AppEnv.logger.errorLogEntry(e1);
 						}
 					}

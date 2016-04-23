@@ -21,6 +21,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.catalina.realm.RealmBase;
+import org.apache.commons.codec.binary.Base64;
+import org.jivesoftware.smack.Roster;
+import org.jivesoftware.smack.packet.Presence;
+
 import kz.flabs.appenv.AppEnv;
 import kz.flabs.dataengine.Const;
 import kz.flabs.dataengine.DatabaseFactory;
@@ -39,11 +44,6 @@ import kz.flabs.util.XMLUtil;
 import kz.flabs.webrule.form.ISaveField;
 import kz.iola.jce.provider.IolaProvider;
 import kz.pchelka.env.Environment;
-
-import org.apache.catalina.realm.RealmBase;
-import org.apache.commons.codec.binary.Base64;
-import org.jivesoftware.smack.Roster;
-import org.jivesoftware.smack.packet.Presence;
 
 public class User extends BaseDocument implements Const {
 	public int docID;
@@ -172,7 +172,7 @@ public class User extends BaseDocument implements Const {
 
 	public HashSet<String> getAllUserGroups() {
 		HashSet<String> userGroups = new HashSet<String>();
-		if (userID.equals(sysUser)) {
+		if (userID.equals(sysUser) || appUser.getCurrentUserID().equals(sysUser)) {
 			userGroups = supervisorGroupAsSet;
 			userGroups.addAll(observerGroupAsList);
 		}
