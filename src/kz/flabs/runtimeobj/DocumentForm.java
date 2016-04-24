@@ -157,7 +157,7 @@ public class DocumentForm extends Form {
 
 		// String captions = getCaptions(captionTextSupplier, rule.captions);
 		String mode[] = getEditModeAttr(doc, lang);
-		System.out.println(mode[1]);
+		// System.out.println(mode[1]);
 		return "<document isvalid=\"true\"  " + "parentdocid=\"" + parentDocID + "\" parentdoctype=\"" + parentDocType + "\" id=\"" + doc.getDdbID()
 		        + "\" " + "docid=\"" + doc.getDocID() + "\" doctype=\"" + rule.docType + "\" " + "hastopic=\"" + (doc.hasDiscussion ? 1 : 0) + "\" "
 		        + "openfrompage=\"" + page + "\" status=\"existing\" isread=\"" + doc.isRead() + "\" " + mode[0] + ">" + outlineContent + "<actions>"

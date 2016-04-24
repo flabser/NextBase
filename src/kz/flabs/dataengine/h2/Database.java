@@ -152,18 +152,17 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	protected String externalStructureApp;
 	private static final String maindocFields = "MAINDOCS.DOCID, DDBID, AUTHOR, PARENTDOCID, PARENTDOCTYPE, REGDATE, DOCTYPE, LASTUPDATE, VIEWTEXT, "
-			+ DatabaseUtil.getViewTextList("") + ", VIEWNUMBER, VIEWDATE, VIEWICON, FORM, HAS_ATTACHMENT ";
+	        + DatabaseUtil.getViewTextList("") + ", VIEWNUMBER, VIEWDATE, VIEWICON, FORM, HAS_ATTACHMENT ";
 	private boolean respUsed;
 
 	public Database(AppEnv env, DatabaseType dbType)
-			throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	        throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		this.env = env;
 		if (env.globalSetting.databaseEnable) {
 			dbID = env.globalSetting.databaseName;
 			connectionURL = env.globalSetting.dbURL;
 			dbPool = new DBConnectionPool();
-			dbPool.initConnectionPool(env.globalSetting.driver, connectionURL, env.globalSetting.getDbUserName(),
-					env.globalSetting.getDbPassword());
+			dbPool.initConnectionPool(env.globalSetting.driver, connectionURL, env.globalSetting.getDbUserName(), env.globalSetting.getDbPassword());
 
 			usersActivity = new UsersActivity(this);
 		}
@@ -172,8 +171,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	}
 
-	public Database(AppEnv env)
-			throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public Database(AppEnv env) throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		this.env = env;
 		dbID = env.globalSetting.databaseName;
 		connectionURL = env.globalSetting.dbURL;
@@ -186,8 +184,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 		respUsed = hasDocsWithParent();
 	}
 
-	public Database(AppEnv env, boolean auth)
-			throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public Database(AppEnv env, boolean auth) throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		this.env = env;
 		if (env.globalSetting.databaseEnable) {
 			dbID = env.globalSetting.databaseName;
@@ -195,7 +192,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			if (auth) {
 				dbPool = new DBConnectionPool();
 				dbPool.initConnectionPool(env.globalSetting.driver, connectionURL, env.globalSetting.getDbUserName(),
-						env.globalSetting.getDbPassword());
+				        env.globalSetting.getDbPassword());
 			} else {
 				dbPool = new DBConnectionPool();
 				dbPool.initConnectionPool(env.globalSetting.driver, connectionURL);
@@ -258,8 +255,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 		}
 	}
 
-	public void resetTopic(int parentDocID, int parentDocType, User user) throws DatabasePoolException,
-			InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
+	public void resetTopic(int parentDocID, int parentDocType, User user)
+	        throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
 		Connection conn = dbPool.getConnection();
 		String tableName = DatabaseUtil.getMainTableName(parentDocType);
 		String sql = "select topicid from " + tableName + " where docid = ?";
@@ -326,19 +323,18 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	@Override
 	public int shutdown() {
-		Database.logger
-				.normalLogEntry("Pool of " + dbID + " is closing (num of connections=" + dbPool.getNumActive() + ")");
+		Database.logger.normalLogEntry("Pool of " + dbID + " is closing (num of connections=" + dbPool.getNumActive() + ")");
 		dbPool.closeAll();
 		return 0;
 	}
 
 	@Override
 	public Document getMainDocumentByID(int docID, Set<String> complexUserID, String absoluteUserID)
-			throws DocumentAccessException, DocumentException, ComplexObjectException {
+	        throws DocumentAccessException, DocumentException, ComplexObjectException {
 		Document doc = new Document(this, absoluteUserID);
 		Connection conn = dbPool.getConnection();
-		String sql = "select * from MAINDOCS as m " + "left join CUSTOM_FIELDS as cf on cf.docid = " + docID
-				+ " where exists " + "(select * from readers_maindocs as rm where rm.docid = " + docID;
+		String sql = "select * from MAINDOCS as m " + "left join CUSTOM_FIELDS as cf on cf.docid = " + docID + " where exists "
+		        + "(select * from readers_maindocs as rm where rm.docid = " + docID;
 
 		if (!complexUserID.contains("[supervisor]")) {
 			sql += " and rm.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
@@ -409,17 +405,13 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						} catch (ClassCastException e) {
 							env.logger.warningLogEntry(e.getMessage());
 						} catch (ClassNotFoundException e) {
-							throw new DocumentException(DocumentExceptionType.COMPLEX_OBJECT_INCORRECT,
-									e.getMessage() + ", field=" + fieldName);
+							throw new DocumentException(DocumentExceptionType.COMPLEX_OBJECT_INCORRECT, e.getMessage() + ", field=" + fieldName);
 						} catch (InstantiationException e) {
-							throw new DocumentException(DocumentExceptionType.COMPLEX_OBJECT_INCORRECT,
-									e.getMessage() + ", field=" + fieldName);
+							throw new DocumentException(DocumentExceptionType.COMPLEX_OBJECT_INCORRECT, e.getMessage() + ", field=" + fieldName);
 						} catch (IllegalAccessException e) {
-							throw new DocumentException(DocumentExceptionType.COMPLEX_OBJECT_INCORRECT,
-									e.getMessage() + ", field=" + fieldName);
+							throw new DocumentException(DocumentExceptionType.COMPLEX_OBJECT_INCORRECT, e.getMessage() + ", field=" + fieldName);
 						} catch (Exception e) {
-							throw new DocumentException(DocumentExceptionType.COMPLEX_OBJECT_INCORRECT,
-									e.getMessage() + ", field=" + fieldName);
+							throw new DocumentException(DocumentExceptionType.COMPLEX_OBJECT_INCORRECT, e.getMessage() + ", field=" + fieldName);
 						}
 
 						break;
@@ -438,8 +430,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 							blockCollection.setStatus(Integer.parseInt(status));
 						} catch (Exception e) {
 						}
-						PreparedStatement blockStatement = conn
-								.prepareStatement("SELECT * FROM COORDBLOCKS where DOCID = ?");
+						PreparedStatement blockStatement = conn.prepareStatement("SELECT * FROM COORDBLOCKS where DOCID = ?");
 						blockStatement.setInt(1, docID);
 						ResultSet blockResultSet = blockStatement.executeQuery();
 						while (blockResultSet.next()) {
@@ -452,8 +443,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 							block.status = blockResultSet.getInt("STATUS");
 							block.setCoordDate(blockResultSet.getTimestamp("COORDATE"));
 
-							PreparedStatement coordsPreparedStatement = conn
-									.prepareStatement("select *  from COORDINATORS where BLOCKID = ?");
+							PreparedStatement coordsPreparedStatement = conn.prepareStatement("select *  from COORDINATORS where BLOCKID = ?");
 							coordsPreparedStatement.setInt(1, blockID);
 							ResultSet coordsResultSet = coordsPreparedStatement.executeQuery();
 							while (coordsResultSet.next()) {
@@ -518,11 +508,10 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 		return pageNumMinusOne * pageSize;
 	}
 
-	public void fillBlobs(Connection conn, Map<String, BlobField> blobFieldsMap, String customBlobTableSuffix,
-			int docID) throws SQLException {
+	public void fillBlobs(Connection conn, Map<String, BlobField> blobFieldsMap, String customBlobTableSuffix, int docID) throws SQLException {
 		Statement statement = conn.createStatement();
-		ResultSet rs = statement.executeQuery("select * from CUSTOM_BLOBS_" + customBlobTableSuffix
-				+ "  where CUSTOM_BLOBS_" + customBlobTableSuffix + ".DOCID = " + docID + " ORDER BY ID");
+		ResultSet rs = statement.executeQuery("select * from CUSTOM_BLOBS_" + customBlobTableSuffix + "  where CUSTOM_BLOBS_" + customBlobTableSuffix
+		        + ".DOCID = " + docID + " ORDER BY ID");
 		HashMap<String, BlobFile> files = new HashMap<String, BlobFile>();
 		String name = "";
 		while (rs.next()) {
@@ -543,8 +532,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	public void fillBlobs(Connection conn, BaseDocument doc, String customBlobTableSuffix) throws SQLException {
 		doc.blobFieldsMap.clear();
 		Statement statement = conn.createStatement();
-		ResultSet rs = statement.executeQuery("select * from CUSTOM_BLOBS_" + customBlobTableSuffix
-				+ "  where CUSTOM_BLOBS_" + customBlobTableSuffix + ".DOCID = " + doc.getDocID() + " ORDER BY ID");
+		ResultSet rs = statement.executeQuery("select * from CUSTOM_BLOBS_" + customBlobTableSuffix + "  where CUSTOM_BLOBS_" + customBlobTableSuffix
+		        + ".DOCID = " + doc.getDocID() + " ORDER BY ID");
 		while (rs.next()) {
 			HashMap<String, BlobFile> files = new HashMap<String, BlobFile>();
 			String name = rs.getString("NAME");
@@ -565,8 +554,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			doc.blobFieldsMap.clear();
 			Statement statement = conn.createStatement();
 			String blobsTable = DatabaseUtil.getCustomBlobsTableName(doc.docType);
-			ResultSet rs = statement.executeQuery(
-					"select * from " + blobsTable + " where " + blobsTable + ".DOCID = " + doc.getDocID());
+			ResultSet rs = statement.executeQuery("select * from " + blobsTable + " where " + blobsTable + ".DOCID = " + doc.getDocID());
 			while (rs.next()) {
 				HashMap<String, BlobFile> files = new HashMap<String, BlobFile>();
 				String name = rs.getString("NAME");
@@ -622,8 +610,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public String getMainDocumentFieldValueByID(int docID, Set<String> complexUserID, String absoluteUserID,
-			String fieldName) throws DocumentAccessException {
+	public String getMainDocumentFieldValueByID(int docID, Set<String> complexUserID, String absoluteUserID, String fieldName)
+	        throws DocumentAccessException {
 
 		String returnValue = "";
 		Connection conn = dbPool.getConnection();
@@ -636,15 +624,14 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			Matcher sysFields = formulaBlocks.getFieldsPattern().matcher(fieldName);
 			Boolean bSysField = sysFields.lookingAt();
 			if (bSysField) {
-				sql = "select m." + fieldName + " from MAINDOCS as m where exists "
-						+ "(select docid,username from readers_maindocs as rm where" + " rm.docid = " + docID
-						+ " and rm.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + "))"
-						+ " and m.docid = " + docID;
+				sql = "select m." + fieldName + " from MAINDOCS as m where exists " + "(select docid,username from readers_maindocs as rm where"
+				        + " rm.docid = " + docID + " and rm.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + "))" + " and m.docid = "
+				        + docID;
 			} else {
 				sql = "select cf.docid, cf.type, cf.name, cf.value, cf.valueasnumber, cf.valueasdate, cf.valueasglossary from MAINDOCS as m, CUSTOM_FIELDS as cf where exists "
-						+ "(select docid,username from readers_maindocs as rm where" + " rm.docid = " + docID
-						+ " and rm.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + "))"
-						+ " and m.docid = " + docID + " and cf.docid = " + docID + " and name='" + fieldName + "'";
+				        + "(select docid,username from readers_maindocs as rm where" + " rm.docid = " + docID + " and rm.username in ("
+				        + DatabaseUtil.prepareListToQuery(complexUserID) + "))" + " and m.docid = " + docID + " and cf.docid = " + docID
+				        + " and name='" + fieldName + "'";
 			}
 
 			ResultSet rs = statement.executeQuery(sql);
@@ -703,9 +690,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			Statement statement = conn.createStatement();
 
 			String sql = "select cfg.docid, cfg.type, cfg.name, cfg.value, cfg.valueasnumber, cfg.valueasdate, cfg.valueasglossary "
-					+ "from CUSTOM_FIELDS_GLOSSARY as cfg "
-					+ "where exists (select docid from GLOSSARY as g where g.docid = " + docID + " and cfg.docid = "
-					+ docID + " and cfg.name='" + fieldName + "');";
+			        + "from CUSTOM_FIELDS_GLOSSARY as cfg " + "where exists (select docid from GLOSSARY as g where g.docid = " + docID
+			        + " and cfg.docid = " + docID + " and cfg.name='" + fieldName + "');";
 
 			ResultSet rs = statement.executeQuery(sql);
 
@@ -772,8 +758,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 					String originalName = rs.getString("ORIGINALNAME");
 					if (originalName.equals(fileName)) {
 						InputStream is = rs.getBinaryStream("VALUE");
-						String fullPath = Util.getFileName(originalName,
-								Environment.tmpDir + "/" + Util.generateRandom() + "/");
+						String fullPath = Util.getFileName(originalName, Environment.tmpDir + "/" + Util.generateRandom() + "/");
 						FileOutputStream out = new FileOutputStream(fullPath);
 						byte[] b = new byte[1048576];
 						int len = 0;
@@ -803,8 +788,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public String getDocumentAttach(int docID, int docType, Set<String> complexUserID, String fieldName,
-			String fileName) {
+	public String getDocumentAttach(int docID, int docType, Set<String> complexUserID, String fieldName, String fileName) {
 		String tableName = "";
 		switch (docType) {
 		case DOCTYPE_MAIN:
@@ -833,24 +817,21 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			ResultSet rs = null;
 			try {
 				if (docType != DOCTYPE_GLOSSARY) {
-					String sql = "select * from " + tableName + ", READERS_" + tableName + " where " + tableName
-							+ ".DOCID = READERS_" + tableName + ".DOCID " + " and " + tableName + ".DOCID = " + docID
-							+ " and READERS_" + tableName + ".USERNAME IN ("
-							+ DatabaseUtil.prepareListToQuery(complexUserID) + ")";
+					String sql = "select * from " + tableName + ", READERS_" + tableName + " where " + tableName + ".DOCID = READERS_" + tableName
+					        + ".DOCID " + " and " + tableName + ".DOCID = " + docID + " and READERS_" + tableName + ".USERNAME IN ("
+					        + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
 					rs = s.executeQuery(sql);
 				}
 				if (docType == DOCTYPE_GLOSSARY || rs != null && rs.next()) {
 					Statement attachStatement = conn.createStatement();
-					ResultSet attachResultSet = attachStatement.executeQuery(
-							"select * from CUSTOM_BLOBS_" + tableName + " where CUSTOM_BLOBS_" + tableName + ".DOCID = "
-									+ docID + " AND CUSTOM_BLOBS_" + tableName + ".NAME = '" + fieldName + "'");
+					ResultSet attachResultSet = attachStatement.executeQuery("select * from CUSTOM_BLOBS_" + tableName + " where CUSTOM_BLOBS_"
+					        + tableName + ".DOCID = " + docID + " AND CUSTOM_BLOBS_" + tableName + ".NAME = '" + fieldName + "'");
 					if (attachResultSet.next()) {
 						do {
 							String originalName = attachResultSet.getString("ORIGINALNAME");
 							if (originalName.equals(fileName)) {
 								InputStream is = attachResultSet.getBinaryStream("VALUE");
-								String fullPath = Util.getFileName(originalName,
-										Environment.tmpDir + "/" + Util.generateRandom() + "/");
+								String fullPath = Util.getFileName(originalName, Environment.tmpDir + "/" + Util.generateRandom() + "/");
 								FileOutputStream out = new FileOutputStream(fullPath);
 								byte[] b = new byte[1048576];
 								int len = 0;
@@ -886,9 +867,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	@Override
 	public int insertMainDocument(Document doc, User user) throws DocumentException {
 		int id = doc.getDocID();
-		String fieldsAsText = "AUTHOR, REGDATE, DOCTYPE, LASTUPDATE, DDBID, PARENTDOCDDBID, VIEWTEXT, PARENTDOCID, PARENTDOCTYPE, "
-				+ " FORM, " + DatabaseUtil.getViewTextList("")
-				+ ", VIEWNUMBER, VIEWDATE, SIGN, SIGNEDFIELDS, HAS_ATTACHMENT";
+		String fieldsAsText = "AUTHOR, REGDATE, DOCTYPE, LASTUPDATE, DDBID, PARENTDOCDDBID, VIEWTEXT, PARENTDOCID, PARENTDOCTYPE, " + " FORM, "
+		        + DatabaseUtil.getViewTextList("") + ", VIEWNUMBER, VIEWDATE, SIGN, SIGNEDFIELDS, HAS_ATTACHMENT";
 		Date viewDate = doc.getViewDate();
 		String viewTextList = "";
 		for (int i = 1; i <= DatabaseConst.VIEWTEXT_COUNT; i++) {
@@ -901,13 +881,11 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 		for (BlobField bfield : doc.blobFieldsMap.values()) {
 			count_files += bfield.getFilesCount();
 		}
-		String valuesAsText = "'" + doc.getAuthorID() + "', '" + sqlDateTimeFormat.format(doc.getRegDate()) + "', "
-				+ doc.docType + ", " + "'" + sqlDateTimeFormat.format(doc.getLastUpdate()) + "', '" + doc.getDdbID()
-				+ "', '" + doc.getParentDocumentID() + "', '" + doc.getViewText().replace("'", "''") + "', "
-				+ doc.parentDocID + ", " + doc.parentDocType + ",'" + doc.form + "', " + viewTextList + ", "
-				+ doc.getViewNumber() + ", "
-				+ (viewDate != null ? "'" + new Timestamp(viewDate.getTime()) + "'" : "null") + ", '" + doc.getSign()
-				+ "', '" + doc.getSignedFields() + "', " + count_files;
+		String valuesAsText = "'" + doc.getAuthorID() + "', '" + sqlDateTimeFormat.format(doc.getRegDate()) + "', " + doc.docType + ", " + "'"
+		        + sqlDateTimeFormat.format(doc.getLastUpdate()) + "', '" + doc.getDdbID() + "', '" + doc.getParentDocumentID() + "', '"
+		        + doc.getViewText().replace("'", "''") + "', " + doc.parentDocID + ", " + doc.parentDocType + ",'" + doc.form + "', " + viewTextList
+		        + ", " + doc.getViewNumber() + ", " + (viewDate != null ? "'" + new Timestamp(viewDate.getTime()) + "'" : "null") + ", '"
+		        + doc.getSign() + "', '" + doc.getSignedFields() + "', " + count_files;
 		Connection conn = dbPool.getConnection();
 		if (id != 0 && doc.hasField("recID")) {
 			fieldsAsText = "DOCID, " + fieldsAsText;
@@ -932,9 +910,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 					switch (field.getTypeAsDatabaseType()) {
 					case TEXT:
 						try {
-							String sqlStatement = "insert into CUSTOM_FIELDS(DOCID, NAME, VALUE, TYPE)" + "values ("
-									+ key + ", '" + field.name + "', '" + field.valueAsText.replace("'", "''").trim()
-									+ "', " + field.getTypeAsDatabaseType() + ")";
+							String sqlStatement = "insert into CUSTOM_FIELDS(DOCID, NAME, VALUE, TYPE)" + "values (" + key + ", '" + field.name
+							        + "', '" + field.valueAsText.replace("'", "''").trim() + "', " + field.getTypeAsDatabaseType() + ")";
 							pst = conn.prepareStatement(sqlStatement);
 							pst.executeUpdate();
 						} catch (SQLException se) {
@@ -946,10 +923,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						break;
 					case RICHTEXT:
 						try {
-							String sqlStatement = "insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASCLOB, TYPE)"
-									+ "values (" + key + ", '" + field.name + "', '"
-									+ field.valueAsText.replace("'", "''").trim() + "', "
-									+ field.getTypeAsDatabaseType() + ")";
+							String sqlStatement = "insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASCLOB, TYPE)" + "values (" + key + ", '" + field.name
+							        + "', '" + field.valueAsText.replace("'", "''").trim() + "', " + field.getTypeAsDatabaseType() + ")";
 							pst = conn.prepareStatement(sqlStatement);
 							pst.executeUpdate();
 						} catch (SQLException se) {
@@ -961,13 +936,12 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						break;
 					case COMPLEX_OBJECT:
 						try {
-							String sqlStatement = "insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASOBJECT, TYPE)"
-									+ "values (" + key + ", '" + field.name + "', '"
-									// +
-									// field.valueAsObject.getPersistentValue()
-									+ AbstractComplexObject.marshall(field.valueAsObject.getClass().getName(),
-											field.valueAsObject)
-									+ "', " + field.getTypeAsDatabaseType() + ")";
+							String sqlStatement = "insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASOBJECT, TYPE)" + "values (" + key + ", '"
+							        + field.name + "', '"
+							        // +
+							        // field.valueAsObject.getPersistentValue()
+							        + AbstractComplexObject.marshall(field.valueAsObject.getClass().getName(), field.valueAsObject) + "', "
+							        + field.getTypeAsDatabaseType() + ")";
 							pst = conn.prepareStatement(sqlStatement);
 							pst.executeUpdate();
 						} catch (SQLException se) {
@@ -977,8 +951,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						}
 						break;
 					case TEXTLIST:
-						pst = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUE, TYPE)" + " values ("
-								+ key + ", '" + field.name + "', ?," + field.getTypeAsDatabaseType() + ")");
+						pst = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUE, TYPE)" + " values (" + key + ", '" + field.name
+						        + "', ?," + field.getTypeAsDatabaseType() + ")");
 						for (String value : field.valuesAsStringList) {
 							pst.setString(1, value);
 							try {
@@ -992,9 +966,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						}
 						break;
 					case NUMBERS:
-						pst = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASNUMBER, TYPE)"
-								+ "values(" + key + ", '" + field.name + "', " + field.valueAsNumber + ", "
-								+ field.getTypeAsDatabaseType() + ")");
+						pst = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASNUMBER, TYPE)" + "values(" + key + ", '"
+						        + field.name + "', " + field.valueAsNumber + ", " + field.getTypeAsDatabaseType() + ")");
 						pst.executeUpdate();
 						break;
 					case DATETIMES:
@@ -1003,10 +976,9 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 							continue;
 						}
 						try {
-							pst = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASDATE, TYPE)"
-									+ "values(" + key + ", '" + field.name + "', '"
-									+ Util.convertDateTimeToDerbyFormat(field.valueAsDate) + "', "
-									+ field.getTypeAsDatabaseType() + ")");
+							pst = conn.prepareStatement(
+							        "insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASDATE, TYPE)" + "values(" + key + ", '" + field.name + "', '"
+							                + Util.convertDateTimeToDerbyFormat(field.valueAsDate) + "', " + field.getTypeAsDatabaseType() + ")");
 						} catch (DataConversionException e) {
 							Database.logger.errorLogEntry(e + ", field=" + field.name);
 							return -1;
@@ -1019,10 +991,9 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 							continue;
 						}
 						try {
-							pst = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASDATE, TYPE)"
-									+ "values(" + key + ", '" + field.name + "', '"
-									+ Util.convertDateTimeToDerbyFormat(field.valueAsDate) + "', "
-									+ field.getTypeAsDatabaseType() + ")");
+							pst = conn.prepareStatement(
+							        "insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASDATE, TYPE)" + "values(" + key + ", '" + field.name + "', '"
+							                + Util.convertDateTimeToDerbyFormat(field.valueAsDate) + "', " + field.getTypeAsDatabaseType() + ")");
 						} catch (DataConversionException e) {
 							Database.logger.errorLogEntry(e + ", field=" + field.name);
 							return -1;
@@ -1030,9 +1001,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						pst.executeUpdate();
 						break;
 					case GLOSSARY:
-						pst = conn.prepareStatement(
-								"insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASGLOSSARY, TYPE)" + " values (" + key
-										+ ", '" + field.name + "', ?," + field.getTypeAsDatabaseType() + ")");
+						pst = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASGLOSSARY, TYPE)" + " values (" + key + ", '"
+						        + field.name + "', ?," + field.getTypeAsDatabaseType() + ")");
 						for (Integer value : field.valuesAsGlossaryData) {
 							if (value == 0) {
 								pst.setNull(1, Types.INTEGER);
@@ -1056,8 +1026,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 								insertCoordinator(blockID, coordinator, conn);
 							}
 						}
-						PreparedStatement preparedStatement = conn.prepareStatement(
-								"insert into CUSTOM_FIELDS(DOCID, NAME, VALUE, TYPE)" + "values (?, ?, ?, ?)");
+						PreparedStatement preparedStatement = conn
+						        .prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUE, TYPE)" + "values (?, ?, ?, ?)");
 						preparedStatement.setInt(1, key);
 						preparedStatement.setString(2, field.name);
 						preparedStatement.setString(3, String.valueOf(blockCollection.getStatus()));
@@ -1128,8 +1098,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 		try {// id not in (" + StringUtils.join(ids, ",")
 			if (ids != null && ids.size() != 0) {
 				PreparedStatement pst = conn
-						.prepareStatement("update custom_blobs_coordinators set docid = ? where id in ("
-								+ StringUtils.join(ids, ",") + ")");
+				        .prepareStatement("update custom_blobs_coordinators set docid = ? where id in (" + StringUtils.join(ids, ",") + ")");
 				pst.setInt(1, coordinatorID);
 				int res = pst.executeUpdate();
 				conn.commit();
@@ -1144,8 +1113,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	protected int recoverCommAttachRelations(Connection conn, int coordinatorID, int attachID) {
 		try {
-			PreparedStatement pst = conn
-					.prepareStatement("update custom_blobs_coordinators set docid = ? where id = ?");
+			PreparedStatement pst = conn.prepareStatement("update custom_blobs_coordinators set docid = ? where id = ?");
 			pst.setInt(1, coordinatorID);
 			pst.setInt(2, attachID);
 			int res = pst.executeUpdate();
@@ -1161,9 +1129,9 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	protected int insertCoordinator(int blockKey, Coordinator coordinator, Connection conn) {
 		try {
 			PreparedStatement pst = conn.prepareStatement(
-					"insert into COORDINATORS(BLOCKID, COORDTYPE, COORDINATOR, COORDNUMBER, ISCURRENT, COMMENT, DECISION, COORDATE, "
-							+ "DECISIONDATE) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-					PreparedStatement.RETURN_GENERATED_KEYS);
+			        "insert into COORDINATORS(BLOCKID, COORDTYPE, COORDINATOR, COORDNUMBER, ISCURRENT, COMMENT, DECISION, COORDATE, "
+			                + "DECISIONDATE) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			        PreparedStatement.RETURN_GENERATED_KEYS);
 			pst.setInt(1, blockKey);
 			pst.setInt(2, coordinator.getCoordType());
 			pst.setString(3, coordinator.getUserID());
@@ -1197,8 +1165,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public int updateMainDocument(Document doc, User user)
-			throws DocumentAccessException, DocumentException, ComplexObjectException {
+	public int updateMainDocument(Document doc, User user) throws DocumentAccessException, DocumentException, ComplexObjectException {
 		if (doc.hasEditor(user.getAllUserGroups())) {
 			Document oldDoc = this.getMainDocumentByID(doc.getDocID(), user.getAllUserGroups(), user.getUserID());
 			Connection conn = dbPool.getConnection();
@@ -1208,8 +1175,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				Date viewDate = doc.getViewDate();
 				String viewTextList = "";
 				for (int i = 1; i <= DatabaseConst.VIEWTEXT_COUNT; i++) {
-					viewTextList += "VIEWTEXT" + i + " =  '" + doc.getViewTextList().get(i).replaceAll("'", "''")
-							+ "',";
+					viewTextList += "VIEWTEXT" + i + " =  '" + doc.getViewTextList().get(i).replaceAll("'", "''") + "',";
 				}
 				if (viewTextList.endsWith(",")) {
 					viewTextList = viewTextList.substring(0, viewTextList.length() - 1);
@@ -1218,53 +1184,45 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				for (BlobField bfield : doc.blobFieldsMap.values()) {
 					count_files += bfield.getFilesCount();
 				}
-				String mainDocUpd = "update MAINDOCS set LASTUPDATE = '" + sqlDateTimeFormat.format(doc.getLastUpdate())
-						+ "', VIEWTEXT='" + doc.getViewText().replace("'", "''").trim() + "', DDBID='" + doc.getDdbID()
-						+ "', PARENTDOCDDBID='" + doc.getParentDocumentID() + "', DEFAULTRULEID='"
-						+ doc.getDefaultRuleID() + "', " + viewTextList + ", VIEWNUMBER = " + doc.getViewNumber()
-						+ ", VIEWDATE = " + (viewDate != null ? "'" + new Timestamp(viewDate.getTime()) + "'" : "null")
-						+ ", SIGN = '" + doc.getSign() + "', SIGNEDFIELDS = '" + doc.getSignedFields() + "' "
-						+ ", PARENTDOCID = " + doc.parentDocID + ", PARENTDOCTYPE = " + doc.parentDocType
-						+ ", HAS_ATTACHMENT = " + count_files + " where DOCID = " + doc.getDocID();
+				String mainDocUpd = "update MAINDOCS set LASTUPDATE = '" + sqlDateTimeFormat.format(doc.getLastUpdate()) + "', VIEWTEXT='"
+				        + doc.getViewText().replace("'", "''").trim() + "', DDBID='" + doc.getDdbID() + "', PARENTDOCDDBID='"
+				        + doc.getParentDocumentID() + "', DEFAULTRULEID='" + doc.getDefaultRuleID() + "', " + viewTextList + ", VIEWNUMBER = "
+				        + doc.getViewNumber() + ", VIEWDATE = " + (viewDate != null ? "'" + new Timestamp(viewDate.getTime()) + "'" : "null")
+				        + ", SIGN = '" + doc.getSign() + "', SIGNEDFIELDS = '" + doc.getSignedFields() + "' " + ", PARENTDOCID = " + doc.parentDocID
+				        + ", PARENTDOCTYPE = " + doc.parentDocType + ", HAS_ATTACHMENT = " + count_files + " where DOCID = " + doc.getDocID();
 				s.executeUpdate(mainDocUpd);
 				for (Field field : doc.fields()) {
 					String upCustomFields = "";
 					switch (field.getTypeAsDatabaseType()) {
 					case TEXT:
-						upCustomFields = "merge into CUSTOM_FIELDS (DOCID, NAME, VALUE, TYPE) key(DOCID, NAME) values("
-								+ doc.getDocID() + ", '" + field.name + "', '"
-								+ field.valueAsText.replace("'", "''").trim() + "', " + field.getTypeAsDatabaseType()
-								+ ")";
+						upCustomFields = "merge into CUSTOM_FIELDS (DOCID, NAME, VALUE, TYPE) key(DOCID, NAME) values(" + doc.getDocID() + ", '"
+						        + field.name + "', '" + field.valueAsText.replace("'", "''").trim() + "', " + field.getTypeAsDatabaseType() + ")";
 						break;
 					case RICHTEXT:
-						upCustomFields = "merge into CUSTOM_FIELDS (DOCID, NAME, VALUEASCLOB, TYPE) key(DOCID, NAME) values("
-								+ doc.getDocID() + ", '" + field.name + "', '"
-								+ field.valueAsText.replace("'", "''").trim() + "', " + field.getTypeAsDatabaseType()
-								+ ")";
+						upCustomFields = "merge into CUSTOM_FIELDS (DOCID, NAME, VALUEASCLOB, TYPE) key(DOCID, NAME) values(" + doc.getDocID() + ", '"
+						        + field.name + "', '" + field.valueAsText.replace("'", "''").trim() + "', " + field.getTypeAsDatabaseType() + ")";
 						break;
 					case COMPLEX_OBJECT:
-						upCustomFields = "merge into CUSTOM_FIELDS (DOCID, NAME, VALUEASOBJECT, TYPE) key(DOCID, NAME) values("
-								+ doc.getDocID() + ", '" + field.name + "', '"
-								// + field.valueAsObject.getPersistentValue()
-								+ AbstractComplexObject.marshall(field.valueAsObject.getClass().getName(),
-										field.valueAsObject)
-								+ "', " + field.getTypeAsDatabaseType() + ")";
+						upCustomFields = "merge into CUSTOM_FIELDS (DOCID, NAME, VALUEASOBJECT, TYPE) key(DOCID, NAME) values(" + doc.getDocID()
+						        + ", '" + field.name + "', '"
+						        // + field.valueAsObject.getPersistentValue()
+						        + AbstractComplexObject.marshall(field.valueAsObject.getClass().getName(), field.valueAsObject) + "', "
+						        + field.getTypeAsDatabaseType() + ")";
 						break;
 					case TEXTLIST:
-						PreparedStatement ps = conn.prepareStatement("DELETE FROM CUSTOM_FIELDS" + " WHERE DOCID="
-								+ doc.getDocID() + " and NAME='" + field.name + "'");
+						PreparedStatement ps = conn
+						        .prepareStatement("DELETE FROM CUSTOM_FIELDS" + " WHERE DOCID=" + doc.getDocID() + " and NAME='" + field.name + "'");
 						ps.executeUpdate();
-						ps = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUE, TYPE)" + " values ("
-								+ doc.getDocID() + ", '" + field.name + "', ?," + field.getTypeAsDatabaseType() + ")");
+						ps = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUE, TYPE)" + " values (" + doc.getDocID() + ", '"
+						        + field.name + "', ?," + field.getTypeAsDatabaseType() + ")");
 						for (String value : field.valuesAsStringList) {
 							ps.setString(1, value);
 							ps.executeUpdate();
 						}
 						break;
 					case NUMBERS:
-						upCustomFields = "merge into CUSTOM_FIELDS (DOCID, NAME, VALUEASNUMBER, TYPE) key(DOCID, NAME) "
-								+ "values (" + doc.getDocID() + ", '" + field.name + "', " + field.valueAsNumber + ", "
-								+ field.getTypeAsDatabaseType() + ")";
+						upCustomFields = "merge into CUSTOM_FIELDS (DOCID, NAME, VALUEASNUMBER, TYPE) key(DOCID, NAME) " + "values (" + doc.getDocID()
+						        + ", '" + field.name + "', " + field.valueAsNumber + ", " + field.getTypeAsDatabaseType() + ")";
 						break;
 					case DATETIMES:
 						if (field.valueAsDate == null) {
@@ -1272,22 +1230,20 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 							continue;
 						}
 						try {
-							upCustomFields = "merge into CUSTOM_FIELDS (DOCID, NAME, VALUEASDATE, TYPE) KEY(DOCID, NAME)"
-									+ " VALUES (" + doc.getDocID() + ", '" + field.name + "', '"
-									+ Util.convertDateTimeToDerbyFormat(field.valueAsDate) + "', "
-									+ field.getTypeAsDatabaseType() + ")";
+							upCustomFields = "merge into CUSTOM_FIELDS (DOCID, NAME, VALUEASDATE, TYPE) KEY(DOCID, NAME)" + " VALUES ("
+							        + doc.getDocID() + ", '" + field.name + "', '" + Util.convertDateTimeToDerbyFormat(field.valueAsDate) + "', "
+							        + field.getTypeAsDatabaseType() + ")";
 						} catch (DataConversionException e) {
 							Database.logger.errorLogEntry(e + ", field=" + field.name);
 							return -1;
 						}
 						break;
 					case GLOSSARY:
-						PreparedStatement pst = conn.prepareStatement("DELETE FROM CUSTOM_FIELDS WHERE DOCID = "
-								+ doc.getDocID() + " and NAME = '" + field.name + "'");
+						PreparedStatement pst = conn
+						        .prepareStatement("DELETE FROM CUSTOM_FIELDS WHERE DOCID = " + doc.getDocID() + " and NAME = '" + field.name + "'");
 						pst.executeUpdate();
-						pst = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASGLOSSARY, TYPE)"
-								+ " values (" + doc.getDocID() + ", '" + field.name + "', ?,"
-								+ field.getTypeAsDatabaseType() + ")");
+						pst = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUEASGLOSSARY, TYPE)" + " values (" + doc.getDocID()
+						        + ", '" + field.name + "', ?," + field.getTypeAsDatabaseType() + ")");
 						for (Integer value : field.valuesAsGlossaryData) {
 							if (value == 0) {
 								pst.setNull(1, Types.INTEGER);
@@ -1304,8 +1260,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						}
 						break;
 					case COORDINATION:
-						PreparedStatement preparedStatement = conn
-								.prepareStatement("delete from coordblocks where docid = ? ");
+						PreparedStatement preparedStatement = conn.prepareStatement("delete from coordblocks where docid = ? ");
 						preparedStatement.setInt(1, doc.getDocID());
 						preparedStatement.executeUpdate();
 
@@ -1317,15 +1272,13 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 							}
 						}
 
-						preparedStatement = conn
-								.prepareStatement("delete from custom_field where name = ? and docid = ? and type = ?");
+						preparedStatement = conn.prepareStatement("delete from custom_field where name = ? and docid = ? and type = ?");
 						preparedStatement.setString(1, field.name);
 						preparedStatement.setInt(2, doc.getDocID());
 						preparedStatement.setInt(3, field.getTypeAsDatabaseType());
 						preparedStatement.executeUpdate();
 
-						preparedStatement = conn.prepareStatement(
-								"insert into CUSTOM_FIELDS(DOCID, NAME, VALUE, TYPE)" + "values (?, ?, ?, ?)");
+						preparedStatement = conn.prepareStatement("insert into CUSTOM_FIELDS(DOCID, NAME, VALUE, TYPE)" + "values (?, ?, ?, ?)");
 						preparedStatement.setInt(1, doc.getDocID());
 						preparedStatement.setString(2, field.name);
 						preparedStatement.setString(3, String.valueOf(blockCollection.getStatus()));
@@ -1366,15 +1319,13 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public void insertBlobTables(Connection conn, int id, int key, Document doc, String tableSuffix)
-			throws SQLException, IOException {
+	public void insertBlobTables(Connection conn, int id, int key, Document doc, String tableSuffix) throws SQLException, IOException {
 		if (id != 0 && !doc.hasField("recID")) {
-			PreparedStatement s0 = conn
-					.prepareStatement("SELECT * FROM CUSTOM_BLOBS_" + tableSuffix + " WHERE DOCID = " + id);
+			PreparedStatement s0 = conn.prepareStatement("SELECT * FROM CUSTOM_BLOBS_" + tableSuffix + " WHERE DOCID = " + id);
 			ResultSet rs0 = s0.executeQuery();
 			while (rs0.next()) {
-				PreparedStatement s1 = conn.prepareStatement("INSERT INTO CUSTOM_BLOBS_" + tableSuffix
-						+ " (DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE)values(?, ?, ?, ?, ?, ?)");
+				PreparedStatement s1 = conn.prepareStatement(
+				        "INSERT INTO CUSTOM_BLOBS_" + tableSuffix + " (DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE)values(?, ?, ?, ?, ?, ?)");
 				s1.setInt(1, key);
 				s1.setString(2, rs0.getString("NAME"));
 				s1.setString(3, rs0.getString("ORIGINALNAME"));
@@ -1388,8 +1339,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			s0.close();
 		} else {
 			for (Entry<String, BlobField> blob : doc.blobFieldsMap.entrySet()) {
-				PreparedStatement ps = conn.prepareStatement("INSERT INTO CUSTOM_BLOBS_" + tableSuffix
-						+ " (DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE)values(?, ?, ?, ?, ?, ?)");
+				PreparedStatement ps = conn.prepareStatement(
+				        "INSERT INTO CUSTOM_BLOBS_" + tableSuffix + " (DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE)values(?, ?, ?, ?, ?, ?)");
 				BlobField bf = blob.getValue();
 				for (BlobFile bfile : bf.getFiles()) {
 					ps.setInt(1, key);
@@ -1417,8 +1368,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	@Override
 	public void updateBlobTables(Connection conn, Document doc, String tableSuffix) throws SQLException, IOException {
 		Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-		ResultSet blobs = s.executeQuery("SELECT ID, DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE "
-				+ "FROM CUSTOM_BLOBS_" + tableSuffix + " WHERE DOCID = " + doc.getDocID());
+		ResultSet blobs = s.executeQuery("SELECT ID, DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE " + "FROM CUSTOM_BLOBS_" + tableSuffix
+		        + " WHERE DOCID = " + doc.getDocID());
 		while (blobs.next()) {
 			if (!doc.blobFieldsMap.containsKey(blobs.getString("NAME"))) {
 				blobs.deleteRow();
@@ -1445,10 +1396,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 		}
 		/* now add files that are absent in database */
 		for (Entry<String, BlobField> blob : doc.blobFieldsMap.entrySet()) {
-			PreparedStatement ps = conn.prepareStatement(
-					"SELECT ID, DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE " + "FROM CUSTOM_BLOBS_"
-							+ tableSuffix + " WHERE DOCID = ? AND NAME = ? AND CHECKSUM = ?",
-					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+			PreparedStatement ps = conn.prepareStatement("SELECT ID, DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE " + "FROM CUSTOM_BLOBS_"
+			        + tableSuffix + " WHERE DOCID = ? AND NAME = ? AND CHECKSUM = ?", ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
 			for (BlobFile bfile : blob.getValue().getFiles()) {
 				// System.out.println("file=" + bfile);
 				ps.setInt(1, doc.getDocID());
@@ -1496,15 +1445,13 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 		for (String table : accessTables) {
 			deletion.executeUpdate("DELETE FROM " + table + " WHERE DOCID = " + doc.getDocID());
 			if (table.equals(accessTables[0])) {
-				PreparedStatement insertion = conn.prepareStatement(
-						"INSERT INTO " + table + " (USERNAME, DOCID) VALUES (?, " + doc.getDocID() + ")");
+				PreparedStatement insertion = conn.prepareStatement("INSERT INTO " + table + " (USERNAME, DOCID) VALUES (?, " + doc.getDocID() + ")");
 				for (String author : doc.getEditors()) {
 					insertion.setString(1, author);
 					insertion.executeUpdate();
 				}
 			} else {
-				PreparedStatement insertion = conn
-						.prepareStatement("INSERT INTO " + table + " (USERNAME, DOCID, FAVORITES) VALUES (?, ?, ?)");
+				PreparedStatement insertion = conn.prepareStatement("INSERT INTO " + table + " (USERNAME, DOCID, FAVORITES) VALUES (?, ?, ?)");
 				for (Reader reader : doc.getReaders()) {
 					insertion.setString(1, reader.toString());
 					insertion.setInt(2, doc.getDocID());
@@ -1524,9 +1471,9 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			for (FileItem item : fileItems) {
 				if (item != null && item.getName() != null && !"".equalsIgnoreCase(item.getName())) {
 					PreparedStatement ps = conn.prepareStatement(
-							"INSERT INTO CUSTOM_BLOBS_" + tableSuffix
-									+ " (DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE, REGDATE) values (?, ?, ?, ?, ?, ?, ?)",
-							PreparedStatement.RETURN_GENERATED_KEYS);
+					        "INSERT INTO CUSTOM_BLOBS_" + tableSuffix
+					                + " (DOCID, NAME, ORIGINALNAME, CHECKSUM, COMMENT, VALUE, REGDATE) values (?, ?, ?, ?, ?, ?, ?)",
+					        PreparedStatement.RETURN_GENERATED_KEYS);
 					String hash = Util.getHexHash(item.getInputStream());
 					ps.setInt(1, 1);
 					ps.setString(2, "rtfcontent");
@@ -1559,9 +1506,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	@Override
 	@Deprecated
-	public ArrayList<BaseDocument> getAllDocuments(int docType, Set<String> complexUserID, String absoluteUserID,
-			String[] fields, int start, int end)
-					throws DocumentException, DocumentAccessException, ComplexObjectException {
+	public ArrayList<BaseDocument> getAllDocuments(int docType, Set<String> complexUserID, String absoluteUserID, String[] fields, int start, int end)
+	        throws DocumentException, DocumentAccessException, ComplexObjectException {
 		ArrayList<BaseDocument> documents = new ArrayList<BaseDocument>();
 		Connection conn = dbPool.getConnection();
 		try {
@@ -1570,8 +1516,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			switch (docType) {
 			case DOCTYPE_MAIN:
 				String sql = "select distinct MAINDOCS.DOCID from MAINDOCS JOIN READERS_MAINDOCS on(MAINDOCS.DOCID=READERS_MAINDOCS.DOCID)"
-						+ "and READERS_MAINDOCS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_MAINDOCS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 
 				ResultSet rs = s.executeQuery(sql);
 				while (rs.next()) {
@@ -1581,8 +1526,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				break;
 			case DOCTYPE_TASK:
 				sql = "select distinct TASKS.DOCID from TASKS,READERS_TASKS where TASKS.DOCID=READERS_TASKS.DOCID "
-						+ "and READERS_TASKS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_TASKS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
 					Task task = getTasks().getTaskByID(rs.getInt("DOCID"), complexUserID, absoluteUserID);
@@ -1591,19 +1535,16 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				break;
 			case DOCTYPE_EXECUTION:
 				sql = "select distinct EXECUTIONS.DOCID from EXECUTIONS JOIN READERS_EXECUTIONS on(EXECUTIONS.DOCID=READERS_EXECUTIONS.DOCID)"
-						+ "and READERS_EXECUTIONS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_EXECUTIONS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
-					Execution exec = getExecutions().getExecutionByID(rs.getInt("DOCID"), complexUserID,
-							absoluteUserID);
+					Execution exec = getExecutions().getExecutionByID(rs.getInt("DOCID"), complexUserID, absoluteUserID);
 					documents.add(exec);
 				}
 				break;
 			case DOCTYPE_PROJECT:
 				sql = "select distinct PROJECTS.DOCID from PROJECTS, READERS_PROJECTS where PROJECTS.DOCID=READERS_PROJECTS.DOCID "
-						+ "and READERS_PROJECTS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_PROJECTS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
 					Project prj = getProjects().getProjectByID(rs.getInt("DOCID"), complexUserID, absoluteUserID);
@@ -1623,8 +1564,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	@Override
 	@Deprecated
-	public ArrayList<BaseDocument> getAllDocuments(int docType, Set<String> complexUserID, String absoluteUserID,
-			int start, int end) throws DocumentException, DocumentAccessException, ComplexObjectException {
+	public ArrayList<BaseDocument> getAllDocuments(int docType, Set<String> complexUserID, String absoluteUserID, int start, int end)
+	        throws DocumentException, DocumentAccessException, ComplexObjectException {
 		ArrayList<BaseDocument> documents = new ArrayList<BaseDocument>();
 		Connection conn = dbPool.getConnection();
 		try {
@@ -1633,8 +1574,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			switch (docType) {
 			case DOCTYPE_MAIN:
 				String sql = "select distinct MAINDOCS.DOCID from MAINDOCS JOIN READERS_MAINDOCS on(MAINDOCS.DOCID=READERS_MAINDOCS.DOCID)"
-						+ "and READERS_MAINDOCS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_MAINDOCS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 
 				ResultSet rs = s.executeQuery(sql);
 				while (rs.next()) {
@@ -1644,8 +1584,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				break;
 			case DOCTYPE_TASK:
 				sql = "select distinct TASKS.DOCID from TASKS,READERS_TASKS where TASKS.DOCID=READERS_TASKS.DOCID "
-						+ "and READERS_TASKS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_TASKS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
 					Task task = getTasks().getTaskByID(rs.getInt("DOCID"), complexUserID, absoluteUserID);
@@ -1654,19 +1593,16 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				break;
 			case DOCTYPE_EXECUTION:
 				sql = "select distinct EXECUTIONS.DOCID from EXECUTIONS JOIN READERS_EXECUTIONS on(EXECUTIONS.DOCID=READERS_EXECUTIONS.DOCID)"
-						+ "and READERS_EXECUTIONS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_EXECUTIONS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
-					Execution exec = getExecutions().getExecutionByID(rs.getInt("DOCID"), complexUserID,
-							absoluteUserID);
+					Execution exec = getExecutions().getExecutionByID(rs.getInt("DOCID"), complexUserID, absoluteUserID);
 					documents.add(exec);
 				}
 				break;
 			case DOCTYPE_PROJECT:
 				sql = "select distinct PROJECTS.DOCID from PROJECTS, READERS_PROJECTS where PROJECTS.DOCID=READERS_PROJECTS.DOCID "
-						+ "and READERS_PROJECTS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_PROJECTS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
 					Project prj = getProjects().getProjectByID(rs.getInt("DOCID"), complexUserID, absoluteUserID);
@@ -1686,8 +1622,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	@Override
 	@Deprecated
-	public ArrayList<Integer> getAllDocumentsIDS(int docType, Set<String> complexUserID, String absoluteUserID,
-			String[] fields, int start, int end) throws DocumentException, DocumentAccessException {
+	public ArrayList<Integer> getAllDocumentsIDS(int docType, Set<String> complexUserID, String absoluteUserID, String[] fields, int start, int end)
+	        throws DocumentException, DocumentAccessException {
 		ArrayList<Integer> documents = new ArrayList<Integer>();
 		Connection conn = dbPool.getConnection();
 		try {
@@ -1696,8 +1632,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			switch (docType) {
 			case DOCTYPE_MAIN:
 				String sql = "select MAINDOCS.DOCID from MAINDOCS JOIN READERS_MAINDOCS on(MAINDOCS.DOCID=READERS_MAINDOCS.DOCID)"
-						+ "and READERS_MAINDOCS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_MAINDOCS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 
 				ResultSet rs = s.executeQuery(sql);
 				while (rs.next()) {
@@ -1705,9 +1640,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				}
 				break;
 			case DOCTYPE_TASK:
-				sql = "select TASKS.DOCID from TASKS,READERS_TASKS where TASKS.DOCID=READERS_TASKS.DOCID "
-						+ "and READERS_TASKS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				sql = "select TASKS.DOCID from TASKS,READERS_TASKS where TASKS.DOCID=READERS_TASKS.DOCID " + "and READERS_TASKS.USERNAME IN ("
+				        + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
 					documents.add(rs.getInt("DOCID"));
@@ -1715,8 +1649,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				break;
 			case DOCTYPE_EXECUTION:
 				sql = "select EXECUTIONS.DOCID from EXECUTIONS JOIN READERS_EXECUTIONS on(EXECUTIONS.DOCID=READERS_EXECUTIONS.DOCID)"
-						+ "and READERS_EXECUTIONS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_EXECUTIONS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
 					documents.add(rs.getInt("DOCID"));
@@ -1724,8 +1657,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				break;
 			case DOCTYPE_PROJECT:
 				sql = "select PROJECTS.DOCID from PROJECTS, READERS_PROJECTS where PROJECTS.DOCID=READERS_PROJECTS.DOCID "
-						+ "and READERS_PROJECTS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_PROJECTS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
 					documents.add(rs.getInt("DOCID"));
@@ -1770,8 +1702,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	@Override
 	@Deprecated
-	public ArrayList<Integer> getAllDocumentsIDS(int docType, Set<String> complexUserID, String absoluteUserID,
-			int start, int end) throws DocumentException, DocumentAccessException {
+	public ArrayList<Integer> getAllDocumentsIDS(int docType, Set<String> complexUserID, String absoluteUserID, int start, int end)
+	        throws DocumentException, DocumentAccessException {
 		ArrayList<Integer> documents = new ArrayList<Integer>();
 		Connection conn = dbPool.getConnection();
 		try {
@@ -1780,8 +1712,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			switch (docType) {
 			case DOCTYPE_MAIN:
 				String sql = "select MAINDOCS.DOCID from MAINDOCS JOIN READERS_MAINDOCS on(MAINDOCS.DOCID=READERS_MAINDOCS.DOCID)"
-						+ "and READERS_MAINDOCS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_MAINDOCS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 
 				ResultSet rs = s.executeQuery(sql);
 				while (rs.next()) {
@@ -1789,9 +1720,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				}
 				break;
 			case DOCTYPE_TASK:
-				sql = "select TASKS.DOCID from TASKS,READERS_TASKS where TASKS.DOCID=READERS_TASKS.DOCID "
-						+ "and READERS_TASKS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				sql = "select TASKS.DOCID from TASKS,READERS_TASKS where TASKS.DOCID=READERS_TASKS.DOCID " + "and READERS_TASKS.USERNAME IN ("
+				        + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
 					documents.add(rs.getInt("DOCID"));
@@ -1799,8 +1729,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				break;
 			case DOCTYPE_EXECUTION:
 				sql = "select EXECUTIONS.DOCID from EXECUTIONS JOIN READERS_EXECUTIONS on(EXECUTIONS.DOCID=READERS_EXECUTIONS.DOCID)"
-						+ "and READERS_EXECUTIONS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_EXECUTIONS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
 					documents.add(rs.getInt("DOCID"));
@@ -1808,8 +1737,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				break;
 			case DOCTYPE_PROJECT:
 				sql = "select PROJECTS.DOCID from PROJECTS, READERS_PROJECTS where PROJECTS.DOCID=READERS_PROJECTS.DOCID "
-						+ "and READERS_PROJECTS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ getPageSQLPiece(start, end);
+				        + "and READERS_PROJECTS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + getPageSQLPiece(start, end);
 				rs = s.executeQuery(sql);
 				while (rs.next()) {
 					documents.add(rs.getInt("DOCID"));
@@ -1828,8 +1756,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	@Override
 	@Deprecated
-	public ArrayList<Integer> getAllDocumentsIDsByCondition(String query, int docType, Set<String> complexUserID,
-			String absoluteUserID) {
+	public ArrayList<Integer> getAllDocumentsIDsByCondition(String query, int docType, Set<String> complexUserID, String absoluteUserID) {
 
 		FormulaBlocks preparedQueryFormula;
 		ArrayList<Integer> documents = new ArrayList<Integer>();
@@ -1894,19 +1821,19 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			switch (docType) {
 			case DOCTYPE_MAIN:
 				sql = "select count(MAINDOCS.docid) from MAINDOCS,READERS_MAINDOCS where MAINDOCS.DOCID = READERS_MAINDOCS.DOCID "
-						+ "and READERS_MAINDOCS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
+				        + "and READERS_MAINDOCS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
 				break;
 			case DOCTYPE_TASK:
 				sql = "select count(tasks.docid) from TASKS,READERS_TASKS where TASKS.DOCID = READERS_TASKS.DOCID "
-						+ "and READERS_TASKS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
+				        + "and READERS_TASKS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
 				break;
 			case DOCTYPE_EXECUTION:
 				sql = "select count(EXECUTIONS.docid) from EXECUTIONS,READERS_EXECUTIONS where EXECUTIONS.DOCID = READERS_EXECUTIONS.DOCID "
-						+ "and READERS_EXECUTIONS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
+				        + "and READERS_EXECUTIONS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
 				break;
 			case DOCTYPE_PROJECT:
 				sql = "select count(PROJECTS.docid) from PROJECTS,READERS_PROJECTS where PROJECTS.DOCID = READERS_PROJECTS.DOCID "
-						+ "and READERS_PROJECTS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
+				        + "and READERS_PROJECTS.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
 				break;
 
 			}
@@ -1983,9 +1910,9 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public StringBuffer getDocsByCondition(IQueryFormula blocks, Set<String> complexUserID, String absoluteUserID,
-			int offset, int pageSize, String fieldsCond, Set<DocID> toExpandResponses, Set<String> toExpandCategory,
-			TagPublicationFormatType publishAs, int page) throws DocumentException {
+	public StringBuffer getDocsByCondition(IQueryFormula blocks, Set<String> complexUserID, String absoluteUserID, int offset, int pageSize,
+	        String fieldsCond, Set<DocID> toExpandResponses, Set<String> toExpandCategory, TagPublicationFormatType publishAs, int page)
+	                throws DocumentException {
 		StringBuffer xmlContent = new StringBuffer(10000);
 
 		Connection conn = dbPool.getConnection();
@@ -2002,15 +1929,14 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						int groupCount = rs.getInt(2);
 						String categoryVal[] = { categoryID };
 						String viewText = ss.publishAs(publishAs, categoryVal).get(0)[0];
-						xmlContent.append("<entry  doctype=\"" + CATEGORY + "\" count=\"" + groupCount + "\" "
-								+ " categoryid=\"" + categoryID + "\" " + " docid=\"" + categoryID + "\" "
-								+ "url=\"Provider?type=view&amp;id=" + blocks.getQueryID() + "&amp;command=expand`"
-								+ categoryID + "\" ><viewtext>" + XMLUtil.getAsTagValue(viewText) + "</viewtext>");
+						xmlContent.append("<entry  doctype=\"" + CATEGORY + "\" count=\"" + groupCount + "\" " + " categoryid=\"" + categoryID + "\" "
+						        + " docid=\"" + categoryID + "\" " + "url=\"Provider?type=view&amp;id=" + blocks.getQueryID() + "&amp;command=expand`"
+						        + categoryID + "\" ><viewtext>" + XMLUtil.getAsTagValue(viewText) + "</viewtext>");
 
 						for (String category : toExpandCategory) {
 							if (categoryID.equalsIgnoreCase(category)) {
-								StringBuffer categoryValue = getGetOneCategory(complexUserID, absoluteUserID,
-										blocks.getGroupCondition(category), fieldsCond, toExpandResponses, page);
+								StringBuffer categoryValue = getGetOneCategory(complexUserID, absoluteUserID, blocks.getGroupCondition(category),
+								        fieldsCond, toExpandResponses, page);
 								int catID;
 								String catName;
 								try {
@@ -2021,22 +1947,19 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 									catName = "";
 								}
 
-								xmlContent.append("<category id=\"" + catID + "\" name=\"" + catName + "\">"
-										+ categoryValue + "</category>");
+								xmlContent.append("<category id=\"" + catID + "\" name=\"" + catName + "\">" + categoryValue + "</category>");
 								break;
 							}
 						}
 					} else {
-						xmlContent.append("<entry  doctype=\"" + DOCTYPE_UNKNOWN + "\" count=\"0\" "
-								+ " categoryid=\"null\"><viewtext></viewtext>");
+						xmlContent.append("<entry  doctype=\"" + DOCTYPE_UNKNOWN + "\" count=\"0\" " + " categoryid=\"null\"><viewtext></viewtext>");
 					}
 					xmlContent.append("</entry>");
 				}
 
 			} else {
 				while (rs.next()) {
-					xmlContent.append(getDocumentEntry(conn, complexUserID, absoluteUserID, rs, fieldsCond,
-							toExpandResponses, page));
+					xmlContent.append(getDocumentEntry(conn, complexUserID, absoluteUserID, rs, fieldsCond, toExpandResponses, page));
 				}
 			}
 			conn.commit();
@@ -2054,9 +1977,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public StringBuffer getDocsByCondition(String sql, Set<String> complexUserID, String absoluteUserID,
-			String fieldsCond, Set<DocID> toExpandResponses, Set<String> toExpandCategory,
-			TagPublicationFormatType publishAs, int page) throws DocumentException {
+	public StringBuffer getDocsByCondition(String sql, Set<String> complexUserID, String absoluteUserID, String fieldsCond,
+	        Set<DocID> toExpandResponses, Set<String> toExpandCategory, TagPublicationFormatType publishAs, int page) throws DocumentException {
 		StringBuffer xmlContent = new StringBuffer(10000);
 
 		Connection conn = dbPool.getConnection();
@@ -2065,8 +1987,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = s.executeQuery(sql);
 			while (rs.next()) {
-				xmlContent.append(
-						getDocumentEntry(conn, complexUserID, absoluteUserID, rs, fieldsCond, toExpandResponses, page));
+				xmlContent.append(getDocumentEntry(conn, complexUserID, absoluteUserID, rs, fieldsCond, toExpandResponses, page));
 			}
 			conn.commit();
 			s.close();
@@ -2082,24 +2003,21 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 		return xmlContent;
 	}
 
-	public StringBuffer getGetOneCategory(Set<String> complexUserID, String absoluteUserID, String addCondition,
-			String fieldsCond, Set<DocID> toExpandResponses, int page) {
+	public StringBuffer getGetOneCategory(Set<String> complexUserID, String absoluteUserID, String addCondition, String fieldsCond,
+	        Set<DocID> toExpandResponses, int page) {
 		StringBuffer xmlContent = new StringBuffer(10000);
 		Connection conn = dbPool.getConnection();
 		try {
 			conn.setAutoCommit(false);
 			Statement statement = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
-			String sql = "SELECT DISTINCT " + maindocFields
-					+ " FROM MAINDOCS, READERS_MAINDOCS rm WHERE rm.docid = MAINDOCS.DOCID and " + "rm.USERNAME IN ("
-					+ DatabaseUtil.prepareListToQuery(complexUserID) + ")" + addCondition
-					+ " ORDER BY MAINDOCS.regdate";
+			String sql = "SELECT DISTINCT " + maindocFields + " FROM MAINDOCS, READERS_MAINDOCS rm WHERE rm.docid = MAINDOCS.DOCID and "
+			        + "rm.USERNAME IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + addCondition + " ORDER BY MAINDOCS.regdate";
 
 			ResultSet rs = statement.executeQuery(sql);
 
 			while (rs.next()) {
-				xmlContent.append(
-						getDocumentEntry(conn, complexUserID, absoluteUserID, rs, fieldsCond, toExpandResponses, page));
+				xmlContent.append(getDocumentEntry(conn, complexUserID, absoluteUserID, rs, fieldsCond, toExpandResponses, page));
 			}
 
 			rs.close();
@@ -2116,8 +2034,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public String getDocumentEntry(Connection conn, Set<String> complexUserID, String absoluteUserID, ResultSet rs,
-			String fieldsCond, Set<DocID> toExpandResponses, int page) throws SQLException, DocumentException {
+	public String getDocumentEntry(Connection conn, Set<String> complexUserID, String absoluteUserID, ResultSet rs, String fieldsCond,
+	        Set<DocID> toExpandResponses, int page) throws SQLException, DocumentException {
 		String customFieldsValue = "";
 		int docID = rs.getInt("DOCID");
 		int docType = rs.getInt("DOCTYPE");
@@ -2132,19 +2050,16 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				String name = rsFields.getString("NAME");
 				switch (rsFields.getInt("TYPE")) {
 				case TEXT:
-					customFieldsValue += "<" + name + ">" + XMLUtil.getAsTagValue(rsFields.getString("VALUE")) + "</"
-							+ name + ">";
+					customFieldsValue += "<" + name + ">" + XMLUtil.getAsTagValue(rsFields.getString("VALUE")) + "</" + name + ">";
 					break;
 				case NUMBERS:
 					customFieldsValue += "<" + name + ">" + rsFields.getInt("VALUEASNUMBER") + "</" + name + ">";
 					break;
 				case DATETIMES:
-					customFieldsValue += "<" + name + ">"
-							+ Database.dateTimeFormat.format(rsFields.getTimestamp("VALUEASDATE")) + "</" + name + ">";
+					customFieldsValue += "<" + name + ">" + Database.dateTimeFormat.format(rsFields.getTimestamp("VALUEASDATE")) + "</" + name + ">";
 					break;
 				case DATE:
-					customFieldsValue += "<" + name + ">"
-							+ Database.dateFormat.format(rsFields.getTimestamp("VALUEASDATE")) + "</" + name + ">";
+					customFieldsValue += "<" + name + ">" + Database.dateFormat.format(rsFields.getTimestamp("VALUEASDATE")) + "</" + name + ">";
 					break;
 				case GLOSSARY:
 					String valueAsGlossary, attr = "";
@@ -2157,8 +2072,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						valueAsGlossary = Integer.toString(gVal);
 						attr = " error=\"glossary not found\" ";
 					}
-					customFieldsValue += "<" + name + attr + ">" + XMLUtil.getAsTagValue(valueAsGlossary) + "</" + name
-							+ ">";
+					customFieldsValue += "<" + name + attr + ">" + XMLUtil.getAsTagValue(valueAsGlossary) + "</" + name + ">";
 					break;
 				}
 			}
@@ -2171,21 +2085,18 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 		Employer emp = this.getStructure().getAppUser(absoluteUserID);
 
-		StringBuffer value = new StringBuffer(
-				"<entry isread=\"" + usersActivity.isRead(conn, docID, docType, absoluteUserID) + "\" " + "hasattach=\""
-						+ Integer.toString(rs.getInt("HAS_ATTACHMENT")) + "\"  id=\"" + id + "\" doctype=\"" + docType
-						+ "\"  " + "docid=\"" + docID + "\" favourites=\"" + isFavourites(conn, docID, docType, emp)
-						+ "\" " + "url=\"Provider?type=edit&amp;element=" + resolveElement(docType) + "&amp;id="
-						+ rs.getString("FORM") + "&amp;key=" + docID + "&amp;docid=" + rs.getString("DDBID")
-						+ "&amp;page=" + page + "\"" + ">" + getViewContent(rs) + customFieldsValue);
+		StringBuffer value = new StringBuffer("<entry isread=\"" + usersActivity.isRead(conn, docID, docType, absoluteUserID) + "\" " + "hasattach=\""
+		        + Integer.toString(rs.getInt("HAS_ATTACHMENT")) + "\"  id=\"" + id + "\" doctype=\"" + docType + "\"  " + "docid=\"" + docID
+		        + "\" favourites=\"" + isFavourites(conn, docID, docType, emp) + "\" " + "url=\"Provider?type=edit&amp;element="
+		        + resolveElement(docType) + "&amp;id=" + rs.getString("FORM") + "&amp;key=" + docID + "&amp;docid=" + rs.getString("DDBID")
+		        + "&amp;page=" + page + "\"" + ">" + getViewContent(rs) + customFieldsValue);
 
 		sFields.close();
 
 		if (isResponding && toExpandResponses.size() > 0) {
 			for (DocID doc : toExpandResponses) {
 				if (doc.id == docID && doc.type == DOCTYPE_MAIN) {
-					DocumentCollection responses = getDescendants(docID, DOCTYPE_MAIN, null, 1, complexUserID,
-							absoluteUserID);
+					DocumentCollection responses = getDescendants(docID, DOCTYPE_MAIN, null, 1, complexUserID, absoluteUserID);
 					if (responses.count > 0) {
 						value.append("<responses>" + responses.xmlContent + "</responses>");
 					}
@@ -2201,9 +2112,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	 */
 	@Deprecated
 	@Override
-	public ArrayList<BaseDocument> getDocumentsByCondition(String form, String query, Set<String> complexUserID,
-			String absoluteUserID) throws DocumentException, DocumentAccessException, QueryFormulaParserException,
-					ComplexObjectException {
+	public ArrayList<BaseDocument> getDocumentsByCondition(String form, String query, Set<String> complexUserID, String absoluteUserID)
+	        throws DocumentException, DocumentAccessException, QueryFormulaParserException, ComplexObjectException {
 		FormulaBlocks preparedQueryFormula = new FormulaBlocks(query, QueryType.DOCUMENT);
 		QueryFormula queryFormula;
 		if (form.equalsIgnoreCase("workdocprj") || form.equalsIgnoreCase("outdocprj")) {
@@ -2215,26 +2125,23 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public ArrayList<BaseDocument> getDocumentsByCondition(String query, Set<String> complexUserID,
-			String absoluteUserID, int limit, int offset) throws DocumentException, DocumentAccessException,
-					QueryFormulaParserException, ComplexObjectException {
+	public ArrayList<BaseDocument> getDocumentsByCondition(String query, Set<String> complexUserID, String absoluteUserID, int limit, int offset)
+	        throws DocumentException, DocumentAccessException, QueryFormulaParserException, ComplexObjectException {
 		FormulaBlocks preparedQueryFormula = new FormulaBlocks(query, QueryType.DOCUMENT);
 		QueryFormula queryFormula = new QueryFormula("", preparedQueryFormula);
-		return getDocumentsByCondition(queryFormula, complexUserID, absoluteUserID, limit,
-				this.calcStartEntry(offset, limit));
+		return getDocumentsByCondition(queryFormula, complexUserID, absoluteUserID, limit, this.calcStartEntry(offset, limit));
 	}
 
 	@Override
 	public int getDocumentsCountByCondition(String query, Set<String> complexUserID, String absoluteUserID)
-			throws DocumentException, DocumentAccessException, QueryFormulaParserException {
+	        throws DocumentException, DocumentAccessException, QueryFormulaParserException {
 		FormulaBlocks preparedQueryFormula = new FormulaBlocks(query, QueryType.DOCUMENT);
 		QueryFormula queryFormula = new QueryFormula("", preparedQueryFormula);
 		return getDocsCountByCondition(queryFormula, complexUserID, absoluteUserID);
 	}
 
-	public ArrayList<BaseDocument> getDocumentsByCondition(IQueryFormula blocks, Set<String> complexUserID,
-			String absoluteUserID, int limit, int offset, Set<DocID> expandedThread)
-					throws DocumentException, DocumentAccessException, ComplexObjectException {
+	public ArrayList<BaseDocument> getDocumentsByCondition(IQueryFormula blocks, Set<String> complexUserID, String absoluteUserID, int limit,
+	        int offset, Set<DocID> expandedThread) throws DocumentException, DocumentAccessException, ComplexObjectException {
 		ArrayList<BaseDocument> docs = new ArrayList<BaseDocument>();
 		Connection conn = dbPool.getConnection();
 		try {
@@ -2262,8 +2169,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 					break;
 				}
 				DocID docid = new DocID(docID, docType);
-				if ("true".equalsIgnoreCase(doc.hasResponse(complexUserID, absoluteUserID))
-						&& expandedThread.contains(docid)) {
+				if ("true".equalsIgnoreCase(doc.hasResponse(complexUserID, absoluteUserID)) && expandedThread.contains(docid)) {
 					doc.responses = this.getDescendants(docID, docType, null, 0, complexUserID, absoluteUserID).col;
 				}
 				docs.add(doc);
@@ -2280,9 +2186,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public ArrayList<BaseDocument> getDocumentsByCondition(IQueryFormula blocks, Set<String> complexUserID,
-			String absoluteUserID, int limit, int offset)
-					throws DocumentException, DocumentAccessException, ComplexObjectException {
+	public ArrayList<BaseDocument> getDocumentsByCondition(IQueryFormula blocks, Set<String> complexUserID, String absoluteUserID, int limit,
+	        int offset) throws DocumentException, DocumentAccessException, ComplexObjectException {
 		ArrayList<BaseDocument> docs = new ArrayList<BaseDocument>();
 		Connection conn = dbPool.getConnection();
 		try {
@@ -2324,22 +2229,19 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public boolean hasResponse(Connection conn, int docID, int docType, Set<String> complexUserID,
-			String absoluteUserID) {
+	public boolean hasResponse(Connection conn, int docID, int docType, Set<String> complexUserID, String absoluteUserID) {
 		try {
 			conn.setAutoCommit(false);
 			Statement st = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			String sql = "select m.docid, m.doctype, m.form from maindocs as m " + " inner join readers_maindocs as rm "
-					+ "     on m.docid = rm.docid " + " where m.parentdocid = " + docID + " and m.parentdoctype = "
-					+ docType + " and rm.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-					+ " and m.form != 'discussion' " + " union all "
-					+ " select t.docid, t.doctype, t.form from tasks as t " + " inner join readers_tasks as rt "
-					+ "     on t.docid = rt.docid " + " where t.parentdocid = " + docID + " and t.parentdoctype = "
-					+ docType + " and rt.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-					+ " union all " + " select e.docid, e.doctype, e.form from executions as e "
-					+ " inner join readers_executions as re " + "     on e.docid = re.docid "
-					+ " where e.parentdocid = " + docID + " and e.parentdoctype = " + docType + " and re.username in ("
-					+ DatabaseUtil.prepareListToQuery(complexUserID) + ")";
+			        + "     on m.docid = rm.docid " + " where m.parentdocid = " + docID + " and m.parentdoctype = " + docType
+			        + " and rm.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + " and m.form != 'discussion' " + " union all "
+			        + " select t.docid, t.doctype, t.form from tasks as t " + " inner join readers_tasks as rt " + "     on t.docid = rt.docid "
+			        + " where t.parentdocid = " + docID + " and t.parentdoctype = " + docType + " and rt.username in ("
+			        + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + " union all "
+			        + " select e.docid, e.doctype, e.form from executions as e " + " inner join readers_executions as re "
+			        + "     on e.docid = re.docid " + " where e.parentdocid = " + docID + " and e.parentdoctype = " + docType
+			        + " and re.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
 			ResultSet rs = st.executeQuery(sql);
 			if (rs.next()) {
 				st.close();
@@ -2360,15 +2262,13 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 		try {
 			conn.setAutoCommit(false);
 			Statement st = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			String sql = "select m.docid, m.doctype, m.form from maindocs as m, readers_maindocs as rm "
-					+ " where m.parentdocid = " + docID + " and m.parentdoctype = " + docType + " and rm.username in ("
-					+ DatabaseUtil.prepareListToQuery(complexUserID) + ")" + " and m.form != 'discussion' "
-					+ " union all " + " select t.docid, t.doctype, t.form from tasks as t, readers_tasks as rt"
-					+ " where t.parentdocid = " + docID + " and t.parentdoctype = " + docType + " and rt.username in ("
-					+ DatabaseUtil.prepareListToQuery(complexUserID) + ")" + " union all "
-					+ " select e.docid, e.doctype, e.form from executions as e, readers_executions as re"
-					+ " where e.parentdocid = " + docID + " and e.parentdoctype = " + docType + " and re.username in ("
-					+ DatabaseUtil.prepareListToQuery(complexUserID) + ")";
+			String sql = "select m.docid, m.doctype, m.form from maindocs as m, readers_maindocs as rm " + " where m.parentdocid = " + docID
+			        + " and m.parentdoctype = " + docType + " and rm.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+			        + " and m.form != 'discussion' " + " union all " + " select t.docid, t.doctype, t.form from tasks as t, readers_tasks as rt"
+			        + " where t.parentdocid = " + docID + " and t.parentdoctype = " + docType + " and rt.username in ("
+			        + DatabaseUtil.prepareListToQuery(complexUserID) + ")" + " union all "
+			        + " select e.docid, e.doctype, e.form from executions as e, readers_executions as re" + " where e.parentdocid = " + docID
+			        + " and e.parentdoctype = " + docType + " and re.username in (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")";
 			ResultSet rs = st.executeQuery(sql);
 			if (rs.next()) {
 				st.close();
@@ -2398,9 +2298,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public void deleteDocument(String ddbId, boolean completely, User user)
-			throws DocumentException, DocumentAccessException, SQLException, DatabasePoolException,
-			InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
+	public void deleteDocument(String ddbId, boolean completely, User user) throws DocumentException, DocumentAccessException, SQLException,
+	        DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
 
 		BaseDocument doc = getDocumentByDdbID(ddbId, user.getAllUserGroups(), user.getUserID());
 		if (doc == null) {
@@ -2417,39 +2316,36 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 					throw new DocumentAccessException(ExceptionType.DOCUMENT_DELETE_RESTRICTED, user.getUserID());
 				}
 			} else {
-				if (this.getGlossaries().hasResponse(conn, doc.getDocID(), doc.docType, user.getAllUserGroups(),
-						user.getUserID()) || this.getGlossaries().inUse(conn, doc.getDocID(), doc.docType)) {
-					throw new DocumentAccessException(ExceptionType.DELETING_RESTRICTED_CAUSED_RELATED_DOCUMENTS,
-							user.getUserID());
+				if (this.getGlossaries().hasResponse(conn, doc.getDocID(), doc.docType, user.getAllUserGroups(), user.getUserID())
+				        || this.getGlossaries().inUse(conn, doc.getDocID(), doc.docType)) {
+					throw new DocumentAccessException(ExceptionType.DELETING_RESTRICTED_CAUSED_RELATED_DOCUMENTS, user.getUserID());
 				}
 			}
 
 			if (docType == DOCTYPE_POST) {
-				sql = "DELETE FROM FORUM_TREE_PATH WHERE DESCENDANT IN (SELECT DESCENDANT FROM FORUM_TREE_PATH WHERE ANCESTOR = "
-						+ doc.getDocID() + ")";
+				sql = "DELETE FROM FORUM_TREE_PATH WHERE DESCENDANT IN (SELECT DESCENDANT FROM FORUM_TREE_PATH WHERE ANCESTOR = " + doc.getDocID()
+				        + ")";
 				statement.addBatch(sql);
 				sql = "delete from posts where docid in (select docid from posts except (select ancestor from forum_tree_path union select descendant from forum_tree_path))";
 				statement.addBatch(sql);
 			}
 			if (docType == DOCTYPE_TOPIC) {
 				sql = "DELETE FROM FORUM_TREE_PATH WHERE DESCENDANT IN (SELECT DESCENDANT FROM FORUM_TREE_PATH WHERE ANCESTOR IN (SELECT DOCID FROM POSTS WHERE PARENTDOCID = "
-						+ doc.getDocID() + " AND PARENTDOCTYPE = " + Const.DOCTYPE_TOPIC + "))";
+				        + doc.getDocID() + " AND PARENTDOCTYPE = " + Const.DOCTYPE_TOPIC + "))";
 				statement.addBatch(sql);
 				sql = "delete from posts where docid in (select docid from posts except (select ancestor from forum_tree_path union select descendant from forum_tree_path))";
 				statement.addBatch(sql);
 				sql = "delete from topics where docid = " + doc.getDocID();
 				statement.addBatch(sql);
 			}
-			ArrayList<BaseDocument> responses = doc.getDescendantsArray(doc.getDocID(), doc.docType, sysGroupAsSet,
-					sysUser);
+			ArrayList<BaseDocument> responses = doc.getDescendantsArray(doc.getDocID(), doc.docType, sysGroupAsSet, sysUser);
 			if (!completely) {
 				for (BaseDocument resp : responses) {
 					if (hasBlobs(resp)) {
 						fillBlobsContent(resp);
 					}
 					sql = "DELETE FROM " + DatabaseUtil.getMainTableName(resp.docType) + " WHERE "
-							+ DatabaseUtil.getPrimaryKeyColumnName(resp.docType) + " = "
-							+ Integer.toString(resp.getDocID());
+					        + DatabaseUtil.getPrimaryKeyColumnName(resp.docType) + " = " + Integer.toString(resp.getDocID());
 					statement.addBatch(sql);
 				}
 				doc.responses = responses;
@@ -2459,15 +2355,13 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			}
 
 			for (BaseDocument resp : responses) {
-				sql = "DELETE FROM " + DatabaseUtil.getMainTableName(resp.docType) + " WHERE "
-						+ DatabaseUtil.getPrimaryKeyColumnName(resp.docType) + " = "
-						+ Integer.toString(resp.getDocID());
+				sql = "DELETE FROM " + DatabaseUtil.getMainTableName(resp.docType) + " WHERE " + DatabaseUtil.getPrimaryKeyColumnName(resp.docType)
+				        + " = " + Integer.toString(resp.getDocID());
 				statement.addBatch(sql);
 			}
 
 			if (docType == DOCTYPE_GLOSSARY) {
-				sql = "DELETE FROM GLOSSARY_TREE_PATH WHERE ANCESTOR = " + doc.getDocID() + " OR DESCENDANT = "
-						+ doc.getDocID();
+				sql = "DELETE FROM GLOSSARY_TREE_PATH WHERE ANCESTOR = " + doc.getDocID() + " OR DESCENDANT = " + doc.getDocID();
 				statement.addBatch(sql);
 			}
 
@@ -2478,8 +2372,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				sysdb.deleteUser(emp.getUser().docID);
 			}
 
-			sql = "DELETE FROM " + DatabaseUtil.getMainTableName(doc.docType) + " WHERE "
-					+ DatabaseUtil.getPrimaryKeyColumnName(doc.docType) + " = " + Integer.toString(doc.getDocID());
+			sql = "DELETE FROM " + DatabaseUtil.getMainTableName(doc.docType) + " WHERE " + DatabaseUtil.getPrimaryKeyColumnName(doc.docType) + " = "
+			        + Integer.toString(doc.getDocID());
 			statement.addBatch(sql);
 			statement.executeBatch();
 			statement.close();
@@ -2498,9 +2392,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public void deleteDocument(int docType, int docID, User user, boolean completely)
-			throws DocumentException, DocumentAccessException, SQLException, DatabasePoolException,
-			InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
+	public void deleteDocument(int docType, int docID, User user, boolean completely) throws DocumentException, DocumentAccessException, SQLException,
+	        DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
 		@Deprecated
 		boolean flushCache = false;
 		BaseDocument doc = getDocumentByComplexID(docType, docID);
@@ -2521,20 +2414,18 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			}
 			if (docType == DOCTYPE_GLOSSARY) {
 				if (this.getGlossaries().hasResponse(conn, docID, docID, user.getAllUserGroups(), user.getUserID())) {
-					throw new DocumentAccessException(ExceptionType.DELETING_RESTRICTED_CAUSED_RELATED_DOCUMENTS,
-							user.getUserID());
+					throw new DocumentAccessException(ExceptionType.DELETING_RESTRICTED_CAUSED_RELATED_DOCUMENTS, user.getUserID());
 				}
 			}
 			if (docType == DOCTYPE_POST) {
-				sql = "DELETE FROM FORUM_TREE_PATH WHERE DESCENDANT IN (SELECT DESCENDANT FROM FORUM_TREE_PATH WHERE ANCESTOR = "
-						+ docID + ")";
+				sql = "DELETE FROM FORUM_TREE_PATH WHERE DESCENDANT IN (SELECT DESCENDANT FROM FORUM_TREE_PATH WHERE ANCESTOR = " + docID + ")";
 				statement.addBatch(sql);
 				sql = "delete from posts where docid in (select docid from posts except (select ancestor from forum_tree_path union select descendant from forum_tree_path))";
 				statement.addBatch(sql);
 			}
 			if (docType == DOCTYPE_TOPIC) {
 				sql = "DELETE FROM FORUM_TREE_PATH WHERE DESCENDANT IN (SELECT DESCENDANT FROM FORUM_TREE_PATH WHERE ANCESTOR IN (SELECT DOCID FROM POSTS WHERE PARENTDOCID = "
-						+ docID + " AND PARENTDOCTYPE = " + Const.DOCTYPE_TOPIC + "))";
+				        + docID + " AND PARENTDOCTYPE = " + Const.DOCTYPE_TOPIC + "))";
 				statement.addBatch(sql);
 				sql = "delete from posts where docid in (select docid from posts except (select ancestor from forum_tree_path union select descendant from forum_tree_path))";
 				statement.addBatch(sql);
@@ -2549,8 +2440,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 					}
 					tableName = DatabaseUtil.getMainTableName(resp.docType);
 					columnName = DatabaseUtil.getPrimaryKeyColumnName(resp.docType);
-					sql = "DELETE FROM " + tableName + " WHERE " + columnName + " = "
-							+ Integer.toString(resp.getDocID());
+					sql = "DELETE FROM " + tableName + " WHERE " + columnName + " = " + Integer.toString(resp.getDocID());
 					statement.addBatch(sql);
 				}
 				doc.responses = responses;
@@ -2587,7 +2477,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	public void recoverDocument(BaseDocument recoverDoc, int recEntryID)
-			throws DocumentAccessException, DocumentException, LicenseException, ComplexObjectException {
+	        throws DocumentAccessException, DocumentException, LicenseException, ComplexObjectException {
 		boolean canBeRecovered = false;
 
 		if (recoverDoc.parentDocID == 0 && recoverDoc.parentDocType == DOCTYPE_UNKNOWN) {
@@ -2800,15 +2690,12 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				String description = rs.getString("DESCRIPTION");
 				String name = rs.getString("NAME");
 				xmlContent.append("<entry doctype=\"PATCH\" "
-						+ XMLUtil.getAsAttribute("viewtext",
-								"time=" + processedTime + ", hash=" + hashCode + ", descritpion=" + description
-										+ ", name=" + name)
-						+ ">" + "<viewtext>"
-						+ XMLUtil.getAsTagValue("time=" + processedTime + ", hash=" + hashCode + ", description="
-								+ description + ", name=" + name)
-						+ "</viewtext>" + "<processedtime>" + processedTime + "</processedtime><hash>" + hashCode
-						+ "</hash><name>" + name + "</name><description>" + XMLUtil.getAsTagValue(description)
-						+ "</description></entry>");
+				        + XMLUtil.getAsAttribute("viewtext",
+				                "time=" + processedTime + ", hash=" + hashCode + ", descritpion=" + description + ", name=" + name)
+				        + ">" + "<viewtext>"
+				        + XMLUtil.getAsTagValue("time=" + processedTime + ", hash=" + hashCode + ", description=" + description + ", name=" + name)
+				        + "</viewtext>" + "<processedtime>" + processedTime + "</processedtime><hash>" + hashCode + "</hash><name>" + name
+				        + "</name><description>" + XMLUtil.getAsTagValue(description) + "</description></entry>");
 			}
 			rs.close();
 			statement.close();
@@ -2834,10 +2721,9 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			while (rs.next()) {
 				String keys = rs.getString("KEYS");
 				String lastNum = Integer.toString(rs.getInt("LASTNUM"));
-				xmlContent.append("<entry doctype=\"COUNTER\" "
-						+ XMLUtil.getAsAttribute("viewtext", "key=" + keys + ", last number=" + lastNum) + ">"
-						+ "<viewtext>" + XMLUtil.getAsTagValue("key=" + keys + ", last number=" + lastNum)
-						+ "</viewtext>" + "<keys>" + keys + "</keys><lastnum>" + lastNum + "</lastnum></entry>");
+				xmlContent.append("<entry doctype=\"COUNTER\" " + XMLUtil.getAsAttribute("viewtext", "key=" + keys + ", last number=" + lastNum) + ">"
+				        + "<viewtext>" + XMLUtil.getAsTagValue("key=" + keys + ", last number=" + lastNum) + "</viewtext>" + "<keys>" + keys
+				        + "</keys><lastnum>" + lastNum + "</lastnum></entry>");
 
 			}
 
@@ -2992,7 +2878,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	@Override
 	public BaseDocument getDocumentByComplexID(int docType, int docID, Set<String> complexUserID, String absoluteUserID)
-			throws DocumentAccessException, DocumentException, ComplexObjectException {
+	        throws DocumentAccessException, DocumentException, ComplexObjectException {
 		switch (docType) {
 		case DOCTYPE_MAIN:
 			Document doc = getMainDocumentByID(docID, complexUserID, absoluteUserID);
@@ -3029,8 +2915,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public BaseDocument getDocumentByComplexID(int docType, int docID)
-			throws DocumentAccessException, DocumentException, ComplexObjectException {
+	public BaseDocument getDocumentByComplexID(int docType, int docID) throws DocumentAccessException, DocumentException, ComplexObjectException {
 		switch (docType) {
 		case DOCTYPE_MAIN:
 			Document doc = getMainDocumentByID(docID, Const.supervisorGroupAsSet, Const.sysUser);
@@ -3067,12 +2952,12 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	public BaseDocument getDocumentByDOCID(String docID, Set<String> complexUserID, String absoluteUserID)
-			throws DocumentException, DocumentAccessException, ComplexObjectException {
+	        throws DocumentException, DocumentAccessException, ComplexObjectException {
 		Statement statement;
 		BaseDocument doc = null;
 		Connection conn = dbPool.getConnection();
 		String sql = "select m.docid, m.doctype from maindocs as m, readers_maindocs as rm where m.docid = rm.docid and rm.username in ("
-				+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and m.docID='" + docID + "' limit 1 ";
+		        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and m.docID='" + docID + "' limit 1 ";
 		try {
 			conn.setAutoCommit(false);
 			statement = conn.createStatement();
@@ -3094,22 +2979,21 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	@Override
 	public BaseDocument getDocumentByDdbID(String ddbID, Set<String> complexUserID, String absoluteUserID)
-			throws DocumentException, DocumentAccessException, ComplexObjectException {
+	        throws DocumentException, DocumentAccessException, ComplexObjectException {
 		Statement statement = null;
 		BaseDocument doc = null;
 		Connection conn = dbPool.getConnection();
 		String sql = "select m.docid, m.doctype from maindocs as m, readers_maindocs as rm where m.docid = rm.docid and rm.username in ("
-				+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
-				+ "select t.docid, t.doctype from tasks as t, readers_tasks as rt where t.docid = rt.docid and rt.username in ("
-				+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
-				+ "select e.docid, e.doctype from executions as e, readers_executions as re where e.docid = re.docid and re.username in ("
-				+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
-				+ "select p.docid, p.doctype from projects as p, readers_projects as rp where p.docid = rp.docid and rp.username in ("
-				+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
-				+ "select g.docid, g.doctype from glossary as g where ddbid='" + ddbID + "' " + "union "
-				+ "select gr.groupid, " + Const.DOCTYPE_GROUP + " from groups as gr where cast(groupid as varchar) = '"
-				+ ddbID + "'" + "union " + "select e.empid as docid, e.doctype from employers as e where e.ddbid = '"
-				+ ddbID + "' ";
+		        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
+		        + "select t.docid, t.doctype from tasks as t, readers_tasks as rt where t.docid = rt.docid and rt.username in ("
+		        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
+		        + "select e.docid, e.doctype from executions as e, readers_executions as re where e.docid = re.docid and re.username in ("
+		        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
+		        + "select p.docid, p.doctype from projects as p, readers_projects as rp where p.docid = rp.docid and rp.username in ("
+		        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
+		        + "select g.docid, g.doctype from glossary as g where ddbid='" + ddbID + "' " + "union " + "select gr.groupid, " + Const.DOCTYPE_GROUP
+		        + " from groups as gr where cast(groupid as varchar) = '" + ddbID + "'" + "union "
+		        + "select e.empid as docid, e.doctype from employers as e where e.ddbid = '" + ddbID + "' ";
 		try {
 			conn.setAutoCommit(false);
 			statement = conn.createStatement();
@@ -3131,19 +3015,19 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 	@Override
 	public IViewEntry getDocumentByDocID(String ddbID, Set<String> complexUserID, String absoluteUserID)
-			throws DocumentException, DocumentAccessException {
+	        throws DocumentException, DocumentAccessException {
 		Statement statement = null;
 		ViewEntry entry = null;
 		Connection conn = dbPool.getConnection();
 		String sql = "select m.docid, m.doctype from maindocs as m, readers_maindocs as rm where m.docid = rm.docid and rm.username in ("
-				+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
-				+ "select t.docid, t.doctype from tasks as t, readers_tasks as rt where t.docid = rt.docid and rt.username in ("
-				+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
-				+ "select e.docid, e.doctype from executions as e, readers_executions as re where e.docid = re.docid and re.username in ("
-				+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
-				+ "select p.docid, p.doctype from projects as p, readers_projects as rp where p.docid = rp.docid and rp.username in ("
-				+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
-				+ "select g.docid, g.doctype from glossary as g where ddbid='" + ddbID + "' ";
+		        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
+		        + "select t.docid, t.doctype from tasks as t, readers_tasks as rt where t.docid = rt.docid and rt.username in ("
+		        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
+		        + "select e.docid, e.doctype from executions as e, readers_executions as re where e.docid = re.docid and re.username in ("
+		        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
+		        + "select p.docid, p.doctype from projects as p, readers_projects as rp where p.docid = rp.docid and rp.username in ("
+		        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and ddbid='" + ddbID + "' " + "union "
+		        + "select g.docid, g.doctype from glossary as g where ddbid='" + ddbID + "' ";
 		try {
 			conn.setAutoCommit(false);
 			statement = conn.createStatement();
@@ -3165,8 +3049,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public ArrayList<BaseDocument> getDescendantsArray(int docID, int docType, DocID[] toExpand, int level,
-			Set<String> complexUserID, String absoluteUserID) throws DocumentException, ComplexObjectException {
+	public ArrayList<BaseDocument> getDescendantsArray(int docID, int docType, DocID[] toExpand, int level, Set<String> complexUserID,
+	        String absoluteUserID) throws DocumentException, ComplexObjectException {
 		ArrayList<BaseDocument> documents = new ArrayList<BaseDocument>();
 		if (docID != 0 && docType != DOCTYPE_UNKNOWN) {
 			Connection conn = dbPool.getConnection();
@@ -3174,24 +3058,20 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				conn.setAutoCommit(false);
 				Statement statement = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 				String sql = "SELECT distinct resp.docid, doctype, form, resp.viewtext, regdate, has_attachment, resp.allcontrol, ctype"
-						+ " FROM TASKS resp" + " LEFT JOIN"
-						+ " (SELECT g.viewtext AS ctype, t.docid AS taskid, g.docid FROM GLOSSARY AS g, TASKS AS t WHERE g.form = 'controltype' AND g.docid = t.controltype)"
-						+ " ON resp.docid = taskid, READERS_TASKS r WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ " UNION SELECT distinct resp.docid, doctype, form, viewtext, regdate, has_attachment, -1 as allcontrol, '' as ctype"
-						+ " FROM EXECUTIONS resp, READERS_EXECUTIONS r WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ " UNION SELECT distinct resp.docid, resp.doctype, resp.form, resp.viewtext, resp.regdate, resp.has_attachment, c.valueasnumber AS allcontrol, ctype"
-						+ " FROM CUSTOM_FIELDS c " + " RIGHT JOIN MAINDOCS resp"
-						+ " ON resp.docid = c.docid AND c.name = 'allcontrol'" + " LEFT JOIN"
-						+ " (SELECT g.viewtext AS ctype, cf.docid AS cfdocid FROM GLOSSARY AS g, CUSTOM_FIELDS AS cf, MAINDOCS AS m"
-						+ " WHERE g.docid = cf.valueasnumber AND cf.docid = m.docid AND cf.name = 'controltype')"
-						+ " ON resp.docid = cfdocid," + " READERS_MAINDOCS r " + " WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")" + " and resp.form != 'discussion' "
-						+ " ORDER BY REGDATE";
+				        + " FROM TASKS resp" + " LEFT JOIN"
+				        + " (SELECT g.viewtext AS ctype, t.docid AS taskid, g.docid FROM GLOSSARY AS g, TASKS AS t WHERE g.form = 'controltype' AND g.docid = t.controltype)"
+				        + " ON resp.docid = taskid, READERS_TASKS r WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + " UNION SELECT distinct resp.docid, doctype, form, viewtext, regdate, has_attachment, -1 as allcontrol, '' as ctype"
+				        + " FROM EXECUTIONS resp, READERS_EXECUTIONS r WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + " UNION SELECT distinct resp.docid, resp.doctype, resp.form, resp.viewtext, resp.regdate, resp.has_attachment, c.valueasnumber AS allcontrol, ctype"
+				        + " FROM CUSTOM_FIELDS c " + " RIGHT JOIN MAINDOCS resp" + " ON resp.docid = c.docid AND c.name = 'allcontrol'" + " LEFT JOIN"
+				        + " (SELECT g.viewtext AS ctype, cf.docid AS cfdocid FROM GLOSSARY AS g, CUSTOM_FIELDS AS cf, MAINDOCS AS m"
+				        + " WHERE g.docid = cf.valueasnumber AND cf.docid = m.docid AND cf.name = 'controltype')" + " ON resp.docid = cfdocid,"
+				        + " READERS_MAINDOCS r " + " WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + " and resp.form != 'discussion' " + " ORDER BY REGDATE";
 
 				ResultSet rs = statement.executeQuery(sql);
 
@@ -3221,8 +3101,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 					int l = level + 1;
 
-					ArrayList<BaseDocument> responses = getDescendantsArray(respDocID, respDocType, null, l,
-							complexUserID, absoluteUserID);
+					ArrayList<BaseDocument> responses = getDescendantsArray(respDocID, respDocType, null, l, complexUserID, absoluteUserID);
 					if (responses.size() > 0) {
 						documents.addAll(responses);
 					}
@@ -3242,8 +3121,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public DocumentCollection getDescendants(int docID, int docType, SortByBlock sortBlock, int level,
-			Set<String> complexUserID, String absoluteUserID) {
+	public DocumentCollection getDescendants(int docID, int docType, SortByBlock sortBlock, int level, Set<String> complexUserID,
+	        String absoluteUserID) {
 		int col = 0;
 		DocumentCollection documents = new DocumentCollection();
 		StringBuffer xmlContent = new StringBuffer(10000);
@@ -3267,24 +3146,20 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				}
 
 				String sql = "SELECT distinct resp.docid, doctype, form, resp.viewtext, resp.viewdate, regdate, has_attachment, resp.allcontrol, ctype"
-						+ " FROM TASKS resp" + " LEFT JOIN"
-						+ " (SELECT g.viewtext AS ctype, t.docid AS taskid, g.docid FROM GLOSSARY AS g, TASKS AS t WHERE g.form = 'controltype' AND g.docid = t.controltype) as ctype "
-						+ " ON resp.docid = taskid, READERS_TASKS r WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ " UNION SELECT distinct resp.docid, doctype, form, viewtext, viewdate, regdate, has_attachment, -1 as allcontrol, '' as ctype"
-						+ " FROM EXECUTIONS resp, READERS_EXECUTIONS r WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ " UNION SELECT distinct resp.docid, resp.doctype, resp.form, resp.viewtext, resp.viewdate, resp.regdate, resp.has_attachment, c.valueasnumber AS allcontrol, ctype"
-						+ " FROM CUSTOM_FIELDS c " + " RIGHT JOIN MAINDOCS resp"
-						+ " ON resp.docid = c.docid AND c.name = 'allcontrol'" + " LEFT JOIN"
-						+ " (SELECT g.viewtext AS ctype, cf.docid AS cfdocid FROM GLOSSARY AS g, CUSTOM_FIELDS AS cf, MAINDOCS AS m"
-						+ " WHERE g.docid = cf.valueasnumber AND cf.docid = m.docid AND cf.name = 'controltype') as ctype "
-						+ " ON resp.docid = cfdocid," + " READERS_MAINDOCS r " + " WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")" + " and resp.form != 'discussion' "
-						+ orderSQL;
+				        + " FROM TASKS resp" + " LEFT JOIN"
+				        + " (SELECT g.viewtext AS ctype, t.docid AS taskid, g.docid FROM GLOSSARY AS g, TASKS AS t WHERE g.form = 'controltype' AND g.docid = t.controltype) as ctype "
+				        + " ON resp.docid = taskid, READERS_TASKS r WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + " UNION SELECT distinct resp.docid, doctype, form, viewtext, viewdate, regdate, has_attachment, -1 as allcontrol, '' as ctype"
+				        + " FROM EXECUTIONS resp, READERS_EXECUTIONS r WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + " UNION SELECT distinct resp.docid, resp.doctype, resp.form, resp.viewtext, resp.viewdate, resp.regdate, resp.has_attachment, c.valueasnumber AS allcontrol, ctype"
+				        + " FROM CUSTOM_FIELDS c " + " RIGHT JOIN MAINDOCS resp" + " ON resp.docid = c.docid AND c.name = 'allcontrol'" + " LEFT JOIN"
+				        + " (SELECT g.viewtext AS ctype, cf.docid AS cfdocid FROM GLOSSARY AS g, CUSTOM_FIELDS AS cf, MAINDOCS AS m"
+				        + " WHERE g.docid = cf.valueasnumber AND cf.docid = m.docid AND cf.name = 'controltype') as ctype "
+				        + " ON resp.docid = cfdocid," + " READERS_MAINDOCS r " + " WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + " and resp.form != 'discussion' " + orderSQL;
 
 				ResultSet rs = statement.executeQuery(sql);
 
@@ -3296,19 +3171,15 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 					int allControl = rs.getInt("ALLCONTROL");
 					String controlType = rs.getString("CTYPE");
 					String form = rs.getString("FORM");
-					xmlContent.append(
-							"<entry isread=\"" + usersActivity.isRead(conn, respDocID, repsDocType, absoluteUserID)
-									+ "\" hasattach=\"" + Integer.toString(rs.getInt("HAS_ATTACHMENT"))
-									+ "\" doctype=\"" + repsDocType + "\"  docid=\"" + respDocID + "\" form=\"" + form
-									+ "\" url=\"Provider?type=edit&amp;element=" + resolveElement(form) + "&amp;id="
-									+ form + "&amp;key=" + respDocID + "\""
-									+ (!form.equalsIgnoreCase("KI") ? " allcontrol =\"" + allControl + "\"" : "")
-									+ (!form.equalsIgnoreCase("KI") ? " controltype =\"" + controlType + "\"" : ""));
+					xmlContent.append("<entry isread=\"" + usersActivity.isRead(conn, respDocID, repsDocType, absoluteUserID) + "\" hasattach=\""
+					        + Integer.toString(rs.getInt("HAS_ATTACHMENT")) + "\" doctype=\"" + repsDocType + "\"  docid=\"" + respDocID
+					        + "\" form=\"" + form + "\" url=\"Provider?type=edit&amp;element=" + resolveElement(form) + "&amp;id=" + form
+					        + "&amp;key=" + respDocID + "\"" + (!form.equalsIgnoreCase("KI") ? " allcontrol =\"" + allControl + "\"" : "")
+					        + (!form.equalsIgnoreCase("KI") ? " controltype =\"" + controlType + "\"" : ""));
 					col++;
 
 					int l = level + 1;
-					DocumentCollection responses = getDescendants(respDocID, repsDocType, null, l, complexUserID,
-							absoluteUserID);
+					DocumentCollection responses = getDescendants(respDocID, repsDocType, null, l, complexUserID, absoluteUserID);
 					if (responses.count > 0) {
 						xmlContent.append(" hasresponse=\"true\" >");
 						value += responses.xmlContent;
@@ -3337,8 +3208,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public DocumentCollection getDiscussion(int docID, int docType, DocID[] toExpand, int level,
-			Set<String> complexUserID, String absoluteUserID) {
+	public DocumentCollection getDiscussion(int docID, int docType, DocID[] toExpand, int level, Set<String> complexUserID, String absoluteUserID) {
 		int col = 0;
 		DocumentCollection documents = new DocumentCollection();
 		StringBuffer xmlContent = new StringBuffer(10000);
@@ -3349,24 +3219,20 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				conn.setAutoCommit(false);
 				Statement statement = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 				String sql = "SELECT distinct resp.docid, doctype, form, resp.viewtext, regdate, has_attachment, -1 as allcontrol , ctype"
-						+ " FROM TASKS resp" + " LEFT JOIN"
-						+ " (SELECT g.viewtext AS ctype, t.docid AS taskid, g.docid FROM GLOSSARY AS g, TASKS AS t WHERE g.form = 'controltype' AND g.docid = t.controltype) as ct"
-						+ " ON resp.docid = taskid, READERS_TASKS r WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ " UNION SELECT distinct resp.docid, doctype, form, viewtext, regdate, has_attachment, -1 as allcontrol, '' as ctype"
-						+ " FROM EXECUTIONS resp, READERS_EXECUTIONS r WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ " UNION SELECT distinct resp.docid, resp.doctype, resp.form, resp.viewtext, resp.regdate, resp.has_attachment, -1 AS allcontrol, ctype"
-						+ " FROM CUSTOM_FIELDS c " + " RIGHT JOIN MAINDOCS resp"
-						+ " ON resp.docid = c.docid AND c.name = 'allcontrol'" + " LEFT JOIN"
-						+ " (SELECT g.viewtext AS ctype, cf.docid AS cfdocid FROM GLOSSARY AS g, CUSTOM_FIELDS AS cf, MAINDOCS AS m"
-						+ " WHERE g.docid = cf.valueasnumber AND cf.docid = m.docid AND cf.name = 'controltype') as ct"
-						+ " ON resp.docid = cfdocid," + " READERS_MAINDOCS r " + " WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")" + " and resp.form = 'discussion' "
-						+ " ORDER BY REGDATE";
+				        + " FROM TASKS resp" + " LEFT JOIN"
+				        + " (SELECT g.viewtext AS ctype, t.docid AS taskid, g.docid FROM GLOSSARY AS g, TASKS AS t WHERE g.form = 'controltype' AND g.docid = t.controltype) as ct"
+				        + " ON resp.docid = taskid, READERS_TASKS r WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + " UNION SELECT distinct resp.docid, doctype, form, viewtext, regdate, has_attachment, -1 as allcontrol, '' as ctype"
+				        + " FROM EXECUTIONS resp, READERS_EXECUTIONS r WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + " UNION SELECT distinct resp.docid, resp.doctype, resp.form, resp.viewtext, resp.regdate, resp.has_attachment, -1 AS allcontrol, ctype"
+				        + " FROM CUSTOM_FIELDS c " + " RIGHT JOIN MAINDOCS resp" + " ON resp.docid = c.docid AND c.name = 'allcontrol'" + " LEFT JOIN"
+				        + " (SELECT g.viewtext AS ctype, cf.docid AS cfdocid FROM GLOSSARY AS g, CUSTOM_FIELDS AS cf, MAINDOCS AS m"
+				        + " WHERE g.docid = cf.valueasnumber AND cf.docid = m.docid AND cf.name = 'controltype') as ct" + " ON resp.docid = cfdocid,"
+				        + " READERS_MAINDOCS r " + " WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + " and resp.form = 'discussion' " + " ORDER BY REGDATE";
 
 				ResultSet rs = statement.executeQuery(sql);
 
@@ -3378,19 +3244,16 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 					int allControl = rs.getInt("ALLCONTROL");
 					String controlType = rs.getString("CTYPE");
 					String form = rs.getString("FORM");
-					xmlContent.append(
-							"<entry isread=\"" + usersActivity.isRead(conn, respDocID, repsDocType, absoluteUserID)
-									+ "\" hasattach=\"" + Integer.toString(rs.getInt("HAS_ATTACHMENT"))
-									+ "\" doctype=\"" + repsDocType + "\"  docid=\"" + respDocID + "\" form=\"" + form
-									+ "\" url=\"Provider?type=edit&amp;element=document&amp;id=" + form + "&amp;key="
-									+ respDocID + "\"" + XMLUtil.getAsAttribute("viewtext", viewText)
-									+ (!form.equalsIgnoreCase("KI") ? " allcontrol =\"" + allControl + "\"" : "")
-									+ (!form.equalsIgnoreCase("KI") ? " controltype =\"" + controlType + "\"" : ""));
+					xmlContent.append("<entry isread=\"" + usersActivity.isRead(conn, respDocID, repsDocType, absoluteUserID) + "\" hasattach=\""
+					        + Integer.toString(rs.getInt("HAS_ATTACHMENT")) + "\" doctype=\"" + repsDocType + "\"  docid=\"" + respDocID
+					        + "\" form=\"" + form + "\" url=\"Provider?type=edit&amp;element=document&amp;id=" + form + "&amp;key=" + respDocID + "\""
+					        + XMLUtil.getAsAttribute("viewtext", viewText)
+					        + (!form.equalsIgnoreCase("KI") ? " allcontrol =\"" + allControl + "\"" : "")
+					        + (!form.equalsIgnoreCase("KI") ? " controltype =\"" + controlType + "\"" : ""));
 					col++;
 
 					int l = level + 1;
-					DocumentCollection responses = getDescendants(respDocID, repsDocType, null, l, complexUserID,
-							absoluteUserID);
+					DocumentCollection responses = getDescendants(respDocID, repsDocType, null, l, complexUserID, absoluteUserID);
 					if (responses.count > 0) {
 						xmlContent.append(" hasresponse=\"true\" >");
 						value += responses.xmlContent;
@@ -3427,8 +3290,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			HashSet<String> authors = doc.getEditors();
 			authors.addAll(Const.supervisorGroupAsList);
 			for (String author : authors) {
-				String hasAuthorSQL = "select count(*) from " + authorsTable + " where DOCID=" + docID
-						+ " and USERNAME='" + author + "'";
+				String hasAuthorSQL = "select count(*) from " + authorsTable + " where DOCID=" + docID + " and USERNAME='" + author + "'";
 				ResultSet resultSet = conn.createStatement().executeQuery(hasAuthorSQL);
 
 				if (resultSet.next()) {
@@ -3440,8 +3302,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			if (!authorsUpdateSQL.equals("")) {
 				authorsUpdateSQL.deleteCharAt(authorsUpdateSQL.length() - 1);
 				// System.out.println(authorsUpdateSQL);
-				conn.prepareStatement("insert into " + authorsTable + "(USERNAME, DOCID) values " + authorsUpdateSQL)
-						.executeUpdate();
+				conn.prepareStatement("insert into " + authorsTable + "(USERNAME, DOCID) values " + authorsUpdateSQL).executeUpdate();
 			}
 			conn.commit();
 			String readersTable = "READERS_" + accessTableSuffix;
@@ -3453,8 +3314,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			}
 
 			for (Reader reader : readers) {
-				String hasReaderSQL = "select count(*) from " + readersTable + " where DOCID=" + docID
-						+ " and USERNAME='" + reader + "'";
+				String hasReaderSQL = "select count(*) from " + readersTable + " where DOCID=" + docID + " and USERNAME='" + reader + "'";
 				ResultSet resultSet = conn.createStatement().executeQuery(hasReaderSQL);
 				if (resultSet.next()) {
 					if (resultSet.getInt(1) == 0) {
@@ -3464,8 +3324,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			}
 			if (!readersUpdateSQL.equals("")) {
 				readersUpdateSQL.deleteCharAt(readersUpdateSQL.length() - 1);
-				conn.prepareStatement("insert into " + readersTable + "(USERNAME, DOCID) values " + readersUpdateSQL)
-						.executeUpdate();
+				conn.prepareStatement("insert into " + readersTable + "(USERNAME, DOCID) values " + readersUpdateSQL).executeUpdate();
 			}
 			conn.commit();
 		} catch (SQLException e) {
@@ -3500,9 +3359,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	 * coll.setCount(rs.getInt(1)); } conn.commit(); s.close(); rs.close();
 	 */
 	@Override
-	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize,
-			Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse,
-			String responseQueryCondition) {
+	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses,
+	        RunTimeParameters parameters, boolean checkResponse, String responseQueryCondition) {
 		ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
 		Set<String> users = user.getAllUserGroups();
 		Connection conn = dbPool.getConnection();
@@ -3517,17 +3375,15 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				}
 			}
 			int offset = calcStartEntry(pageNum, pageSize);
-			String sql = condition.getCondition(users, pageSize, offset, parameters.getFilters(),
-					parameters.getSorting(), checkResponse, responseQueryCondition);
+			String sql = condition.getCondition(users, pageSize, offset, parameters.getFilters(), parameters.getSorting(), checkResponse,
+			        responseQueryCondition);
 			ResultSet rs = s.executeQuery(sql);
 			if (rs.next()) {
-				ViewEntry entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat(),
-						responseQueryCondition);
+				ViewEntry entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat(), responseQueryCondition);
 				coll.add(entry);
 				coll.setCount(rs.getInt(1));
 				while (rs.next()) {
-					entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat(),
-							responseQueryCondition);
+					entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat(), responseQueryCondition);
 					coll.add(entry);
 				}
 			}
@@ -3547,8 +3403,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public DocumentCollection getDescendants(int docID, int docType, SortByBlock sortBlock, int level,
-			Set<String> complexUserID, String absoluteUserID, String responseQueryCondition) {
+	public DocumentCollection getDescendants(int docID, int docType, SortByBlock sortBlock, int level, Set<String> complexUserID,
+	        String absoluteUserID, String responseQueryCondition) {
 		int col = 0;
 		DocumentCollection documents = new DocumentCollection();
 		StringBuffer xmlContent = new StringBuffer(10000);
@@ -3572,27 +3428,23 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				}
 
 				String sql = "SELECT distinct resp.docid, doctype, form, resp.viewtext, resp.viewdate, regdate, has_attachment, resp.allcontrol, ctype"
-						+ " FROM TASKS resp" + " LEFT JOIN"
-						+ " (SELECT g.viewtext AS ctype, t.docid AS taskid, g.docid FROM GLOSSARY AS g, TASKS AS t WHERE g.form = 'controltype' AND g.docid = t.controltype) as ctype "
-						+ " ON resp.docid = taskid, READERS_TASKS r WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ (!"".equalsIgnoreCase(responseQueryCondition) ? " and " + responseQueryCondition : "")
-						+ " UNION SELECT distinct resp.docid, doctype, form, viewtext, viewdate, regdate, has_attachment, -1 as allcontrol, '' as ctype"
-						+ " FROM EXECUTIONS resp, READERS_EXECUTIONS r WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")"
-						+ (!"".equalsIgnoreCase(responseQueryCondition) ? " and " + responseQueryCondition : "")
-						+ " UNION SELECT distinct resp.docid, resp.doctype, resp.form, resp.viewtext, resp.viewdate, resp.regdate, resp.has_attachment, c.valueasnumber AS allcontrol, ctype"
-						+ " FROM CUSTOM_FIELDS c " + " RIGHT JOIN MAINDOCS resp"
-						+ " ON resp.docid = c.docid AND c.name = 'allcontrol'" + " LEFT JOIN"
-						+ " (SELECT g.viewtext AS ctype, cf.docid AS cfdocid FROM GLOSSARY AS g, CUSTOM_FIELDS AS cf, MAINDOCS AS m"
-						+ " WHERE g.docid = cf.valueasnumber AND cf.docid = m.docid AND cf.name = 'controltype') as ctype "
-						+ " ON resp.docid = cfdocid," + " READERS_MAINDOCS r " + " WHERE parentdocid = " + docID
-						+ " AND parentdoctype = " + docType + " AND resp.docid = r.docid AND r.username IN ("
-						+ DatabaseUtil.prepareListToQuery(complexUserID) + ")" + " and resp.form != 'discussion' "
-						+ (!"".equalsIgnoreCase(responseQueryCondition) ? " and " + responseQueryCondition : "")
-						+ orderSQL;
+				        + " FROM TASKS resp" + " LEFT JOIN"
+				        + " (SELECT g.viewtext AS ctype, t.docid AS taskid, g.docid FROM GLOSSARY AS g, TASKS AS t WHERE g.form = 'controltype' AND g.docid = t.controltype) as ctype "
+				        + " ON resp.docid = taskid, READERS_TASKS r WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + (!"".equalsIgnoreCase(responseQueryCondition) ? " and " + responseQueryCondition : "")
+				        + " UNION SELECT distinct resp.docid, doctype, form, viewtext, viewdate, regdate, has_attachment, -1 as allcontrol, '' as ctype"
+				        + " FROM EXECUTIONS resp, READERS_EXECUTIONS r WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + (!"".equalsIgnoreCase(responseQueryCondition) ? " and " + responseQueryCondition : "")
+				        + " UNION SELECT distinct resp.docid, resp.doctype, resp.form, resp.viewtext, resp.viewdate, resp.regdate, resp.has_attachment, c.valueasnumber AS allcontrol, ctype"
+				        + " FROM CUSTOM_FIELDS c " + " RIGHT JOIN MAINDOCS resp" + " ON resp.docid = c.docid AND c.name = 'allcontrol'" + " LEFT JOIN"
+				        + " (SELECT g.viewtext AS ctype, cf.docid AS cfdocid FROM GLOSSARY AS g, CUSTOM_FIELDS AS cf, MAINDOCS AS m"
+				        + " WHERE g.docid = cf.valueasnumber AND cf.docid = m.docid AND cf.name = 'controltype') as ctype "
+				        + " ON resp.docid = cfdocid," + " READERS_MAINDOCS r " + " WHERE parentdocid = " + docID + " AND parentdoctype = " + docType
+				        + " AND resp.docid = r.docid AND r.username IN (" + DatabaseUtil.prepareListToQuery(complexUserID) + ")"
+				        + " and resp.form != 'discussion' " + (!"".equalsIgnoreCase(responseQueryCondition) ? " and " + responseQueryCondition : "")
+				        + orderSQL;
 
 				ResultSet rs = statement.executeQuery(sql);
 
@@ -3604,19 +3456,15 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 					int allControl = rs.getInt("ALLCONTROL");
 					String controlType = rs.getString("CTYPE");
 					String form = rs.getString("FORM");
-					xmlContent.append(
-							"<entry isread=\"" + usersActivity.isRead(conn, respDocID, repsDocType, absoluteUserID)
-									+ "\" hasattach=\"" + Integer.toString(rs.getInt("HAS_ATTACHMENT"))
-									+ "\" doctype=\"" + repsDocType + "\"  docid=\"" + respDocID + "\" form=\"" + form
-									+ "\" url=\"Provider?type=edit&amp;element=" + resolveElement(form) + "&amp;id="
-									+ form + "&amp;key=" + respDocID + "\""
-									+ (!form.equalsIgnoreCase("KI") ? " allcontrol =\"" + allControl + "\"" : "")
-									+ (!form.equalsIgnoreCase("KI") ? " controltype =\"" + controlType + "\"" : ""));
+					xmlContent.append("<entry isread=\"" + usersActivity.isRead(conn, respDocID, repsDocType, absoluteUserID) + "\" hasattach=\""
+					        + Integer.toString(rs.getInt("HAS_ATTACHMENT")) + "\" doctype=\"" + repsDocType + "\"  docid=\"" + respDocID
+					        + "\" form=\"" + form + "\" url=\"Provider?type=edit&amp;element=" + resolveElement(form) + "&amp;id=" + form
+					        + "&amp;key=" + respDocID + "\"" + (!form.equalsIgnoreCase("KI") ? " allcontrol =\"" + allControl + "\"" : "")
+					        + (!form.equalsIgnoreCase("KI") ? " controltype =\"" + controlType + "\"" : ""));
 					col++;
 
 					int l = level + 1;
-					DocumentCollection responses = getDescendants(respDocID, repsDocType, null, l, complexUserID,
-							absoluteUserID);
+					DocumentCollection responses = getDescendants(respDocID, repsDocType, null, l, complexUserID, absoluteUserID);
 					if (responses.count > 0) {
 						xmlContent.append(" hasresponse=\"true\" >");
 						value += responses.xmlContent;
@@ -3662,9 +3510,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize,
-			Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse,
-			boolean expandAllResponses, boolean checkUnread) {
+	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses,
+	        RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, boolean checkUnread) {
 		ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
 		Set<String> users = user.getAllUserGroups();
 		Connection conn = dbPool.getConnection();
@@ -3679,8 +3526,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				}
 			}
 			int offset = calcStartEntry(pageNum, pageSize);
-			String sql = condition.getCondition(user, pageSize, offset, parameters.getFilters(),
-					parameters.getSorting(), checkResponse, checkUnread);
+			String sql = condition.getCondition(user, pageSize, offset, parameters.getFilters(), parameters.getSorting(), checkResponse, checkUnread);
 			ResultSet rs = s.executeQuery(sql);
 			if (rs.next()) {
 				if (expandAllResponses) {
@@ -3713,9 +3559,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize,
-			Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse,
-			boolean expandAllResponses, _ReadConditionType type) {
+	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses,
+	        RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, _ReadConditionType type) {
 		ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
 		Set<String> users = user.getAllUserGroups();
 		Connection conn = dbPool.getConnection();
@@ -3735,18 +3580,19 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			break;
 		}
 		try {
+			int count = 0;
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			if (pageNum == 0) {
 				String sql = condition.getCountCondition(user, parameters.getFilters(), cond);
 				ResultSet rs = s.executeQuery(sql);
 				if (rs.next()) {
-					pageNum = RuntimeObjUtil.countMaxPage(rs.getInt(1), pageSize);
+					count = rs.getInt(1);
+					pageNum = RuntimeObjUtil.countMaxPage(count, pageSize);
 				}
 			}
 			int offset = calcStartEntry(pageNum, pageSize);
-			String sql = condition.getCondition(user, pageSize, offset, parameters.getFilters(),
-					parameters.getSorting(), checkResponse, cond);
+			String sql = condition.getCondition(user, pageSize, offset, parameters.getFilters(), parameters.getSorting(), checkResponse, cond);
 			ResultSet rs = s.executeQuery(sql);
 			if (rs.next()) {
 				if (expandAllResponses) {
@@ -3754,7 +3600,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				}
 				ViewEntry entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat());
 				coll.add(entry);
-				coll.setCount(rs.getInt(1));
+				// coll.setCount(rs.getInt(1));
+				coll.setCount(count);
 				while (rs.next()) {
 					if (expandAllResponses) {
 						toExpandResponses.add(new DocID(rs.getInt("DOCID"), rs.getInt("DOCTYPE")));
@@ -3779,9 +3626,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize,
-			Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse,
-			boolean expandAllResponses, _ReadConditionType type, String customFieldName) {
+	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses,
+	        RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, _ReadConditionType type, String customFieldName) {
 		ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
 		Set<String> users = user.getAllUserGroups();
 		Connection conn = dbPool.getConnection();
@@ -3811,8 +3657,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				}
 			}
 			int offset = calcStartEntry(pageNum, pageSize);
-			String sql = condition.getCondition(user, pageSize, offset, parameters.getFilters(),
-					parameters.getSorting(), checkResponse, cond, customFieldName);
+			String sql = condition.getCondition(user, pageSize, offset, parameters.getFilters(), parameters.getSorting(), checkResponse, cond,
+			        customFieldName);
 			ResultSet rs = s.executeQuery(sql);
 			if (rs.next()) {
 				if (expandAllResponses) {
@@ -3845,9 +3691,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize,
-			Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse,
-			boolean expandAllResponses) {
+	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses,
+	        RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses) {
 		ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
 		Set<String> users = user.getAllUserGroups();
 		Connection conn = dbPool.getConnection();
@@ -3862,8 +3707,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				}
 			}
 			int offset = calcStartEntry(pageNum, pageSize);
-			String sql = condition.getCondition(users, pageSize, offset, parameters.getFilters(),
-					parameters.getSorting(), checkResponse);
+			String sql = condition.getCondition(users, pageSize, offset, parameters.getFilters(), parameters.getSorting(), checkResponse);
 			ResultSet rs = s.executeQuery(sql);
 			if (rs.next()) {
 				if (expandAllResponses) {
@@ -3896,8 +3740,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize,
-			Set<DocID> toExpandResponses, RunTimeParameters parameters, boolean checkResponse) {
+	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses,
+	        RunTimeParameters parameters, boolean checkResponse) {
 		ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
 		Set<String> users = user.getAllUserGroups();
 		Connection conn = dbPool.getConnection();
@@ -3912,8 +3756,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				}
 			}
 			int offset = calcStartEntry(pageNum, pageSize);
-			String sql = condition.getCondition(users, pageSize, offset, parameters.getFilters(),
-					parameters.getSorting(), checkResponse);
+			String sql = condition.getCondition(users, pageSize, offset, parameters.getFilters(), parameters.getSorting(), checkResponse);
 			ResultSet rs = s.executeQuery(sql);
 			if (rs.next()) {
 				ViewEntry entry = new ViewEntry(this, rs, toExpandResponses, user, parameters.getDateFormat());
@@ -3961,8 +3804,9 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 
 			int pDocId = 0;
 			if (!XMLUtil.getTextContent(xmlDoc, "document/@parentdocid").trim().equals("0")) {
-				int parentDocId = parseFile(parentDir, new File(parentDir.getAbsolutePath() + File.separator + "doc_"
-						+ XMLUtil.getTextContent(xmlDoc, "document/@parentdocid").trim()), linkOldNew);
+				int parentDocId = parseFile(parentDir, new File(
+				        parentDir.getAbsolutePath() + File.separator + "doc_" + XMLUtil.getTextContent(xmlDoc, "document/@parentdocid").trim()),
+				        linkOldNew);
 				if (parentDocId < 0) {
 					Server.logger.errorLogEntry("PARENT DOCUMENT DOES NOT EXIST FOR DOC " + docid);
 					linkOldNew.put(Integer.parseInt(docid), -1);
@@ -3999,8 +3843,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public void fillAccessRelatedField(Connection conn, String accessTableSuffix, int docID, Document doc)
-			throws SQLException {
+	public void fillAccessRelatedField(Connection conn, String accessTableSuffix, int docID, Document doc) throws SQLException {
 		conn.setAutoCommit(false);
 		String getReadSQL = "select * from READERS_" + accessTableSuffix + " where DOCID = " + docID;
 		Statement statement = conn.createStatement();
@@ -4118,8 +3961,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public ArrayList<BaseDocument> getResponses(int docID, int docType, Set<String> complexUserID,
-			String absoluteUserID) throws DocumentAccessException, DocumentException, ComplexObjectException {
+	public ArrayList<BaseDocument> getResponses(int docID, int docType, Set<String> complexUserID, String absoluteUserID)
+	        throws DocumentAccessException, DocumentException, ComplexObjectException {
 		ArrayList<BaseDocument> documents = new ArrayList<BaseDocument>();
 		if (docID != 0 && docType != DOCTYPE_UNKNOWN) {
 			Connection conn = dbPool.getConnection();
@@ -4128,17 +3971,13 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				Statement statement = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 				String ids = DatabaseUtil.prepareListToQuery(complexUserID);
 				String sql = "select distinct resp.docid, doctype, form, viewtext, regdate, has_attachment FROM TASKS resp, READERS_TASKS r where PARENTDOCID="
-						+ docID + " and PARENTDOCTYPE=" + docType + " and resp.DOCID = r.DOCID and r.USERNAME IN ("
-						+ ids + ")"
-						+ " UNION SELECT distinct resp.docid, doctype, form, viewtext, regdate, has_attachment FROM EXECUTIONS resp, READERS_EXECUTIONS r WHERE PARENTDOCID="
-						+ docID + " and PARENTDOCTYPE=" + docType + " and resp.DOCID = r.DOCID and r.USERNAME IN ("
-						+ ids + ")"
-						+ " UNION SELECT distinct resp.docid, doctype, form, viewtext, regdate, has_attachment FROM MAINDOCS resp, READERS_MAINDOCS r WHERE PARENTDOCID="
-						+ docID + " and PARENTDOCTYPE=" + docType + " and resp.DOCID = r.DOCID and r.USERNAME IN ("
-						+ ids + ")"
-						+ " UNION SELECT distinct resp.docid, doctype, form, viewtext, regdate, 0 as has_attachment from GLOSSARY resp where parentdocid="
-						+ docID + " and parentdoctype=" + docType + " and resp.form != 'discussion' "
-						+ " ORDER BY REGDATE";
+				        + docID + " and PARENTDOCTYPE=" + docType + " and resp.DOCID = r.DOCID and r.USERNAME IN (" + ids + ")"
+				        + " UNION SELECT distinct resp.docid, doctype, form, viewtext, regdate, has_attachment FROM EXECUTIONS resp, READERS_EXECUTIONS r WHERE PARENTDOCID="
+				        + docID + " and PARENTDOCTYPE=" + docType + " and resp.DOCID = r.DOCID and r.USERNAME IN (" + ids + ")"
+				        + " UNION SELECT distinct resp.docid, doctype, form, viewtext, regdate, has_attachment FROM MAINDOCS resp, READERS_MAINDOCS r WHERE PARENTDOCID="
+				        + docID + " and PARENTDOCTYPE=" + docType + " and resp.DOCID = r.DOCID and r.USERNAME IN (" + ids + ")"
+				        + " UNION SELECT distinct resp.docid, doctype, form, viewtext, regdate, 0 as has_attachment from GLOSSARY resp where parentdocid="
+				        + docID + " and parentdoctype=" + docType + " and resp.form != 'discussion' " + " ORDER BY REGDATE";
 				ResultSet rs = statement.executeQuery(sql);
 
 				while (rs.next()) {
@@ -4161,8 +4000,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						doc = getProjects().getProjectByID(respDocID, complexUserID, absoluteUserID);
 						break;
 					case DOCTYPE_GLOSSARY:
-						doc = getGlossaries().getGlossaryDocumentByID(respDocID, false, Const.sysGroupAsSet,
-								Const.sysUser);
+						doc = getGlossaries().getGlossaryDocumentByID(respDocID, false, Const.sysGroupAsSet, Const.sysUser);
 						break;
 					}
 					documents.add(doc);
@@ -4213,9 +4051,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			} catch (Exception e) {
 				DatabaseUtil.errorPrint(dbID, e);
 				String viewText = this.getFieldByComplexID(id.id, id.type, "viewtext");
-				messages.append(
-						"<entry id=\"" + id.id + "\" type=\"" + id.type + "\" reason=\"" + e.getClass().getSimpleName()
-								+ "\">" + (viewText != null ? XMLUtil.getAsTagValue(viewText) : "") + "</entry>");
+				messages.append("<entry id=\"" + id.id + "\" type=\"" + id.type + "\" reason=\"" + e.getClass().getSimpleName() + "\">"
+				        + (viewText != null ? XMLUtil.getAsTagValue(viewText) : "") + "</entry>");
 				listOfNotDeleted += viewText + "||";
 				countNotDeleted++;
 			}
@@ -4239,9 +4076,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			} catch (Exception e) {
 				DatabaseUtil.errorPrint(dbID, e);
 				String viewText = this.getFieldByComplexID(id.id, Const.DOCTYPE_ACTIVITY_ENTRY, "viewtext");
-				messages.append("<entry id=\"" + id.id + "\" type=\"" + Const.DOCTYPE_ACTIVITY_ENTRY + "\" reason=\""
-						+ e.getClass().getSimpleName() + "\">"
-						+ (viewText != null ? XMLUtil.getAsTagValue(viewText) : "") + "</entry>");
+				messages.append("<entry id=\"" + id.id + "\" type=\"" + Const.DOCTYPE_ACTIVITY_ENTRY + "\" reason=\"" + e.getClass().getSimpleName()
+				        + "\">" + (viewText != null ? XMLUtil.getAsTagValue(viewText) : "") + "</entry>");
 				countNotRestored++;
 			}
 		}
@@ -4327,18 +4163,14 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			String sql = "";
 			if (!fieldName.contains("view")) {
-				sql = "select cf." + result[1] + ", count(cf." + result[1]
-						+ ") from custom_fields as cf where cf.name = '" + result[0] + "' and " + " cf." + result[1]
-						+ " is not null and "
-						+ " cf.docid in (select docid from readers_maindocs as rm where rm.username in ("
-						+ DatabaseUtil.prepareListToQuery(users) + ")) " + " group by cf." + result[1] + " order by cf."
-						+ result[1] + " limit " + pageSize + " offset " + offset;
+				sql = "select cf." + result[1] + ", count(cf." + result[1] + ") from custom_fields as cf where cf.name = '" + result[0] + "' and "
+				        + " cf." + result[1] + " is not null and " + " cf.docid in (select docid from readers_maindocs as rm where rm.username in ("
+				        + DatabaseUtil.prepareListToQuery(users) + ")) " + " group by cf." + result[1] + " order by cf." + result[1] + " limit "
+				        + pageSize + " offset " + offset;
 			} else {
-				sql = "select m." + fieldName + ", count(m." + fieldName + ") from maindocs as m where m." + fieldName
-						+ " is not null and "
-						+ "m.docid in (select docid from readers_maindocs as rm where rm.username in ("
-						+ DatabaseUtil.prepareListToQuery(users) + ")) " + " group by m." + fieldName + " order by m."
-						+ fieldName + " limit " + pageSize + " offset " + offset;
+				sql = "select m." + fieldName + ", count(m." + fieldName + ") from maindocs as m where m." + fieldName + " is not null and "
+				        + "m.docid in (select docid from readers_maindocs as rm where rm.username in (" + DatabaseUtil.prepareListToQuery(users)
+				        + ")) " + " group by m." + fieldName + " order by m." + fieldName + " limit " + pageSize + " offset " + offset;
 			}
 
 			ResultSet rs = s.executeQuery(sql);
@@ -4360,8 +4192,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public ArrayList<BaseDocument> getDocumentsForMonth(HashSet<String> userGroups, String userID, String form,
-			String fieldName, int month, int offset, int pageSize) {
+	public ArrayList<BaseDocument> getDocumentsForMonth(HashSet<String> userGroups, String userID, String form, String fieldName, int month,
+	        int offset, int pageSize) {
 		ArrayList<BaseDocument> vec = new ArrayList<BaseDocument>();
 		String userIDs = DatabaseUtil.prepareListToQuery(userGroups);
 		Connection conn = dbPool.getConnection();
@@ -4372,16 +4204,16 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			String sql = "";
 			if (isSystemField(fieldName)) {
 				sql = "select distinct MAINDOCS.DOCTYPE, MAINDOCS.DOCID from MAINDOCS where MAINDOCS.DOCID in "
-						+ "(select docid from READERS_MAINDOCS where MAINDOCS.DOCID = READERS_MAINDOCS.DOCID AND READERS_MAINDOCS.USERNAME IN ("
-						+ userIDs + ")) and " + "(form= '" + form + "' and MONTH(" + fieldName + ") = " + month
-						+ " ) limit " + pageSize + " offset " + offset;
+				        + "(select docid from READERS_MAINDOCS where MAINDOCS.DOCID = READERS_MAINDOCS.DOCID AND READERS_MAINDOCS.USERNAME IN ("
+				        + userIDs + ")) and " + "(form= '" + form + "' and MONTH(" + fieldName + ") = " + month + " ) limit " + pageSize + " offset "
+				        + offset;
 			} else {
 				sql = "select distinct MAINDOCS.DOCTYPE, MAINDOCS.DOCID from MAINDOCS where MAINDOCS.DOCID in "
-						+ "(select docid from READERS_MAINDOCS where MAINDOCS.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME in ("
-						+ userIDs + ") and MAINDOCS.DOCID in "
-						+ "(select docid from CUSTOM_FIELDS where MAINDOCS.DOCID = CUSTOM_FIELDS.DOCID AND CUSTOM_FIELDS.NAME='"
-						+ fieldName + "' and MONTH(CUSTOM_FIELDS.VALUEASDATE) = " + month + ")) and " + "form= '" + form
-						+ "' limit " + pageSize + " offset " + offset;
+				        + "(select docid from READERS_MAINDOCS where MAINDOCS.DOCID = READERS_MAINDOCS.DOCID and READERS_MAINDOCS.USERNAME in ("
+				        + userIDs + ") and MAINDOCS.DOCID in "
+				        + "(select docid from CUSTOM_FIELDS where MAINDOCS.DOCID = CUSTOM_FIELDS.DOCID AND CUSTOM_FIELDS.NAME='" + fieldName
+				        + "' and MONTH(CUSTOM_FIELDS.VALUEASDATE) = " + month + ")) and " + "form= '" + form + "' limit " + pageSize + " offset "
+				        + offset;
 			}
 
 			ResultSet rs = s.executeQuery(sql);
@@ -4403,35 +4235,28 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	}
 
 	@Override
-	public StringBuffer getFavorites(IQueryFormula nf, Set<String> complexUserID, String absoluteUserID, int offset,
-			int pageSize, String fieldsCond, Set<DocID> toExpandResponses, Set<String> toExpandCategory,
-			TagPublicationFormatType publishAs, int page) {
+	public StringBuffer getFavorites(IQueryFormula nf, Set<String> complexUserID, String absoluteUserID, int offset, int pageSize, String fieldsCond,
+	        Set<DocID> toExpandResponses, Set<String> toExpandCategory, TagPublicationFormatType publishAs, int page) {
 		StringBuffer xmlContent = new StringBuffer(10000);
 		Connection conn = dbPool.getConnection();
 		try {
 			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			String sql = "select has_attachment, form, ddbid, docid, doctype, viewtext, "
-					+ DatabaseUtil.getViewTextList("")
-					+ ", viewnumber, viewdate from maindocs where docid in (select docid from readers_maindocs where username in ("
-					+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and favorites = 1) " + " union "
-					+ " select has_attachment, form, ddbid, docid, doctype, viewtext, "
-					+ DatabaseUtil.getViewTextList("")
-					+ ", viewnumber, viewdate  from tasks where docid in (select docid from readers_tasks where username in ("
-					+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and favorites = 1) " + " union "
-					+ " select has_attachment, form, ddbid, docid, doctype, viewtext, "
-					+ DatabaseUtil.getViewTextList("")
-					+ ", viewnumber, viewdate  from executions where docid in (select docid from readers_executions where username in ("
-					+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and favorites = 1) " + " union "
-					+ " select has_attachment, form, ddbid, docid, doctype, viewtext, "
-					+ DatabaseUtil.getViewTextList("")
-					+ ", viewnumber, viewdate  from projects where docid in (select docid from readers_projects where username in ("
-					+ DatabaseUtil.prepareListToQuery(complexUserID) + ") and favorites = 1) " + " order by "
-					+ nf.getSortBlock().fieldName + "  " + nf.getSortBlock().order + " LIMIT " + pageSize + " OFFSET "
-					+ offset;
+			String sql = "select has_attachment, form, ddbid, docid, doctype, viewtext, " + DatabaseUtil.getViewTextList("")
+			        + ", viewnumber, viewdate from maindocs where docid in (select docid from readers_maindocs where username in ("
+			        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and favorites = 1) " + " union "
+			        + " select has_attachment, form, ddbid, docid, doctype, viewtext, " + DatabaseUtil.getViewTextList("")
+			        + ", viewnumber, viewdate  from tasks where docid in (select docid from readers_tasks where username in ("
+			        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and favorites = 1) " + " union "
+			        + " select has_attachment, form, ddbid, docid, doctype, viewtext, " + DatabaseUtil.getViewTextList("")
+			        + ", viewnumber, viewdate  from executions where docid in (select docid from readers_executions where username in ("
+			        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and favorites = 1) " + " union "
+			        + " select has_attachment, form, ddbid, docid, doctype, viewtext, " + DatabaseUtil.getViewTextList("")
+			        + ", viewnumber, viewdate  from projects where docid in (select docid from readers_projects where username in ("
+			        + DatabaseUtil.prepareListToQuery(complexUserID) + ") and favorites = 1) " + " order by " + nf.getSortBlock().fieldName + "  "
+			        + nf.getSortBlock().order + " LIMIT " + pageSize + " OFFSET " + offset;
 			ResultSet rs = s.executeQuery(sql);
 			while (rs.next()) {
-				xmlContent.append(
-						getDocumentEntry(conn, complexUserID, absoluteUserID, rs, fieldsCond, toExpandResponses, page));
+				xmlContent.append(getDocumentEntry(conn, complexUserID, absoluteUserID, rs, fieldsCond, toExpandResponses, page));
 			}
 			s.close();
 			rs.close();
@@ -4453,13 +4278,13 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 		try {
 			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			String sql = " select count(*) from (select docid from maindocs where docid in (select docid from readers_maindocs where username = '"
-					+ absoluteUserID + "' and favorites = 1) " + " union "
-					+ " select docid  from tasks where docid in (select docid from readers_tasks where username = '"
-					+ absoluteUserID + "' and favorites = 1) " + " union "
-					+ " select docid  from executions where docid in (select docid from readers_executions where username = '"
-					+ absoluteUserID + "' and favorites = 1) " + " union "
-					+ " select docid  from projects where docid in (select docid from readers_projects where username = '"
-					+ absoluteUserID + "' and favorites = 1)) cnt ";
+			        + absoluteUserID + "' and favorites = 1) " + " union "
+			        + " select docid  from tasks where docid in (select docid from readers_tasks where username = '" + absoluteUserID
+			        + "' and favorites = 1) " + " union "
+			        + " select docid  from executions where docid in (select docid from readers_executions where username = '" + absoluteUserID
+			        + "' and favorites = 1) " + " union "
+			        + " select docid  from projects where docid in (select docid from readers_projects where username = '" + absoluteUserID
+			        + "' and favorites = 1)) cnt ";
 
 			ResultSet rs = s.executeQuery(sql);
 			if (rs.next()) {
@@ -4481,8 +4306,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	public int isFavourites(Connection conn, int docID, int docType, Employer user) {
 		int isFavour = 0;
 		try {
-			String sql = "select favorites from READERS_MAINDOCS where username in ("
-					+ DatabaseUtil.prepareListToQuery(user.getAllUserGroups()) + ") and docid = " + docID;
+			String sql = "select favorites from READERS_MAINDOCS where username in (" + DatabaseUtil.prepareListToQuery(user.getAllUserGroups())
+			        + ") and docid = " + docID;
 			ResultSet rs = conn.createStatement().executeQuery(sql);
 			while (rs.next()) {
 				isFavour = rs.getInt("favorites");
@@ -4507,7 +4332,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			// having count(docid) % 2 <> 0";
 			Employer user = this.getStructure().getAppUser(userName);
 			String sql = "select favorites from " + DatabaseUtil.getReadersTableName(docType) + " where username  in ("
-					+ DatabaseUtil.prepareListToQuery(user.getAllUserGroups()) + ") and docid = " + docID;
+			        + DatabaseUtil.prepareListToQuery(user.getAllUserGroups()) + ") and docid = " + docID;
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
@@ -4549,8 +4374,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			String tableType = "";
 			// custom_fields
 			tableType = "custom_fields";
-			String sql = "select CONSTRAINT_NAME, SQL from information_schema.CONSTRAINTS where LCASE(table_name) = '"
-					+ tableType + "' and LCASE(column_list) = 'docid'";
+			String sql = "select CONSTRAINT_NAME, SQL from information_schema.CONSTRAINTS where LCASE(table_name) = '" + tableType
+			        + "' and LCASE(column_list) = 'docid'";
 			Statement s = conn.createStatement();
 			ResultSet rs = s.executeQuery(sql);
 
@@ -4560,21 +4385,19 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 					String constraint = rs.getString("CONSTRAINT_NAME");
 					sql = "ALTER TABLE " + tableType + " DROP CONSTRAINT " + constraint;
 					s.execute(sql);
-					sql = "ALTER TABLE " + tableType + " ADD FOREIGN KEY(DOCID) REFERENCES " + tables[0]
-							+ " (DOCID) ON DELETE CASCADE";
+					sql = "ALTER TABLE " + tableType + " ADD FOREIGN KEY(DOCID) REFERENCES " + tables[0] + " (DOCID) ON DELETE CASCADE";
 					s.execute(sql);
 				}
 			} else {
-				sql = "ALTER TABLE " + tableType + " ADD FOREIGN KEY(DOCID) REFERENCES " + tables[0]
-						+ " (DOCID) ON DELETE CASCADE";
+				sql = "ALTER TABLE " + tableType + " ADD FOREIGN KEY(DOCID) REFERENCES " + tables[0] + " (DOCID) ON DELETE CASCADE";
 				s.execute(sql);
 			}
 
 			// custom_blobs
 			tableType = "custom_blobs_";
 			for (String tableName : tables) {
-				sql = "select CONSTRAINT_NAME, SQL from information_schema.CONSTRAINTS where LCASE(table_name) = '"
-						+ tableType + tableName + "' and LCASE(column_list) = 'docid'";
+				sql = "select CONSTRAINT_NAME, SQL from information_schema.CONSTRAINTS where LCASE(table_name) = '" + tableType + tableName
+				        + "' and LCASE(column_list) = 'docid'";
 				rs = s.executeQuery(sql);
 
 				if (rs.next()) {
@@ -4584,12 +4407,11 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						sql = "ALTER TABLE " + tableType + tableName + " DROP CONSTRAINT " + constraint;
 						s.execute(sql);
 						sql = "ALTER TABLE " + tableType + tableName + " ADD FOREIGN KEY(DOCID) REFERENCES " + tableName
-								+ " (DOCID) ON DELETE CASCADE";
+						        + " (DOCID) ON DELETE CASCADE";
 						s.execute(sql);
 					}
 				} else {
-					sql = "ALTER TABLE " + tableType + tableName + " ADD FOREIGN KEY(DOCID) REFERENCES " + tableName
-							+ " (DOCID) ON DELETE CASCADE";
+					sql = "ALTER TABLE " + tableType + tableName + " ADD FOREIGN KEY(DOCID) REFERENCES " + tableName + " (DOCID) ON DELETE CASCADE";
 					s.execute(sql);
 				}
 			}
@@ -4597,8 +4419,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			// readers
 			tableType = "readers_";
 			for (String tableName : tables) {
-				sql = "select CONSTRAINT_NAME, SQL from information_schema.CONSTRAINTS where LCASE(table_name) = '"
-						+ tableType + tableName + "' and LCASE(column_list) = 'username,docid'";
+				sql = "select CONSTRAINT_NAME, SQL from information_schema.CONSTRAINTS where LCASE(table_name) = '" + tableType + tableName
+				        + "' and LCASE(column_list) = 'username,docid'";
 				rs = s.executeQuery(sql);
 
 				if (rs.next()) {
@@ -4608,12 +4430,11 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						sql = "ALTER TABLE " + tableType + tableName + " DROP CONSTRAINT " + constraint;
 						s.execute(sql);
 						sql = "ALTER TABLE " + tableType + tableName + " ADD FOREIGN KEY(DOCID) REFERENCES " + tableName
-								+ " (DOCID) ON DELETE CASCADE";
+						        + " (DOCID) ON DELETE CASCADE";
 						s.execute(sql);
 					}
 				} else {
-					sql = "ALTER TABLE " + tableType + tableName + " ADD FOREIGN KEY(DOCID) REFERENCES " + tableName
-							+ " (DOCID) ON DELETE CASCADE";
+					sql = "ALTER TABLE " + tableType + tableName + " ADD FOREIGN KEY(DOCID) REFERENCES " + tableName + " (DOCID) ON DELETE CASCADE";
 					s.execute(sql);
 				}
 			}
@@ -4621,8 +4442,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 			// authors
 			tableType = "authors_";
 			for (String tableName : tables) {
-				sql = "select CONSTRAINT_NAME, SQL from information_schema.CONSTRAINTS where LCASE(table_name) = '"
-						+ tableType + tableName + "' and LCASE(column_list) = 'username,docid'";
+				sql = "select CONSTRAINT_NAME, SQL from information_schema.CONSTRAINTS where LCASE(table_name) = '" + tableType + tableName
+				        + "' and LCASE(column_list) = 'username,docid'";
 				rs = s.executeQuery(sql);
 
 				if (rs.next()) {
@@ -4632,20 +4453,19 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 						sql = "ALTER TABLE " + tableType + tableName + " DROP CONSTRAINT " + constraint;
 						s.execute(sql);
 						sql = "ALTER TABLE " + tableType + tableName + " ADD FOREIGN KEY(DOCID) REFERENCES " + tableName
-								+ " (DOCID) ON DELETE CASCADE";
+						        + " (DOCID) ON DELETE CASCADE";
 						s.execute(sql);
 					}
 				} else {
-					sql = "ALTER TABLE " + tableType + tableName + " ADD FOREIGN KEY(DOCID) REFERENCES " + tableName
-							+ " (DOCID) ON DELETE CASCADE";
+					sql = "ALTER TABLE " + tableType + tableName + " ADD FOREIGN KEY(DOCID) REFERENCES " + tableName + " (DOCID) ON DELETE CASCADE";
 					s.execute(sql);
 				}
 			}
 
 			// tasks
 			tableType = "";
-			sql = "select CONSTRAINT_NAME, SQL from information_schema.CONSTRAINTS where LCASE(table_name) = '"
-					+ tableType + tables[4] + "' and LCASE(column_list) = 'username,docid'";
+			sql = "select CONSTRAINT_NAME, SQL from information_schema.CONSTRAINTS where LCASE(table_name) = '" + tableType + tables[4]
+			        + "' and LCASE(column_list) = 'username,docid'";
 			rs = s.executeQuery(sql);
 
 			if (rs.next()) {
@@ -4654,13 +4474,11 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 					String constraint = rs.getString("CONSTRAINT_NAME");
 					sql = "ALTER TABLE " + tableType + tables[4] + " DROP CONSTRAINT " + constraint;
 					s.execute(sql);
-					sql = "ALTER TABLE " + tableType + tables[4] + " ADD FOREIGN KEY(DOCID) REFERENCES " + tables[4]
-							+ " (DOCID) ON DELETE CASCADE";
+					sql = "ALTER TABLE " + tableType + tables[4] + " ADD FOREIGN KEY(DOCID) REFERENCES " + tables[4] + " (DOCID) ON DELETE CASCADE";
 					s.execute(sql);
 				}
 			} else {
-				sql = "ALTER TABLE " + tableType + tables[4] + " ADD FOREIGN KEY(DOCID) REFERENCES " + tables[4]
-						+ " (DOCID) ON DELETE CASCADE";
+				sql = "ALTER TABLE " + tableType + tables[4] + " ADD FOREIGN KEY(DOCID) REFERENCES " + tables[4] + " (DOCID) ON DELETE CASCADE";
 				s.execute(sql);
 			}
 			sql = "DELETE FROM PROJECTS";
