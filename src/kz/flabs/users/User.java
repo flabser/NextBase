@@ -172,7 +172,9 @@ public class User extends BaseDocument implements Const {
 
 	public HashSet<String> getAllUserGroups() {
 		HashSet<String> userGroups = new HashSet<String>();
-		if (userID.equals(sysUser) || (appUser != null && appUser.getCurrentUserID().equals(sysUser))) {
+		// if (userID.equals(sysUser) || (appUser != null &&
+		// appUser.getCurrentUserID().equals(sysUser))) {
+		if (userID.equals(sysUser)) {
 			userGroups = supervisorGroupAsSet;
 			userGroups.addAll(observerGroupAsList);
 		}
@@ -181,6 +183,7 @@ public class User extends BaseDocument implements Const {
 		} catch (Exception e) {
 			userGroups.add(userID);
 		}
+		System.out.println(userGroups);
 		return userGroups;
 	}
 
@@ -422,7 +425,7 @@ public class User extends BaseDocument implements Const {
 							// final KeyStore ks =
 							// KeyStore.getInstance("PKCS12");
 							ks.load(ksbufin, p_eds.toCharArray());
-							KeyStore.ProtectionParameter protParam = new KeyStore.PasswordProtection(p_eds.toCharArray());
+							new KeyStore.PasswordProtection(p_eds.toCharArray());
 							Enumeration<String> aliases = ks.aliases();
 							String alias = "";
 							while (aliases.hasMoreElements()) {
