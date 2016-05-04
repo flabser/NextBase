@@ -181,7 +181,7 @@ public class User extends BaseDocument implements Const {
 		} catch (Exception e) {
 			userGroups.add(userID);
 		}
-		System.out.println(userGroups);
+		// System.out.println(userGroups);
 		return userGroups;
 	}
 
