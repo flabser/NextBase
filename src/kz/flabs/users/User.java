@@ -172,9 +172,7 @@ public class User extends BaseDocument implements Const {
 
 	public HashSet<String> getAllUserGroups() {
 		HashSet<String> userGroups = new HashSet<String>();
-		// if (userID.equals(sysUser) || (appUser != null &&
-		// appUser.getCurrentUserID().equals(sysUser))) {
-		if (userID.equals(sysUser)) {
+		if (userID.equals(sysUser) || isSupervisor()) {
 			userGroups = supervisorGroupAsSet;
 			userGroups.addAll(observerGroupAsList);
 		}

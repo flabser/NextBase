@@ -2300,8 +2300,8 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	@Override
 	public void deleteDocument(String ddbId, boolean completely, User user) throws DocumentException, DocumentAccessException, SQLException,
 	        DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
-
-		BaseDocument doc = getDocumentByDdbID(ddbId, user.getAllUserGroups(), user.getUserID());
+		HashSet<String> userGroups = user.getAllUserGroups();
+		BaseDocument doc = getDocumentByDdbID(ddbId, userGroups, user.getUserID());
 		if (doc == null) {
 			throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED, user.getUserID());
 		}
@@ -2394,8 +2394,6 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	@Override
 	public void deleteDocument(int docType, int docID, User user, boolean completely) throws DocumentException, DocumentAccessException, SQLException,
 	        DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException, ComplexObjectException {
-		@Deprecated
-		boolean flushCache = false;
 		BaseDocument doc = getDocumentByComplexID(docType, docID);
 		if (doc == null) {
 			throw new DocumentAccessException(ExceptionType.DOCUMENT_READ_RESTRICTED, user.getUserID());
@@ -2449,7 +2447,6 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				}
 			}
 			if (docType == DOCTYPE_GLOSSARY) {
-				flushCache = true;
 				sql = "DELETE FROM GLOSSARY_TREE_PATH WHERE ANCESTOR = " + docID + " OR DESCENDANT = " + docID;
 				statement.addBatch(sql);
 			}
@@ -3562,7 +3559,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses,
 	        RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, _ReadConditionType type) {
 		ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
-		Set<String> users = user.getAllUserGroups();
+		user.getAllUserGroups();
 		Connection conn = dbPool.getConnection();
 		SelectFormula.ReadCondition cond;
 		switch (type) {
@@ -3629,7 +3626,7 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	public _ViewEntryCollection getCollectionByCondition(ISelectFormula condition, User user, int pageNum, int pageSize, Set<DocID> toExpandResponses,
 	        RunTimeParameters parameters, boolean checkResponse, boolean expandAllResponses, _ReadConditionType type, String customFieldName) {
 		ViewEntryCollection coll = new ViewEntryCollection(pageSize, user, parameters);
-		Set<String> users = user.getAllUserGroups();
+		user.getAllUserGroups();
 		Connection conn = dbPool.getConnection();
 		SelectFormula.ReadCondition cond;
 		switch (type) {
@@ -4037,8 +4034,6 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 	public XMLResponse deleteDocuments(List<DocID> docs, boolean completely, User user) {
 		XMLResponse result = new XMLResponse(ResponseType.DELETE_DOCUMENT);
 		StringBuffer messages = new StringBuffer(1000);
-		String listOfDeleted = "";
-		String listOfNotDeleted = "";
 		String currentDoc = "";
 		int countDeleted = 0, countNotDeleted = 0;
 
@@ -4047,13 +4042,11 @@ public class Database extends DatabaseCore implements IDatabase, Const {
 				currentDoc = this.getFieldByComplexID(id.id, id.type, "viewtext");
 				this.deleteDocument(id.type, id.id, user, completely);
 				countDeleted++;
-				listOfDeleted += currentDoc + "||";
 			} catch (Exception e) {
 				DatabaseUtil.errorPrint(dbID, e);
 				String viewText = this.getFieldByComplexID(id.id, id.type, "viewtext");
 				messages.append("<entry id=\"" + id.id + "\" type=\"" + id.type + "\" reason=\"" + e.getClass().getSimpleName() + "\">"
 				        + (viewText != null ? XMLUtil.getAsTagValue(viewText) : "") + "</entry>");
-				listOfNotDeleted += viewText + "||";
 				countNotDeleted++;
 			}
 		}
