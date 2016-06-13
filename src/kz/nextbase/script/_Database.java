@@ -603,10 +603,11 @@ public class _Database implements Const {
 
 	public int getRegNumber(String key, boolean commit) {
 		RegNum rn = new RegNum();
+		int num = rn.getRegNumber(key);
 		if (commit) {
 			rn.post();
 		}
-		return rn.getRegNumber(key);
+		return num;
 	}
 
 	public void addCounter(String key, int num) {
