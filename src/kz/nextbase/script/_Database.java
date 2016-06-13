@@ -91,8 +91,8 @@ public class _Database implements Const {
 			parameters = new RunTimeParameters(param.getDateFormat());
 		}
 
-		return dataBase.getCollectionByCondition(sf, user, param.getPageNum(), param.getPageSize(),
-				session.getExpandedDocuments(), parameters, param.withResponse());
+		return dataBase.getCollectionByCondition(sf, user, param.getPageNum(), param.getPageSize(), session.getExpandedDocuments(), parameters,
+		        param.withResponse());
 	}
 
 	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, boolean checkResponse) {
@@ -100,18 +100,15 @@ public class _Database implements Const {
 		// ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
 		RunTimeParameters parameters = new RunTimeParameters();
-		return dataBase.getCollectionByCondition(sf, user, 1, 0, session.getExpandedDocuments(), parameters,
-				checkResponse);
+		return dataBase.getCollectionByCondition(sf, user, 1, 0, session.getExpandedDocuments(), parameters, checkResponse);
 	}
 
-	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, boolean checkResponse,
-			boolean checkUnread) {
+	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, boolean checkResponse, boolean checkUnread) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
 		// ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
 		RunTimeParameters parameters = new RunTimeParameters();
-		return dataBase.getCollectionByCondition(sf, user, 1, 0, session.getExpandedDocuments(), parameters,
-				checkResponse, false, checkUnread);
+		return dataBase.getCollectionByCondition(sf, user, 1, 0, session.getExpandedDocuments(), parameters, checkResponse, false, checkUnread);
 	}
 
 	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse) {
@@ -120,12 +117,10 @@ public class _Database implements Const {
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
 		int pageSize = user.getSession().pageSize;
 		RunTimeParameters parameters = new RunTimeParameters();
-		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse);
+		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(), parameters, checkResponse);
 	}
 
-	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
-			boolean useFilter) {
+	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse, boolean useFilter) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
 		// ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
@@ -138,12 +133,11 @@ public class _Database implements Const {
 		if (parameters == null) {
 			parameters = new RunTimeParameters();
 		}
-		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse);
+		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(), parameters, checkResponse);
 	}
 
-	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
-			boolean useFilter, boolean expandAllResponses) {
+	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse, boolean useFilter,
+	        boolean expandAllResponses) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
 		// ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
@@ -156,12 +150,12 @@ public class _Database implements Const {
 		if (parameters == null) {
 			parameters = new RunTimeParameters();
 		}
-		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse, expandAllResponses);
+		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(), parameters, checkResponse,
+		        expandAllResponses);
 	}
 
-	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
-			boolean useFilter, boolean expandAllResponses, boolean checkRead) {
+	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse, boolean useFilter,
+	        boolean expandAllResponses, boolean checkRead) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
 		// ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
@@ -174,12 +168,12 @@ public class _Database implements Const {
 		if (parameters == null) {
 			parameters = new RunTimeParameters();
 		}
-		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse, expandAllResponses, checkRead);
+		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(), parameters, checkResponse,
+		        expandAllResponses, checkRead);
 	}
 
-	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
-			boolean useFilter, boolean expandAllResponses, _ReadConditionType type) {
+	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse, boolean useFilter,
+	        boolean expandAllResponses, _ReadConditionType type) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
 		// ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
@@ -192,12 +186,12 @@ public class _Database implements Const {
 		if (parameters == null) {
 			parameters = new RunTimeParameters();
 		}
-		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse, expandAllResponses, type);
+		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(), parameters, checkResponse,
+		        expandAllResponses, type);
 	}
 
-	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
-			boolean useFilter, boolean expandAllResponses, _ReadConditionType type, String customFieldName) {
+	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse, boolean useFilter,
+	        boolean expandAllResponses, _ReadConditionType type, String customFieldName) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
 		// ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
@@ -210,12 +204,12 @@ public class _Database implements Const {
 		if (parameters == null) {
 			parameters = new RunTimeParameters();
 		}
-		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse, expandAllResponses, type, customFieldName);
+		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(), parameters, checkResponse,
+		        expandAllResponses, type, customFieldName);
 	}
 
-	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
-			boolean useFilter, String responseQueryCondition) {
+	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse, boolean useFilter,
+	        String responseQueryCondition) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
 		// ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
@@ -229,12 +223,12 @@ public class _Database implements Const {
 		if (parameters == null) {
 			parameters = new RunTimeParameters();
 		}
-		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse, responseQueryCondition);
+		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(), parameters, checkResponse,
+		        responseQueryCondition);
 	}
 
-	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse,
-			boolean useFilter, SimpleDateFormat simpleDateFormat) {
+	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, boolean checkResponse, boolean useFilter,
+	        SimpleDateFormat simpleDateFormat) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
 		// ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
@@ -249,12 +243,11 @@ public class _Database implements Const {
 		} else {
 			parameters.setSimpleDateFormat(simpleDateFormat);
 		}
-		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse);
+		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(), parameters, checkResponse);
 	}
 
-	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, int pageSize,
-			boolean checkResponse, String sortingColumnName, _Direction direction) {
+	public _ViewEntryCollection getCollectionOfDocuments(String queryCondition, int pageNum, int pageSize, boolean checkResponse,
+	        String sortingColumnName, _Direction direction) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.DOCUMENT);
 		// ISelectFormula sf = new SelectFormula(queryFormulaBlocks);
 		ISelectFormula sf = dataBase.getSelectFormula(queryFormulaBlocks);
@@ -270,8 +263,7 @@ public class _Database implements Const {
 		}
 		parameters.getSorting().add(s);
 		parameters.sortingMap.put(sortingColumnName, s);
-		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse);
+		return dataBase.getCollectionByCondition(sf, user, pageNum, pageSize, session.getExpandedDocuments(), parameters, checkResponse);
 	}
 
 	public _ViewEntryCollection getCollectionOfGlossaries(_ViewEntryCollectionParam param) {
@@ -286,20 +278,19 @@ public class _Database implements Const {
 			parameters = new RunTimeParameters(param.getDateFormat());
 		}
 
-		return dataBase.getGlossaries().getCollectionByCondition(sf, param.getPageNum(), param.getPageSize(),
-				session.getExpandedDocuments(), parameters, param.withResponse());
+		return dataBase.getGlossaries().getCollectionByCondition(sf, param.getPageNum(), param.getPageSize(), session.getExpandedDocuments(),
+		        parameters, param.withResponse());
 	}
 
 	public _ViewEntryCollection getCollectionOfGlossaries(String queryCondition, int pageNum, int pageSize) {
 		FormulaBlocks formulaBlocks = new FormulaBlocks(queryCondition, QueryType.GLOSSARY);
 		ISelectFormula sf = this.dataBase.getSelectFormula(formulaBlocks);
 		RunTimeParameters parameters = new RunTimeParameters();
-		return dataBase.getGlossaries().getCollectionByCondition(sf, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, true);
+		return dataBase.getGlossaries().getCollectionByCondition(sf, pageNum, pageSize, session.getExpandedDocuments(), parameters, true);
 	}
 
-	public _ViewEntryCollection getCollectionOfGlossaries(String queryCondition, int pageNum, int pageSize,
-			boolean checkResponse, String sortingColumnName, _Direction direction) {
+	public _ViewEntryCollection getCollectionOfGlossaries(String queryCondition, int pageNum, int pageSize, boolean checkResponse,
+	        String sortingColumnName, _Direction direction) {
 		FormulaBlocks queryFormulaBlocks = new FormulaBlocks(queryCondition, QueryType.GLOSSARY);
 		ISelectFormula sf = new GlossarySelectFormula(queryFormulaBlocks);
 		RunTimeParameters parameters = new RunTimeParameters();
@@ -317,8 +308,7 @@ public class _Database implements Const {
 			parameters.sortingMap.put(sortingColumnName, s);
 		}
 
-		return dataBase.getGlossaries().getCollectionByCondition(sf, pageNum, pageSize, session.getExpandedDocuments(),
-				parameters, checkResponse);
+		return dataBase.getGlossaries().getCollectionByCondition(sf, pageNum, pageSize, session.getExpandedDocuments(), parameters, checkResponse);
 	}
 
 	public _ViewEntryCollection getCollectionOfTopics(String queryCondition, int pageNum, int pageSize) {
@@ -329,28 +319,25 @@ public class _Database implements Const {
 	}
 
 	public _ViewEntryCollection search(String keyWord, int pageNum, String[] filter)
-			throws UnsupportedEncodingException, DocumentException, FTIndexEngineException, RuleException,
-			QueryFormulaParserException {
+	        throws UnsupportedEncodingException, DocumentException, FTIndexEngineException, RuleException, QueryFormulaParserException {
 		keyWord = new String(keyWord.getBytes("ISO-8859-1"), "UTF-8");
 		int pageSize = user.getSession().pageSize;
 		return dataBase.getFTSearchEngine().search(keyWord, user, pageNum, pageSize, filter, new String[5]);
 
 	}
 
-	public ArrayList<_ViewEntry> getGroupedEntries(String fieldName, int pageNum, int pageSize)
-			throws DocumentException, DocumentAccessException {
+	public ArrayList<_ViewEntry> getGroupedEntries(String fieldName, int pageNum, int pageSize) throws DocumentException, DocumentAccessException {
 		ArrayList<_ViewEntry> col = new ArrayList<_ViewEntry>();
 
-		ArrayList<ViewEntry> entryCollection = dataBase.getGroupedEntries(fieldName,
-				dataBase.calcStartEntry(pageNum, pageSize), pageSize, user);
+		ArrayList<ViewEntry> entryCollection = dataBase.getGroupedEntries(fieldName, dataBase.calcStartEntry(pageNum, pageSize), pageSize, user);
 		for (ViewEntry ve : entryCollection) {
 			col.add(new _ViewEntry(ve, session));
 		}
 		return col;
 	}
 
-	public ArrayList<_Document> getDocumentsForMonth(String form, String fieldName, Month month, int pageNum,
-			int pageSize) throws DocumentException, DocumentAccessException {
+	public ArrayList<_Document> getDocumentsForMonth(String form, String fieldName, Month month, int pageNum, int pageSize)
+	        throws DocumentException, DocumentAccessException {
 		ArrayList<_Document> col = new ArrayList<_Document>();
 		int m = 0;
 		switch (month) {
@@ -398,7 +385,7 @@ public class _Database implements Const {
 		}
 
 		ArrayList<BaseDocument> docsCollection = dataBase.getDocumentsForMonth(userGroups, userID, form, fieldName, m,
-				dataBase.calcStartEntry(pageNum, pageSize), pageSize);
+		        dataBase.calcStartEntry(pageNum, pageSize), pageSize);
 		for (BaseDocument doc : docsCollection) {
 			col.add(new _Document(doc));
 		}
@@ -426,15 +413,14 @@ public class _Database implements Const {
 		case FAVOURITES:
 			return dataBase.getFavoritesCount(userGroups, userID);
 		default:
-			throw new _Exception(_ExceptionType.UNKNOWN_MACRO,
-					"unknown macro, function: _Document.getCount(" + macro + ")");
+			throw new _Exception(_ExceptionType.UNKNOWN_MACRO, "unknown macro, function: _Document.getCount(" + macro + ")");
 
 		}
 
 	}
 
-	public _ViewEntryCollection getCollectionOfOrganizations(String queryCondition, int pageNum, int pageSize,
-			String sortingColumnName, _Direction direction) {
+	public _ViewEntryCollection getCollectionOfOrganizations(String queryCondition, int pageNum, int pageSize, String sortingColumnName,
+	        _Direction direction) {
 		// _ViewEntryCollection getOrganization(ISelectFormula sf, int pageNum,
 		// int pageSize,
 		// RunTimeParameters parameters);
@@ -442,11 +428,9 @@ public class _Database implements Const {
 	}
 
 	@Deprecated
-	public ArrayList<_Document> getAllDocuments(int docType, Set<String> complexUserID, String absoluteUserID,
-			String[] fields, int offset, int pageSize)
-					throws DocumentException, DocumentAccessException, ComplexObjectException {
-		ArrayList<BaseDocument> docs = this.dataBase.getAllDocuments(docType, complexUserID, absoluteUserID, fields,
-				offset, pageSize);
+	public ArrayList<_Document> getAllDocuments(int docType, Set<String> complexUserID, String absoluteUserID, String[] fields, int offset,
+	        int pageSize) throws DocumentException, DocumentAccessException, ComplexObjectException {
+		ArrayList<BaseDocument> docs = this.dataBase.getAllDocuments(docType, complexUserID, absoluteUserID, fields, offset, pageSize);
 		ArrayList<_Document> _docs = new ArrayList<_Document>();
 		for (BaseDocument doc : docs) {
 			_Document _doc = new _Document(doc);
@@ -457,7 +441,7 @@ public class _Database implements Const {
 
 	@Deprecated
 	public ArrayList<_Document> getAllDocuments(int docType, int offset, int pageSize)
-			throws DocumentException, DocumentAccessException, ComplexObjectException {
+	        throws DocumentException, DocumentAccessException, ComplexObjectException {
 		ArrayList<BaseDocument> docs = this.dataBase.getAllDocuments(docType, userGroups, userID, offset, pageSize);
 		ArrayList<_Document> _docs = new ArrayList<_Document>();
 		for (BaseDocument doc : docs) {
@@ -469,7 +453,7 @@ public class _Database implements Const {
 
 	@Deprecated
 	public ArrayList<_Document> getDocuments(int docType, int offset, int pageSize)
-			throws DocumentException, DocumentAccessException, ComplexObjectException {
+	        throws DocumentException, DocumentAccessException, ComplexObjectException {
 		// DocumentCollection col =
 		// dataBase.getCollectionByCondition(IQueryFormula condition,
 		// Set<String> complexUserID, String absoluteUserID, int offset, int
@@ -487,33 +471,28 @@ public class _Database implements Const {
 
 	@Deprecated
 	public _DocumentCollection getAllDocuments(_DocumentType docType, int offset, int pageSize)
-			throws DocumentException, DocumentAccessException, ComplexObjectException {
+	        throws DocumentException, DocumentAccessException, ComplexObjectException {
 		switch (docType) {
 		case MAINDOC:
-			ArrayList<BaseDocument> docs = this.dataBase.getAllDocuments(DOCTYPE_MAIN, userGroups, userID, offset,
-					pageSize);
+			ArrayList<BaseDocument> docs = this.dataBase.getAllDocuments(DOCTYPE_MAIN, userGroups, userID, offset, pageSize);
 			return new _DocumentCollection(docs, session);
 		case PROJECT:
-			ArrayList<BaseDocument> prjs = this.dataBase.getAllDocuments(DOCTYPE_PROJECT, userGroups, userID, offset,
-					pageSize);
+			ArrayList<BaseDocument> prjs = this.dataBase.getAllDocuments(DOCTYPE_PROJECT, userGroups, userID, offset, pageSize);
 			return new _DocumentCollection(prjs, session);
 		case TASK:
-			ArrayList<BaseDocument> tasks = this.dataBase.getAllDocuments(DOCTYPE_TASK, userGroups, userID, offset,
-					pageSize);
+			ArrayList<BaseDocument> tasks = this.dataBase.getAllDocuments(DOCTYPE_TASK, userGroups, userID, offset, pageSize);
 			return new _DocumentCollection(tasks, session);
 		case EXECUTION:
-			ArrayList<BaseDocument> execs = this.dataBase.getAllDocuments(DOCTYPE_EXECUTION, userGroups, userID, offset,
-					pageSize);
+			ArrayList<BaseDocument> execs = this.dataBase.getAllDocuments(DOCTYPE_EXECUTION, userGroups, userID, offset, pageSize);
 			return new _DocumentCollection(execs, session);
 		}
 		return null;
 	}
 
 	@Deprecated
-	public ArrayList<_Document> getAllDocuments(int docType, Set<String> complexUserID, String absoluteUserID,
-			int offset, int pageSize) throws DocumentException, DocumentAccessException, ComplexObjectException {
-		ArrayList<BaseDocument> docs = this.dataBase.getAllDocuments(docType, complexUserID, absoluteUserID, offset,
-				pageSize);
+	public ArrayList<_Document> getAllDocuments(int docType, Set<String> complexUserID, String absoluteUserID, int offset, int pageSize)
+	        throws DocumentException, DocumentAccessException, ComplexObjectException {
+		ArrayList<BaseDocument> docs = this.dataBase.getAllDocuments(docType, complexUserID, absoluteUserID, offset, pageSize);
 		ArrayList<_Document> _docs = new ArrayList<_Document>();
 		for (BaseDocument doc : docs) {
 			_Document _doc = new _Document(doc);
@@ -523,29 +502,28 @@ public class _Database implements Const {
 	}
 
 	@Deprecated
-	public ArrayList<Integer> getAllDocumentsIDS(int docType, Set<String> complexUserID, String absoluteUserID,
-			String[] fields, int offset, int pageSize) throws DocumentException, DocumentAccessException {
+	public ArrayList<Integer> getAllDocumentsIDS(int docType, Set<String> complexUserID, String absoluteUserID, String[] fields, int offset,
+	        int pageSize) throws DocumentException, DocumentAccessException {
 		return this.dataBase.getAllDocumentsIDS(docType, complexUserID, absoluteUserID, fields, offset, pageSize);
 	}
 
 	@Deprecated
-	public ArrayList<Integer> getAllDocumentsIDS(int docType, Set<String> complexUserID, String absoluteUserID,
-			int offset, int pageSize) throws DocumentException, DocumentAccessException {
+	public ArrayList<Integer> getAllDocumentsIDS(int docType, Set<String> complexUserID, String absoluteUserID, int offset, int pageSize)
+	        throws DocumentException, DocumentAccessException {
 		return this.dataBase.getAllDocumentsIDS(docType, complexUserID, absoluteUserID, offset, pageSize);
 	}
 
 	@Deprecated
-	public ArrayList<Integer> getAllDocumentsIDsByCondition(String query, int docType, Set<String> complexUserID,
-			String absoluteUserID) throws DocumentException, DocumentAccessException {
+	public ArrayList<Integer> getAllDocumentsIDsByCondition(String query, int docType, Set<String> complexUserID, String absoluteUserID)
+	        throws DocumentException, DocumentAccessException {
 		return this.dataBase.getAllDocumentsIDsByCondition(query, docType, complexUserID, absoluteUserID);
 	}
 
 	@Deprecated
 	public ArrayList<_Document> getAllDocsByReader(String query, Set<String> complexUserID, String absoluteUserID)
-			throws DocumentException, QueryFormulaParserException, DocumentAccessException, ComplexObjectException {
+	        throws DocumentException, QueryFormulaParserException, DocumentAccessException, ComplexObjectException {
 
-		ArrayList<BaseDocument> docs = this.dataBase.getDocumentsByCondition(query, complexUserID, absoluteUserID, 0,
-				0);
+		ArrayList<BaseDocument> docs = this.dataBase.getDocumentsByCondition(query, complexUserID, absoluteUserID, 0, 0);
 		ArrayList<_Document> _docs = new ArrayList<_Document>();
 		for (BaseDocument doc : docs) {
 			_Document _doc = new _Document(doc);
@@ -557,8 +535,7 @@ public class _Database implements Const {
 	@Deprecated
 	public _DocumentCollection getDocsCollection(String condition, int offset, int limit) throws _Exception {
 		try {
-			ArrayList<BaseDocument> docs = dataBase.getDocumentsByCondition(condition, userGroups, userID, limit,
-					offset);
+			ArrayList<BaseDocument> docs = dataBase.getDocumentsByCondition(condition, userGroups, userID, limit, offset);
 			_DocumentCollection col = new _DocumentCollection(docs, session);
 			int docscount = dataBase.getDocumentsCountByCondition(condition, userGroups, userID);
 			Properties params = new Properties();
@@ -568,22 +545,20 @@ public class _Database implements Const {
 			col.setParameter("query", params);
 			return col;
 		} catch (Exception e) {
-			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR,
-					e.getMessage() + " function: _Document.getDocsCollection(" + condition + ")");
+			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, e.getMessage() + " function: _Document.getDocsCollection(" + condition + ")");
 		}
 	}
 
 	@Deprecated
 	public _DocumentCollection getDocsCollection(String form, int docType, String condition)
-			throws DocumentException, DocumentAccessException, QueryFormulaParserException {
+	        throws DocumentException, DocumentAccessException, QueryFormulaParserException {
 		AppEnv.logger.errorLogEntry(
-				"Groovy - _Database.getDocsCollection(String form, String docType, String condition) is obsolete method. Use _Database.getDocsCollection(String condition)(getTasksCollection, getPrjsCollection)");
+		        "Groovy - _Database.getDocsCollection(String form, String docType, String condition) is obsolete method. Use _Database.getDocsCollection(String condition)(getTasksCollection, getPrjsCollection)");
 		return null;
 	}
 
 	@Deprecated
-	public _DocumentCollection getTasksCollection(String condition)
-			throws DocumentException, DocumentAccessException, QueryFormulaParserException {
+	public _DocumentCollection getTasksCollection(String condition) throws DocumentException, DocumentAccessException, QueryFormulaParserException {
 		ArrayList<BaseDocument> docs = new ArrayList<BaseDocument>();
 		ArrayList<Task> tasks = dataBase.getTasks().getTasksByCondition(condition, userGroups, userID);
 		for (Task t : tasks) {
@@ -594,7 +569,7 @@ public class _Database implements Const {
 
 	@Deprecated
 	public _DocumentCollection getTasksCollection(String condition, Set<String> complexUserID, String absoluteUserID)
-			throws DocumentException, DocumentAccessException, QueryFormulaParserException {
+	        throws DocumentException, DocumentAccessException, QueryFormulaParserException {
 		ArrayList<BaseDocument> docs = new ArrayList<BaseDocument>();
 		ArrayList<Task> tasks = dataBase.getTasks().getTasksByCondition(condition, complexUserID, absoluteUserID);
 		for (Task t : tasks) {
@@ -604,17 +579,15 @@ public class _Database implements Const {
 	}
 
 	@Deprecated
-	public _DocumentCollection getPrjsCollection(String condition)
-			throws DocumentException, DocumentAccessException, QueryFormulaParserException {
+	public _DocumentCollection getPrjsCollection(String condition) throws DocumentException, DocumentAccessException, QueryFormulaParserException {
 		ArrayList<BaseDocument> docs = dataBase.getProjects().getProjectsByCondition(condition, userGroups, userID);
 		return new _DocumentCollection(docs, session);
 	}
 
 	@Deprecated
 	public _DocumentCollection getPrjsCollection(String condition, HashSet<String> complexUserID, String absoluteUserID)
-			throws DocumentException, DocumentAccessException, QueryFormulaParserException {
-		ArrayList<BaseDocument> docs = dataBase.getProjects().getDocumentsByCondition(condition, complexUserID,
-				absoluteUserID);
+	        throws DocumentException, DocumentAccessException, QueryFormulaParserException {
+		ArrayList<BaseDocument> docs = dataBase.getProjects().getDocumentsByCondition(condition, complexUserID, absoluteUserID);
 		return new _DocumentCollection(docs, session);
 	}
 
@@ -628,13 +601,21 @@ public class _Database implements Const {
 		return rn.getRegNumber(key);
 	}
 
+	public int getRegNumber(String key, boolean commit) {
+		RegNum rn = new RegNum();
+		if (commit) {
+			rn.post();
+		}
+		return rn.getRegNumber(key);
+	}
+
 	public void addCounter(String key, int num) {
 		this.dataBase.addCounter(key, num);
 	}
 
 	@Deprecated
-	public String getMainDocumentFieldValueByDOCID(int docID, Set<String> complexUserID, String absoluteUserID,
-			String fieldName) throws DocumentAccessException {
+	public String getMainDocumentFieldValueByDOCID(int docID, Set<String> complexUserID, String absoluteUserID, String fieldName)
+	        throws DocumentAccessException {
 		return dataBase.getMainDocumentFieldValueByID(docID, complexUserID, absoluteUserID, fieldName);
 	}
 
@@ -714,7 +695,7 @@ public class _Database implements Const {
 			return getDocumentByComplexID(dt, di);
 		} catch (NumberFormatException e) {
 			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR,
-					"Value has not converted to number: getDocumentByComplexID(" + docType + "," + docID + ")");
+			        "Value has not converted to number: getDocumentByComplexID(" + docType + "," + docID + ")");
 		}
 
 	}
@@ -755,11 +736,9 @@ public class _Database implements Const {
 			dataBase.deleteDocument(ddbId, completely, user);
 		} catch (DocumentAccessException e) {
 			if (e.exceptionType == ExceptionType.DOCUMENT_DELETE_RESTRICTED) {
-				throw new _Exception(_ExceptionType.DOCUMENT_DELETING_ERROR,
-						"Unable to delete document. Document is read only", this.session);
+				throw new _Exception(_ExceptionType.DOCUMENT_DELETING_ERROR, "Unable to delete document. Document is read only", this.session);
 			} else if (e.exceptionType == ExceptionType.DELETING_RESTRICTED_CAUSED_RELATED_DOCUMENTS) {
-				throw new _Exception(_ExceptionType.DOCUMENT_DELETING_ERROR,
-						"Unable to delete document. Document has some relations", this.session);
+				throw new _Exception(_ExceptionType.DOCUMENT_DELETING_ERROR, "Unable to delete document. Document has some relations", this.session);
 			}
 		} catch (InstantiationException e) {
 			throw new _Exception(e.getMessage(), this.session);
@@ -774,8 +753,8 @@ public class _Database implements Const {
 				SQLException next = e.getNextException();
 				// Нарушение ограничения целостности
 				if (next.getSQLState().equalsIgnoreCase("23503")) {
-					throw new _Exception(_ExceptionType.DOCUMENT_DELETING_ERROR,
-							"Unable to delete document. Document has some relations", this.session);
+					throw new _Exception(_ExceptionType.DOCUMENT_DELETING_ERROR, "Unable to delete document. Document has some relations",
+					        this.session);
 				}
 				throw new _Exception(next.getMessage(), this.session);
 			}
@@ -798,7 +777,7 @@ public class _Database implements Const {
 		} catch (DocumentAccessException e) {
 			// it is to extend to separate error type
 			throw new _Exception(_ExceptionType.NO_PERMISSION_TO_READ_THE_DOCUMENT,
-					"Unable to delete document. Security reason: deleteDocument(int docType, int docID, boolean completely)");
+			        "Unable to delete document. Security reason: deleteDocument(int docType, int docID, boolean completely)");
 		} catch (InstantiationException e) {
 			throw new _Exception(e.getMessage());
 		} catch (IllegalAccessException e) {
@@ -823,7 +802,7 @@ public class _Database implements Const {
 		} catch (DocumentAccessException e) {
 			// it is to extend to separate error type
 			throw new _Exception(_ExceptionType.NO_PERMISSION_TO_READ_THE_DOCUMENT,
-					"Unable to undelete document. Security reason: unDeleteDocument(int docType, int docID, boolean completely)");
+			        "Unable to undelete document. Security reason: unDeleteDocument(int docType, int docID, boolean completely)");
 		} catch (ComplexObjectException e) {
 			throw new _Exception(e.getMessage());
 		}
@@ -836,7 +815,7 @@ public class _Database implements Const {
 		} catch (DocumentAccessException e) {
 			// it is to extend to separate error type
 			throw new _Exception(_ExceptionType.NO_PERMISSION_TO_READ_THE_DOCUMENT,
-					"Unable to undelete document. Security reason: unDeleteDocument(int docType, int docID, boolean completely)");
+			        "Unable to undelete document. Security reason: unDeleteDocument(int docType, int docID, boolean completely)");
 		} catch (DocumentException e) {
 			throw new _Exception(e.getMessage());
 		} catch (ComplexObjectException e) {
@@ -872,8 +851,8 @@ public class _Database implements Const {
 	 **/
 	@Deprecated
 	public _Document getTaskByID(int docID, String userName) throws DocumentException, DocumentAccessException {
-		AppEnv.logger.errorLogEntry(
-				"Groovy - _Database.getTaskByID(int docID, String userName) is obsolete method. Use _Database.getTaskByID(int docID)");
+		AppEnv.logger
+		        .errorLogEntry("Groovy - _Database.getTaskByID(int docID, String userName) is obsolete method. Use _Database.getTaskByID(int docID)");
 		return null;
 	}
 
@@ -893,7 +872,7 @@ public class _Database implements Const {
 	@Deprecated
 	public _Project getProjectByID(int docID, String userName) throws DocumentException, DocumentAccessException {
 		AppEnv.logger.errorLogEntry(
-				"Groovy - _Database.getProjectByID(int docID, String userName) is obsolete method. Use _Database.getProjectByID(int docID)");
+		        "Groovy - _Database.getProjectByID(int docID, String userName) is obsolete method. Use _Database.getProjectByID(int docID)");
 		return null;
 	}
 
@@ -924,11 +903,9 @@ public class _Database implements Const {
 	 * @deprecated
 	 **/
 	@Deprecated
-	public _Glossary getGlossaryDocumentByField(String form, String condition, String returnFieldName)
-			throws DocumentException {
-		ScriptProcessor.logger.warningLogEntry(
-				"method: _Database.getGlossaryDocumentByField(" + form + "," + condition + "," + returnFieldName
-						+ ") deprecated, use _Database.getGlossaryDocument(String form, String condition)");
+	public _Glossary getGlossaryDocumentByField(String form, String condition, String returnFieldName) throws DocumentException {
+		ScriptProcessor.logger.warningLogEntry("method: _Database.getGlossaryDocumentByField(" + form + "," + condition + "," + returnFieldName
+		        + ") deprecated, use _Database.getGlossaryDocument(String form, String condition)");
 		FormulaBlocks blocks = new FormulaBlocks(condition, QueryType.DOCUMENT);
 		IQueryFormula queryFormula = dataBase.getQueryFormula("", blocks);
 		IGlossaries glos = dataBase.getGlossaries();
@@ -938,13 +915,11 @@ public class _Database implements Const {
 		return _glos;
 	}
 
-	public Document getTopicByPostID(BaseDocument post, Set<String> complexUserID, String absoluteUserID)
-			throws DocumentAccessException {
+	public Document getTopicByPostID(BaseDocument post, Set<String> complexUserID, String absoluteUserID) throws DocumentAccessException {
 		return this.dataBase.getForum().getTopicByPostID(post, complexUserID, absoluteUserID);
 	}
 
-	public _Glossary getGlossaryDocument(String form, String condition)
-			throws DocumentException, QueryFormulaParserException {
+	public _Glossary getGlossaryDocument(String form, String condition) throws DocumentException, QueryFormulaParserException {
 		FormulaBlocks blocks = new FormulaBlocks(condition, QueryType.GLOSSARY);
 		IQueryFormula queryFormula = dataBase.getQueryFormula("_Database", blocks);
 		IGlossaries glos = dataBase.getGlossaries();
@@ -958,8 +933,7 @@ public class _Database implements Const {
 	}
 
 	@Deprecated
-	public List<_Glossary> getGlossaryDocs(String condition, int pageNum)
-			throws DocumentException, QueryFormulaParserException {
+	public List<_Glossary> getGlossaryDocs(String condition, int pageNum) throws DocumentException, QueryFormulaParserException {
 		FormulaBlocks blocks = new FormulaBlocks(condition, QueryType.GLOSSARY);
 		blocks.setSortByBlock(new SortByBlock("ddbid"));
 		IQueryFormula queryFormula = dataBase.getQueryFormula("_Database", blocks);
@@ -974,8 +948,7 @@ public class _Database implements Const {
 	}
 
 	@Deprecated
-	public List<_Glossary> getGlossaryDocs(String form, String condition)
-			throws DocumentException, QueryFormulaParserException {
+	public List<_Glossary> getGlossaryDocs(String form, String condition) throws DocumentException, QueryFormulaParserException {
 		FormulaBlocks blocks = new FormulaBlocks(condition, QueryType.GLOSSARY);
 		IQueryFormula queryFormula = dataBase.getQueryFormula("_Database", blocks);
 		IGlossaries glos = dataBase.getGlossaries();
