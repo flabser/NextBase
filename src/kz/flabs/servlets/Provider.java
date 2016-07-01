@@ -132,6 +132,7 @@ public class Provider extends HttpServlet implements Const {
 			String id = request.getParameter("id");
 			String key = request.getParameter("key");
 			String onlyXML = request.getParameter("onlyxml");
+			String as = request.getParameter("as");
 
 			if (env != null) {
 				if (id != null) {
@@ -219,7 +220,7 @@ public class Provider extends HttpServlet implements Const {
 						return;
 					}
 
-					if (userSession.browserType == BrowserType.APPLICATION && result.publishAs != PublishAsType.OUTPUTSTREAM || onlyXML != null) {
+					if ((as != null && as.equalsIgnoreCase("xml")) || result.publishAs != PublishAsType.OUTPUTSTREAM || onlyXML != null) {
 						result.publishAs = PublishAsType.XML;
 						result.addHistory = false;
 					}
