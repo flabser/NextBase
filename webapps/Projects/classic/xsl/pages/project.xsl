@@ -113,8 +113,11 @@
 		    								<td style="width:40%; padding-left:13px">
 		    									<xsl:if test="$actionbar/action[@id='new_project']/@mode =  'ON'">							
 													<button title="{$actionbar/action[@id='new_project']/@hint}" id="btnNewdoc" style="margin-right:5px">
-														<xsl:attribute name="href">javascript:window.location.href="<xsl:value-of select="$actionbar/action[@id='new_project']/@url"/>";<!-- beforeOpenDocument()--></xsl:attribute>
-														<xsl:attribute name="onclick">javascript:window.location.href="<xsl:value-of select="$actionbar/action[@id='new_project']/@url"/>";<!-- beforeOpenDocument()--></xsl:attribute>
+														<!--<xsl:attribute name="href">javascript:window.location.href="<xsl:value-of select="$actionbar/action[@id='new_project']/@url"/>";&lt;!&ndash; beforeOpenDocument()&ndash;&gt;</xsl:attribute>
+														<xsl:attribute name="onclick">javascript:window.location.href="<xsl:value-of select="$actionbar/action[@id='new_project']/@url"/>";&lt;!&ndash; beforeOpenDocument()&ndash;&gt;</xsl:attribute>
+														-->
+														<xsl:attribute name="href">javascript:infoDialog("В связи с переходом на новую систему учета заявок регистрация новых заявок закрыта. Для перехода в новую систему перейдите по адресу http://poema.exponentus.com . По всем вопросам обращаться к Падалко П.")</xsl:attribute>
+														<xsl:attribute name="onclick">javascript:infoDialog("В связи с переходом на новую систему учета заявок регистрация новых заявок закрыта. Для перехода в новую систему перейдите по адресу http://poema.exponentus.com . По всем вопросам обращаться к Падалко П.")</xsl:attribute>
 														<img src="/SharedResources/img/iconset/page_white_add.png" class="button_img"/>
 														<font class="button_text"><xsl:value-of select="$actionbar/action[@id='new_project']/@caption"/></font>
 													</button>	
