@@ -220,7 +220,10 @@ public class Provider extends HttpServlet implements Const {
 						return;
 					}
 
-					if ((as != null && as.equalsIgnoreCase("xml")) || result.publishAs != PublishAsType.OUTPUTSTREAM || onlyXML != null) {
+					// if ((as != null && as.equalsIgnoreCase("xml")) ||
+					// result.publishAs != PublishAsType.OUTPUTSTREAM || onlyXML
+					// != null) {
+					if ((as != null && as.equalsIgnoreCase("xml")) || onlyXML != null) {
 						result.publishAs = PublishAsType.XML;
 						result.addHistory = false;
 					}
@@ -479,7 +482,7 @@ public class Provider extends HttpServlet implements Const {
 
 		if (commandURL != null && !commandURL.equals("null")) {
 			StringTokenizer t = new StringTokenizer(commandURL, ":");
-			ArrayList<String> commands = new ArrayList<String>();
+			ArrayList<String> commands = new ArrayList<>();
 			while (t.hasMoreTokens()) {
 				commands.add(t.nextToken());
 			}
@@ -518,7 +521,7 @@ public class Provider extends HttpServlet implements Const {
 				}
 			}
 		}
-		HashMap<String, String[]> fields = new HashMap<String, String[]>();
+		HashMap<String, String[]> fields = new HashMap<>();
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
 		int pageSize = userSession.pageSize;
@@ -544,7 +547,7 @@ public class Provider extends HttpServlet implements Const {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		result.addHistory = pageRule.addToHistory;
-		HashMap<String, String[]> fields = new HashMap<String, String[]>();
+		HashMap<String, String[]> fields = new HashMap<>();
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
 		Page page = new Page(env, userSession, pageRule);
@@ -580,7 +583,7 @@ public class Provider extends HttpServlet implements Const {
 		ProviderResult result = new ProviderResult();
 		result.addHistory = false;
 		int parentDocProp[] = getParentDocProp(request);
-		HashMap<String, String[]> fields = new HashMap<String, String[]>();
+		HashMap<String, String[]> fields = new HashMap<>();
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
 		QueryRule queryRule = (QueryRule) rule;
@@ -610,7 +613,7 @@ public class Provider extends HttpServlet implements Const {
 	private ProviderResult count(HttpServletRequest request, IRule rule, UserSession userSession) throws DocumentException, FTIndexEngineException,
 	        RuleException, QueryFormulaParserException, UnsupportedEncodingException, DocumentAccessException, QueryException {
 		ProviderResult result = new ProviderResult();
-		HashMap<String, String[]> fields = new HashMap<String, String[]>();
+		HashMap<String, String[]> fields = new HashMap<>();
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
 
@@ -657,7 +660,7 @@ public class Provider extends HttpServlet implements Const {
 
 		Form form = null;
 		if (formRule.qoEnable) {
-			HashMap<String, String[]> fields = new HashMap<String, String[]>();
+			HashMap<String, String[]> fields = new HashMap<>();
 			HashMap<String, String[]> parMap = (HashMap<String, String[]>) request.getParameterMap();
 			// Map<String, String[]> parMap =
 			// ServletUtil.showParametersMap(request);
@@ -737,7 +740,7 @@ public class Provider extends HttpServlet implements Const {
 	@Deprecated
 	private ProviderResult document(HttpServletRequest request, HttpServletResponse response, IRule rule, UserSession userSession, String key,
 	        String id, String type) throws DocumentAccessException, RuleException, QueryFormulaParserException, DocumentException, QueryException,
-	                LocalizatorException, ClassNotFoundException, _Exception, NumberFormatException, ComplexObjectException {
+	        LocalizatorException, ClassNotFoundException, _Exception, NumberFormatException, ComplexObjectException {
 		// FormRule formRule = (FormRule) rule;
 		FormRule formRule = (FormRule) env.ruleProvider.getRule(FORM_RULE, id);
 		ProviderResult result = new ProviderResult(formRule.publishAs, formRule.getXSLT());
@@ -798,7 +801,7 @@ public class Provider extends HttpServlet implements Const {
 
 	private ProviderResult structure(HttpServletRequest request, HttpServletResponse response, IRule rule, UserSession userSession, String key,
 	        String id) throws DocumentAccessException, DocumentException, RuleException, QueryFormulaParserException, QueryException,
-	                LocalizatorException, ClassNotFoundException, _Exception, ComplexObjectException {
+	        LocalizatorException, ClassNotFoundException, _Exception, ComplexObjectException {
 		// FormRule formRule = (FormRule)rule;
 		FormRule formRule = (FormRule) env.ruleProvider.getRule(FORM_RULE, id);
 		ProviderResult result = new ProviderResult(formRule.publishAs, formRule.getXSLT());
@@ -812,7 +815,7 @@ public class Provider extends HttpServlet implements Const {
 
 		Form form = null;
 		if (formRule.qoEnable) {
-			HashMap<String, String[]> fields = new HashMap<String, String[]>();
+			HashMap<String, String[]> fields = new HashMap<>();
 			HashMap<String, String[]> parMap = (HashMap<String, String[]>) request.getParameterMap();
 			// Map<String, String[]> parMap =
 			// ServletUtil.showParametersMap(request);
@@ -906,7 +909,7 @@ public class Provider extends HttpServlet implements Const {
 		ProviderResult result = new ProviderResult();
 
 		String element = request.getParameter("element");
-		HashMap<String, String[]> fields = new HashMap<String, String[]>();
+		HashMap<String, String[]> fields = new HashMap<>();
 		HashMap<String, String[]> parMap = (HashMap<String, String[]>) request.getParameterMap();
 		// Map<String, String[]> parMap =
 		// ServletUtil.showParametersMap(request);
@@ -915,7 +918,7 @@ public class Provider extends HttpServlet implements Const {
 		if (element != null && element.equalsIgnoreCase("user_profile")) {
 			XMLResponse xmlResult = new XMLResponse(ResponseType.SAVE_FORM);
 			Employer emp = userSession.currentUser.getAppUser();
-			HashSet<Filter> currentFilters = new HashSet<Filter>(emp.getFilters());
+			HashSet<Filter> currentFilters = new HashSet<>(emp.getFilters());
 			userSession.history.remove(currentFilters);
 			userSession.setLang(fields.get("lang")[0], response);
 			userSession.setPageSize(fields.get("pagesize")[0], response);
@@ -924,7 +927,7 @@ public class Provider extends HttpServlet implements Const {
 			emp.setFilters(FilterParser.parse(fields, env));
 			int docID = emp.save(userSession.currentUser);
 
-			HashSet<Filter> updatedFilters = new HashSet<Filter>(emp.getFilters());
+			HashSet<Filter> updatedFilters = new HashSet<>(emp.getFilters());
 			currentFilters.removeAll(updatedFilters);
 
 			if (docID > -1) {
@@ -939,7 +942,7 @@ public class Provider extends HttpServlet implements Const {
 		} else {
 			FormRule formRule = (FormRule) rule;
 			if (formRule.advancedQSEnable) {
-				fields = new HashMap<String, String[]>();
+				fields = new HashMap<>();
 				parMap = (HashMap<String, String[]>) request.getParameterMap();
 				fields.putAll(parMap);
 				DocumentForm form = new DocumentForm(fields, env, formRule, userSession);
