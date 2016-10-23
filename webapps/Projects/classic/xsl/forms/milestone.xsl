@@ -126,7 +126,7 @@
 									<xsl:if test="//actionbar/action[@id='NEW_DOCUMENT']/@mode= 'ON'" >
 										<button style="margin-right:5px; margin-bottom:5px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" title="{//actionbar/action[@id='NEW_DOCUMENT']/@title}" id="new_demand">
 											<xsl:attribute name="title" select="//actionbar/action[@id='NEW_DOCUMENT']"/>
-											<xsl:attribute name="onclick">location.href='Provider?type=edit&amp;element=document&amp;id=demand&amp;docid=&amp;parentdocid=<xsl:value-of select="document/@docid"/>&amp;parentdoctype=<xsl:value-of select="document/@doctype"/>'</xsl:attribute>
+											<xsl:attribute name="onclick">javascript:infoDialog("В связи с переходом на новую систему учета заявок регистрация новых заявок закрыта. Для перехода в новую систему перейдите по адресу http://poema.exponentus.com . По всем вопросам обращаться к Падалко П.")</xsl:attribute>
 											<span>
 												<img src="/SharedResources/img/iconset/page_white_add.png" class="button_img"/>
 												<font class="button_text">

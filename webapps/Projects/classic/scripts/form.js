@@ -574,7 +574,7 @@ function controlOn(pos){
 }
 
 function infoDialog(text){
-	divhtml ="<div id='dialog-message' title='"+warning+"'>";
+	divhtml ="<div id='dialog-message' title='Предупреждение'>";
 	divhtml+="<span style='height:40px; width:100%; text-align:center;'>"+
 		"<font style='font-size:13px;'>"+text+"</font></span></div>";
 	$("body").append(divhtml);
