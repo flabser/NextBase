@@ -48,10 +48,10 @@ public class GlossaryQuery extends Query{
 				}
 	            
 	            SortByBlock sortBlock = queryFormula.getSortBlock();
-                if (!"".equalsIgnoreCase(sortBlock.fieldName)){
+                if (!"".equalsIgnoreCase(sortBlock.fieldName) && !"'$sortfield'".equalsIgnoreCase(sortBlock.fieldName)){
                     sortField = sortBlock.fieldName;
                 }
-                if (!"".equalsIgnoreCase(sortBlock.order)){
+                if (!"".equalsIgnoreCase(sortBlock.order) && !"'$order'".equalsIgnoreCase(sortBlock.order)){
                     sortOrder = sortBlock.order;
                 }
 

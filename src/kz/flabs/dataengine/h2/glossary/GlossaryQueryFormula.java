@@ -52,7 +52,7 @@ public class GlossaryQueryFormula extends QueryFormula {
 								havingSQLpart +
 								" order by count(cf.valueasglossary) " + " " + (sortBlock != null ? sortBlock.order : Const.DEFAULT_SORT_ORDER); 
 					} else {
-						sql += " ORDER BY " + (sortBlock != null ? sortBlock.fieldName : Const.DEFAULT_SORT_COLUMN) + " " + (sortBlock != null ? sortBlock.order : Const.DEFAULT_SORT_ORDER);
+						sql += " ORDER BY " + (sortBlock != null && !"'$sortfield'".equalsIgnoreCase(sortBlock.fieldName) ? sortBlock.fieldName : Const.DEFAULT_SORT_COLUMN) + " " + (sortBlock != null && !"'$order'".equalsIgnoreCase(sortBlock.order) ? sortBlock.order : Const.DEFAULT_SORT_ORDER);
 					} 
 				}
 			}

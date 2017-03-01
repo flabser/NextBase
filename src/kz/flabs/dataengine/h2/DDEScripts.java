@@ -345,7 +345,7 @@ public class DDEScripts {
                 "COMMENT varchar(256), " +
                 "VALUE blob, " +
                 "REGDATE timestamp, " +
-                "FOREIGN KEY (DOCID) REFERENCES " + mainTableName + "(DOCID) ON DELETE CASCADE)";
+                "FOREIGN KEY (DOCID) REFERENCES " + mainTableName + "(" + (mainTableName.equalsIgnoreCase("COORDINATORS") ? "ID":"DOCID") + ") ON DELETE CASCADE)";
         return dde;
     }
 
@@ -566,7 +566,7 @@ public class DDEScripts {
     }
 
     public static String getAddResponseTriggerDDE(String mainTableName) {
-        return "CREATE TRIGGER set_resp_flag_" + mainTableName +
+        return "CREATE TRIGGER if not exists set_resp_flag_" + mainTableName +
                 " AFTER INSERT ON " + mainTableName +
                 " FOR EACH ROW CALL \"kz.flabs.dataengine.h2.triggers.ResponseCounter\"";
     }
@@ -579,7 +579,7 @@ public class DDEScripts {
     }
 
     public static String getRemoveResponseTriggerDDE(String mainTableName) {
-        return "CREATE TRIGGER remove_resp_flag_" + mainTableName +
+        return "CREATE TRIGGER if not exists remove_resp_flag_" + mainTableName +
                 " AFTER DELETE ON " + mainTableName +
                 " FOR EACH ROW CALL \"kz.flabs.dataengine.h2.triggers.ResponseCounter\"";
     }
