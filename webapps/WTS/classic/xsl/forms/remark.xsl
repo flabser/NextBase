@@ -387,7 +387,7 @@
 												<table id="authortbl" style="border-spacing:0px 3px;">
 													<tr>
 														<td class="td_noteditable" style="width:600px;">
-															<xsl:value-of select="document/fields/author"/> - <xsl:value-of select="document/fields/position"/> &#xA0;
+															<xsl:value-of select="document/fields/author"/> &#xA0;
 														</td>
 													</tr>
 												</table>

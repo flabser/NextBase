@@ -115,7 +115,7 @@ function pickListSingleOk(docid){
 		 newTable="<table id="+ queryOpt.tablename +"><tr><td style='width:600px;' class='td_editable'>"+ text +"<span style='float:right; border-left:1px solid #ccc; width:20px; padding-right:10px; padding-left:2px; padding-top:1px; color:#ccc; font-size:11px'>"+docid+"</span></td></tr></table>"
 	 }else{
 		 if(queryOpt.fieldname == "responsible"){
-			 newTable="<table id="+ queryOpt.tablename +"><tr><td style='width:600px;' class='td_editable'>"+ text +" - "+ $(".post"+docid).val() +"</td></tr></table>"
+			 newTable="<table id="+ queryOpt.tablename +"><tr><td style='width:600px;' class='td_editable'>"+ text  +"</td></tr></table>"
 		 }else{
 			 newTable="<table id="+ queryOpt.tablename +"><tr><td style='width:600px;' class='td_editable'>"+ text  +"</td></tr></table>" 
 		 }
@@ -196,11 +196,11 @@ function pickListBtnOk(){
 						}
 						k=k+1;
 						if (queryOpt.fieldname == "responsible"){
-							$("#"+ queryOpt.tablename).append("<tr><td style='width:600px;' class='td_editable'>"+chBoxes[i].value+" - "+$(".post"+chBoxes[i].id).val()+"</td></tr>");
+							$("#"+ queryOpt.tablename).append("<tr><td style='width:600px;' class='td_editable'>"+chBoxes[i].value +"</td></tr>");
 							$("[name=coordBlock]").remove();
-							$("#frm").append("<input type='hidden' name='coordBlock'  id='coordBlockSign' value='new`tosign`0`"+$("input[name=author]").val()+"'>")
-							$("#frm").append("<input type='hidden' name='coordBlock'  id='coordBlockSign' value='new`par`0`"+chBoxes[i].id+"`367'>")
-							$("#frm").append("<input type='hidden' name='respost'  id='respost' value='"+$(".post"+chBoxes[i].id).val()+"'>")
+							$("#frm").append("<input type='hidden' name='coordBlock'  id='coordBlockSign' value='new`tosign`0`"+$("input[name=author]").val()+"'>");
+							$("#frm").append("<input type='hidden' name='coordBlock'  id='coordBlockSign' value='new`par`0`"+chBoxes[i].id+"`367'>");
+							$("#frm").append("<input type='hidden' name='respost'  id='respost' value='"+$(".post"+chBoxes[i].id).val()+"'>");
 							$("#"+ queryOpt.formname).append("<input type='hidden' name='"+queryOpt.fieldname+"' id='"+queryOpt.fieldname+"' value='"+chBoxes[i].id+"'>")
 						}else{
 							$("#"+ queryOpt.tablename).append("<tr><td style='width:600px;' class='td_editable'>"+chBoxes[i].value+"</td></tr>");

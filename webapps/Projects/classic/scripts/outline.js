@@ -703,7 +703,7 @@ function calcStatistics(type){
 					chart1 = new cfx.Chart();chart1.getAnimations().getLoad().setEnabled(true);
 					var data = chart1.getData();
 					data.setSeries(items.length);
-					data.setPoints(items.length)
+					data.setPoints(items.length);
 					chart1.setDataSource(items);
 					chart1.setGallery(cfx.Gallery.Bar);
 					//chart1.getAxisX().setStaggered(true);

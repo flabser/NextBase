@@ -22,7 +22,8 @@
 		</tr>
 	</xsl:template>
 	<xsl:template match="viewtext" mode="line"/>
-	
+	<xsl:template match="viewtext1" mode="line"/>
+	<xsl:template match="viewtext2" mode="line"/>
 	<xsl:template match="*" mode="line">
 		<xsl:if test="name(.) != 'userid'">	
 			<div class="Node" style="height:100%; cursor:pointer;">
@@ -47,19 +48,21 @@
 				<img border='0' src="/SharedResources/img/classic/minus.gif" id="treedepimg{@docid}{@doctype}"/>
 			</a>
 		</xsl:if>
-		<input type="checkbox" name="chbox" class="chbox" style="margin:2px; padding:0px;">
-			<xsl:attribute name="id" select="userid"/>
-			<xsl:attribute name="value" select="viewtext"/>
-			<xsl:if test="not(userid)">
-				<xsl:attribute name="onclick">javascript:checkDepInp(this,<xsl:value-of select="count(./descendant::entry)"/>)</xsl:attribute>
-			</xsl:if>
-		</input>
+		<xsl:if test="./@doctype = '889'">
+			<input type="checkbox" name="chbox" class="chbox" style="margin:2px; padding:0px;">
+				<xsl:attribute name="id" select="userid"/>
+				<xsl:attribute name="value" select="viewtext"/>
+				<xsl:if test="not(userid)">
+					<xsl:attribute name="onclick">javascript:checkDepInp(this,<xsl:value-of select="count(./descendant::entry)"/>)</xsl:attribute>
+				</xsl:if>
+			</input>
+		</xsl:if>
 		<font href="" style="font-style:arial; font-size:12px; margin:0px 2px;">
 			<xsl:if test="userid != ''">
 				<xsl:attribute name="ondblclick">javascript:pickListSingleOk('<xsl:value-of select="userid"/>')</xsl:attribute>
 			</xsl:if>
 			<xsl:attribute name="title" select="userid"/>
-			<xsl:value-of select="replace(@viewtext,'&amp;quot;','&#34;')"/>	
+			<xsl:value-of select="replace(@viewtext,'&amp;quot;','&#34;')"/>
 		</font>
 	</xsl:template>
 
@@ -96,11 +99,11 @@
 					<xsl:attribute name='href'>javascript:toggleOrgTreeStructure(<xsl:value-of select="@doctype"/><xsl:value-of select="@docid"/>)</xsl:attribute>
 					<img border='0' src="/SharedResources/img/classic/minus.gif" id="treeorgimg{@doctype}{@docid}"/>
 				</a>
-				<input type="checkbox" name="chbox" id="">
-<!-- 					<xsl:attribute name="id" select="@docid"/> -->
+				<!--<input type="checkbox" name="chbox" id="">
+&lt;!&ndash; 					<xsl:attribute name="id" select="@docid"/> &ndash;&gt;
 					<xsl:attribute name="value" select="@doctype"/>
 					<xsl:attribute name="onclick">checkallOrg(this,<xsl:value-of select="@doctype"/><xsl:value-of select="@docid"/>)</xsl:attribute>
-				</input>
+				</input>-->
 				<font style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size:0.9em">
 					<xsl:value-of select="replace(@viewtext,'&amp;quot;','&#34;')"/>	
 				</font>
