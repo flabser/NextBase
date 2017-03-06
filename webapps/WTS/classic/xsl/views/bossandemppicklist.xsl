@@ -46,9 +46,9 @@
 								<xsl:attribute name="ondblclick">javascript:pickListSingleOk('<xsl:value-of select="userid"/>')</xsl:attribute>
 							</xsl:if>
 							<xsl:attribute name="style">cursor:pointer; text-align:left</xsl:attribute>
-							<input class='chbox' type="hidden" name="chbox" id="{userid}" value="{viewcontent/viewtext1}"/>
+							<input class='chbox' type="hidden" name="chbox" id="{userid}" value="{viewcontent/viewtext}"/>
 							<input class='post{userid}' type="hidden"  value="{post}"/>
-							<input type="checkbox" name="chbox" id="{userid}" value="{viewcontent/viewtext1}">
+							<input type="checkbox" name="chbox" id="{userid}" value="{viewcontent/viewtext}">
 								<xsl:if test="userid =''">
 									<xsl:attribute name="disabled">disabled</xsl:attribute>
 								</xsl:if>
@@ -57,7 +57,7 @@
 								<xsl:if test="userid =''">
 									<xsl:attribute name="color">gray</xsl:attribute>
 								</xsl:if>
-								<xsl:value-of select="viewcontent/viewtext1"/> - <xsl:value-of select="post"/>
+								<xsl:value-of select="viewcontent/viewtext"/>
 							</font>
 						</div>
 					</xsl:if>
@@ -79,9 +79,9 @@
 								<xsl:attribute name="ondblclick">javascript:addSupervisorSingleOk('<xsl:value-of select="userid"/>')</xsl:attribute>
 							</xsl:if>
 							<xsl:attribute name="style">cursor:pointer; text-align:left</xsl:attribute>
-							<input class='chbox' type="hidden" name="chbox" id="{userid}" value="{viewcontent/viewtext1}"/>
+							<input class='chbox' type="hidden" name="chbox" id="{userid}" value="{viewcontent/viewtext}"/>
 							<input class='post{userid}' type="hidden"  value="{post}"/>
-							<input type="checkbox" name="chbox" id="{userid}" value="{viewcontent/viewtext1}">
+							<input type="checkbox" name="chbox" id="{userid}" value="{viewcontent/viewtext}">
 								<xsl:if test="userid =''">
 									<xsl:attribute name="disabled">disabled</xsl:attribute>
 								</xsl:if>
@@ -90,7 +90,7 @@
 								<xsl:if test="userid =''">
 									<xsl:attribute name="color">gray</xsl:attribute>
 								</xsl:if>
-								<xsl:value-of select="viewcontent/viewtext1"/> - <xsl:value-of select="post"/>
+								<xsl:value-of select="viewcontent/viewtext"/>
 							</font>
 						</div>
 					</xsl:if>
