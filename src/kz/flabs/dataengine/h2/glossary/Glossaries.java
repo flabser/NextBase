@@ -660,6 +660,7 @@ public class Glossaries extends DatabaseCore implements IGlossaries, Const{
 			}
 			pst.executeUpdate();
 			ResultSet rs = pst.getGeneratedKeys();
+			conn.commit();
 			while (rs.next()) {
 				key = rs.getInt(1);
 			}
@@ -722,6 +723,7 @@ public class Glossaries extends DatabaseCore implements IGlossaries, Const{
 					break;
 				}					
 			}
+			conn.commit();
 			pst = conn.prepareStatement("INSERT INTO GLOSSARY_TREE_PATH (ANCESTOR, DESCENDANT, LENGTH) " +
 					" SELECT gtp.ANCESTOR, " + key + ", gtp.LENGTH + 1 FROM GLOSSARY_TREE_PATH as gtp WHERE gtp.DESCENDANT = " + doc.parentDocID + " UNION ALL SELECT " + key + ", " + key + ", 0");
 			pst.executeUpdate();
