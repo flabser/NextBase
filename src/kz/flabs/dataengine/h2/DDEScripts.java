@@ -120,9 +120,7 @@ public class DDEScripts {
                 " ANCESTOR VARCHAR(16) NOT NULL, " +
                 " DESCENDANT VARCHAR(16) NOT NULL, " +
                 " LENGTH int, " +
-                " PRIMARY KEY(ANCESTOR, DESCENDANT), " +
-                " FOREIGN KEY (ANCESTOR) REFERENCES GLOSSARY(DDBID), " +
-                " FOREIGN KEY (DESCENDANT) REFERENCES GLOSSARY(DDBID))";
+                " PRIMARY KEY(ANCESTOR, DESCENDANT))";
         return createString;
     }
 
